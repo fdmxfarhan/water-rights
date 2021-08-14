@@ -5,4 +5,10 @@ module.exports = {
   description: '#aaa',
   blue: '#4464AD',
   background: '#F0EFEF',
+  lightgray: '#aaa',
+  gray: '#666',
+  text: '#555',
+  orange: '#F08700',
+  green: '#21A179',
+  red: '#FE5F55',
 };

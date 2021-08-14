@@ -20,7 +20,7 @@ const splash = (props) => {
         <View style={styles.container}>
             <View style={styles.blueArea}>
                 <Image style={styles.logoImage} source={require('../assets/water.png')}/>
-                <Text style={styles.titleText}>عنوان برنامه</Text>
+                <Text style={styles.titleText}>اپلیکیشن میراب</Text>
             </View>
             <View style={styles.bottomArea}>
                 <View style={styles.buttonsArea}>
@@ -29,8 +29,7 @@ const splash = (props) => {
                     </TouchableOpacity>
                     <TouchableOpacity 
                         style={styles.button}
-                        onPress={() => {props.navigation.navigate('Login')}}
-                        >
+                        onPress={() => {props.navigation.navigate('Login')}}>
                         <Text style={styles.buttonText}>ورود</Text>
                     </TouchableOpacity>
                 </View>

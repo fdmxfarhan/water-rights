@@ -9,6 +9,7 @@ import splash from './screens/splash';
 import login from './screens/login';
 import register from './screens/register';
 import home from './screens/home';
+import acount from './screens/acount';
 import colors from './components/colors';
 
 const App = (props) => {
@@ -54,7 +55,23 @@ const App = (props) => {
                         },
                     })}
                 />
-                
+                <Stack.Screen 
+                    name="Acount" 
+                    component={acount} 
+                    options={({ route }) => ({ 
+                        headerShown: false,
+                        title: 'مشاهده حساب',
+                        headerStyle: {
+                            backgroundColor: colors.background,
+                            textAlign: 'right',
+                        },
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                            textAlign: 'right',
+                            fontFamily: 'iransans',
+                        },
+                    })}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     )

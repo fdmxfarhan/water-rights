@@ -8,18 +8,22 @@ import {
   TouchableOpacity,
   useColorScheme,
   View,
+  BackHandler
 } from 'react-native';
 import colors from '../components/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default Header = ({title}) => {
+export default Header = ({title, backID, navigation}) => {
     return(
         <View style={styles.header}>
-            <TouchableOpacity style={styles.homeButton}>
+            <TouchableOpacity style={styles.homeButton} onPress={() => {navigation.navigate('Home')}}>
                 <Icon  style={styles.homeButtonIcon} name={'home'}/>
             </TouchableOpacity>
             <Text style={styles.title}>{title}</Text>
-            <TouchableOpacity style={styles.backButton}>
+            <TouchableOpacity style={styles.backButton} onPress={() => {
+                if(backID == 'exit') BackHandler.exitApp();
+                else navigation.navigate(backID)
+            }}> 
                 <Icon  style={styles.backButtonIcon} name={'chevron-left'}/>
             </TouchableOpacity>
         </View>

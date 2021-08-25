@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     },
     blueArea: {
         flex: 8,
-        backgroundColor: colors.lightblue,
+        backgroundColor: colors.blue,
         alignContent: 'center',
         alignItems: 'center',
     },
@@ -63,8 +63,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     bottomArea: {
-        flex: 2,
-        paddingTop: 40,
+        flex: 1,
+        paddingTop: 50,
     },
     buttonsArea: {
         flexDirection: 'row',
@@ -74,12 +74,12 @@ const styles = StyleSheet.create({
         width: '40%',
         marginLeft: '5%',
         marginRight: '5%',
-        borderColor: colors.lightblue,
+        borderColor: colors.blue,
         borderWidth: 2,
         borderRadius: 3,
     },
     buttonText: {
-        color: colors.lightblue,
+        color: colors.blue,
         fontFamily: 'iransans',
         fontSize: 20,
         paddingHorizontal: 3,
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     blueButton: {
-        backgroundColor: colors.lightblue,
+        backgroundColor: colors.blue,
         color: 'white',
     },
 });

@@ -20,7 +20,7 @@ import Setting from '../components/Setting';
 const Tab = createBottomTabNavigator();
 
 
-const HomeScreen = () => {
+const HomeScreen = (props) => {
   var [acounts, setAcounts] = useState({
     abvandi: [
       {type: 'abvandi', startDate: {year: 1400, month: 5, day: 19}, endDate: {year: 1400, month: 6, day: 5}, charge: 1000, id: 0},
@@ -45,33 +45,33 @@ const HomeScreen = () => {
   })
   return (
     <View style={styles.container}>
-      <Header title={'خانه'} />
+      <Header title={'خانه'} backID={'exit'} navigation={props.navigation}/>
       <ScrollView style={styles.scrollView}>
-        <AcountView data={acounts.abvandi} title={'حساب های آب‌وندی'} />
-        <AcountView data={acounts.chahvandi} title={'حساب های چاه‌وندی'} />
-        <AcountView data={acounts.chah} title={'حساب های چاه'} />
+        <AcountView data={acounts.abvandi} title={'حساب های آب‌وندی'} navigation={props.navigation}/>
+        <AcountView data={acounts.chahvandi} title={'حساب های چاه‌وندی'} navigation={props.navigation}/>
+        <AcountView data={acounts.chah} title={'حساب های چاه'} navigation={props.navigation}/>
         
       </ScrollView>
     </View>
   );
 }
 
-const SettingsScreen = () => {
+const SettingsScreen = (props) => {
   return (
     <View style={styles.container}>
-      <Header title={'تنظیمات'} />
+      <Header title={'تنظیمات'} backID={'Main'} navigation={props.navigation} />
       <Setting />
     </View>
   );
 }
-const HistoryScreen = () => {
+const HistoryScreen = (props) => {
   return (
     <View style={styles.container}>
-      <Header title={'تاریخچه'} />
+      <Header title={'تاریخچه'}  backID={'Main'} navigation={props.navigation}/>
     </View>
   );
 }
-const home = () => {
+const home = (props) => {
   return (
     // <NavigationContainer>
       <Tab.Navigator
@@ -90,14 +90,14 @@ const home = () => {
           title: 'خانه',
           tabBarLabelStyle: styles.tabBar,
           })}/>
-        <Tab.Screen name="Settings" component={SettingsScreen} options={({route}) => ({
-          headerShown: false, 
-          title: 'تنظیمات',
-          tabBarLabelStyle: styles.tabBar,
-          })} />
         <Tab.Screen name="History" component={HistoryScreen} options={({route}) => ({
           headerShown: false, 
           title: 'تاریخچه',
+          tabBarLabelStyle: styles.tabBar,
+        })} />
+        <Tab.Screen name="Settings" component={SettingsScreen} options={({route}) => ({
+          headerShown: false, 
+          title: 'تنظیمات',
           tabBarLabelStyle: styles.tabBar,
           })} />
         

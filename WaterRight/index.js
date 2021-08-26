@@ -39,6 +39,23 @@ const App = (props) => {
                     })}
                 />
                 <Stack.Screen 
+                    name="Register" 
+                    component={register} 
+                    options={({ route }) => ({ 
+                        headerShown: false,
+                        title: 'ورود',
+                        headerStyle: {
+                            backgroundColor: colors.background,
+                            textAlign: 'right',
+                        },
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                            textAlign: 'right',
+                            fontFamily: 'iransans',
+                        },
+                    })}
+                />
+                <Stack.Screen 
                     name="Home" 
                     component={home} 
                     options={({ route }) => ({ 

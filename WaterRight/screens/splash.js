@@ -24,7 +24,9 @@ const splash = (props) => {
             </View>
             <View style={styles.bottomArea}>
                 <View style={styles.buttonsArea}>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity 
+                        style={styles.button}
+                        onPress={() => {props.navigation.navigate('Register')}}>
                         <Text style={[styles.buttonText, styles.blueButton]}>ثبت نام</Text>
                     </TouchableOpacity>
                     <TouchableOpacity 

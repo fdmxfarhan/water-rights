@@ -100,7 +100,6 @@ const home = (props) => {
           title: 'تنظیمات',
           tabBarLabelStyle: styles.tabBar,
           })} />
-        
       </Tab.Navigator>
     // </NavigationContainer>
   );
@@ -119,3 +118,5 @@ const styles = StyleSheet.create({
 });
 
 export default home;
+
+

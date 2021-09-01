@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -15,26 +15,44 @@ import {
 import colors from '../components/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const url = require('../config/api');
+const api = axios.create({baseURL: url});
+
+const STORAGE_KEY = '@store_file'
+const saveData = async (data) => {
+  try {
+    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+    // console.log('Data successfully saved');
+  } catch (e) {
+    // console.log('Failed to save data');
+    console.log(e)
+  }
+}
 
 const login = (props) => {
   var [userInputColor, setUserInputColor] = useState('lightgray');
   var [passInputColor, setPassInputColor] = useState('lightgray');
   var [username, setUsername] = useState('');
   var [password, setPassword] = useState('');
-  // axios.defaults.baseURL = 'http://192.168.1.6:3000';
-  const instance = axios.create({
-    baseURL: 'http://192.168.1.6:3000'
-  });
+  var passwordInput = useRef(null);
   var checkLogin = ()=>{
-    instance.post('/api/login', {
-        username: 'Fred',
-        password: 'Flintstone'
-      })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
+    api.post('/api/login', {
+        username: username,
+        password: password,
+      }).then(function (res) {
+        // console.log(res.data);
+        if(res.data.correct){
+          saveData({username, password, user: res.data.user}).then(() => {
+            props.navigation.navigate('Home');
+          })
+        }
+        else{
+          alert(res.data.msg)
+        }
+      }).catch(function (error) {
+        alert('خطا در برقراری ارتباط. لطفا اتصال اینترنت خود را چک کنید.')
         console.log(error);
       });
   }
@@ -49,10 +67,13 @@ const login = (props) => {
         </View>
         <TextInput 
           style={[styles.textInput, {borderBottomColor: userInputColor}]}
-          placeholder={'کد ملی'}
+          placeholder={'کد ملی (کد ملی یا شماره تلفن)'}
           onChange={(text) => {setUsername(text.nativeEvent.text)}}
           onFocus={() => {setUserInputColor(colors.lightblue)}}
           onBlur={() => {setUserInputColor('lightgray')}}
+          blurOnSubmit={false}
+          returnKeyType={'next'}
+          onSubmitEditing={()=>passwordInput.current.focus()}
         />
         <TextInput 
           style={[styles.textInput, {borderBottomColor: passInputColor}]}
@@ -60,6 +81,8 @@ const login = (props) => {
           onChange={(text) => {setPassword(text.nativeEvent.text)}}
           onFocus={() => {setPassInputColor(colors.lightblue)}}
           onBlur={() => {setPassInputColor('lightgray')}}
+          ref={passwordInput}
+          onSubmitEditing={() => checkLogin()}
         />
         <TouchableOpacity>
           <Text style={styles.forgotPassword}>کلمه عبور خود را فراموش کرده ام.</Text>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -17,8 +17,22 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Header from '../components/header';
 import AcountView from '../components/AcountView';
 import Setting from '../components/Setting';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 const Tab = createBottomTabNavigator();
 
+const url = require('../config/api');
+const api = axios.create({baseURL: url});
+
+const STORAGE_KEY = '@store_file'
+const readData = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem(STORAGE_KEY)
+    return jsonValue != null ? JSON.parse(jsonValue) : null;
+  } catch (e) {
+    console.log(e)
+  }
+}
 
 const HomeScreen = (props) => {
   var [acounts, setAcounts] = useState({
@@ -42,7 +56,13 @@ const HomeScreen = (props) => {
       {type: 'chah', sellCap: 1000, buyCap: 1000, wellCap: 5000, id: 2},
       {type: 'chah', sellCap: 1000, buyCap: 1000, wellCap: 5000, id: 3},
     ],
-  })
+  });
+  var [user, setUser] = useState();
+  useEffect(() => {
+    readData().then((data) => {
+      console.log(data);
+    });
+  });
   return (
     <View style={styles.container}>
       <Header title={'خانه'} backID={'exit'} navigation={props.navigation}/>

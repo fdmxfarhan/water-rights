@@ -12,9 +12,44 @@ import {
   View,
 } from 'react-native';
 import colors from '../components/colors';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import LoginForm from '../components/loginForm';
 
+const url = require('../config/api');
+const api = axios.create({baseURL: url});
 
+const STORAGE_KEY = '@store_file'
+const readData = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem(STORAGE_KEY)
+    return jsonValue != null ? JSON.parse(jsonValue) : null;
+  } catch (e) {
+    console.log(e)
+  }
+}
 const splash = (props) => {
+    var [loggedIn, setLoggedIn] = useState(true);
+    useEffect(() => {
+        readData().then((data) => {
+            if(data != null){
+                api.post('/api/login', {
+                    username: data.username,
+                    password: data.password,
+                }).then(function (res) {
+                    // console.log(res.data);
+                    if(res.data.correct){
+                        props.navigation.navigate('Home');
+                    }
+                    else{setLoggedIn(false)}
+                }).catch(function (error) {
+                    setLoggedIn(false);
+                    console.log(error);
+                });
+            }
+            else setLoggedIn(false);
+        });
+    });
     
     return(
         <View style={styles.container}>
@@ -23,18 +58,7 @@ const splash = (props) => {
                 <Text style={styles.titleText}>اپلیکیشن میراب</Text>
             </View>
             <View style={styles.bottomArea}>
-                <View style={styles.buttonsArea}>
-                    <TouchableOpacity 
-                        style={styles.button}
-                        onPress={() => {props.navigation.navigate('Register')}}>
-                        <Text style={[styles.buttonText, styles.blueButton]}>ثبت نام</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity 
-                        style={styles.button}
-                        onPress={() => {props.navigation.navigate('Login')}}>
-                        <Text style={styles.buttonText}>ورود</Text>
-                    </TouchableOpacity>
-                </View>
+                <LoginForm loggedIn={loggedIn} navigation={props.navigation}/>
             </View>
         </View>
     )

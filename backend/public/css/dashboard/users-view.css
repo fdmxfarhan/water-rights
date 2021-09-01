@@ -74,6 +74,14 @@
         margin: 0;
         padding: 0 0.5vw;
     }
+    .content-view .users-view table td.user h2 a{
+        text-decoration: none;
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        color: var(--lightgray);
+        direction: ltr;
+    }
+    .content-view .users-view table td.user h2 a:hover{color: var(--blue);}
     .content-view .users-view table td.role .role-user{
         background-color: var(--green);
         color: white;

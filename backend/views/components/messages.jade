@@ -1,12 +1,12 @@
 .errors-area
     -if(errors){
-            -for(var i=0; i<errors.length; i++){
-                .error(id='error#{i}')
-                    i.fa.fa-warning
-                    h1= errors[i].msg
-                    i.fa.fa-times.close-error
-                    .time-interval(id='time#{i}')
-            -}
+        -for(var i=0; i<errors.length; i++){
+            .error(id='error#{i}')
+                i.fa.fa-warning
+                h1= errors[i].msg
+                i.fa.fa-times.close-error
+                .time-interval(id='time#{i}')
+        -}
     -}
     -if(success_msg){
         -if(success_msg != ''){
@@ -17,3 +17,5 @@
                 .time-interval(id='time3')
         -}
     -}
+
+script(src="/js/messages.js") 

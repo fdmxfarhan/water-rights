@@ -47,4 +47,18 @@ router.get('/delete-user', ensureAuthenticated, (req, res, next) => {
     }
 });
 
+router.get('/user-view', ensureAuthenticated, (req, res, next) => {
+    var {userID} = req.query;
+    if(req.user.role == 'admin'){
+        User.findById(userID, (err, viewingUser) => {
+            res.render('./dashboard/admin-user-view', {
+                user: req.user,
+                viewingUser,
+                
+            });
+        });
+    }
+});
+
 module.exports = router;
+

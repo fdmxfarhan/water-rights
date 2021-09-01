@@ -1,0 +1,17 @@
+extends layout
+
+block styles
+    link(rel="stylesheet", href="/css/dashboard/user-view.css")
+
+block content
+    .personal-info 
+        .avatar 
+            i.fa.fa-user 
+        .info 
+            h1= viewingUser.fullname 
+            h2
+                a(href="tel:#{viewingUser.phone}")= viewingUser.phone
+            
+    script(src="/js/user-view.js") 
+
+

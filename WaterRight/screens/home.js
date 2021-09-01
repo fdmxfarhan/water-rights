@@ -57,6 +57,7 @@ const HomeScreen = (props) => {
       {type: 'chah', sellCap: 1000, buyCap: 1000, wellCap: 5000, id: 3},
     ],
   });
+  
   var [user, setUser] = useState();
   useEffect(() => {
     readData().then((data) => {

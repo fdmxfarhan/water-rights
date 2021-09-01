@@ -1,0 +1,87 @@
+@media only screen and (min-width: 800px) {
+    header{
+        position: relative;
+        overflow: hidden;
+    }
+    header img{
+        width: 100%;
+    }
+    header .dark-overlay{
+        background-color: rgba(0, 0, 0, 0.349);
+        width: 100%;
+        height: 99%;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+    header a.logo{
+        text-decoration: none;
+        position: absolute;
+        top: 4vw;
+        left: 5%;
+
+    }
+    header a.logo img{width: 5vw;}
+    header nav{
+        position: absolute;
+        top: 5vw;
+        right: 5%;
+        overflow: hidden;
+    }
+    header nav a.nav-link{
+        color: white;
+        font-size: 1.7vw;
+        font-family: 'iransans';
+        text-decoration: none;
+        display: block;
+        float: right;
+        padding: 0.5vw 1vw;
+        margin: 0 1vw;
+        border-bottom: transparent 0.2vw solid;
+        font-weight: bold;
+    }
+    header nav a.nav-link:hover, header nav a.nav-link.active{
+        border-bottom: white 0.2vw solid;
+    }
+    header nav a.nav-link i{
+        padding: 0 0.5vw;
+    }
+    header .info {
+        position: absolute;
+        top: 15vw;
+        right: 5vw;
+    }
+    header .info h1.title{
+        font-family: 'iransans';
+        font-size: 12vw;
+        margin: 0;
+        padding: 0;
+        color: white;
+        font-weight: bold;
+        line-height: 15vw;
+    }
+    header .info h1.title2{
+        font-family: 'iransans';
+        font-size: 2.3vw;
+        margin: 0;
+        padding: 0;
+        color: rgb(236, 236, 236);
+        font-weight: normal;
+    }
+    header .info a.enter{
+        color: white;
+        font-family: 'iransans';
+        font-size: 1.5vw;
+        margin-top: 2vw;
+        display: block;
+        width: fit-content;
+        background-color: var(--blue);
+        padding: 0.5vw 4vw;
+        border-radius: 2vw;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    header .info a.enter:hover{
+        background-color: var(--hover);
+    }
+}

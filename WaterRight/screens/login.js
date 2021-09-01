@@ -14,11 +14,30 @@ import {
 
 import colors from '../components/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import axios from 'axios';
 
 
 const login = (props) => {
   var [userInputColor, setUserInputColor] = useState('lightgray');
   var [passInputColor, setPassInputColor] = useState('lightgray');
+  var [username, setUsername] = useState('');
+  var [password, setPassword] = useState('');
+  // axios.defaults.baseURL = 'http://192.168.1.6:3000';
+  const instance = axios.create({
+    baseURL: 'http://192.168.1.6:3000'
+  });
+  var checkLogin = ()=>{
+    instance.post('/api/login', {
+        username: 'Fred',
+        password: 'Flintstone'
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
   return(
     <View style={styles.container}>
       <View style={styles.loginArea}>
@@ -30,15 +49,15 @@ const login = (props) => {
         </View>
         <TextInput 
           style={[styles.textInput, {borderBottomColor: userInputColor}]}
-          placeholder={'نام کاربری'}
-          onChange={(text) => {}}
+          placeholder={'کد ملی'}
+          onChange={(text) => {setUsername(text.nativeEvent.text)}}
           onFocus={() => {setUserInputColor(colors.lightblue)}}
           onBlur={() => {setUserInputColor('lightgray')}}
         />
         <TextInput 
           style={[styles.textInput, {borderBottomColor: passInputColor}]}
           placeholder={'کلمه عبور'}
-          onChange={(text) => {}}
+          onChange={(text) => {setPassword(text.nativeEvent.text)}}
           onFocus={() => {setPassInputColor(colors.lightblue)}}
           onBlur={() => {setPassInputColor('lightgray')}}
         />
@@ -52,7 +71,7 @@ const login = (props) => {
       <View style={styles.submit}>
         <TouchableOpacity 
           style={styles.submitButton}
-          onPress={() => {props.navigation.navigate('Home')}}
+          onPress={() => {checkLogin()}}
           >
           <Text style={styles.submitText}>ورود</Text>
         </TouchableOpacity>

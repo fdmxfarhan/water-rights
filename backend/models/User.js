@@ -24,10 +24,6 @@ var UserSchema = new mongoose.Schema({
   education: String,
   role: String,
   card: Number,
-  file: {
-    type: [Object],
-    default: []
-  },
   acounts: [Object],
   
 });

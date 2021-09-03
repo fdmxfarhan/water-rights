@@ -4,14 +4,44 @@ block styles
     link(rel="stylesheet", href="/css/dashboard/user-view.css")
 
 block content
-    .personal-info 
+    .avatar-info
         .avatar 
             i.fa.fa-user 
         .info 
-            h1= viewingUser.fullname 
+            h1= viewingUser.sex + ' ' + viewingUser.fullname 
             h2
                 a(href="tel:#{viewingUser.phone}")= viewingUser.phone
-            
+    .personal-info 
+        form(action="/dashboard/edit-user") 
+            .part 
+                label(for="fatherName") نام پدر: 
+                input.text(type="text" name="fatherName" placeholder="نام پدر" value="#{viewingUser.fatherName}")
+                label(for="idNumber") کد ملی: 
+                input.text(type="text" name="idNumber" placeholder="کد ملی" value="#{viewingUser.idNumber}")
+                label(for="cardNumber") شماره شناسنامه: 
+                input.text(type="text" name="cardNumber" placeholder="شماره شناسنامه" value="#{viewingUser.cardNumber}")
+            .part
+                label(for="address") آدرس: 
+                input.text(type="text" name="address" placeholder="آدرس" value="#{viewingUser.address}")
+                label(for="postCode") کد پستی: 
+                input.text(type="text" name="postCode" placeholder="کد پستی" value="#{viewingUser.postCode}")
+                label(for="phone") تلفن: 
+                input.text(type="text" name="phone" placeholder="تلفن" value="#{viewingUser.phone}")
+                //- birthDate
+                //- introductionLetter
+                //- sex
+            input.submit(type="sbumit" value="ثبت تغییرات")
+    .tab-view 
+        .tabs-area
+            .tab#tab1 حساب های آب‌وندی
+            .tab#tab2 حساب های چاه‌وندی
+            .tab#tab3 حساب های چاه
+        #tab-content1
+        #tab-content2
+        #tab-content3
     script(src="/js/user-view.js") 
+
+
+
 
 

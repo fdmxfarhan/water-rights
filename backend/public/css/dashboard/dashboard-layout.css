@@ -362,3 +362,5 @@ body::-webkit-scrollbar-thumb:hover{background: var(--blue);}
 @media only screen and (max-width: 800px) {
     
 }
+.invisible{display: none;}
+.visible{display: block;}

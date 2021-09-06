@@ -14,31 +14,147 @@ block content
     .personal-info 
         form(action="/dashboard/edit-user") 
             .part 
-                label(for="fatherName") نام پدر: 
-                input.text(type="text" name="fatherName" placeholder="نام پدر" value="#{viewingUser.fatherName}")
-                label(for="idNumber") کد ملی: 
-                input.text(type="text" name="idNumber" placeholder="کد ملی" value="#{viewingUser.idNumber}")
-                label(for="cardNumber") شماره شناسنامه: 
-                input.text(type="text" name="cardNumber" placeholder="شماره شناسنامه" value="#{viewingUser.cardNumber}")
+                .text-input
+                    label(for="fatherName") نام پدر: 
+                    input.text(type="text" name="fatherName" placeholder="نام پدر" value="#{viewingUser.fatherName}")
+                .text-input
+                    label(for="idNumber") کد ملی: 
+                    input.text(type="text" name="idNumber" placeholder="کد ملی" value="#{viewingUser.idNumber}")
+                .text-input
+                    label(for="cardNumber") شماره شناسنامه: 
+                    input.text(type="text" name="cardNumber" placeholder="شماره شناسنامه" value="#{viewingUser.cardNumber}")
             .part
-                label(for="address") آدرس: 
-                input.text(type="text" name="address" placeholder="آدرس" value="#{viewingUser.address}")
-                label(for="postCode") کد پستی: 
-                input.text(type="text" name="postCode" placeholder="کد پستی" value="#{viewingUser.postCode}")
-                label(for="phone") تلفن: 
-                input.text(type="text" name="phone" placeholder="تلفن" value="#{viewingUser.phone}")
+                .text-input
+                    label(for="address") آدرس: 
+                    input.text(type="text" name="address" placeholder="آدرس" value="#{viewingUser.address}")
+                .text-input
+                    label(for="postCode") کد پستی: 
+                    input.text(type="text" name="postCode" placeholder="کد پستی" value="#{viewingUser.postCode}")
+                .text-input
+                    label(for="phone") تلفن: 
+                    input.text(type="text" name="phone" placeholder="تلفن" value="#{viewingUser.phone}")
                 //- birthDate
                 //- introductionLetter
                 //- sex
-            input.submit(type="sbumit" value="ثبت تغییرات")
+            input.submit(type="submit" value="ثبت تغییرات")
     .tab-view 
         .tabs-area
-            .tab#tab1 حساب های آب‌وندی
+            .tab.active#tab1 حساب های آب‌وندی
             .tab#tab2 حساب های چاه‌وندی
             .tab#tab3 حساب های چاه
-        #tab-content1
-        #tab-content2
-        #tab-content3
+        .content#tab-content1
+            table 
+                tr 
+                    th ردیف
+                    th شماره حساب
+                    th آغاز
+                    th پایان
+                    th ظرفیت (متر مکعب)
+                    th 
+                tr 
+                    td 1
+                    td 0123457
+                    td 1234/5/6
+                    td 1234/5/6
+                    td 1234
+                    td 
+                        a.green(href="#") 
+                            i.fa.fa-edit
+                        a.red(href="#") 
+                            i.fa.fa-trash
+                tr 
+                    td 1
+                    td 0123457
+                    td 1234/5/6
+                    td 1234/5/6
+                    td 1234
+                    td 
+                        a.green(href="#") 
+                            i.fa.fa-edit
+                        a.red(href="#") 
+                            i.fa.fa-trash
+                tr 
+                    td 1
+                    td 0123457
+                    td 1234/5/6
+                    td 1234/5/6
+                    td 1234
+                    td 
+                        a.green(href="#") 
+                            i.fa.fa-edit
+                        a.red(href="#") 
+                            i.fa.fa-trash
+            a.add-acount
+                i.fa.fa-plus 
+                | افزودن حساب آب‌وندی
+        .content#tab-content2.invisible
+            table 
+                tr 
+                    th ردیف
+                    th شماره حساب
+                    th آغاز
+                    th پایان
+                    th ظرفیت (متر مکعب)
+                    th 
+                tr 
+                    td 1
+                    td 0123457
+                    td 1234/5/6
+                    td 1234/5/6
+                    td 1234
+                    td 
+                        a.green(href="#") 
+                            i.fa.fa-edit
+                        a.red(href="#") 
+                            i.fa.fa-trash
+                tr 
+                    td 1
+                    td 0123457
+                    td 1234/5/6
+                    td 1234/5/6
+                    td 1234
+                    td 
+                        a.green(href="#") 
+                            i.fa.fa-edit
+                        a.red(href="#") 
+                            i.fa.fa-trash
+                tr 
+                    td 1
+                    td 0123457
+                    td 1234/5/6
+                    td 1234/5/6
+                    td 1234
+                    td 
+                        a.green(href="#") 
+                            i.fa.fa-edit
+                        a.red(href="#") 
+                            i.fa.fa-trash
+            a.add-acount
+                i.fa.fa-plus 
+                | افزودن حساب چاه‌وندی
+        .content#tab-content3.invisible
+            table 
+                tr 
+                    th ردیف
+                    th شماره حساب
+                    th ظرفیت خرید
+                    th ظرفیت فروش
+                    th ظرفیت کل
+                    th 
+                tr 
+                    td 1
+                    td 0123457
+                    td 1234
+                    td 1234
+                    td 1234
+                    td 
+                        a.green(href="#") 
+                            i.fa.fa-edit
+                        a.red(href="#") 
+                            i.fa.fa-trash
+            a.add-acount
+                i.fa.fa-plus 
+                | افزودن حساب چاه
     script(src="/js/user-view.js") 
 
 

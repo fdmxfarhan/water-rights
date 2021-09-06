@@ -1,4 +1,6 @@
 $(document).ready(function(){
+    $('#link1').addClass('active');
+
     $('.close-success-msg').click(() => {
         $('.success-msg').slideUp(500);
     });

@@ -1,26 +1,45 @@
 extends layout
 
 block styles
-    link(rel="stylesheet", href="/css/css-circular-prog-bar.css")
-    link(rel="stylesheet", href="/css/dashboard/dashboard.css")
+    link(rel="stylesheet", href="/css/dashboard/admin-dashboard.css")
 
 block content
-    .message-area
-        -if(login){
-            .success-msg
-                i.fa.fa-times.close-success-msg
-                ul 
-                    li به پنل کاربری خود خوش آمدید
-        -}
-        -if(false){
-            .notif-msg
-                i.fa.fa-times.close-notif-msg
-                ul 
-                    li شما n صورت حساب پرداخت نشده دارید. جهت پرداخت صورت حساب خود 
-                        a(href="#") اینجا 
-                        | را کلیک کنید.
-        -}
+    .cards-view 
+        a.card.blue(href="/dashboard/users")
+            i.fa.fa-user 
+            h1.number 1234
+            .progress-bar
+                .passed(style="width: 30%")
+            h1.title کاربران
+        a.card.orange(href="#")
+            i.fa.fa-dollar
+            h1.number 1234 تومان
+            .progress-bar
+                .passed(style="width: 50%")
+            h1.title درآمد
+        a.card.green(href="#")
+            i.fa.fa-credit-card
+            h1.number 1235
+            .progress-bar
+                .passed(style="width: 10%")
+            h1.title حساب ها
+        a.card.red(href="#")
+            i.fa.fa-graduation-cap
+            h1.number 1234
+            .progress-bar
+                .passed(style="width: 90%")
+            h1.title شارژ کل
     
-    script(src="/js/dashboard.js") 
+    .charts-view 
+        .chart1 
+            #chart1
+        .chart2
+            #chart2
+            a(href="#") 
+                i.fa.fa-address-card
+                | حساب ها
+        
+    
+    script(src="/js/admin-dashboard.js") 
 
 

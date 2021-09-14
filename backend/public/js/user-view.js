@@ -6,10 +6,12 @@ $(document).ready(function(){
         $('.black-modal').fadeIn(500);
     });
     $('.black-modal').click(() => {
+        $('#file-user-popup').fadeOut(500);
         $('#add-user-popup').fadeOut(500);
         $('.black-modal').fadeOut(500);
     });
     $('.close-popup').click(() => {
+        $('#file-user-popup').fadeOut(500);
         $('#add-user-popup').fadeOut(500);
         $('.black-modal').fadeOut(500);
     });
@@ -41,4 +43,34 @@ $(document).ready(function(){
     });
     
 
+    $('.add-file').click(() => {
+        $('#file-user-popup').fadeIn(500);
+        $('.black-modal').fadeIn(500);
+    });
+
+    $('#add-abvandi-btn').click(() => {
+        $('#add-abvandi-popup').fadeIn(500);
+        $('.black-modal').fadeIn(500);
+    });
+    $('#add-chahvandi-btn').click(() => {
+        $('#add-chahvandi-popup').fadeIn(500);
+        $('.black-modal').fadeIn(500);
+    });
+    $('#add-chah-btn').click(() => {
+        $('#add-chah-popup').fadeIn(500);
+        $('.black-modal').fadeIn(500);
+    });
+    
+    $('.black-modal').click(() => {
+        $('#add-abvandi-popup').fadeOut(500);
+        $('#add-chahvandi-popup').fadeOut(500);
+        $('#add-chah-popup').fadeOut(500);
+        $('.black-modal').fadeOut(500);
+    });
+    $('.close-popup').click(() => {
+        $('#add-abvandi-popup').fadeOut(500);
+        $('#add-chahvandi-popup').fadeOut(500);
+        $('#add-chah-popup').fadeOut(500);
+        $('.black-modal').fadeOut(500);
+    });
 });

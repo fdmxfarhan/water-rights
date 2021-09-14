@@ -47,7 +47,7 @@ body::-webkit-scrollbar {width: 0.5vw;}
 body::-webkit-scrollbar-track {background: var(--gray);}
 body::-webkit-scrollbar-thumb {background: var(--dark);}
 body::-webkit-scrollbar-thumb:hover{background: var(--blue);}
-
+.hidden{display: none;}
 .black-modal{
     display: none;
     position: fixed;
@@ -357,6 +357,66 @@ body::-webkit-scrollbar-thumb:hover{background: var(--blue);}
         height: 0.3vw;
         margin-top: 0.5vw;
     }
+    .popup .middle-col {
+        width: 50%;
+        margin: auto;
+    }
+    .popup .middle-col .text-input{
+        width: 100%;
+        padding: 0.7vw 1vw;
+        direction: rtl;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 2vw;
+    }
+    .popup .middle-col .text-input input{
+        display: block;
+        width: 70%;
+        box-shadow: 0 0 0.5vw 0.1vw rgba(0, 0, 0, 0.2);
+        border-radius: 2vw;
+        border: white 0.1vw solid;
+        font-family: 'iransans';
+        font-size: 1vw;
+        padding: 0.3vw 4vw;
+    }   
+    .popup .middle-col .text-input input:focus{
+        border: var(--blue) 0.1vw solid;
+        outline: none;
+    }
+    .popup .middle-col .text-input i{
+        position: absolute;
+        color: var(--blue);
+        font-size: 1.3vw;
+        top: 1.2vw;
+        right: 2vw;
+    }
+    .upload-area {
+        border: lightblue 2px dashed;
+        position: relative;
+        cursor: pointer;
+        padding: 2vw 0;
+        text-align: center;
+        color: #798AAF;
+        font-family: 'iransans';
+        font-size: 1.3vw;
+        width: 98%;
+        border-radius: 1vw;
+        margin-bottom: 1vw;
+    }
+    .upload-area i{
+        padding: 0 0.5vw;
+    }
+    input.file {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+    
 }
 
 @media only screen and (max-width: 800px) {

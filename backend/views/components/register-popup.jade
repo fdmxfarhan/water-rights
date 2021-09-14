@@ -1,7 +1,7 @@
 .popup#add-user-popup
     i.fa.fa-times.close-popup
     h1.popup-title افزودن کاربر جدید
-    form(action="/upload/admin-register" enctype="multipart/form-data" method="POST")
+    form(action="/dashboard/admin-register" method="POST")
         .two-side-form
             .part
                 .text-input-area
@@ -47,8 +47,8 @@
                 .text-input-area
                     input.textinput(type="password" placeholder="تایید رمز عبور" name="configpassword" value= "#{ typeof configpsw != 'undefined' ? configpsw: '' }" required)
                     i.fa.fa-check
-                label(for="myFile") معرفی نامه: 
-                input.file(type="file" name="myFile" required)
+                //- label(for="myFile") معرفی نامه: 
+                //- input.file(type="file" name="myFile" required)
                 .text-input-area
                     button.submit(type="submit") ثبت نام
 -if(errors){

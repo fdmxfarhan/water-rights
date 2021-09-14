@@ -12,18 +12,25 @@ block content
             h2
                 a(href="tel:#{viewingUser.phone}")= viewingUser.phone
     .personal-info 
-        form(action="/dashboard/edit-user") 
+        form(action="/dashboard/edit-user" method="POST") 
+            input.hidden(type="text" name="userID" value="#{viewingUser._id}")
             .part 
+                .text-input
+                    label(for="firstName") نام: 
+                    input.text(type="text" name="firstName" placeholder="نام" value="#{viewingUser.firstName}")
+                .text-input
+                    label(for="lastName") نام خانوادگی: 
+                    input.text(type="text" name="lastName" placeholder="نام خانوادگی" value="#{viewingUser.lastName}")
                 .text-input
                     label(for="fatherName") نام پدر: 
                     input.text(type="text" name="fatherName" placeholder="نام پدر" value="#{viewingUser.fatherName}")
                 .text-input
                     label(for="idNumber") کد ملی: 
                     input.text(type="text" name="idNumber" placeholder="کد ملی" value="#{viewingUser.idNumber}")
+            .part
                 .text-input
                     label(for="cardNumber") شماره شناسنامه: 
                     input.text(type="text" name="cardNumber" placeholder="شماره شناسنامه" value="#{viewingUser.cardNumber}")
-            .part
                 .text-input
                     label(for="address") آدرس: 
                     input.text(type="text" name="address" placeholder="آدرس" value="#{viewingUser.address}")
@@ -37,6 +44,16 @@ block content
                 //- introductionLetter
                 //- sex
             input.submit(type="submit" value="ثبت تغییرات")
+    .files-area 
+        -for(var i=0; i<viewingUser.file.length; i++){
+            a.file(href="#{viewingUser.file[i].link}" target="_blank")
+                img(src="#{viewingUser.file[i].link}")
+            a.delete(href="/dashboard/delete-file?userID=#{viewingUser._id}&index=#{i}") 
+                i.fa.fa-times
+        -}
+        .add-file
+            i.fa.fa-plus
+            h1 افزودن فایل
     .tab-view 
         .tabs-area
             .tab.active#tab1 حساب های آب‌وندی
@@ -84,7 +101,7 @@ block content
                             i.fa.fa-edit
                         a.red(href="#") 
                             i.fa.fa-trash
-            a.add-acount
+            a.add-acount#add-abvandi-btn
                 i.fa.fa-plus 
                 | افزودن حساب آب‌وندی
         .content#tab-content2.invisible
@@ -129,32 +146,38 @@ block content
                             i.fa.fa-edit
                         a.red(href="#") 
                             i.fa.fa-trash
-            a.add-acount
+            a.add-acount#add-chahvandi-btn
                 i.fa.fa-plus 
                 | افزودن حساب چاه‌وندی
         .content#tab-content3.invisible
             table 
                 tr 
                     th ردیف
-                    th شماره حساب
+                    th شماره پروانه
                     th ظرفیت خرید
                     th ظرفیت فروش
                     th ظرفیت کل
                     th 
-                tr 
-                    td 1
-                    td 0123457
-                    td 1234
-                    td 1234
-                    td 1234
-                    td 
-                        a.green(href="#") 
-                            i.fa.fa-edit
-                        a.red(href="#") 
-                            i.fa.fa-trash
-            a.add-acount
+                -var chah = acounts.filter(e => e.type == 'chah');
+                -for(var i=0; i<chah.length; i++){
+                    tr 
+                        td= i+1
+                        td= chah[i].license
+                        td= chah[i].buyCap
+                        td= chah[i].sellCap
+                        td= chah[i].wellCap
+                        td 
+                            a.green(href="/dashboard/acount-view?acountID=#{chah[i]._id}") 
+                                i.fa.fa-edit
+                            a.red(href="/dashboard/delete-acount?acountID=#{chah[i]._id}&userID=#{viewingUser._id}") 
+                                i.fa.fa-trash
+                -}
+            a.add-acount#add-chah-btn
                 i.fa.fa-plus 
                 | افزودن حساب چاه
+
+    include ../components/add-file
+    include ../components/add-acount
     script(src="/js/user-view.js") 
 
 

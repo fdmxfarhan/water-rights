@@ -17,5 +17,11 @@
                 .time-interval(id='time3')
         -}
     -}
-
+    -if(error_msg != ''){
+        .error(id='error4')
+            i.fa.fa-warning
+            h1= error_msg
+            i.fa.fa-times.close-error
+            .time-interval(id='time4')
+    -}
 script(src="/js/messages.js") 

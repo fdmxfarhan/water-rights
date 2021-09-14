@@ -173,6 +173,216 @@
     .tab-view .content a.add-acount i{
         padding: 0 0.5vw;
     }
+    .files-area{
+        overflow: hidden;
+        width: 85%;
+        margin: 1vw auto;
+        margin-top: 3vw;
+    }
+    .files-area a.file{
+        float: right;
+        width: 10vw;
+        height: 11vw;
+        border-radius: 0.5vw;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        align-content: center;
+        background-color: white;
+        margin: 0.3vw 1vw;
+        margin-left: 0.5vw;
+        box-shadow: 0 0 0.5vw 0.1vw rgba(0, 0, 0, 0.1);
+    }
+    .files-area a.file:hover{
+        background-color: var(--lightblue);
+    }
+    .files-area a.file img{
+        width: 100%;
+    }
+    .files-area .add-file{
+        float: right;
+        background-color: rgb(255, 171, 162);
+        width: 10vw;
+        height: 11vw;
+        border-radius: 0.5vw;
+        overflow: hidden;
+        /* display: flex;
+        align-content: center;
+        align-items: center; */
+        cursor: pointer;
+        text-align: center;
+        margin: 0.3vw 1vw;
+    }
+    .files-area .add-file i{
+        /* text-align: center; */
+        font-size: 4vw;
+        color: white;
+        display: block;
+        margin-top: 2vw;
+        width: 100%;
+    }
+    .files-area .add-file:hover{
+        background-color: var(--green);
+    }
+    .files-area .add-file h1{
+        color: white;
+        font-size: 1.3vw;
+        display: block;
+        width: 100%;
+    }
+    .popup#file-user-popup input.submit{
+        background-color: var(--blue);
+        color: white;
+        display: block;
+        font-family: 'iransans';
+        font-size: 1.2vw;
+        border-radius: 2vw;
+        border: none;
+        padding: 0.3vw 2vw;
+        /* float: left; */
+        /* margin-left: 2vw; */
+        cursor: pointer;
+    }
+    .popup#file-user-popup input.submit:hover{
+        background-color: var(--orange);
+    }
+    .files-area a.delete{
+        float: right;
+        color: var(--lightgray);
+    }
+    .files-area a.delete:hover{
+        color: red;
+    }
+    .popup .two-column{
+        overflow: hidden;
+    }
+    .popup .two-column .column{
+        width: 50%;
+        float: right;
+    }
+    .popup .two-column .column .check-input{
+        padding-right: 1vw;
+    }
+    .popup .two-column .column .text-input{
+        width: 90%;
+        border-radius: 2vw;
+        margin: 1vw 0.5vw;
+        box-shadow: 0 0 0.5vw 0.2vw rgba(0, 0, 0, 0.2);
+        padding: 0;
+    }
+    .popup .two-column .column .select-input{
+        width: 90%;
+        border-radius: 2vw;
+        margin: 1vw 0.5vw;
+        box-shadow: 0 0 0.5vw 0.2vw rgba(0, 0, 0, 0.2);
+        padding: 0;
+    }
+    .popup .two-column .column .select-input label{
+        padding: 0.5vw 1vw;
+        font-family: 'iransans';
+        font-size: 1.1vw;
+    }
+    .popup .two-column .column .select-input select{
+        font-size: 1vw;
+        padding: 0.6vw;
+        width: 60%;
+        border: none;
+        font-family: 'iransans';
+    }
+    .popup .two-column .column .select-input select:focus{
+        outline: none;
+    }
+    .popup .two-column .column .date-input{
+        width: 90%;
+        border-radius: 2vw;
+        margin: 1vw 0.5vw;
+        box-shadow: 0 0 0.5vw 0.2vw rgba(0, 0, 0, 0.2);
+        padding: 0;
+        text-align: center;
+    }
+    .popup .two-column .column .date-input input{
+        font-family: 'iransans';
+        font-size: 1vw;
+        padding: 0.8vw 1vw;
+        width: 15%;
+        border: none;
+        text-align: center;
+    }
+    .popup .two-column .column .label{
+        text-align: center;
+    }
+    .popup .two-column .column .title{
+        color: var(--blue);
+        font-family: 'iransans';
+        font-size: 1.1vw;
+    }
+    .popup .two-column .column textarea{
+        border: none;
+        resize: vertical;
+        min-height: 10vw;
+        width: 82%;
+        border-radius: 1vw;
+        margin: 1vw 0.5vw;
+        box-shadow: 0 0 0.5vw 0.2vw rgba(0, 0, 0, 0.2);
+        padding: 0;
+        padding: 0.7vw 1vw;
+        font-family: 'iransans';
+        font-size: 1vw;
+        border: transparent 0.1vw solid;
+    }
+    .popup .two-column .column textarea:focus{
+        outline: none;
+        border: var(--blue) 0.1vw solid;
+    }
+    .popup .two-column .column .text-input i{
+        font-size: 1.3vw;
+        color: var(--blue);
+        width: 3vw;
+        text-align: center;
+        padding: 0.7vw 0;
+    }
+    .popup .two-column .column .text-input input{
+        font-size: 1vw;
+        padding: 0.6vw;
+        width: 70%;
+        border: none;
+        font-family: 'iransans';
+    }
+    .popup .two-column .column .text-input input:focus{outline: none;}
+    .popup .two-column .column .upload-area{
+        width: 90%;
+    }
+    .popup .two-column button.submit i{padding-left: 0.5vw;}
+    .popup .two-column button.submit{
+        background-color: var(--blue);
+        color: white;
+        font-family: 'iransans';
+        font-size: 1vw;
+        padding: 0.6vw 4vw;
+        border: none;
+        border-radius: 2vw;
+        /* margin-right: 5%; */
+        cursor: pointer;
+        /* display: block; */
+    }
+    input.submit{
+        background-color: var(--blue);
+        color: white;
+        font-family: 'iransans';
+        font-size: 1vw;
+        padding: 0.6vw 4vw;
+        border: none;
+        border-radius: 2vw;
+        /* margin-right: 5%; */
+        cursor: pointer;
+        /* display: block; */
+    }
+    input.submit:hover{
+        background-color: var(--hover);
+    }
+    .popup .two-column button.submit:hover{
+        background-color: var(--hover);
+    }
 }
 
 @media only screen and (max-width: 800px) {

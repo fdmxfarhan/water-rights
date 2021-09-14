@@ -1,0 +1,114 @@
+.popup#add-abvandi-popup
+    i.fa.fa-times.close-popup
+    h1.popup-title افزودن حساب آب‌وندی
+    form(action="/dashboard/add-acount" method="POST") 
+        input.hidden(type="text" name="userID" value="#{viewingUser._id}")
+        .two-column
+            .column
+                .label تاریخ آغاز
+                .date-input
+                    input(type="number" name="startDay" placeholder="روز")
+                    | /
+                    input(type="number" name="startMonth" placeholder="ماه")
+                    | /
+                    input(type="number" name="startYear" placeholder="سال")
+            .column
+                .label تاریخ پایان
+                .date-input
+                    input(type="number" name="endDay" placeholder="روز")
+                    | /
+                    input(type="number" name="endMonth" placeholder="ماه")
+                    | /
+                    input(type="number" name="endYear" placeholder="سال")
+            button.submit(type="submit")
+                i.fa.fa-save 
+                | ثبت 
+
+
+.popup#add-chahvandi-popup
+    i.fa.fa-times.close-popup
+    h1.popup-title افزودن حساب چاه‌وندی
+    form(action="/dashboard/add-acount" method="POST") 
+        input.hidden(type="text" name="userID" value="#{viewingUser._id}")
+        .two-column
+            .column
+                .label تاریخ آغاز
+                .date-input
+                    input(type="number" name="startDay" placeholder="روز")
+                    | /
+                    input(type="number" name="startMonth" placeholder="ماه")
+                    | /
+                    input(type="number" name="startYear" placeholder="سال")
+            .column
+                .label تاریخ پایان
+                .date-input
+                    input(type="number" name="endDay" placeholder="روز")
+                    | /
+                    input(type="number" name="endMonth" placeholder="ماه")
+                    | /
+                    input(type="number" name="endYear" placeholder="سال")
+            button.submit(type="submit")
+                i.fa.fa-save 
+                | ثبت 
+
+.popup#add-chah-popup
+    i.fa.fa-times.close-popup
+    h1.popup-title افزودن حساب چاه
+    form(action="/upload/add-chah" enctype="multipart/form-data" method="POST") 
+        input.hidden(type="text" name="userID" value="#{viewingUser._id}")
+        .middle-col
+            .text-input 
+                i.fa.fa-pencil
+                input(type="text" name="license" placeholder="شماره پروانه بهره برداری" required)
+            .upload-area عکس پروانه بهره برداری چاه
+                i.fa.fa-cloud-upload
+                input.file(type="file" name="myFile")
+            
+            input.submit(type="submit" value="آپلود")
+    //- form(action="/dashboard/add-acount" method="POST") 
+    //-     input.hidden(type="text" name="userID" value="#{viewingUser._id}")
+    //-     .two-column
+    //-         .column
+    //-             .text-input 
+    //-                 i.fa.fa-pencil 
+    //-                 input(type="text" name="code" placeholder="شماره پروانه بهره برداری" required)
+    //-             .title اطلاعات پروانه
+    //-             .text-input 
+    //-                 i.fa.fa-pencil 
+    //-                 input(type="number" name="permitedAbdehi" placeholder="آبدهی مجاز (لیتر بر ثانیه)")
+    //-             .text-input 
+    //-                 i.fa.fa-pencil 
+    //-                 input(type="number" name="permitedWorkTime" placeholder="ساعت کارکرد مجاز")
+    //-             .text-input 
+    //-                 i.fa.fa-pencil 
+    //-                 input(type="text" name="UTM" placeholder="UTM")
+    //-             .select-input
+    //-                 label(for="useType") نوع بهره برداری: 
+    //-                 select(id="useType" name="useType") 
+    //-                     option(value="شرب") شرب
+    //-                     option(value="صنعت") صنعت
+    //-                     option(value="کشاورزی") کشاورزی
+    //-                     option(value="فضای سبز") فضای سبز
+    //-                     option(value="شرکت آب") شرکت آب
+                
+    //-         .column
+    //-             .title اطلاعات فیزیکی
+    //-             .text-input 
+    //-                 i.fa.fa-pencil 
+    //-                 input(type="number" name="depth" placeholder="عمق چاه (متر)")
+    //-             .text-input 
+    //-                 i.fa.fa-pencil 
+    //-                 input(type="number" name="power" placeholder="توان چاه (وات)")
+    //-             .text-input 
+    //-                 i.fa.fa-pencil 
+    //-                 input(type="number" name="abdehi" placeholder="آبدهی چاه (لیتر بر ثانیه)")
+    //-             .select-input
+    //-                 label(for="pomp") نوع پمپ: 
+    //-                 select(id="pomp" name="pomp") 
+    //-                     option(value="شناور") شناور
+    //-                     option(value="شفت و قلاف") شفت و قلاف
+    //-                     option(value="سایر") سایر
+                
+    //-         button.submit(type="submit")
+    //-             i.fa.fa-save 
+    //-             | ثبت 

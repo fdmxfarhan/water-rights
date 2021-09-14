@@ -1,0 +1,48 @@
+-if(!acount.completedInfo){
+    .complete-license-info 
+        h1.title تکمیل اطلاعات چاه
+        form(action="/dashboard/complete-license" method="POST") 
+            input.hidden(type="text" name="userID" value="#{viewingUser._id}")
+            .two-column
+                .column
+                    .title اطلاعات پروانه
+                    .text-input 
+                        i.fa.fa-pencil 
+                        input(type="number" name="permitedAbdehi" placeholder="آبدهی مجاز (لیتر بر ثانیه)")
+                    .text-input 
+                        i.fa.fa-pencil 
+                        input(type="number" name="permitedWorkTime" placeholder="ساعت کارکرد مجاز")
+                    .text-input 
+                        i.fa.fa-pencil 
+                        input(type="text" name="UTM" placeholder="UTM")
+                    .select-input
+                        label(for="useType") نوع بهره برداری: 
+                        select(id="useType" name="useType") 
+                            option(value="شرب") شرب
+                            option(value="صنعت") صنعت
+                            option(value="کشاورزی") کشاورزی
+                            option(value="فضای سبز") فضای سبز
+                            option(value="شرکت آب") شرکت آب
+                .column
+                    .title اطلاعات فیزیکی
+                    .text-input 
+                        i.fa.fa-pencil 
+                        input(type="number" name="depth" placeholder="عمق چاه (متر)")
+                    .text-input 
+                        i.fa.fa-pencil 
+                        input(type="number" name="power" placeholder="توان چاه (وات)")
+                    .text-input 
+                        i.fa.fa-pencil 
+                        input(type="number" name="abdehi" placeholder="آبدهی چاه (لیتر بر ثانیه)")
+                    .select-input
+                        label(for="pomp") نوع پمپ: 
+                        select(id="pomp" name="pomp") 
+                            option(value="شناور") شناور
+                            option(value="شفت و قلاف") شفت و قلاف
+                            option(value="سایر") سایر
+                button.submit(type="submit")
+                    i.fa.fa-save 
+                    | ثبت 
+-}else{
+
+-}

@@ -8,6 +8,7 @@ const multer = require('multer');
 const mkdirp = require('mkdirp');
 const { ensureAuthenticated } = require('../config/auth');
 const User = require('../models/User');
+const Acount = require('../models/Acount');
 
 router.use(bodyparser.urlencoded({ extended: true }));
 
@@ -104,8 +105,55 @@ router.post('/admin-register', ensureAuthenticated, upload.single('myFile'), (re
             });
         }
     }
-
 });
+
+router.post('/user-file', ensureAuthenticated, upload.single('myFile'), (req, res, next) => {
+    var {userID, title} = req.body;
+    var file = req.file;
+    if(!file) res.send('no file to upload');
+    else{
+        User.findById(userID, (err, user) => {
+            var newFile = user.file;
+            newFile.push({link: file.destination.slice(6) + '/' + file.originalname, title});
+            User.updateMany({_id: userID}, {$set: {file: newFile}}, (err) => {
+                if(err) console.log(err);
+                res.redirect(`/dashboard/user-view?userID=${userID}`);
+            });
+        });
+    }
+});
+
+router.post('/add-chah', ensureAuthenticated, upload.single('myFile'), (req, res, next) => {
+    var {userID, license} = req.body;
+    var file = req.file;
+    if(!file) {
+        req.flash('error_msg', 'عکس پروانه بهره برداری را انتخاب نمایید');
+        res.redirect(`/dashboard/user-view?userID=${userID}`);
+    }
+    else{
+        Acount.findOne({license: license}, (err, acount) => {
+            if(acount){
+                req.flash('error_msg', 'شماره پروانه قبلا ثبت شده');
+                res.redirect(`/dashboard/user-view?userID=${userID}`)
+            }else{
+                User.findById(userID, (err, user) => {
+                    var licensePic = file.destination.slice(6) + '/' + file.originalname;
+                    var newAcount = new Acount({
+                        license,
+                        licensePic,
+                        owner: user.fullname,
+                        ownerID: userID,
+                        type: 'chah',
+                    });
+                    newAcount.save().then(doc => {
+                        res.redirect(`/dashboard/acount-view?acountID=${newAcount._id}`)
+                    }).catch(err => console.log(err));
+                });
+            }
+        })
+    }
+});
+
 
 
 

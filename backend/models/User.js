@@ -15,6 +15,10 @@ var UserSchema = new mongoose.Schema({
   password: String,
   active: String,
   introductionLetter: String,
+  file: {
+    type: [Object],
+    default: [],
+  },
 
   avatar: Number,
   school: String,

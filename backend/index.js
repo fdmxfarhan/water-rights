@@ -29,10 +29,8 @@ mongoose.connect('mongodb://localhost/mirab', {useNewUrlParser: true, useUnified
 
 
 // express session middleware
-const {
-    SESS_NAME = 'sid',
-    SESS_TIME = 10000 * 60 * 60 * 2 
-} = process.env;
+const SESS_NAME = 'sid';
+const SESS_TIME = 10000 * 60 * 60 * 2;
 
 app.use(session({
     name: SESS_NAME,

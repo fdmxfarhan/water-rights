@@ -89,6 +89,8 @@
         padding: 0.2vw 0.7vw;
         border-radius: 0.5vw;
         width: fit-content;
+        text-decoration: none;
+        display: block;
     }
     .content-view .users-view table td.role .role-admin{
         background-color: var(--orange);
@@ -97,6 +99,8 @@
         padding: 0.2vw 0.7vw;
         border-radius: 0.5vw;
         width: fit-content;
+        text-decoration: none;
+        display: block;
     }
     .content-view .users-view table td.acounts h1{
         margin: 0;

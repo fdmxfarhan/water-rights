@@ -183,5 +183,25 @@ router.get('/acount-view', ensureAuthenticated, (req, res, next) => {
     });
 })
 
+router.get('/make-admin', ensureAuthenticated, (req, res, next) => {
+    var {userID} = req.query;
+    if(req.user.role == 'admin'){
+        User.updateMany({_id: userID}, {$set: {role: 'admin'}}, (err) => {
+            res.redirect('/dashboard/users');
+        })
+    }
+})
+
+router.get('/make-user', ensureAuthenticated, (req, res, next) => {
+    var {userID} = req.query;
+    if(req.user.role == 'admin'){
+        User.updateMany({_id: userID}, {$set: {role: 'user'}}, (err) => {
+            res.redirect('/dashboard/users');
+        })
+    }
+})
+
+
+
 module.exports = router;
 

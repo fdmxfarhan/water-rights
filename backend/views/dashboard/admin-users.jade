@@ -24,9 +24,9 @@ block content
                                 a(href="tel:#{users[i].phone}")= users[i].phone
                         td.role 
                             -if(users[i].role == 'user')
-                                .role-user user 
+                                a.role-user(href="/dashboard/make-admin?userID=#{users[i]._id}")  user 
                             -if(users[i].role == 'admin')
-                                .role-admin admin 
+                                a.role-admin(href="/dashboard/make-user?userID=#{users[i]._id}") admin 
                             
                         td.acounts 
                             h1 6 حساب

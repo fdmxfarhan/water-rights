@@ -14,11 +14,9 @@ import {
 
 import colors from '../components/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const url = require('../config/api');
-const api = axios.create({baseURL: url});
+const api = require('../config/api');
 
 const STORAGE_KEY = '@store_file'
 const saveData = async (data) => {

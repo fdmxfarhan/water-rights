@@ -19,7 +19,7 @@ export default Input = ({navigation, title}) => {
 
     return(
         <View>
-            <TextInput
+          <TextInput
             style={[styles.textInput, {borderBottomColor: userInputColor}]}
             placeholder={title}
             onChange={(text) => {}}

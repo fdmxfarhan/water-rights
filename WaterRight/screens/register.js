@@ -15,11 +15,14 @@ import {
 import colors from '../components/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Input from '../components/input';
+import SelectDropdown from 'react-native-select-dropdown'
 
 const register = (props) => {
   var [userInputColor, setUserInputColor] = useState('lightgray');
   var [passInputColor, setPassInputColor] = useState('lightgray');
   var [passConfirmInputColor, setPassConfirmInputColor] = useState('lightgray');
+  const countries = ["Egypt", "Canada", "Australia", "Ireland"]
+
   return(
     <View style={styles.container}>
       <View style={styles.loginArea}>
@@ -30,49 +33,36 @@ const register = (props) => {
             </View>
             <Text style={styles.labelText}> ثبت نام </Text>
           </View>
-
+          <SelectDropdown
+            data={countries}
+            onSelect={(selectedItem, index) => {
+              console.log(selectedItem, index)
+            }}
+            buttonTextAfterSelection={(selectedItem, index) => {
+              // text represented after item is selected
+              // if data array is an array of objects then return selectedItem.property to render after item is selected
+              return selectedItem
+            }}
+            rowTextForSelection={(item, index) => {
+              // text represented for each item in dropdown
+              // if data array is an array of objects then return item.property to represent item in dropdown
+              return item
+            }}
+          />
           <Input title={'نام و نام خانوادگی'}/>
           <Input title={'کد ملی'}/>
           <Input title={'شماره شناسنامه'}/>
           <Input title={'تاریخ تولد'}/>
-          <Input title={'نام پدر'}/>
-          <Input title={'جنسیت'}/>
+          <Input title={'نام پدر'} />
+          <Input title={'جنسیت'} />
           <Input title={'آدرس'}/>
-          <Input title={'کد پستی'}/>
-          <Input title={'تلفن ثابت'}/>
-          <Input title={'شغل'}/>
+          <Input title={'کد پستی'} />
+          <Input title={'تلفن ثابت'} />
+          <Input title={'شغل'} />
           <Input title={'نام کاربری'}/>
-          <Input title={'کلمه عبور'}/>
-          <Input title={'تایید کلمه عبور'}/>
+          <Input title={'کلمه عبور'} />
+          <Input title={'تایید کلمه عبور'} />
 
-          {/* <TextInput 
-            style={[styles.textInput, {borderBottomColor: userInputColor}]}
-            placeholder={'نام و نام خانوادگی'}
-            onChange={(text) => {}}
-            onFocus={() => {setUserInputColor(colors.lightblue)}}
-            onBlur={() => {setUserInputColor('lightgray')}}
-          />
-          <TextInput 
-            style={[styles.textInput, {borderBottomColor: passInputColor}]}
-            placeholder={'کلمه عبور'}
-            onChange={(text) => {}}
-            onFocus={() => {setPassInputColor(colors.lightblue)}}
-            onBlur={() => {setPassInputColor('lightgray')}}
-          />
-          <TextInput 
-            style={[styles.textInput, {borderBottomColor: passConfirmInputColor}]}
-            placeholder={'تایید کلمه عبور'}
-            onChange={(text) => {}}
-            onFocus={() => {setPassConfirmInputColor(colors.lightblue)}}
-            onBlur={() => {setPassConfirmInputColor('lightgray')}}
-          /> */}
-          
-          {/* <TouchableOpacity>
-            <Text style={styles.forgotPassword}>کلمه عبور خود را فراموش کرده ام.</Text>
-          </TouchableOpacity>
-          <Text style={styles.paragraph}>
-            با ورود به اپلیکیشن میراب می‌توانید حساب های خود را مدیریت کنید و انتقال شارژ انجام دهید.
-          </Text> */}
         </ScrollView>
       </View>
       <View style={styles.submit}>
@@ -80,7 +70,7 @@ const register = (props) => {
           style={styles.submitButton}
           onPress={() => {props.navigation.navigate('Home')}}
           >
-          <Text style={styles.submitText}>ورود</Text>
+          <Text style={styles.submitText}>ثبت نام</Text>
         </TouchableOpacity>
       </View>
     </View>

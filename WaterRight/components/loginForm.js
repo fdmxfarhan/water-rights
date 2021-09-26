@@ -21,7 +21,7 @@ const LoginForm = (props) => {
             <View style={styles.buttonsArea}>
                 <TouchableOpacity 
                     style={styles.button}
-                    onPress={() => {props.navigation.navigate('Register')}}>
+                    onPress={() => {props.navigation.navigate('PhoneLogin')}}>
                     <Text style={[styles.buttonText, styles.blueButton]}>ثبت نام</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 

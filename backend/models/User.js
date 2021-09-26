@@ -30,6 +30,8 @@ var UserSchema = new mongoose.Schema({
   card: Number,
   acounts: [Object],
   
+  smsCode: Object,
+  
 });
 
 var User = mongoose.model('User', UserSchema);

@@ -1,8 +1,20 @@
 import React, { useState } from 'react';
-import {StyleSheet,View,Text,TextInput} from 'react-native';
+import {
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  useColorScheme,
+  View,
+  BackHandler,
+  TextInput
+} from 'react-native';
 import colors, { lightblue } from '../components/colors';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default Input = ({navigation, title, setFunction, refrence, onSubmitEditing, returnKeyType, blurOnSubmit, keyboardType}) => {
+export default Input2 = ({navigation, title}) => {
   var [userInputColor, setUserInputColor] = useState('lightgray');
 
   return(
@@ -10,18 +22,14 @@ export default Input = ({navigation, title, setFunction, refrence, onSubmitEditi
       <TextInput
         style={[styles.textInput, {borderBottomColor: userInputColor}]}
         placeholder={title}
-        onChange={(text) => {setFunction(text.nativeEvent.text)}}
+        onChange={(text) => {console.log(text.nativeEvent.text)}}
         onFocus={() => {setUserInputColor(colors.lightblue)}}
         onBlur={() => {setUserInputColor('lightgray')}}
-        blurOnSubmit={blurOnSubmit}
-        returnKeyType={returnKeyType}
-        onSubmitEditing={onSubmitEditing}
-        ref={refrence}
-        keyboardType={keyboardType}
       />
     </View>
   )
 }
+
 
 const styles = StyleSheet.create({
     textInput: {

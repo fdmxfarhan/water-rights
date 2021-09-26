@@ -10,6 +10,7 @@ import login from './screens/login';
 import register from './screens/register';
 import home from './screens/home';
 import acount from './screens/acount';
+import phoneLogin from './screens/phoneLogin';
 import colors from './components/colors';
 
 const App = (props) => {
@@ -78,6 +79,23 @@ const App = (props) => {
                     options={({ route }) => ({ 
                         headerShown: false,
                         title: 'مشاهده حساب',
+                        headerStyle: {
+                            backgroundColor: colors.background,
+                            textAlign: 'right',
+                        },
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                            textAlign: 'right',
+                            fontFamily: 'iransans',
+                        },
+                    })}
+                />
+                <Stack.Screen 
+                    name="PhoneLogin" 
+                    component={phoneLogin} 
+                    options={({ route }) => ({ 
+                        headerShown: false,
+                        title: 'تایید شماره تلفن',
                         headerStyle: {
                             backgroundColor: colors.background,
                             textAlign: 'right',

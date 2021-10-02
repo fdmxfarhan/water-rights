@@ -22,11 +22,22 @@ router.post('/login', (req, res, next) => {
     });
 });
 
+router.post('/phone-login', (req, res, next) => {
+    const {phone} = req.body;
+    User.findOne({phone: phone}, (err, user) => {
+        if(!user){
+            res.send({msg: 'نام کاربری یافت نشد.', correct: false});
+        }else{
+            res.send({msg: 'خوش آمدید', correct: true, user: user});
+        }
+    });
+});
+
 router.post('/sendsms', (req, res, next) => {
     const {phone} = req.body;
     User.findOne({phone: phone}, (err, user) => {
         smsCode = generateCode(4);
-        // sms(phone, `رمز عبور یکبار مصرف شما: ${smsCode} \n میراب`);
+        sms(phone, `رمز عبور یکبار مصرف شما: ${smsCode} \n میراب`);
         console.log(smsCode);
         if(user){
             User.updateMany({phone: phone}, {$set: {smsCode: smsCode}}, (err, doc) => {
@@ -53,7 +64,7 @@ router.post('/check-code', (req, res, next) => {
     console.log(req.body)
     User.findOne({phone: phone}, (err, user) => {
         if(user.smsCode.toString() == smsCode.toString()){
-            res.send({correct: true})
+            res.send({correct: true, user})
         }
         else{
             res.send({correct: false})
@@ -71,7 +82,5 @@ router.post('/compelete-reg', (req, res, next) => {
         })
     })
 });
-
-
 
 module.exports = router;

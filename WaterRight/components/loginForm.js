@@ -26,7 +26,7 @@ const LoginForm = (props) => {
                 </TouchableOpacity>
                 <TouchableOpacity 
                     style={styles.button}
-                    onPress={() => {props.navigation.navigate('Login')}}>
+                    onPress={() => {props.navigation.navigate('PhoneLogin')}}>
                     <Text style={styles.buttonText}>ورود</Text>
                 </TouchableOpacity>
             </View>

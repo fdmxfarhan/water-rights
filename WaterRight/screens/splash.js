@@ -12,36 +12,36 @@ import {
   View,
 } from 'react-native';
 import colors from '../components/colors';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
 import LoginForm from '../components/loginForm';
 
-const url = require('../config/api');
-const api = axios.create({baseURL: url});
+const api = require('../config/api');
+const {saveData, readData} = require('../config/save');
 
-const STORAGE_KEY = '@store_file'
-const readData = async () => {
-  try {
-    const jsonValue = await AsyncStorage.getItem(STORAGE_KEY)
-    return jsonValue != null ? JSON.parse(jsonValue) : null;
-  } catch (e) {
-    console.log(e)
-  }
-}
+// const STORAGE_KEY = '@store_file'
+// const readData = async () => {
+//   try {
+//     const jsonValue = await AsyncStorage.getItem(STORAGE_KEY)
+//     return jsonValue != null ? JSON.parse(jsonValue) : null;
+//   } catch (e) {
+//     console.log(e)
+//   }
+// }
 const splash = (props) => {
     var [loggedIn, setLoggedIn] = useState(true);
     useEffect(() => {
         readData().then((data) => {
             if(data != null){
-                api.post('/api/login', {
-                    username: data.username,
-                    password: data.password,
+                api.post('/api/phone-login', {
+                    phone: data.phone,
                 }).then(function (res) {
                     // console.log(res.data);
                     if(res.data.correct){
                         props.navigation.navigate('Home');
                     }
-                    else{setLoggedIn(false)}
+                    else{
+                        setLoggedIn(false);
+                        console.log('not correct')
+                    }
                 }).catch(function (error) {
                     setLoggedIn(false);
                     console.log(error);

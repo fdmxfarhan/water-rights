@@ -1,3 +1,5 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const STORAGE_KEY = '@store_file'
 var saveData = async (data) => {
   try {
@@ -18,4 +20,5 @@ const readData = async () => {
       console.log(e)
     }
 }
+
 module.exports = {saveData, readData};

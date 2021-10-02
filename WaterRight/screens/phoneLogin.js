@@ -18,13 +18,16 @@ import Input from '../components/input';
 import Input2 from '../components/input2';
 import SubmitButton from '../components/submitButton';
 import ConfirmInput from '../components/confirmInput';
+
 const api = require('../config/api');
+const {saveData, readData} = require('../config/save');
 
 const phoneLogin = (props) => {
   var [phone, setPhone] = useState('lightgray');
   var [smsCode, setSmsCode] = useState('lightgray');
   var [buttonText, setButtonText] = useState('ارسال رمز یکبار مصرف');
   var [smsSent, setSmsSent] = useState(false);
+  var [userExist, setUserExist] = useState(false);
 
   var phoneInput = useRef(null);
   var codeInput = useRef(null);
@@ -38,8 +41,9 @@ const phoneLogin = (props) => {
       // console.log(res.data);
       if(res.data.smsSent){
         setSmsSent(true);
-        setButtonText('بررسی')
-        codeInput.current.focus()
+        setUserExist(res.data.userExist);
+        setButtonText('بررسی');
+        codeInput.current.focus();
       }
     }).catch(function (error) {
       alert('خطا در برقراری ارتباط. لطفا اتصال اینترنت خود را چک کنید.')
@@ -52,7 +56,13 @@ const phoneLogin = (props) => {
       smsCode: smsCode,
     }).then(function (res) {
       if(res.data.correct){
-        props.navigation.navigate('Register', {phone: phone});
+        if(userExist){
+          saveData({phone: phone, user: res.data.user}).then(() => {
+            props.navigation.navigate('Home');
+          })
+        }else{
+          props.navigation.navigate('Register', {phone: phone});
+        }
       }
       else{
         alert('رمز عبور اشتباه است.')

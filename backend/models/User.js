@@ -19,6 +19,7 @@ var UserSchema = new mongoose.Schema({
     type: [Object],
     default: [],
   },
+  job: String,
 
   avatar: Number,
   school: String,
@@ -26,7 +27,10 @@ var UserSchema = new mongoose.Schema({
   email: String,
   ipAddress: String,
   education: String,
-  role: String,
+  role: {
+    type: String,
+    default: 'user',
+  },
   card: Number,
   acounts: [Object],
   

@@ -37,7 +37,7 @@ router.post('/sendsms', (req, res, next) => {
             })
         }
         else{
-            var newUser = new User({phone, smsCode});
+            var newUser = new User({phone, smsCode, role: 'user'});
             newUser.save().then(user => {
                 res.send({
                     smsSent: true,
@@ -59,7 +59,19 @@ router.post('/check-code', (req, res, next) => {
             res.send({correct: false})
         }
     })
+});
 
-})
+router.post('/compelete-reg', (req, res, next) => {
+    const {firstName, lastName, idNumber, cardNumber, fatherName, job, sex, phone} = req.body;
+    console.log(req.body)
+    User.updateMany({phone: phone}, {$set: {firstName, lastName, idNumber, cardNumber, fatherName, job, sex, fullname: firstName + ' ' + lastName}}, (err) => {
+        if(err) console.log(err);
+        User.findOne({phone: phone}, (err, user) => {
+            res.send({correct: true, user});
+        })
+    })
+});
+
+
 
 module.exports = router;

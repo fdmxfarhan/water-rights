@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -15,13 +15,55 @@ import {
 import colors from '../components/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Input from '../components/input';
-import SelectDropdown from 'react-native-select-dropdown'
+import Dinput from '../components/Dinput';
+import DateInput from '../components/DateInput';
+import Select from '../components/select';
+const api = require('../config/api');
+const {saveData, readData} = require('../config/save');
+
 
 const register = (props) => {
-  var [userInputColor, setUserInputColor] = useState('lightgray');
-  var [passInputColor, setPassInputColor] = useState('lightgray');
-  var [passConfirmInputColor, setPassConfirmInputColor] = useState('lightgray');
-  const countries = ["Egypt", "Canada", "Australia", "Ireland"]
+  var [firstName, setFirstName] = useState('');
+  var [lastName, setLastName] = useState('');
+  var [idNumber, setIdNumber] = useState('');
+  var [cardNumber, setCardNumber] = useState('');
+  var [fatherName, setFatherName] = useState('');
+  var [job, setJob] = useState('');
+  var [sex, setSex] = useState('آقا');
+  var [phone, setPhone] = useState('');
+  
+  firstNameInput = useRef(null);
+  lastNameInput = useRef(null);
+  idNumberInput = useRef(null);
+  cardNumberInput = useRef(null);
+  fatherNameInput = useRef(null);
+  jobInput = useRef(null);
+
+  useEffect(() => {
+    setPhone(props.route.params.phone);
+  })
+
+  var submitForm = () => {
+    api.post('/api/compelete-reg', {
+      firstName,
+      lastName,
+      idNumber,
+      cardNumber,
+      fatherName,
+      job,
+      sex,
+      phone
+    }).then((res) => {
+      if(res.data.correct){
+        saveData({phone: phone, user: res.data.user}).then(() => {
+          props.navigation.navigate('Home');
+        })
+      }
+    }).catch((error) => {
+      alert('خطا در برقراری ارتباط. لطفا اتصال اینترنت خود را چک کنید.')
+      console.log(error);
+    });
+  }
 
   return(
     <View style={styles.container}>
@@ -31,44 +73,53 @@ const register = (props) => {
             <View style={styles.labelIcon}>
               <Icon name="user" style={styles.icon}/>
             </View>
-            <Text style={styles.labelText}> ثبت نام </Text>
+            <Text style={styles.labelText}> اطلاعات حساب کاربری </Text>
           </View>
-          <SelectDropdown
-            data={countries}
-            onSelect={(selectedItem, index) => {
-              console.log(selectedItem, index)
-            }}
-            buttonTextAfterSelection={(selectedItem, index) => {
-              // text represented after item is selected
-              // if data array is an array of objects then return selectedItem.property to render after item is selected
-              return selectedItem
-            }}
-            rowTextForSelection={(item, index) => {
-              // text represented for each item in dropdown
-              // if data array is an array of objects then return item.property to represent item in dropdown
-              return item
-            }}
-          />
-          <Input title={'نام و نام خانوادگی'}/>
-          <Input title={'کد ملی'}/>
-          <Input title={'شماره شناسنامه'}/>
-          <Input title={'تاریخ تولد'}/>
-          <Input title={'نام پدر'} />
-          <Input title={'جنسیت'} />
-          <Input title={'آدرس'}/>
-          <Input title={'کد پستی'} />
-          <Input title={'تلفن ثابت'} />
-          <Input title={'شغل'} />
-          <Input title={'نام کاربری'}/>
-          <Input title={'کلمه عبور'} />
-          <Input title={'تایید کلمه عبور'} />
-
+          
+          <Dinput 
+            title={'نام'} 
+            title2={'نام خانوادگی'} 
+            setFunction={setFirstName} 
+            setFunction2={setLastName} 
+            blurOnSubmit={false}
+            returnKeyType={'next'}
+            onSubmitEditing={() => idNumberInput.current.focus()}/>
+          <Input 
+            title={'کد ملی'} 
+            setFunction={setIdNumber} 
+            refrence={idNumberInput} 
+            blurOnSubmit={false}
+            returnKeyType={'next'}
+            onSubmitEditing={() => cardNumberInput.current.focus()}/>
+          <Input 
+            title={'شماره شناسنامه'} 
+            setFunction={setCardNumber} 
+            refrence={cardNumberInput} 
+            blurOnSubmit={false}
+            returnKeyType={'next'}
+            onSubmitEditing={() => fatherNameInput.current.focus()}/>
+          <Input 
+            title={'نام پدر'} 
+            setFunction={setFatherName} 
+            refrence={fatherNameInput} 
+            blurOnSubmit={false}
+            returnKeyType={'next'}
+            onSubmitEditing={() => jobInput.current.focus()}/>
+          <Input 
+            title={'شغل'} 
+            setFunction={setJob} 
+            blurOnSubmit={true}
+            returnKeyType={'done'}
+            refrence={jobInput}/>
+          <Select 
+            title={'جنسیت'}
+            setFunction={setSex} />
         </ScrollView>
       </View>
       <View style={styles.submit}>
         <TouchableOpacity 
           style={styles.submitButton}
-          onPress={() => {props.navigation.navigate('Home')}}
+          onPress={submitForm}
           >
           <Text style={styles.submitText}>ثبت نام</Text>
         </TouchableOpacity>

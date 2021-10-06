@@ -19,14 +19,14 @@ block content
                 -for(var i=0; i<users.length; i++){
                     tr 
                         td.user 
-                            h1= users[i].sex + ' ' + users[i].fullname
+                            h1= users[i].fullname
                             h2
                                 a(href="tel:#{users[i].phone}")= users[i].phone
                         td.role 
                             -if(users[i].role == 'user')
-                                a.role-user(href="/dashboard/make-admin?userID=#{users[i]._id}")  user 
+                                a.role-user(href="/dashboard/make-admin?userID=#{users[i]._id}") user 
                             -if(users[i].role == 'admin')
-                                a.role-admin(href="/dashboard/make-user?userID=#{users[i]._id}") admin 
+                                a.role-admin(href="/dashboard/make-user?userID=#{users[i]._id}") میراب 
                             
                         td.acounts 
                             h1 6 حساب

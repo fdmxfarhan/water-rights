@@ -35,7 +35,10 @@ var UserSchema = new mongoose.Schema({
   acounts: [Object],
   
   smsCode: Object,
-  
+  accountRole: {
+    type: String,
+    default: 'آب‌وند',
+  },
 });
 
 var User = mongoose.model('User', UserSchema);

@@ -9,21 +9,23 @@
     .two-column .column .check-input{
         padding-right: 1vw;
     }
-    .two-column .column .text-input{
+    /* .two-column .column .text-input{
         width: 90%;
         border-radius: 2vw;
         margin: 1vw 0.5vw;
         box-shadow: 0 0 0.5vw 0.2vw rgba(0, 0, 0, 0.2);
         padding: 0;
         background-color: white;
-    }
+    } */
     .two-column .column .select-input{
-        width: 90%;
+        /* width: 90%;
         border-radius: 2vw;
         margin: 1vw 0.5vw;
         box-shadow: 0 0 0.5vw 0.2vw rgba(0, 0, 0, 0.2);
         padding: 0;
-        background-color: white;
+        background-color: white; */
+        margin-top: 2vw;
+        margin-bottom: 1vw;
     }
     .two-column .column .select-input label{
         padding: 0.5vw 1vw;
@@ -33,9 +35,11 @@
     .two-column .column .select-input select{
         font-size: 1vw;
         padding: 0.6vw;
-        width: 60%;
+        width: 40%;
         border: none;
         font-family: 'iransans';
+        background-color: transparent;
+        border-bottom: var(--lightgray) 0.2vw solid;
     }
     .two-column .column .select-input select:focus{
         outline: none;
@@ -63,6 +67,7 @@
         color: var(--blue);
         font-family: 'iransans';
         font-size: 1.1vw;
+        margin-bottom: 1vw;
     }
     .two-column .column textarea{
         border: none;
@@ -83,35 +88,62 @@
         border: var(--blue) 0.1vw solid;
     }
     .two-column .column .text-input i{
-        font-size: 1.3vw;
+        font-size: 1vw;
         color: var(--blue);
-        width: 3vw;
+        width: 2vw;
         text-align: center;
         padding: 0.7vw 0;
     }
+    .two-column .column label{
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        color: var(--text);
+        padding-left: 1vw;
+    }
     .two-column .column .text-input input{
+        display: block;
+        width: 100%;
+        background-color: transparent;
         font-size: 1vw;
-        padding: 0.6vw;
+        padding: 0 0.6vw;
         width: 70%;
         border: none;
         font-family: 'iransans';
+        border-bottom: var(--lightgray) 0.2vw solid;
+        margin-right: 1vw;
+        margin-bottom: 1vw;
+        margin-top: 0;
     }
-    .two-column .column .text-input input:focus{outline: none;}
+    .two-column .column .text-input input::placeholder{
+        color: var(--lightgray);
+    }
+    .two-column .column .text-input input:focus{
+        border-bottom: var(--blue) 0.2vw solid;
+        outline: none;
+    }
     .two-column .column .upload-area{
         width: 90%;
     }
-    .two-column button.submit i{padding-left: 0.5vw;}
-    .two-column button.submit{
+    button.submit i{
+        padding-left: 0.5vw;
+    }
+    button.submit{
+        position: fixed;
+        bottom: 2vw;
+        left: 2vw;
+
         background-color: var(--blue);
         color: white;
         font-family: 'iransans';
-        font-size: 1vw;
-        padding: 0.6vw 4vw;
+        font-size: 3vw;
+        text-align: center;
+        padding: 0.6vw 1.5vw 0.3vw 1.2vw;
         border: none;
-        border-radius: 2vw;
+        border-radius: 50%;
         /* margin-right: 5%; */
         cursor: pointer;
-        /* display: block; */
+        display: block;
+        margin-top: 1vw;
     }
     input.submit{
         background-color: var(--blue);
@@ -125,7 +157,7 @@
         cursor: pointer;
         /* display: block; */
     }
-    input.submit:hover{
+    .submit:hover{
         background-color: var(--hover);
     }
     .two-column button.submit:hover{
@@ -141,4 +173,15 @@
         font-size: 1.4vw;
         margin-top: 2vw;
     }
+    .two-column img.license{
+        width: 40%;
+        margin-right: 15%;
+        display: block;
+        border-radius: 0.5vw;
+    }
+    .two-column .file-upload {
+        margin-top: 2vw;
+        margin-bottom: 1vw;
+    }
+
 }

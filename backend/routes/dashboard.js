@@ -49,10 +49,14 @@ router.get('/delete-user', ensureAuthenticated, (req, res, next) => {
 });
 
 router.get('/delete-acount', ensureAuthenticated, (req, res, next) => {
+    var { redirect } = req.query;
     if(req.user.role == 'admin'){
         Acount.deleteOne({_id: req.query.acountID}, (err) => {
             req.flash('success_msg', 'حساب با موفقیت حذف شد');
-            res.redirect(`/dashboard/user-view?userID=${req.query.userID}`);
+            if(redirect)
+                res.redirect(redirect);
+            else
+                res.redirect(`/dashboard/user-view?userID=${req.query.userID}`);
         });
     }
 });
@@ -171,14 +175,16 @@ router.get('/delete-file', ensureAuthenticated, (req, res, next) => {
 
 router.get('/acount-view', ensureAuthenticated, (req, res, next) => {
     var {acountID} = req.query;
-    Acount.findById(acountID, (err, acount) => {
-        User.findById(acount.ownerID, (err, user) => {
-            res.render('./dashboard/acount-view', {
-                user: req.user,
-                viewingUser: user,
-                acount,
-
-            })
+    Acount.findById(acountID, (err, account) => {
+        User.findById(account.ownerID, (err, user) => {
+            User.find({}, (err, users) => {
+                res.render('./dashboard/acount-view', {
+                    user: req.user,
+                    viewingUser: user,
+                    account,
+                    users,
+                })
+            });
         });
     });
 })
@@ -201,6 +207,20 @@ router.get('/make-user', ensureAuthenticated, (req, res, next) => {
     }
 })
 
+router.get('/accounts', ensureAuthenticated, (req, res, next) => {
+    if(req.user.role == 'admin'){
+        User.find({}, (err, users) => {
+            Acount.find({}, (err, accounts) => {
+                res.render('./dashboard/admin-accounts', {
+                    user: req.user,
+                    users,
+                    accounts,
+                    
+                });
+            });
+        });
+    }
+})
 
 
 module.exports = router;

@@ -145,6 +145,13 @@
         overflow: hidden;
         padding: 1vw 1vw;
     }
+    .content-view .user-control .control .check-boxes{
+        padding: 1vw;
+    }
+    .content-view .user-control .control .check-boxes label{
+        font-family: 'iransans';
+        font-size: 1.1vw;
+    }
     .content-view .user-control .control .search-view input{
         border: var(--lightgray) 0.1vw solid;
         font-size: 1vw;

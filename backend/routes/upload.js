@@ -154,7 +154,69 @@ router.post('/add-chah', ensureAuthenticated, upload.single('myFile'), (req, res
     }
 });
 
+router.post('/add-account-chah', ensureAuthenticated, upload.single('licensePic'), (req, res, next) => {
+    var {userID, license, permitedUseInYear} = req.body;
+    var file = req.file;
+    Acount.findOne({license: license}, (err, acount) => {
+        if(acount){
+            req.flash('error_msg', 'شماره پروانه قبلا ثبت شده');
+            res.redirect(`/dashboard/accounts`)
+        }else{
+            User.findById(userID, (err, user) => {
+                var owner = 'undefined';
+                var licensePic = 'undefined';
+                if(user) owner = user.fullname;
+                if(file) licensePic = file.destination.slice(6) + '/' + file.originalname;
+                var newAcount = new Acount({
+                    license,
+                    licensePic,
+                    owner: owner,
+                    ownerID: userID,
+                    permitedUseInYear,
+                    type: 'chah',
+                });
+                newAcount.save().then(doc => {
+                    req.flash('success_msg', 'حساب با موفقیت ایجاد شد');
+                    res.redirect(`/dashboard/accounts`);
+                }).catch(err => console.log(err));
+            });
+        }
+    })
+});
 
 
+router.post('/save-chah', ensureAuthenticated, upload.single('licensePic'), (req, res, next) => {
+    var {accountID, permitedUseInYear, permitedAbdehi, permitedWorkTime, UTM, useType, wellCap, sellCap, buyCap, depth, power, abdehi, userID, pomp} = req.body;
+    var file = req.file;
+    User.findById(userID, (err, user) => {
+        Acount.findById(accountID, (err, account) => {
+            var owner = 'undefined';
+            var licensePic = account.licensePic;
+            if(user) owner = user.fullname;
+            if(file) licensePic = file.destination.slice(6) + '/' + file.originalname;
+            Acount.updateMany({_id: accountID}, {$set: {
+                licensePic,
+                owner: owner,
+                ownerID: userID,
+                permitedUseInYear,
+                permitedAbdehi,
+                permitedWorkTime,
+                UTM,
+                useType,
+                wellCap,
+                sellCap,
+                buyCap,
+                depth,
+                power,
+                abdehi,
+                pomp,
+                type: 'chah',
+            }}, (err) => {
+                if(err) console.log(err);
+                res.redirect(`/dashboard/acount-view?acountID=${accountID}`);
+            });
+        });
+    });
+});
 
 module.exports = router;

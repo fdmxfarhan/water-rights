@@ -1,0 +1,109 @@
+@media only screen and (min-width: 800px) {
+    .tab-buttons{
+        overflow: hidden;
+        width: 80%;
+        margin: auto;
+        margin-top: 1vw;
+    }
+    .tab-buttons .tab-btn{
+        float: right;
+        width: 33%;
+        text-align: center;
+        border-bottom: lightgray 0.3vw solid;
+        padding: 0.5vw 0;
+        cursor: pointer;
+    }
+    .tab-buttons .tab-btn.active{
+        border-bottom: var(--blue) 0.3vw solid;
+        background-color: var(--lightgray);
+    }
+    .tab-buttons .tab-btn:hover{
+        background-color: var(--lightgray);
+    }
+    .tab{
+        text-align: right;
+        width: 40%;
+        margin: auto;
+        margin-top: 2vw;
+    }
+    .tab .text-input input{
+        display: block;
+        border: none;
+        border-bottom: var(--lightgray) 0.2vw solid;
+        font-family: 'iransans';
+        font-size: 1vw;
+        padding: 0.4vw 1vw;
+        width: 100%;
+        margin: 0;
+    }
+    .tab .select-input select{
+        display: block;
+        border: none;
+        border-bottom: var(--lightgray) 0.2vw solid;
+        font-family: 'iransans';
+        font-size: 1vw;
+        padding: 0.4vw 1vw;
+        width: 107%;
+        margin: 0;
+    }
+    .tab .text-input input:focus{
+        border-bottom: var(--blue) 0.2vw solid;
+        outline: none;
+    }
+    .tab label{
+        display: block;
+        color: var(--text);
+        margin: 0;
+        margin-top: 1vw;
+        font-size: 1vw;
+    }
+    .tab input.submit{
+        display: block;
+        border: none;
+        font-family: 'iransans';
+        font-size: 1vw;
+        padding: 0.5vw 1vw;
+        width: 60%;
+        margin: auto;
+        margin-top: 2vw;
+        background-color: var(--blue);
+        border-radius: 0.5vw;
+        color: white;
+        text-align: center;
+        cursor: pointer;
+    }
+    .tab input.submit:hover{
+        background-color: var(--green);
+    }
+    .role .red{
+        background-color: var(--red);
+        color: white;
+        font-family: 'iransans';
+        font-size: 1vw;
+        padding: 0.1vw 1vw;
+        width: fit-content;
+        border-radius: 0.5vw;
+        text-align: center;
+    }
+    .role .green{
+        background-color: var(--green);
+        color: white;
+        font-family: 'iransans';
+        font-size: 1vw;
+        padding: 0.1vw 1vw;
+        width: fit-content;
+        border-radius: 0.5vw;
+        text-align: center;
+    }
+    .role .blue{
+        background-color: var(--blue);
+        color: white;
+        font-family: 'iransans';
+        font-size: 1vw;
+        padding: 0.1vw 1vw;
+        width: fit-content;
+        border-radius: 0.5vw;
+        text-align: center;
+    }
+    .inline.red{color: var(--red);display: inline;}
+}

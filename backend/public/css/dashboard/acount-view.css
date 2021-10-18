@@ -172,6 +172,7 @@
         font-family: 'iransans';
         font-size: 1.4vw;
         margin-top: 2vw;
+        /* text-align: center; */
     }
     .two-column img.license{
         width: 40%;

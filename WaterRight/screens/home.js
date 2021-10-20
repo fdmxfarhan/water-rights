@@ -9,6 +9,9 @@ import {
   Text,
   useColorScheme,
   View,
+  BackHandler,
+  TouchableOpacity,
+
 } from 'react-native';
 import colors, { gray } from '../components/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -21,58 +24,91 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 const Tab = createBottomTabNavigator();
 
-const url = require('../config/api');
-const api = axios.create({baseURL: url});
-
-const STORAGE_KEY = '@store_file'
-const readData = async () => {
-  try {
-    const jsonValue = await AsyncStorage.getItem(STORAGE_KEY)
-    return jsonValue != null ? JSON.parse(jsonValue) : null;
-  } catch (e) {
-    console.log(e)
-  }
-}
+const api = require('../config/api');
+const {saveData, readData} = require('../config/save');
 
 const HomeScreen = (props) => {
-  var [acounts, setAcounts] = useState({
-    abvandi: [
-      {type: 'abvandi', startDate: {year: 1400, month: 5, day: 19}, endDate: {year: 1400, month: 6, day: 5}, charge: 1000, id: 0},
-      {type: 'abvandi', startDate: {year: 1400, month: 5, day: 19}, endDate: {year: 1400, month: 6, day: 5}, charge: 1000, id: 1},
-      {type: 'abvandi', startDate: {year: 1400, month: 5, day: 19}, endDate: {year: 1400, month: 6, day: 5}, charge: 1000, id: 2},
-      {type: 'abvandi', startDate: {year: 1400, month: 5, day: 19}, endDate: {year: 1400, month: 6, day: 5}, charge: 1000, id: 3},
-      {type: 'abvandi', startDate: {year: 1400, month: 5, day: 19}, endDate: {year: 1400, month: 6, day: 5}, charge: 1000, id: 4},
-    ],
-    chahvandi: [
-      {type: 'chahvandi', startDate: {year: 1400, month: 5, day: 19}, endDate: {year: 1400, month: 6, day: 5}, charge: 2000, id: 0},
-      {type: 'chahvandi', startDate: {year: 1400, month: 5, day: 19}, endDate: {year: 1400, month: 6, day: 5}, charge: 2000, id: 1},
-      {type: 'chahvandi', startDate: {year: 1400, month: 5, day: 19}, endDate: {year: 1400, month: 6, day: 5}, charge: 2000, id: 2},
-      {type: 'chahvandi', startDate: {year: 1400, month: 5, day: 19}, endDate: {year: 1400, month: 6, day: 5}, charge: 2000, id: 3},
-      {type: 'chahvandi', startDate: {year: 1400, month: 5, day: 19}, endDate: {year: 1400, month: 6, day: 5}, charge: 2000, id: 4},
-    ],
-    chah: [
-      {type: 'chah', sellCap: 1000, buyCap: 1000, wellCap: 5000, id: 0},
-      {type: 'chah', sellCap: 1000, buyCap: 1000, wellCap: 5000, id: 1},
-      {type: 'chah', sellCap: 1000, buyCap: 1000, wellCap: 5000, id: 2},
-      {type: 'chah', sellCap: 1000, buyCap: 1000, wellCap: 5000, id: 3},
-    ],
-  });
-  
+  var [activeTab, setActiveTab] = useState('abvandi');
+  var [savedData, setSavedData] = useState();
+  var [acounts, setAcounts] = useState({abvandi: [], chahvandi: [], chah: []});
+  var [readOnce, setReadOnce] = useState(false);
   var [user, setUser] = useState();
   useEffect(() => {
-    readData().then((data) => {
-      console.log(data);
+    if(!readOnce){
+      readData().then(data => {
+        setSavedData(data);
+        if(data != null){
+          api.post('/api/get-accounts', {
+            phone: data.phone,
+          }).then(res => {
+            acounts = res.data;
+            setAcounts(acounts);
+            readOnce = true;
+            setReadOnce(readOnce);
+          }).catch(error => {
+            alert('خطا در برقراری ارتباط. لطفا اتصال اینترنت خود را چک کنید.')
+            console.log(error);
+          });
+        }
+      });
+    }
+    BackHandler.addEventListener('hardwareBackPress', function () {
+      BackHandler.exitApp();
+      return true;
     });
   });
   return (
     <View style={styles.container}>
-      <Header title={'خانه'} backID={'exit'} navigation={props.navigation}/>
-      <ScrollView style={styles.scrollView}>
-        <AcountView data={acounts.abvandi} title={'حساب های آب‌وندی'} navigation={props.navigation}/>
-        <AcountView data={acounts.chahvandi} title={'حساب های چاه‌وندی'} navigation={props.navigation}/>
-        <AcountView data={acounts.chah} title={'حساب های چاه'} navigation={props.navigation}/>
-        
-      </ScrollView>
+      {/* <Header title={'خانه'} backID={'exit'} navigation={props.navigation}/> */}
+      <View style={styles.blueArea}>
+        <View style={styles.topHeader}>
+          <TouchableOpacity style={styles.buttonIcon}>
+            <Icon  style={styles.headerIcon} name={'list'}/>  
+          </TouchableOpacity>
+          <View style={styles.tabButtonsView}>
+            <TouchableOpacity 
+              onPress={() => {setActiveTab('abvandi');}}
+              style={[styles.tabButton, {backgroundColor: activeTab == 'abvandi' ? colors.blue : 'transparent'}]}>
+              <Text style={styles.tabButtonText}>آب‌وندی</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              onPress={() => {setActiveTab('chahvandi');}}
+              style={[styles.tabButton, {backgroundColor: activeTab == 'chahvandi' ? colors.blue : 'transparent'}]}>
+              <Text style={styles.tabButtonText}>چاه‌وندی</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              onPress={() => {setActiveTab('chah');}}
+              style={[styles.tabButton, {backgroundColor: activeTab == 'chah' ? colors.blue : 'transparent'}]}>
+              <Text style={styles.tabButtonText}>چاه</Text>
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity style={styles.buttonIcon}>
+            <Icon style={styles.headerIcon} name={'bell'}/>  
+            <View style={styles.notificationAlert} />
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.sumText}>$0.00</Text>
+        <Text style={styles.sumTextDescription}>مجموع شارژ</Text>
+        <View style={styles.navButtonsView}>
+          <TouchableOpacity style={styles.navButton}>
+            <Icon style={styles.navButtonIcon} name={'arrow-up'}/>  
+            <Text style={styles.navButtonText}>انتقال</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navButton}>
+            <Icon style={styles.navButtonIcon} name={'arrow-down'}/>  
+            <Text style={styles.navButtonText}>دریافت</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navButton}>
+            <Icon style={styles.navButtonIcon} name={'tag'}/>  
+            <Text style={styles.navButtonText}>خرید</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View style={styles.scrollView}>
+        {activeTab == 'abvandi' ? <AcountView data={acounts.abvandi} title={'حساب های آب‌وندی'} navigation={props.navigation}/> : null}
+        {activeTab == 'chahvandi' ? <AcountView data={acounts.chahvandi} title={'حساب های چاه‌وندی'} navigation={props.navigation}/> : null}
+        {activeTab == 'chah' ? <AcountView data={acounts.chah} title={'حساب های چاه'} navigation={props.navigation}/> : null}
+      </View>
     </View>
   );
 }
@@ -135,6 +171,103 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingBottom: 30,
+  },
+  blueArea: {
+    backgroundColor: colors.blue,
+  },
+  topHeader: {
+    alignContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row-reverse',
+    paddingVertical: 15,
+  },
+  buttonIcon: {
+    flex: 1,
+    alignContent: 'center',
+    alignItems: 'center',
+  },
+  tabButtonsView: {
+    flex: 5,
+    flexDirection: 'row-reverse',
+    backgroundColor: colors.darkBlue,
+    borderRadius: 14,
+    padding: 5,
+  },
+  tabButton: {
+    flex: 1,
+    paddingVertical: 3,
+    alignItems: 'center',
+    alignContent: 'center',
+    borderRadius: 10,
+  },
+  tabButtonText: {
+    fontFamily: 'iransans',
+    fontSize: 13,
+    textAlign: 'center',
+    color: colors.white,
+
+  },
+  headerIcon: {
+    color: colors.white,
+    fontSize: 19,
+    paddingVertical: 5,
+    paddingHorizontal: 5,
+    position: 'relative',
+  },
+  notificationAlert: {
+    position: 'absolute',
+    bottom: 2, 
+    right: 10,
+    width: 8,
+    height: 8,
+    backgroundColor: colors.red,
+    borderRadius: 8,
+  },
+  sumText: {
+    color: colors.white,
+    fontFamily: 'iransans',
+    fontSize: 35,
+    paddingTop: 20,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  sumTextDescription: {
+    color: colors.white,
+    fontFamily: 'iransans',
+    fontSize: 11,
+    textAlign: 'center',
+    // paddingBottom: 10,
+  },
+  navButtonsView: {
+    width: '70%',
+    marginHorizontal: '15%',
+    flexDirection: 'row-reverse',
+    marginVertical: 20,
+  },
+  navButton: {
+    flex: 1,
+    alignContent: 'center',
+    alignItems: 'center',
+  },
+  navButtonIcon: {
+    color: colors.white,
+    paddingVertical: 16,
+    paddingHorizontal: 17,
+    borderRadius: 40,
+    fontSize: 20,
+    backgroundColor: colors.lightblue,
+  },
+  navButtonText: {
+    color: colors.white,
+    fontFamily: 'iransans',
+    fontSize: 10,
+    paddingTop: 7,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  listView: {
+
   },
 });
 

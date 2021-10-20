@@ -6,6 +6,7 @@ const generateCode = require('../config/generateCode');
 const sms = require('../config/sms');
 const { ensureAuthenticated } = require('../config/auth');
 var User = require('../models/User');
+var Acount = require('../models/Acount');
 
 router.post('/login', (req, res, next) => {
     const {username, password} = req.body;
@@ -81,6 +82,18 @@ router.post('/compelete-reg', (req, res, next) => {
             res.send({correct: true, user});
         })
     })
+});
+
+router.post('/get-accounts', (req, res, next) => {
+    const {phone} = req.body;
+    User.findOne({phone: phone}, (err, user) => {
+        Acount.find({ownerID: user._id}, (err, accounts) => {
+            var abvandi = accounts.filter(e => e.type == 'abvandi');
+            var chahvandi = accounts.filter(e => e.type == 'chahvandi');
+            var chah = accounts.filter(e => e.type == 'chah');
+            res.send({abvandi, chahvandi, chah});
+        });
+    });
 });
 
 module.exports = router;

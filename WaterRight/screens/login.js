@@ -17,17 +17,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const api = require('../config/api');
+const {saveData, readData} = require('../config/save');
 
-const STORAGE_KEY = '@store_file'
-const saveData = async (data) => {
-  try {
-    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(data))
-    // console.log('Data successfully saved');
-  } catch (e) {
-    // console.log('Failed to save data');
-    console.log(e)
-  }
-}
 
 const login = (props) => {
   var [userInputColor, setUserInputColor] = useState('lightgray');
@@ -42,9 +33,9 @@ const login = (props) => {
       }).then(function (res) {
         // console.log(res.data);
         if(res.data.correct){
-          saveData({username, password, user: res.data.user}).then(() => {
+          saveData({username, password, phone: res.data.user.phone, user: res.data.user}).then(() => {
             props.navigation.navigate('Home');
-          })
+          });
         }
         else{
           alert(res.data.msg)

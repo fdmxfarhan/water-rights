@@ -61,7 +61,8 @@ const phoneLogin = (props) => {
             props.navigation.navigate('Home');
           })
         }else{
-          props.navigation.navigate('Register', {phone: phone});
+          alert('شماره تلفن همراه یافت نشد.');
+          // props.navigation.navigate('Register', {phone: phone});
         }
       }
       else{

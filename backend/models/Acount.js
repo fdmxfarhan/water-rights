@@ -30,7 +30,7 @@ var AcountSchema = new mongoose.Schema({
   endDate: Object,
   startDate: Object,
   creationDate: Date,
-
+  linkedAccount: String,
 });
 
 var Acount = mongoose.model('Acount', AcountSchema);

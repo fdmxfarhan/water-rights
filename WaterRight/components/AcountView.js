@@ -33,7 +33,7 @@ export default AcountView = ({data, title, navigation}) => {
                   </View>
                   <View style={styles.info}>
                     <Text style={styles.accountNumber}>{item.license}</Text>
-                    <Text style={styles.date}>1400/5/4</Text>
+                    <Text style={styles.date}></Text>
                   </View>
                   <Text style={styles.capacity}>{item.charge}  
                     <Text style={styles.cm}> متر مکعب </Text>

@@ -183,7 +183,7 @@ router.post('/add-account-chah', ensureAuthenticated, upload.single('licensePic'
                             for(var i=0; i<accounts.length; i++)
                                 if(accounts[i].accountNumber > accountNumber)
                                     accountNumber = accounts[i].accountNumber
-                            var newAcount = new Acount({
+                            var newAcount2 = new Acount({
                                 accountNumber: accountNumber+1,
                                 charge: 0,
                                 owner: user.fullname,
@@ -192,8 +192,9 @@ router.post('/add-account-chah', ensureAuthenticated, upload.single('licensePic'
                                 endDate: {year: 1400, month: 10, day: 4},
                                 startDate: {year: 1400, month: 10, day: 4},
                                 creationDate: new Date,
+                                linkedAccount: newAcount._id,
                             });
-                            newAcount.save().then(doc => {
+                            newAcount2.save().then(doc => {
                                 req.flash('success_msg', 'حساب با موفقیت ایجاد شد');
                                 res.redirect(`/dashboard/accounts`);
                             });
@@ -215,7 +216,7 @@ router.post('/save-chah', ensureAuthenticated, upload.single('licensePic'), (req
     var file = req.file;
     User.findById(userID, (err, user) => {
         Acount.findById(accountID, (err, account) => {
-            var owner = 'undefined';
+            var owner = account.owner;
             var licensePic = account.licensePic;
             if(user) owner = user.fullname;
             if(file) licensePic = file.destination.slice(6) + '/' + file.originalname;

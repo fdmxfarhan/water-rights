@@ -73,7 +73,7 @@ const login = (props) => {
           ref={passwordInput}
           onSubmitEditing={() => checkLogin()}
         />
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => props.navigation.navigate('PhoneLogin')}>
           <Text style={styles.forgotPassword}>کلمه عبور خود را فراموش کرده ام.</Text>
         </TouchableOpacity>
         <Text style={styles.paragraph}>

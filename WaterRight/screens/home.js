@@ -34,7 +34,26 @@ const HomeScreen = (props) => {
   var [readOnce, setReadOnce] = useState(false);
   var [addAccountEnable, setAddAccountEnable] = useState(false);
   var [user, setUser] = useState();
+  var [sum, setSum] = useState(0);
 
+  var updateSum = (accounts) => {
+    if(activeTab == 'abvandi'){
+      sum = 0;
+      for(var i=0; i<accounts.abvandi.length; i++)
+        sum += accounts.abvandi[i].charge;
+      setSum(sum);
+    } else if(activeTab == 'chahvandi'){
+      sum = 0;
+      for(var i=0; i<accounts.chahvandi.length; i++)
+        sum += accounts.chahvandi[i].charge;
+      setSum(sum);
+    } else if(activeTab == 'chah'){
+      sum = 0;
+      for(var i=0; i<accounts.chah.length; i++)
+        sum += accounts.chah[i].charge;
+      setSum(sum);
+    }
+  }
   var getAccounts = () => {
     readData().then(data => {
       setSavedData(data);
@@ -44,8 +63,9 @@ const HomeScreen = (props) => {
         }).then(res => {
           acounts = res.data;
           setAcounts(acounts);
+          updateSum(acounts);
         }).catch(error => {
-          alert('خطا در برقراری ارتباط. لطفا اتصال اینترنت خود را چک کنید.')
+          // alert('خطا در برقراری ارتباط. لطفا اتصال اینترنت خود را چک کنید.')
           console.log(error);
         });
       }
@@ -70,10 +90,10 @@ const HomeScreen = (props) => {
     if(!readOnce) getAccounts();
     readOnce = true;
     setReadOnce(true);
-    setInterval(getAccounts, 60000);
+    // setInterval(getAccounts, 60000);
     BackHandler.addEventListener('hardwareBackPress', function () {
       // BackHandler.exitApp();
-      return true;
+      return false;
     });
   });
   return (
@@ -86,17 +106,35 @@ const HomeScreen = (props) => {
           </TouchableOpacity>
           <View style={styles.tabButtonsView}>
             <TouchableOpacity 
-              onPress={() => {setActiveTab('abvandi');}}
+              onPress={() => {
+                setActiveTab('abvandi');
+                sum = 0;
+                for(var i=0; i<acounts.abvandi.length; i++)
+                  sum += acounts.abvandi[i].charge;
+                setSum(sum);
+              }}
               style={[styles.tabButton, {backgroundColor: activeTab == 'abvandi' ? colors.blue : 'transparent'}]}>
               <Text style={styles.tabButtonText}>آب‌وندی</Text>
             </TouchableOpacity>
             <TouchableOpacity 
-              onPress={() => {setActiveTab('chahvandi');}}
+              onPress={() => {
+                setActiveTab('chahvandi');
+                sum = 0;
+                for(var i=0; i<acounts.chahvandi.length; i++)
+                  sum += acounts.chahvandi[i].charge;
+                setSum(sum);
+              }}
               style={[styles.tabButton, {backgroundColor: activeTab == 'chahvandi' ? colors.blue : 'transparent'}]}>
               <Text style={styles.tabButtonText}>چاه‌وندی</Text>
             </TouchableOpacity>
             <TouchableOpacity 
-              onPress={() => {setActiveTab('chah');}}
+              onPress={() => {
+                setActiveTab('chah');
+                sum = 0;
+                for(var i=0; i<acounts.chah.length; i++)
+                  sum += acounts.chah[i].charge;
+                setSum(sum);
+              }}
               style={[styles.tabButton, {backgroundColor: activeTab == 'chah' ? colors.blue : 'transparent'}]}>
               <Text style={styles.tabButtonText}>چاه</Text>
             </TouchableOpacity>
@@ -106,16 +144,16 @@ const HomeScreen = (props) => {
             <View style={styles.notificationAlert} />
           </TouchableOpacity>
         </View>
-        <Text style={styles.sumText}>$0.00</Text>
-        <Text style={styles.sumTextDescription}>مجموع شارژ</Text>
+        <Text style={styles.sumText}>{sum}</Text>
+        <Text style={styles.sumTextDescription}>متر مکعب</Text>
         <View style={styles.navButtonsView}>
           <TouchableOpacity style={styles.navButton}>
             <Icon style={styles.navButtonIcon} name={'arrow-up'}/>  
             <Text style={styles.navButtonText}>انتقال</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.navButton}>
-            <Icon style={styles.navButtonIcon} name={'arrow-down'}/>  
-            <Text style={styles.navButtonText}>دریافت</Text>
+          <TouchableOpacity onPress={() => {getAccounts();}} style={styles.navButton}>
+            <Icon style={styles.navButtonIcon} name={'refresh'}/>  
+            <Text style={styles.navButtonText}>تازه سازی</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setAddAccountEnable(true)} style={styles.navButton}>
             <Icon style={styles.navButtonIcon} name={'plus'}/>  
@@ -136,8 +174,8 @@ const HomeScreen = (props) => {
 const SettingsScreen = (props) => {
   return (
     <View style={styles.container}>
-      <Header title={'تنظیمات'} backID={'Main'} navigation={props.navigation} />
-      <Setting />
+      {/* <Header title={'تنظیمات'} backID={'Main'} navigation={props.navigation} /> */}
+      <Setting navigation={props.navigation}/>
     </View>
   );
 }

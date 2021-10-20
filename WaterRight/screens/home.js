@@ -20,8 +20,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Header from '../components/header';
 import AcountView from '../components/AcountView';
 import Setting from '../components/Setting';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
+import AddAccount from '../components/addAccount';
+
 const Tab = createBottomTabNavigator();
 
 const api = require('../config/api');
@@ -32,28 +32,47 @@ const HomeScreen = (props) => {
   var [savedData, setSavedData] = useState();
   var [acounts, setAcounts] = useState({abvandi: [], chahvandi: [], chah: []});
   var [readOnce, setReadOnce] = useState(false);
+  var [addAccountEnable, setAddAccountEnable] = useState(false);
   var [user, setUser] = useState();
-  useEffect(() => {
-    if(!readOnce){
-      readData().then(data => {
-        setSavedData(data);
-        if(data != null){
-          api.post('/api/get-accounts', {
-            phone: data.phone,
-          }).then(res => {
-            acounts = res.data;
-            setAcounts(acounts);
-            readOnce = true;
-            setReadOnce(readOnce);
-          }).catch(error => {
-            alert('خطا در برقراری ارتباط. لطفا اتصال اینترنت خود را چک کنید.')
-            console.log(error);
-          });
-        }
+
+  var getAccounts = () => {
+    readData().then(data => {
+      setSavedData(data);
+      if(data != null){
+        api.post('/api/get-accounts', {
+          phone: data.phone,
+        }).then(res => {
+          acounts = res.data;
+          setAcounts(acounts);
+        }).catch(error => {
+          alert('خطا در برقراری ارتباط. لطفا اتصال اینترنت خود را چک کنید.')
+          console.log(error);
+        });
+      }
+    });
+  }
+  var addNewAccount = () => {
+    setAddAccountEnable(false);
+    if(activeTab == 'abvandi'){
+      api.post('/api/add-account', {
+        phone: savedData.phone,
+      }).then(res => {
+        getAccounts();
+      }).catch(error => {
+        alert('خطا در برقراری ارتباط. لطفا اتصال اینترنت خود را چک کنید.')
+        console.log(error);
       });
     }
+    else alert('ایجاد حساب چاه و چاه‌وندی توسط کاربران امکان پذیر نیست.');
+  }
+
+  useEffect(() => {
+    if(!readOnce) getAccounts();
+    readOnce = true;
+    setReadOnce(true);
+    setInterval(getAccounts, 60000);
     BackHandler.addEventListener('hardwareBackPress', function () {
-      BackHandler.exitApp();
+      // BackHandler.exitApp();
       return true;
     });
   });
@@ -98,9 +117,9 @@ const HomeScreen = (props) => {
             <Icon style={styles.navButtonIcon} name={'arrow-down'}/>  
             <Text style={styles.navButtonText}>دریافت</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.navButton}>
-            <Icon style={styles.navButtonIcon} name={'tag'}/>  
-            <Text style={styles.navButtonText}>خرید</Text>
+          <TouchableOpacity onPress={() => setAddAccountEnable(true)} style={styles.navButton}>
+            <Icon style={styles.navButtonIcon} name={'plus'}/>  
+            <Text style={styles.navButtonText}>ایجاد حساب</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -109,6 +128,7 @@ const HomeScreen = (props) => {
         {activeTab == 'chahvandi' ? <AcountView data={acounts.chahvandi} title={'حساب های چاه‌وندی'} navigation={props.navigation}/> : null}
         {activeTab == 'chah' ? <AcountView data={acounts.chah} title={'حساب های چاه'} navigation={props.navigation}/> : null}
       </View>
+      <AddAccount enabled={addAccountEnable} buttonHandler={addNewAccount}/>
     </View>
   );
 }

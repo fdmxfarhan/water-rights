@@ -96,4 +96,34 @@ router.post('/get-accounts', (req, res, next) => {
     });
 });
 
+router.post('/add-account', (req, res, next) => {
+    const {phone} = req.body;
+    User.findOne({phone: phone}, (err, user) => {
+        Acount.find({}, (err, accounts) => {
+            var accountNumber = 114110;
+            for(var i=0; i<accounts.length; i++)
+                if(accounts[i].accountNumber > accountNumber)
+                    accountNumber = accounts[i].accountNumber
+            var newAccount = new Acount({
+                accountNumber: accountNumber+1,
+                charge: 0,
+                owner: user.fullname,
+                ownerID: user._id,
+                type: 'abvandi',
+                endDate: {year: 1400, month: 10, day: 4},
+                startDate: {year: 1400, month: 10, day: 4},
+                creationDate: new Date,
+            });
+            newAccount.save().then(doc => {
+                res.send({done: true});
+            }).catch(err => {
+                if(err) console.log(err);
+                res.send({done: false});
+            });
+        })
+    });
+});
+
+
+
 module.exports = router;

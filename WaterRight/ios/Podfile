@@ -16,6 +16,8 @@ target 'WaterRight' do
 
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-async-storage/async-storage'
 
+  pod 'react-native-webview', :path => '../node_modules/react-native-webview'
+
   target 'WaterRightTests' do
     inherit! :complete
     # Pods for testing

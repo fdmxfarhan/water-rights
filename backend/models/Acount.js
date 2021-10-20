@@ -21,6 +21,16 @@ var AcountSchema = new mongoose.Schema({
   owner: String,
   ownerID: String,
   completedInfo: {type: Boolean, default: false},
+
+  accountNumber: Number,
+  charge: {
+    type: Number,
+    default: 0,
+  },
+  endDate: Object,
+  startDate: Object,
+  creationDate: Date,
+
 });
 
 var Acount = mongoose.model('Acount', AcountSchema);

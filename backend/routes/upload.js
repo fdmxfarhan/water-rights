@@ -174,10 +174,35 @@ router.post('/add-account-chah', ensureAuthenticated, upload.single('licensePic'
                     ownerID: userID,
                     permitedUseInYear,
                     type: 'chah',
+                    charge: permitedUseInYear,
                 });
                 newAcount.save().then(doc => {
-                    req.flash('success_msg', 'حساب با موفقیت ایجاد شد');
-                    res.redirect(`/dashboard/accounts`);
+                    if(owner != 'undefined'){
+                        Acount.find({}, (err, accounts) => {
+                            var accountNumber = 114110;
+                            for(var i=0; i<accounts.length; i++)
+                                if(accounts[i].accountNumber > accountNumber)
+                                    accountNumber = accounts[i].accountNumber
+                            var newAcount = new Acount({
+                                accountNumber: accountNumber+1,
+                                charge: 0,
+                                owner: user.fullname,
+                                ownerID: user._id,
+                                type: 'chahvandi',
+                                endDate: {year: 1400, month: 10, day: 4},
+                                startDate: {year: 1400, month: 10, day: 4},
+                                creationDate: new Date,
+                            });
+                            newAcount.save().then(doc => {
+                                req.flash('success_msg', 'حساب با موفقیت ایجاد شد');
+                                res.redirect(`/dashboard/accounts`);
+                            });
+                        });
+                    }
+                    else{
+                        req.flash('success_msg', 'حساب با موفقیت ایجاد شد');
+                        res.redirect(`/dashboard/accounts`);
+                    }
                 }).catch(err => console.log(err));
             });
         }

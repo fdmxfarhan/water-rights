@@ -35,7 +35,7 @@ export default AcountView = ({data, title, navigation}) => {
                     <Text style={styles.accountNumber}>{item.license}</Text>
                     <Text style={styles.date}>1400/5/4</Text>
                   </View>
-                  <Text style={styles.capacity}>1000  
+                  <Text style={styles.capacity}>{item.charge}  
                     <Text style={styles.cm}> متر مکعب </Text>
                   </Text>
                 </TouchableOpacity>
@@ -50,10 +50,10 @@ export default AcountView = ({data, title, navigation}) => {
                     <Icon style={[styles.icon, {backgroundColor: colors.yellow}]} name="database"/>
                   </View>
                   <View style={styles.info}>
-                    <Text style={styles.accountNumber}>6125124</Text>
-                    <Text style={styles.date}>1400/5/4</Text>
+                    <Text style={styles.accountNumber}>{item.accountNumber}</Text>
+                    <Text style={styles.date}>{item.endDate.year}/{item.endDate.month}/{item.endDate.day}</Text>
                   </View>
-                  <Text style={styles.capacity}>1000  
+                  <Text style={styles.capacity}>{item.charge}
                     <Text style={styles.cm}> متر مکعب </Text>
                   </Text>
                 </TouchableOpacity>

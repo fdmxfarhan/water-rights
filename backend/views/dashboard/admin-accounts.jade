@@ -39,7 +39,48 @@ block content
                             td
                                 a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts") 
                                     i.fa.fa-trash 
+                        -}else if(accounts[i].type == "abvandi"){
+                            td.role
+                                .green آب‌وندی
+                            td.user 
+                                h1= accounts[i].accountNumber
+                                h2
+                                    //- -if(accounts[i].licensePic != 'undefined')
+                                    //-     a(href="#{accounts[i].licensePic}" target="_blank") پروانه بهره برداری
+                            td.acounts 
+                                -if(accounts[i].owner != 'undefined')
+                                    h1= accounts[i].owner
+                                -else
+                                    .inline.red مشخص نشده
+                                h2
+                            td
+                                a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
+                                    i.fa.fa-edit
+                            td
+                                a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts") 
+                                    i.fa.fa-trash 
+                        -}else if(accounts[i].type == "chahvandi"){
+                            td.role
+                                .blue چاه‌وندی
+                            td.user 
+                                h1= accounts[i].accountNumber
+                                h2
+                                    //- -if(accounts[i].licensePic != 'undefined')
+                                    //-     a(href="#{accounts[i].licensePic}" target="_blank") پروانه بهره برداری
+                            td.acounts 
+                                -if(accounts[i].owner != 'undefined')
+                                    h1= accounts[i].owner
+                                -else
+                                    .inline.red مشخص نشده
+                                h2
+                            td
+                                a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
+                                    i.fa.fa-edit
+                            td
+                                a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts") 
+                                    i.fa.fa-trash 
                         -}
+                        
                 -}
         .user-control 
             .control 

@@ -7,6 +7,7 @@ const { ensureAuthenticated } = require('../config/auth');
 var User = require('../models/User');
 var Acount = require('../models/Acount');
 var Notification = require('../models/Notification');
+var Transmission = require('../models/Transmission');
 const mail = require('../config/mail');
 const dateConvert = require('../config/dateConvert');
 
@@ -22,32 +23,42 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
     else if(req.user.role = 'admin')
     {
         Notification.find({}, (err, notifications) => {
-            res.render('./dashboard/admin-dashboard', {
-                user: req.user,
-                login: req.query.login,
-                notifications,
-                dateConvert
-            });
+            Transmission.find({done: false}, (err, transmissions) => {
+                res.render('./dashboard/admin-dashboard', {
+                    user: req.user,
+                    login: req.query.login,
+                    notifications,
+                    dateConvert,
+                    transmissions,
+                });
+            })
         })
         Notification.updateMany({seen: false}, {$set: {seen: true}}, (err, notifications) => {
             if(err) console.log(err)
         });
     }
 });
-
 router.get('/users', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'admin'){
         User.find({}, (err, users) => {
-            res.render('./dashboard/admin-users', {
-                user: req.user,
-                users,
-            });
+            Acount.find({}, (err, accounts) => {
+                for(var i=0; i<users.length; i++){
+                    users[i].numberOfAbvandi = 0;
+                    users[i].numberOfChahvandi = 0;
+                    users[i].numberOfChah = 0;
+                    users[i].numberOfAbvandi = accounts.filter(e => e.ownerID == users[i]._id.toString() && e.type == 'abvandi').length;
+                    users[i].numberOfChahvandi = accounts.filter(e => e.ownerID == users[i]._id.toString() && e.type == 'chahvandi').length;
+                    users[i].numberOfChah = accounts.filter(e => e.ownerID == users[i]._id.toString() && e.type == 'chah').length;
+                }
+                res.render('./dashboard/admin-users', {
+                    user: req.user,
+                    users,
+                });
+            })
         })
     }
     else res.send('Access Denied');
 });
-
-
 router.get('/delete-user', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'admin'){
         User.deleteOne({_id: req.query.userID}, (err) => {
@@ -56,7 +67,6 @@ router.get('/delete-user', ensureAuthenticated, (req, res, next) => {
         });
     }
 });
-
 router.get('/delete-acount', ensureAuthenticated, (req, res, next) => {
     var { redirect } = req.query;
     if(req.user.role == 'admin'){
@@ -69,7 +79,6 @@ router.get('/delete-acount', ensureAuthenticated, (req, res, next) => {
         });
     }
 });
-
 router.get('/user-view', ensureAuthenticated, (req, res, next) => {
     var {userID} = req.query;
     if(req.user.role == 'admin'){
@@ -84,7 +93,6 @@ router.get('/user-view', ensureAuthenticated, (req, res, next) => {
         });
     }
 });
-
 router.post('/admin-register', ensureAuthenticated, (req, res, next) => {
     const {firstName, lastName, idNumber, cardNumber, birthDay, birthMonth, birthYear, sex, fatherName, address, postCode, phone, password, configpassword} = req.body;
     const role = 'user', card = 0;
@@ -121,10 +129,10 @@ router.post('/admin-register', ensureAuthenticated, (req, res, next) => {
     }
     else if(req.user.role == 'admin'){
         const fullname = firstName + ' ' + lastName;
-        User.findOne({ idNumber: idNumber}).then(user =>{
+        User.findOne({$or: [{idNumber: idNumber},{phone: phone}]}).then(user =>{
             if(user){
                 // user exist
-                errors.push({msg: 'کد ملی قبلا ثبت شده است.'});
+                errors.push({msg: 'کد ملی یا شماره تلفن قبلا ثبت شده است.'});
                 User.find({}, (err, users) => {
                     res.render('./dashboard/admin-users', { 
                         user: req.user,
@@ -161,7 +169,6 @@ router.post('/admin-register', ensureAuthenticated, (req, res, next) => {
         });
     }
 });
-
 router.post('/edit-user', ensureAuthenticated, (req, res, next) => {
     const {userID, firstName, lastName, fatherName, idNumber, cardNumber, address, postCode, phone} = req.body;
     const fullname = firstName + ' ' + lastName;
@@ -170,7 +177,6 @@ router.post('/edit-user', ensureAuthenticated, (req, res, next) => {
         res.redirect(`/dashboard/user-view?userID=${userID}`);
     });
 });
-
 router.get('/delete-file', ensureAuthenticated, (req, res, next) => {
     var {userID, index} = req.query;
     User.findById(userID, (err, user) => {
@@ -181,7 +187,6 @@ router.get('/delete-file', ensureAuthenticated, (req, res, next) => {
         });
     })
 });
-
 router.get('/acount-view', ensureAuthenticated, (req, res, next) => {
     var {acountID} = req.query;
     Acount.findById(acountID, (err, account) => {
@@ -197,7 +202,6 @@ router.get('/acount-view', ensureAuthenticated, (req, res, next) => {
         });
     });
 })
-
 router.get('/make-admin', ensureAuthenticated, (req, res, next) => {
     var {userID} = req.query;
     if(req.user.role == 'admin'){
@@ -206,7 +210,6 @@ router.get('/make-admin', ensureAuthenticated, (req, res, next) => {
         })
     }
 })
-
 router.get('/make-user', ensureAuthenticated, (req, res, next) => {
     var {userID} = req.query;
     if(req.user.role == 'admin'){
@@ -215,7 +218,6 @@ router.get('/make-user', ensureAuthenticated, (req, res, next) => {
         })
     }
 })
-
 router.get('/accounts', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'admin'){
         User.find({}, (err, users) => {
@@ -230,6 +232,27 @@ router.get('/accounts', ensureAuthenticated, (req, res, next) => {
         });
     }
 })
+router.get('/accept-transmission', ensureAuthenticated, (req, res, next) => {
+    var {transmissionID} = req.query;
+    Transmission.findById(transmissionID, (err, transmission) => {
+        Acount.findById(transmission.source._id, (err, source) => {
+            Acount.findById(transmission.target._id, (err, target) => {
+                Acount.updateMany({_id: source._id}, {$set: {charge: source.charge - transmission.amount}}, (err) => {});
+                Acount.updateMany({_id: target._id}, {$set: {charge: target.charge + transmission.amount}}, (err) => {});
+                Transmission.updateMany({_id: transmissionID}, {$set: {done: true, accepted: true}}, (err) => {
+                    res.redirect('/dashboard');
+                });
+            });
+        });
+    });
+});
+
+router.get('/decline-transmission', ensureAuthenticated, (req, res, next) => {
+    var {transmissionID} = req.query;
+    Transmission.updateMany({_id: transmissionID}, {$set: {done: true, accepted: false}}, (err) => {
+        res.redirect('/dashboard');
+    });
+});
 
 
 module.exports = router;

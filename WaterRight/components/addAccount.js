@@ -13,7 +13,7 @@ import {
 import colors from '../components/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default AddAccount = ({enabled, buttonHandler}) => {
+export default AddAccount = ({enabled, buttonHandler, setEnable}) => {
     if(enabled)
         return(
             <View style={styles.container}>
@@ -25,6 +25,9 @@ export default AddAccount = ({enabled, buttonHandler}) => {
                     </ScrollView>
                     <TouchableOpacity onPress={buttonHandler} style={styles.submitButton}>
                         <Text style={styles.submitButtonText}>شرایط را می‌پذیرم</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {setEnable(false)}} style={[styles.submitButton, {backgroundColor: colors.red}]}>
+                        <Text style={styles.submitButtonText}>انصراف</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -82,12 +85,12 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
-        paddingVertical: 10,
+        paddingVertical: 7,
+        marginTop: 5,
     },
     submitButtonText: {
         color: colors.white,
         fontFamily: 'iransans',
         fontSize: 17,
-
     },
 });

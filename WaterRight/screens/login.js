@@ -65,6 +65,7 @@ const login = (props) => {
           onSubmitEditing={()=>passwordInput.current.focus()}
         />
         <TextInput 
+          secureTextEntry={true}
           style={[styles.textInput, {borderBottomColor: passInputColor}]}
           placeholder={'کلمه عبور'}
           onChange={(text) => {setPassword(text.nativeEvent.text)}}

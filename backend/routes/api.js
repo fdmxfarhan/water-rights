@@ -8,10 +8,11 @@ const { ensureAuthenticated } = require('../config/auth');
 var User = require('../models/User');
 var Acount = require('../models/Acount');
 var Notification = require('../models/Notification');
+var Transmission = require('../models/Transmission');
 
 router.post('/login', (req, res, next) => {
     const {username, password} = req.body;
-    User.findOne({idNumber: username}, (err, user) => {
+    User.findOne({$or: [{idNumber: username},{phone: username}]}, (err, user) => {
         if(!user){
             res.send({msg: 'نام کاربری یافت نشد.', correct: false});
         }else{
@@ -23,7 +24,6 @@ router.post('/login', (req, res, next) => {
         }
     });
 });
-
 router.post('/phone-login', (req, res, next) => {
     const {phone} = req.body;
     User.findOne({phone: phone}, (err, user) => {
@@ -34,7 +34,6 @@ router.post('/phone-login', (req, res, next) => {
         }
     });
 });
-
 router.post('/sendsms', (req, res, next) => {
     const {phone} = req.body;
     User.findOne({phone: phone}, (err, user) => {
@@ -60,7 +59,6 @@ router.post('/sendsms', (req, res, next) => {
         }
     });
 });
-
 router.post('/check-code', (req, res, next) => {
     const {phone, smsCode} = req.body;
     console.log(req.body)
@@ -73,7 +71,6 @@ router.post('/check-code', (req, res, next) => {
         }
     })
 });
-
 router.post('/compelete-reg', (req, res, next) => {
     const {firstName, lastName, idNumber, cardNumber, fatherName, job, sex, phone} = req.body;
     console.log(req.body)
@@ -84,7 +81,6 @@ router.post('/compelete-reg', (req, res, next) => {
         })
     })
 });
-
 router.post('/get-accounts', (req, res, next) => {
     const {phone} = req.body;
     User.findOne({phone: phone}, (err, user) => {
@@ -96,7 +92,6 @@ router.post('/get-accounts', (req, res, next) => {
         });
     });
 });
-
 router.post('/add-account', (req, res, next) => {
     const {phone} = req.body;
     User.findOne({phone: phone}, (err, user) => {
@@ -124,7 +119,6 @@ router.post('/add-account', (req, res, next) => {
         })
     });
 });
-
 router.post('/add-notification', (req, res, next) => {
     const {type, text, link} = req.body;
     var newNotif = new Notification({
@@ -138,13 +132,20 @@ router.post('/add-notification', (req, res, next) => {
     }).catch(err => {
         if(err) {
             console.log(err);
-            res.send({done: false})
+            res.send({done: false});
         }
     });
-
 });
-
-
-
-
+router.post('/add-transmission', (req, res, next) => {
+    var {source, target, amount} = req.body;
+    var newTransmission = new Transmission({
+        source,
+        target,
+        amount,
+        date: new Date,
+    });
+    newTransmission.save().then(doc =>{
+        res.send({done: true})
+    }).catch(err => console.log(err));
+})
 module.exports = router;

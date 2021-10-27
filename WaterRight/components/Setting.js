@@ -46,8 +46,8 @@ export default Setting = ({data, title, navigation}) => {
         <View style={styles.settingView}>
             <View style={styles.blueArea}>
                 <View style={styles.topHeader}>
-                    <TouchableOpacity style={styles.buttonIcon}>
-                        <Icon  style={styles.headerIcon} name={'list'}/>  
+                    <TouchableOpacity style={styles.buttonIcon}  onPress={() => {navigation.navigate('Main')}}>
+                        <Icon  style={styles.headerIcon} name={'home'}/>  
                     </TouchableOpacity>
                     <View style={styles.tabButtonsView}>
                         <TouchableOpacity 

@@ -30,7 +30,7 @@ block content
                             
                         td.acounts 
                             h1 6 حساب
-                            h2 2 حساب آب‌وندی، 3 حساب چاه‌وندی و 1 حساب چاه
+                            h2 #{users[i].numberOfAbvandi} حساب آب‌وندی، #{users[i].numberOfChahvandi} حساب چاه‌وندی و #{users[i].numberOfChah} حساب چاه
                         td
                             a.edit(href="/dashboard/user-view?userID=#{users[i]._id}") 
                                 i.fa.fa-eye 

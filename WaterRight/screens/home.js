@@ -106,7 +106,7 @@ const HomeScreen = (props) => {
       {/* <Header title={'خانه'} backID={'exit'} navigation={props.navigation}/> */}
       <View style={styles.blueArea}>
         <View style={styles.topHeader}>
-          <TouchableOpacity style={styles.buttonIcon}>
+          <TouchableOpacity style={styles.buttonIcon} onPress={() => {props.navigation.navigate('Settings')}}>
             <Icon  style={styles.headerIcon} name={'list'}/>  
           </TouchableOpacity>
           <View style={styles.tabButtonsView}>
@@ -152,7 +152,7 @@ const HomeScreen = (props) => {
         <Text style={styles.sumText}>{sum}</Text>
         <Text style={styles.sumTextDescription}>متر مکعب</Text>
         <View style={styles.navButtonsView}>
-          <TouchableOpacity style={styles.navButton}>
+          <TouchableOpacity style={styles.navButton} onPress={() => {props.navigation.navigate('Transmission')}} >
             <Icon style={styles.navButtonIcon} name={'arrow-up'}/>  
             <Text style={styles.navButtonText}>انتقال</Text>
           </TouchableOpacity>
@@ -171,7 +171,7 @@ const HomeScreen = (props) => {
         {activeTab == 'chahvandi' ? <AcountView data={acounts.chahvandi} title={'حساب های چاه‌وندی'} navigation={props.navigation}/> : null}
         {activeTab == 'chah' ? <AcountView data={acounts.chah} title={'حساب های چاه'} navigation={props.navigation}/> : null}
       </View>
-      <AddAccount enabled={addAccountEnable} buttonHandler={addNewAccount}/>
+      <AddAccount enabled={addAccountEnable} buttonHandler={addNewAccount} setEnable={setAddAccountEnable} />
     </View>
   );
 }

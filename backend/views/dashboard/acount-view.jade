@@ -6,6 +6,11 @@ block styles
 block content
     -if(account.type == 'chah')
         include ../components/chah-view
+    -else if(account.type == 'chahvandi')
+        include ../components/chahvandi-view
+    -else if(account.type == 'abvandi')
+        include ../components/abvandi-view
+    
     script(src="/js/acount-view.js") 
 
 

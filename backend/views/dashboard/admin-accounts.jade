@@ -10,7 +10,7 @@ block content
         h2 #{accounts.length} حساب
     .content-view 
         .users-view 
-            table 
+            table(id="myTable")
                 tr 
                     th نوع حساب
                     th شماره حساب/پروانه
@@ -18,10 +18,11 @@ block content
                     th 
                     th 
                 -for(var i=0; i<accounts.length; i++){
-                    tr 
-                        -if(accounts[i].type == "chah"){
+                    -if(accounts[i].type == "chah"){
+                        tr
                             td.role
                                 .red چاه
+                                .hidden= accounts[i].type
                             td.user 
                                 h1= accounts[i].license
                                 h2
@@ -39,9 +40,11 @@ block content
                             td
                                 a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts") 
                                     i.fa.fa-trash 
-                        -}else if(accounts[i].type == "abvandi"){
+                    -}else if(accounts[i].type == "abvandi"){
+                        tr
                             td.role
                                 .green آب‌وندی
+                                .hidden= accounts[i].type
                             td.user 
                                 h1= accounts[i].accountNumber
                                 h2
@@ -59,9 +62,11 @@ block content
                             td
                                 a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts") 
                                     i.fa.fa-trash 
-                        -}else if(accounts[i].type == "chahvandi"){
+                    -}else if(accounts[i].type == "chahvandi"){
+                        tr
                             td.role
                                 .blue چاه‌وندی
+                                .hidden= accounts[i].type
                             td.user 
                                 h1= accounts[i].accountNumber
                                 h2
@@ -79,23 +84,23 @@ block content
                             td
                                 a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts") 
                                     i.fa.fa-trash 
-                        -}
+                    -}
                         
                 -}
         .user-control 
             .control 
                 .search-view
-                    input(type="text" placeholder="جستجو")
-                    button
+                    input(id="searchInput" type="text" placeholder="جستجو" onchange="search()")
+                    button(onclick="search()")
                         i.fa.fa-search
                 .check-boxes
-                    input.check(type="checkbox" id="check-abvandi" checked)
+                    input.check(type="checkbox" id="check-abvandi" checked onchange="abvandiCheck()")
                     label(for="check-abvandi") حساب های آب‌وندی
                     br
-                    input.check(type="checkbox" id="check-chahvandi" checked)
+                    input.check(type="checkbox" id="check-chahvandi" checked onchange="chahvandiCheck()")
                     label(for="check-chahvandi") حساب های چاه‌وندی
                     br
-                    input.check(type="checkbox" id="check-chah" checked)
+                    input.check(type="checkbox" id="check-chah" checked onchange="chahCheck()")
                     label(for="check-chah") حساب های چاه
                     
                 a.add-user#add-account-btn

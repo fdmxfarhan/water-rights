@@ -59,27 +59,27 @@
                 .text-input 
                     i.fa.fa-pencil 
                     label(for="wellCap") WellCap:
-                    input(type="number" name="wellCap" placeholder="00 لیتر")
+                    input(type="number" name="wellCap" placeholder="00 لیتر" value="#{typeof(account.wellCap) == 'undefined' ? '' : account.wellCap}")
                 .text-input 
                     i.fa.fa-pencil 
                     label(for="sellCap") SellCap:
-                    input(type="number" name="sellCap" placeholder="00 لیتر")
+                    input(type="number" name="sellCap" placeholder="00 لیتر" value="#{typeof(account.sellCap) == 'undefined' ? '' : account.sellCap}")
                 .text-input 
                     i.fa.fa-pencil 
                     label(for="buyCap") BuyCap:
-                    input(type="number" name="buyCap" placeholder="00 لیتر")
+                    input(type="number" name="buyCap" placeholder="00 لیتر" value="#{typeof(account.buyCap) == 'undefined' ? '' : account.buyCap}")
                 .text-input 
                     i.fa.fa-pencil 
                     label(for="depth") عمق چاه (متر):
-                    input(type="number" name="depth" placeholder="00 متر")
+                    input(type="number" name="depth" placeholder="00 متر" value="#{typeof(account.depth) == 'undefined' ? '' : account.depth}")
                 .text-input 
                     i.fa.fa-pencil 
                     label(for="power") توان چاه (وات):
-                    input(type="number" name="power" placeholder="00 وات")
+                    input(type="number" name="power" placeholder="00 وات" value="#{typeof(account.power) == 'undefined' ? '' : account.power}")
                 .text-input 
                     i.fa.fa-pencil 
                     label(for="abdehi") آبدهی چاه (لیتر بر ثانیه):
-                    input(type="number" name="abdehi" placeholder="00 متر بر ثانیه")
+                    input(type="number" name="abdehi" placeholder="00 متر بر ثانیه" value="#{typeof(account.abdehi) == 'undefined' ? '' : account.abdehi}")
                 .select-input
                     label(for="userID") کاربر:
                     select(name="userID" id="userID") 

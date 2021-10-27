@@ -239,7 +239,41 @@ router.post('/save-chah', ensureAuthenticated, upload.single('licensePic'), (req
                 type: 'chah',
             }}, (err) => {
                 if(err) console.log(err);
-                res.redirect(`/dashboard/acount-view?acountID=${accountID}`);
+                if(owner != 'undefined'){
+                    Acount.findOne({linkedAccount: accountID}, (err, account) => {
+                        if(account){
+                            req.flash('success_msg', 'اطلاعات با موفقیت ذخیره شد');
+                            res.redirect(`/dashboard/acount-view?acountID=${accountID}`);
+                        }
+                        else{
+                            Acount.find({}, (err, accounts) => {
+                                var accountNumber = 114110;
+                                for(var i=0; i<accounts.length; i++)
+                                    if(accounts[i].accountNumber > accountNumber)
+                                        accountNumber = accounts[i].accountNumber
+                                var newAcount2 = new Acount({
+                                    accountNumber: accountNumber+1,
+                                    charge: 0,
+                                    owner: user.fullname,
+                                    ownerID: user._id,
+                                    type: 'chahvandi',
+                                    endDate: {year: 1400, month: 10, day: 4},
+                                    startDate: {year: 1400, month: 10, day: 4},
+                                    creationDate: new Date,
+                                    linkedAccount: accountID,
+                                });
+                                newAcount2.save().then(doc => {
+                                    req.flash('success_msg', 'اطلاعات با موفقیت ذخیره شد');
+                                    res.redirect(`/dashboard/acount-view?acountID=${accountID}`);
+                                });
+                            });
+                        }
+                    })
+                }
+                else{
+                    req.flash('success_msg', 'اطلاعات با موفقیت ذخیره شد');
+                    res.redirect(`/dashboard/acount-view?acountID=${accountID}`);
+                }
             });
         });
     });

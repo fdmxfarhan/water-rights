@@ -1,0 +1,109 @@
+.complete-license-info 
+    h1.title اطلاعات حساب چاه‌وندی
+    form(action="/upload/save-chah" enctype="multipart/form-data" method="POST") 
+        input.hidden(type="text" name="accountID" value="#{account._id}")
+        .two-column
+            .column
+                //- .title اطلاعات پروانه
+                //- .text-input 
+                //-     i.fa.fa-pencil 
+                //-     label(for="license") شماره پروانه:
+                //-     input(type="text" name="license" placeholder="XXXX" value="#{typeof(account.license) == 'undefined' ? '' : account.license}" disabled)
+                //- .text-input
+                //-     i.fa.fa-pencil 
+                //-     label(for="permitedUseInYear") اجازه برداشت سالیانه:
+                //-     input(type="number" name="permitedUseInYear" id="permitedUseInYear" placeholder="00 لیتر" value="#{typeof(account.permitedUseInYear) == 'undefined' ? '' : account.permitedUseInYear}")
+                //- .text-input 
+                //-     i.fa.fa-pencil 
+                //-     label(for="permitedAbdehi") آبدهی مجاز (لیتر بر ثانیه):
+                //-     input(type="number" name="permitedAbdehi" placeholder="00 لیتر بر ثانیه" value="#{typeof(account.permitedAbdehi) == 'undefined' ? '' : account.permitedAbdehi}")
+                //- .text-input 
+                //-     i.fa.fa-pencil 
+                //-     label(for="permitedWorkTime") ساعت کارکرد مجاز:
+                //-     input(type="number" name="permitedWorkTime" placeholder="00 لیتر" value="#{typeof(account.permitedWorkTime) == 'undefined' ? '' : account.permitedWorkTime}")
+                //- .text-input 
+                //-     i.fa.fa-pencil 
+                //-     label(for="UTM") UTM:
+                //-     input(type="text" name="UTM" placeholder="00" value="#{typeof(account.UTM) == 'undefined' ? '' : account.UTM}")
+                //- .select-input
+                //-     label(for="useType") نوع بهره برداری: 
+                //-     select(id="useType" name="useType") 
+                //-         -if(account.useType == 'شرب')
+                //-             option(selected value="شرب" ) شرب
+                //-         -else 
+                //-             option(value="شرب" ) شرب
+                //-         -if(account.useType == 'صنعت')
+                //-             option(selected value="صنعت" ) صنعت
+                //-         -else 
+                //-             option(value="صنعت" ) صنعت
+                //-         -if(account.useType == 'کشاورزی')
+                //-             option(selected value="کشاورزی" ) کشاورزی
+                //-         -else 
+                //-             option(value="کشاورزی" ) کشاورزی
+                //-         -if(account.useType == 'فضای سبز')
+                //-             option(selected value="فضای سبز") فضای سبز
+                //-         -else 
+                //-             option(value="فضای سبز") فضای سبز
+                //-         -if(account.useType == 'شرکت آب')
+                //-             option(selected value="شرکت آب") شرکت آب
+                //-         -else 
+                //-             option(value="شرکت آب") شرکت آب
+                //- .file-upload 
+                //-     label(for="licensePic") اسکن پروانه بهره برداری:
+                //-     input(type="file" name="licensePic" id="licensePic")
+                //- -if(account.licensePic)
+                //-     img.license(src="#{account.licensePic}")
+                
+            .column
+                //- .title اطلاعات فیزیکی
+                //- .text-input 
+                //-     i.fa.fa-pencil 
+                //-     label(for="wellCap") WellCap:
+                //-     input(type="number" name="wellCap" placeholder="00 لیتر" value="#{typeof(account.wellCap) == 'undefined' ? '' : account.wellCap}")
+                //- .text-input 
+                //-     i.fa.fa-pencil 
+                //-     label(for="sellCap") SellCap:
+                //-     input(type="number" name="sellCap" placeholder="00 لیتر" value="#{typeof(account.sellCap) == 'undefined' ? '' : account.sellCap}")
+                //- .text-input 
+                //-     i.fa.fa-pencil 
+                //-     label(for="buyCap") BuyCap:
+                //-     input(type="number" name="buyCap" placeholder="00 لیتر" value="#{typeof(account.buyCap) == 'undefined' ? '' : account.buyCap}")
+                //- .text-input 
+                //-     i.fa.fa-pencil 
+                //-     label(for="depth") عمق چاه (متر):
+                //-     input(type="number" name="depth" placeholder="00 متر" value="#{typeof(account.depth) == 'undefined' ? '' : account.depth}")
+                //- .text-input 
+                //-     i.fa.fa-pencil 
+                //-     label(for="power") توان چاه (وات):
+                //-     input(type="number" name="power" placeholder="00 وات" value="#{typeof(account.power) == 'undefined' ? '' : account.power}")
+                //- .text-input 
+                //-     i.fa.fa-pencil 
+                //-     label(for="abdehi") آبدهی چاه (لیتر بر ثانیه):
+                //-     input(type="number" name="abdehi" placeholder="00 متر بر ثانیه" value="#{typeof(account.abdehi) == 'undefined' ? '' : account.abdehi}")
+                //- .select-input
+                //-     label(for="userID") کاربر:
+                //-     select(name="userID" id="userID") 
+                //-         option(value="undefined") انتخاب کاربر
+                //-         -for(var i=0; i<users.length; i++){
+                //-             -if(account.ownerID == users[i]._id)
+                //-                 option(value="#{users[i]._id}" selected) #{users[i].fullname} (#{users[i].phone})
+                //-             -else
+                //-                 option(value="#{users[i]._id}") #{users[i].fullname} (#{users[i].phone})
+                //-         -}
+                //- .select-input
+                //-     label(for="pomp") نوع پمپ: 
+                //-     select(id="pomp" name="pomp") 
+                //-         -if(account.pomp == 'شناور')
+                //-             option(selected value="شناور") شناور
+                //-         -else
+                //-             option(value="شناور") شناور
+                //-         -if(account.pomp == 'شفت و غلاف')
+                //-             option(selected value="شفت و غلاف") شفت و غلاف
+                //-         -else
+                //-             option(value="شفت و غلاف") شفت و غلاف
+                //-         -if(account.pomp == 'سایر')
+                //-             option(selected value="سایر") سایر
+                //-         -else
+                //-             option(value="سایر") سایر
+        button.submit(type="submit")
+            i.fa.fa-save

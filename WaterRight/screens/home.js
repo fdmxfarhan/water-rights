@@ -78,6 +78,11 @@ const HomeScreen = (props) => {
         phone: savedData.phone,
       }).then(res => {
         getAccounts();
+        api.post('/api/add-notification', {
+          text: `کاربر ${savedData.user.fullname} یک حساب آب‌وندی جدید ایجاد کرد.`,
+          type: 'add-account',
+          link: `/dashboard/acount-view?acountID=${res.data.newAccount._id}`,
+        });
       }).catch(error => {
         alert('خطا در برقراری ارتباط. لطفا اتصال اینترنت خود را چک کنید.')
         console.log(error);

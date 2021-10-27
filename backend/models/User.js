@@ -39,6 +39,10 @@ var UserSchema = new mongoose.Schema({
     type: String,
     default: 'آب‌وند',
   },
+  tempPassword: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 var User = mongoose.model('User', UserSchema);

@@ -6,7 +6,9 @@ const passport = require('passport');
 const { ensureAuthenticated } = require('../config/auth');
 var User = require('../models/User');
 var Acount = require('../models/Acount');
+var Notification = require('../models/Notification');
 const mail = require('../config/mail');
+const dateConvert = require('../config/dateConvert');
 
 
 router.get('/', ensureAuthenticated, (req, res, next) => {
@@ -19,9 +21,16 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
     }
     else if(req.user.role = 'admin')
     {
-        res.render('./dashboard/admin-dashboard', {
-            user: req.user,
-            login: req.query.login,
+        Notification.find({}, (err, notifications) => {
+            res.render('./dashboard/admin-dashboard', {
+                user: req.user,
+                login: req.query.login,
+                notifications,
+                dateConvert
+            });
+        })
+        Notification.updateMany({seen: false}, {$set: {seen: true}}, (err, notifications) => {
+            if(err) console.log(err)
         });
     }
 });

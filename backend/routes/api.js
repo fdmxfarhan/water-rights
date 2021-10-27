@@ -7,6 +7,7 @@ const sms = require('../config/sms');
 const { ensureAuthenticated } = require('../config/auth');
 var User = require('../models/User');
 var Acount = require('../models/Acount');
+var Notification = require('../models/Notification');
 
 router.post('/login', (req, res, next) => {
     const {username, password} = req.body;
@@ -115,7 +116,7 @@ router.post('/add-account', (req, res, next) => {
                 creationDate: new Date,
             });
             newAccount.save().then(doc => {
-                res.send({done: true});
+                res.send({done: true, newAccount});
             }).catch(err => {
                 if(err) console.log(err);
                 res.send({done: false});
@@ -123,6 +124,26 @@ router.post('/add-account', (req, res, next) => {
         })
     });
 });
+
+router.post('/add-notification', (req, res, next) => {
+    const {type, text, link} = req.body;
+    var newNotif = new Notification({
+        type,
+        text,
+        link,
+        date: new Date,
+    });
+    newNotif.save().then(doc => {
+        res.send({done: true})
+    }).catch(err => {
+        if(err) {
+            console.log(err);
+            res.send({done: false})
+        }
+    });
+
+});
+
 
 
 

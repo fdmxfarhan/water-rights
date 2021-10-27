@@ -100,6 +100,47 @@
         padding: 0 0.5vw;
         font-size: 1.3vw;
     }
+    .notifications{
+        max-height: 60vh;
+        overflow-y: scroll;
+        width: 80%;
+        margin: 1vw auto;
+        padding: 1vw 2vw;
+    }
+    .notifications .notif{
+        padding: 0.7vw 1vw;
+        color: white;
+        border-radius: 1vw;
+        margin-bottom: 1vw;
+        overflow: hidden;
+        background-color: var(--blue);
+    }
+    .notifications .notif.seen{
+        background-color: var(--gray);
+    }
+    .notifications .notif:hover{
+        background-color: var(--green);
+    }
+    .notifications .notif a{
+        color: white;
+        font-family: 'iransans';
+        font-size: 1vw;
+        float: right;
+        display: block;
+        text-decoration: none;
+    }
+    .notifications .notif .text{
+        color: white;
+        font-family: 'iransans';
+        font-size: 1vw;
+    }
+    .notifications .notif .date{
+        color: white;
+        font-family: 'iransans';
+        font-size: 1vw;
+        float: left;
+    }
+    
 }
 @media only screen and (max-width: 800px) {
     

@@ -183,16 +183,33 @@ block content
                     input(type="file" name="licensePic" id="licensePic")
                 input.submit(type="submit" value="ثبت")
         .tab#tab2 
-            form(action="/upload/add-chah" enctype="multipart/form-data" method="POST") 
-                .text-input
-                    label(for="license") شماره پروانه بهره برداری:
-                    input(type="text" name="license" id="license" placeholder="00000")
+            form(action="/upload/add-account-chahvandi" method="POST") 
+                .select-input
+                    label(for="chahID") حساب چاه:
+                    select(name="chahID" id="chahID") 
+                        option(value="undefined") انتخاب حساب جاه
+                        -for(var i=0; i<accounts.length; i++)
+                            -if(accounts[i].type == "chah")
+                                option(value="#{accounts[i]._id}") #{accounts[i].license} (#{accounts[i].owner})
+                .select-input
+                    label(for="userID") کاربر:
+                    select(name="userID" id="userID") 
+                        option(value="undefined") انتخاب کاربر
+                        -for(var i=0; i<users.length; i++)
+                            option(value="#{users[i]._id}") #{users[i].fullname} (#{users[i].phone})
+                input.submit(type="submit" value="ثبت")
         .tab#tab3 
-            form(action="/upload/add-chah" enctype="multipart/form-data" method="POST") 
-                .text-input
-                    label(for="license") شماره پروانه بهره برداری:
-                    input(type="text" name="license" id="license" placeholder="00000")
+            form(action="/upload/add-account-abvandi" method="POST") 
+                .select-input
+                    label(for="userID") کاربر:
+                    select(name="userID" id="userID") 
+                        option(value="undefined") انتخاب کاربر
+                        -for(var i=0; i<users.length; i++)
+                            option(value="#{users[i]._id}") #{users[i].fullname} (#{users[i].phone})
+                input.submit(type="submit" value="ثبت")
         
     script(src="/js/accounts.js") 
+    script.
+        $('#link3').addClass('active');
 
 

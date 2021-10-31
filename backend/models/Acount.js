@@ -9,6 +9,8 @@ var AcountSchema = new mongoose.Schema({
   permitedWorkTime: Number,
   UTM: String,
   useType: String,
+  farmingType: String,
+  area: Number,
   depth: Number,
   power: Number,
   abdehi: Number,
@@ -21,7 +23,7 @@ var AcountSchema = new mongoose.Schema({
   owner: String,
   ownerID: String,
   completedInfo: {type: Boolean, default: false},
-
+  
   accountNumber: Number,
   charge: {
     type: Number,
@@ -31,6 +33,11 @@ var AcountSchema = new mongoose.Schema({
   startDate: Object,
   creationDate: Date,
   linkedAccount: String,
+
+  sandogh: {
+    type: Number,
+    default: 0,
+  },
 });
 
 var Acount = mongoose.model('Acount', AcountSchema);

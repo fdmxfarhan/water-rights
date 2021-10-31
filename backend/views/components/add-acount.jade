@@ -24,7 +24,6 @@
                 i.fa.fa-save 
                 | ثبت 
 
-
 .popup#add-chahvandi-popup
     i.fa.fa-times.close-popup
     h1.popup-title افزودن حساب چاه‌وندی
@@ -57,7 +56,7 @@
     form(action="/upload/add-chah" enctype="multipart/form-data" method="POST") 
         input.hidden(type="text" name="userID" value="#{viewingUser._id}")
         .middle-col
-            .text-input 
+            .text-input
                 i.fa.fa-pencil
                 input(type="text" name="license" placeholder="شماره پروانه بهره برداری" required)
             .upload-area عکس پروانه بهره برداری چاه

@@ -83,7 +83,7 @@ function abvandiCheck()
 }
 
 $(document).ready(function(){
-    $('#link3').addClass('active');
+    // $('#link3').addClass('active');
     $('#tab2').hide();
     $('#tab3').hide();
 

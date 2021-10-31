@@ -10,7 +10,7 @@
                 .text-input-area
                     input.textinput(type="text" placeholder="نام خانوادگی" name="lastName" value= "#{ typeof lastName != 'undefined' ? lastName: '' }")
                     i.fa.fa-pencil
-                .text-input-area
+                .text-input-area.required
                     input.textinput(type="text" placeholder="کد ملی" name="idNumber" value= "#{ typeof idNumber != 'undefined' ? idNumber: '' }" required)
                     i.fa.fa-user
                 .text-input-area
@@ -38,13 +38,13 @@
                 .text-input-area
                     input.textinput(type="text" placeholder="کد پستی" name="postCode" value= "#{ typeof postCode != 'undefined' ? postCode: '' }")
                     i.fa.fa-inbox
-                .text-input-area
-                    input.textinput(type="text" placeholder="شماره تماس" name="phone" value= "#{ typeof phone != 'undefined' ? phone: '' }")
+                .text-input-area.required
+                    input.textinput(type="text" placeholder="شماره تماس" name="phone" value= "#{ typeof phone != 'undefined' ? phone: '' }" required)
                     i.fa.fa-phone
-                .text-input-area
+                .text-input-area.required
                     input.textinput(type="password" placeholder="رمز عبور" name="password" value= "#{ typeof psw != 'undefined' ? psw: '' }" required)
                     i.fa.fa-key
-                .text-input-area
+                .text-input-area.required
                     input.textinput(type="password" placeholder="تایید رمز عبور" name="configpassword" value= "#{ typeof configpsw != 'undefined' ? configpsw: '' }" required)
                     i.fa.fa-check
                 //- label(for="myFile") معرفی نامه: 

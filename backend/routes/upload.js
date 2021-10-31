@@ -209,7 +209,7 @@ router.post('/add-account-chah', ensureAuthenticated, upload.single('licensePic'
     })
 });
 router.post('/save-chah', ensureAuthenticated, upload.single('licensePic'), (req, res, next) => {
-    var {accountID, permitedUseInYear, linkedAccount, permitedAbdehi, permitedWorkTime, UTM, useType, wellCap, sellCap, buyCap, depth, power, abdehi, userID, pomp} = req.body;
+    var {accountID, permitedUseInYear, linkedAccount, permitedAbdehi, permitedWorkTime, UTM, useType, wellCap, sellCap, buyCap, depth, power, abdehi, userID, pomp, farmingType, area} = req.body;
     var file = req.file;
     User.findById(userID, (err, user) => {
         Acount.findById(accountID, (err, account) => {
@@ -235,6 +235,8 @@ router.post('/save-chah', ensureAuthenticated, upload.single('licensePic'), (req
                 pomp,
                 type: 'chah',
                 linkedAccount,
+                farmingType, 
+                area,
             }}, (err) => {
                 if(err) console.log(err);
                 if(owner != 'undefined'){
@@ -318,6 +320,56 @@ router.post('/save-chahvandi', ensureAuthenticated, upload.single('licensePic'),
         });
     });
 });
+router.post('/add-account-chahvandi', ensureAuthenticated, (req, res, next) => {
+    var {chahID, userID} = req.body;
+    User.findById(userID, (err, user) => {
+        Acount.find({}, (err, accounts) => {
+            var accountNumber = 114110;
+            for(var i=0; i<accounts.length; i++)
+                if(accounts[i].accountNumber > accountNumber)
+                    accountNumber = accounts[i].accountNumber
+            var owner = 'undefined';
+            if(user) owner = user.fullname;
+            var newAccount = new Acount({
+                accountNumber: accountNumber+1,
+                owner,
+                ownerID: userID,
+                linkedAccount: chahID,
+                type: 'chahvandi',
+                charge: 0,
+                creationDate: new Date,
+            })
+            newAccount.save().then(doc => {
+                res.redirect(`/dashboard/acount-view?acountID=${newAccount._id}`);
+            }).catch(err => console.log(err));
+        });
+    })
+});
+router.post('/add-account-abvandi', ensureAuthenticated, (req, res, next) => {
+    var {userID} = req.body;
+    User.findById(userID, (err, user) => {
+        Acount.find({}, (err, accounts) => {
+            var accountNumber = 114110;
+            for(var i=0; i<accounts.length; i++)
+                if(accounts[i].accountNumber > accountNumber)
+                    accountNumber = accounts[i].accountNumber
+            var owner = 'undefined';
+            if(user) owner = user.fullname;
+            var newAccount = new Acount({
+                accountNumber: accountNumber+1,
+                owner,
+                ownerID: userID,
+                type: 'abvandi',
+                charge: 0,
+                creationDate: new Date,
+            })
+            newAccount.save().then(doc => {
+                res.redirect(`/dashboard/acount-view?acountID=${newAccount._id}`);
+            }).catch(err => console.log(err));
+        });
+    })
+});
+
 
 
 module.exports = router;

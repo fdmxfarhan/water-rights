@@ -20,6 +20,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Header from '../components/header';
 import AcountView from '../components/AcountView';
 import Setting from '../components/Setting';
+import History from '../components/History';
 import AddAccount from '../components/addAccount';
 
 const Tab = createBottomTabNavigator();
@@ -79,7 +80,7 @@ const HomeScreen = (props) => {
       }).then(res => {
         getAccounts();
         api.post('/api/add-notification', {
-          text: `کاربر ${savedData.user.fullname} یک حساب آب‌وندی جدید ایجاد کرد.`,
+          text: `کاربر ${savedData.user.fullname} یک حساب آب‌وندی جدید (${res.data.newAccount.accountNumber}) ایجاد کرد.`,
           type: 'add-account',
           link: `/dashboard/acount-view?acountID=${res.data.newAccount._id}`,
         });
@@ -187,7 +188,8 @@ const SettingsScreen = (props) => {
 const HistoryScreen = (props) => {
   return (
     <View style={styles.container}>
-      <Header title={'تاریخچه'}  backID={'Main'} navigation={props.navigation}/>
+      {/* <Header title={'تاریخچه'}  backID={'Main'} navigation={props.navigation}/> */}
+      <History navigation={props.navigation}/>
     </View>
   );
 }

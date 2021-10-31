@@ -147,5 +147,19 @@ router.post('/add-transmission', (req, res, next) => {
     newTransmission.save().then(doc =>{
         res.send({done: true})
     }).catch(err => console.log(err));
-})
+});
+router.post('/get-transmissions', (req, res, next) => {
+    var {phone} = req.body;
+    User.findOne({phone: phone}, (err, user) => {
+        Transmission.find({}, (err, allTransmissions) => {
+            var transmissions = [];
+            for(var i=0; i<allTransmissions.length; i++){
+                if(allTransmissions[i].source.ownerID.toString() == user._id.toString() || allTransmissions[i].target.ownerID.toString() == user._id.toString()){
+                    transmissions.push(allTransmissions[i]);
+                }
+            }
+            res.send({done: true, transmissions});
+        });
+    });
+});
 module.exports = router;

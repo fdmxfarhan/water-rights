@@ -53,12 +53,37 @@
                                     option(selected value="شرکت آب") شرکت آب
                                 -else 
                                     option(value="شرکت آب") شرکت آب
+                        .select-input
+                            label(for="userID")
+                                i.fa.fa-pencil 
+                                | کاربر:
+                            select(name="userID" id="userID") 
+                                option(value="undefined") انتخاب کاربر
+                                -for(var i=0; i<users.length; i++){
+                                    -if(account.ownerID == users[i]._id)
+                                        option(value="#{users[i]._id}" selected) #{users[i].fullname} (#{users[i].phone})
+                                    -else
+                                        option(value="#{users[i]._id}") #{users[i].fullname} (#{users[i].phone})
+                                -}
+                        .select-input
+                            label(for="linkedAccount") 
+                                i.fa.fa-pencil 
+                                | حساب چاه‌وندی متصل:
+                            select(name="linkedAccount" id="linkedAccount") 
+                                option(value="undefined") انتخاب حساب
+                                -for(var i=0; i<accounts.length; i++){
+                                    -if(accounts[i].type == 'chahvandi'){
+                                        -if(accounts[i].linkedAccount == account._id.toString())
+                                            option(value="#{accounts[i]._id}" selected) #{accounts[i].accountNumber}
+                                        -else
+                                            option(value="#{accounts[i]._id}") #{accounts[i].accountNumber}
+                                    -}
+                                -}
                         .file-upload 
                             label(for="licensePic") اسکن پروانه بهره برداری:
                             input(type="file" name="licensePic" id="licensePic")
                         -if(account.licensePic)
                             img.license(src="#{account.licensePic}")
-                        
                     .column
                         .title اطلاعات فیزیکی
                         .text-input 
@@ -85,18 +110,14 @@
                             i.fa.fa-pencil 
                             label(for="abdehi") آبدهی چاه (لیتر بر ثانیه):
                             input(type="number" name="abdehi" placeholder="00 متر بر ثانیه" value="#{typeof(account.abdehi) == 'undefined' ? '' : account.abdehi}")
-                        .select-input
-                            label(for="userID")
-                                i.fa.fa-pencil 
-                                | کاربر:
-                            select(name="userID" id="userID") 
-                                option(value="undefined") انتخاب کاربر
-                                -for(var i=0; i<users.length; i++){
-                                    -if(account.ownerID == users[i]._id)
-                                        option(value="#{users[i]._id}" selected) #{users[i].fullname} (#{users[i].phone})
-                                    -else
-                                        option(value="#{users[i]._id}") #{users[i].fullname} (#{users[i].phone})
-                                -}
+                        .text-input 
+                            i.fa.fa-pencil 
+                            label(for="farmingType") نوع کشت:
+                            input(type="text" name="farmingType" placeholder="نوع کشت" value="#{typeof(account.farmingType) == 'undefined' ? '' : account.farmingType}")
+                        .text-input 
+                            i.fa.fa-pencil 
+                            label(for="area") مساحت زمین:
+                            input(type="number" name="area" placeholder="00 متر مربع" value="#{typeof(account.area) == 'undefined' ? '' : account.area}")
                         .select-input
                             label(for="pomp") 
                                 i.fa.fa-pencil 
@@ -114,20 +135,7 @@
                                     option(selected value="سایر") سایر
                                 -else
                                     option(value="سایر") سایر
-                        .select-input
-                            label(for="linkedAccount") 
-                                i.fa.fa-pencil 
-                                | حساب چاه‌وندی متصل:
-                            select(name="linkedAccount" id="linkedAccount") 
-                                option(value="undefined") انتخاب حساب
-                                -for(var i=0; i<accounts.length; i++){
-                                    -if(accounts[i].type == 'chahvandi'){
-                                        -if(accounts[i].linkedAccount == account._id.toString())
-                                            option(value="#{accounts[i]._id}" selected) #{accounts[i].accountNumber}
-                                        -else
-                                            option(value="#{accounts[i]._id}") #{accounts[i].accountNumber}
-                                    -}
-                                -}
+                        
                 button.submit(type="submit")
                     i.fa.fa-save
         .user-control 

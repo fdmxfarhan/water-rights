@@ -245,13 +245,46 @@ router.get('/accounts', ensureAuthenticated, (req, res, next) => {
         });
     }
 })
+var getMirabRight = (source, target, amount) => {
+    if(source.type == 'chah' && target.type == 'chahvandi')
+        return 0;
+    return amount * 0.05
+}
+var getAbkhanRight = (source, target, amount) => {
+    if(source.type == 'chahvandi' && target.type == 'chah'){
+        if((amount - getMirabRight(source, target, amount)) * 0.1 - target.sandogh  < 0) return 0;
+        return (amount - getMirabRight(source, target, amount)) * 0.1 - target.sandogh;
+    }
+    return 0;
+}
+var getSandoghRight = (source, target, amount) => {
+    if(source.type == 'chah' && target.type == 'chahvandi'){
+        return amount * 0.1
+    }
+    else if(source.type == 'chahvandi' && target.type == 'chah'){
+        if((amount - getMirabRight(source, target, amount)) * 0.1 - target.sandogh  < 0) return -(amount - getMirabRight(source, target, amount)) * 0.1
+        return -target.sandogh; 
+    }
+    return 0;
+}
+
 router.get('/accept-transmission', ensureAuthenticated, (req, res, next) => {
     var {transmissionID} = req.query;
+
     Transmission.findById(transmissionID, (err, transmission) => {
         Acount.findById(transmission.source._id, (err, source) => {
             Acount.findById(transmission.target._id, (err, target) => {
+                var amount = transmission.amount;
+                var mirab = getMirabRight(source, target, amount);
+                var abkhan = getAbkhanRight(source, target, amount);
+                var sandogh = getSandoghRight(source, target, amount);
+
                 Acount.updateMany({_id: source._id}, {$set: {charge: source.charge - transmission.amount}}, (err) => {});
-                Acount.updateMany({_id: target._id}, {$set: {charge: target.charge + transmission.amount}}, (err) => {});
+                Acount.updateMany({_id: target._id}, {$set: {charge: target.charge + (transmission.amount - mirab - abkhan)}}, (err) => {});
+                if(source.type == 'chah') 
+                    Acount.updateMany({_id: source._id}, {$set: {sandogh: source.sandogh + sandogh}}, (err) => {});
+                if(target.type == 'chah')
+                    Acount.updateMany({_id: target._id}, {$set: {sandogh: target.sandogh + sandogh}}, (err) => {});
                 Transmission.updateMany({_id: transmissionID}, {$set: {done: true, accepted: true}}, (err) => {
                     res.redirect('/dashboard');
                 });
@@ -259,7 +292,18 @@ router.get('/accept-transmission', ensureAuthenticated, (req, res, next) => {
         });
     });
 });
-
+router.get('/transmissions', ensureAuthenticated, (req, res, next) => {
+    if(req.user.role == 'admin'){
+        Transmission.find({}, (err, transmissions) => {
+            res.render('./dashboard/admin-transmissions', {
+                user: req.user,
+                transmissions,
+                dateConvert,
+            });
+        });
+    }
+    else res.send('access denied');
+})
 router.get('/decline-transmission', ensureAuthenticated, (req, res, next) => {
     var {transmissionID} = req.query;
     Transmission.updateMany({_id: transmissionID}, {$set: {done: true, accepted: false}}, (err) => {

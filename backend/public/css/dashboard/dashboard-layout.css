@@ -233,6 +233,9 @@ body::-webkit-scrollbar-thumb:hover{background: var(--blue);}
         font-size: 1vw;
         padding: 0.3vw 4vw;
     }   
+    .popup .two-side-form .part .text-input-area.required input{
+        border: var(--blue) 0.1vw dashed;
+    }
     .popup .two-side-form .part .text-input-area input:focus{
         border: var(--blue) 0.1vw solid;
         outline: none;

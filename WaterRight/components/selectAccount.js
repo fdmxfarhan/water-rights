@@ -46,7 +46,32 @@ export default SelectAccount = ({enabled, setAccount, setTargetAccounts, setEnab
                                                 }
                                             });
                                         }
-                                        else setTargetAccounts(accountList);
+                                        else if(item.type == 'chahvandi'){
+                                            var nextList = [];
+                                            for(var i=0; i<accountList.length; i++){
+                                                if(accountList[i]._id.toString() == item._id.toString());
+                                                else if(accountList[i].type == 'chah' && item.linkedAccount == accountList[i]._id.toString()){
+                                                    nextList.push(accountList[i])
+                                                }
+                                                else nextList.push(accountList[i])
+                                            }
+                                            setTargetAccounts(nextList);
+                                            setTargetAccount('انتخاب حساب مقصد');
+                                        }
+                                        else if(item.type == 'abvandi'){
+                                            var nextList = [];
+                                            for(var i=0; i<accountList.length; i++){
+                                                if(accountList[i]._id.toString() == item._id.toString());
+                                                else if(accountList[i].type == 'chah');
+                                                else nextList.push(accountList[i])
+                                            }
+                                            setTargetAccounts(nextList);
+                                            setTargetAccount('انتخاب حساب مقصد');
+                                        }
+                                        else {
+                                            setTargetAccounts(accountList);
+                                            setTargetAccount('انتخاب حساب مقصد');
+                                        }
                                         }}>
                                         <View style={styles.info}>
                                             <Text style={styles.infoTitle}>{item.type == 'chah' ? item.license : item.accountNumber}</Text>

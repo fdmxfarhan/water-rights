@@ -1,0 +1,58 @@
+extends layout
+
+block styles
+    link(rel="stylesheet", href="/css/dashboard/users-view.css")
+    link(rel="stylesheet", href="/css/dashboard/accounts.css")
+
+block content
+    .title-view 
+        h1 انتقالات
+        h2 #{transmissions.length} حساب
+    .content-view 
+        .users-view 
+            table(id="myTable")
+                tr 
+                    th ردیف
+                    th حساب مبداء
+                    th حساب مقصد
+                    th شارژ
+                    th تاریخ
+                    th 
+                -for(var i=0; i<transmissions.length; i++){
+                    tr
+                        td.role= i+1
+                        td.user 
+                            h1= transmissions[i].source.type == 'chah'? transmissions[i].source.license : transmissions[i].source.accountNumber
+                            h2= transmissions[i].source.owner
+                        td.acounts 
+                            h1= transmissions[i].target.type == 'chah'? transmissions[i].target.license : transmissions[i].target.accountNumber
+                            h2= transmissions[i].target.owner
+                        td.charge= transmissions[i].amount
+                        td= dateConvert.get_year_month_day(transmissions[i].date)
+                        td
+                            a.edit(href="/dashboard/transmissions-view?transmissionsID=#{transmissions[i]._id}") 
+                                i.fa.fa-external-link
+                -}
+        .user-control 
+            .control 
+                //- .search-view
+                //-     input(id="searchInput" type="text" placeholder="جستجو" onchange="search()")
+                //-     button(onclick="search()")
+                //-         i.fa.fa-search
+                //- .check-boxes
+                //-     input.check(type="checkbox" id="check-abvandi" checked onchange="abvandiCheck()")
+                //-     label(for="check-abvandi") حساب های آب‌وندی
+                //-     br
+                //-     input.check(type="checkbox" id="check-chahvandi" checked onchange="chahvandiCheck()")
+                //-     label(for="check-chahvandi") حساب های چاه‌وندی
+                //-     br
+                //-     input.check(type="checkbox" id="check-chah" checked onchange="chahCheck()")
+                //-     label(for="check-chah") حساب های چاه
+                    
+                //- a.add-user#add-account-btn
+                //-     i.fa.fa-plus 
+                //-     | افزودن حساب
+    script(src="/js/accounts.js") 
+    script.
+        $('#link4').addClass('active');
+

@@ -19,6 +19,19 @@ const api = require('../config/api');
 const {saveData, readData} = require('../config/save');
 
 export default ConfirmTransmission = ({enabled, setEnable, navigation, source, target, amount}) => {
+    var getMirabRight = () => {
+        if(source.type == 'chah' && target.type == 'chahvandi')
+            return 0;
+        return amount * 0.05
+    }
+    var getAbkhanRight = () => {
+        if(source.type == 'chahvandi' && target.type == 'chah'){
+            if((amount - getMirabRight()) * 0.1 - target.sandogh  < 0) return 0;
+            return (amount - getMirabRight()) * 0.1 - target.sandogh;
+        }
+        return 0;
+    }
+    
     var transmit = () => {
         api.post('/api/add-transmission', {source, target, amount}).then(res => {
             if(res.data.done){
@@ -34,6 +47,11 @@ export default ConfirmTransmission = ({enabled, setEnable, navigation, source, t
                     <ScrollView>
                         <Text style={styles.title}>انتقال شارژ</Text>
                         <Text style={styles.text}>پس از تایید، درخواست انتقال شارژ به میراب ارسال می‌گردد و در صورت تایید میراب شارژ به حساب مقصد انتقال می‌یابد</Text>
+                        <Text>شارژ انتقالی: {amount}</Text>
+                        <Text>سهم میراب: {getMirabRight(amount)}</Text>
+                        <Text>سهم آبخوان: {getAbkhanRight(amount)}</Text>
+                        <Text>قابل انتقال: {amount - getMirabRight() - getAbkhanRight()}</Text>
+
                     </ScrollView>
                     <TouchableOpacity onPress={transmit} style={[styles.submitButton, {backgroundColor: colors.blue}]}>
                         <Text style={styles.submitButtonText}>تایید و ارسال</Text>

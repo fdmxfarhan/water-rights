@@ -17,20 +17,19 @@
     header a.logo{
         text-decoration: none;
         position: absolute;
-        top: 4vw;
+        top: 3vw;
         left: 5%;
-
     }
-    header a.logo img{width: 5vw;}
+    header a.logo img{width: 10vw;}
     header nav{
         position: absolute;
-        top: 5vw;
-        right: 5%;
+        top: 6vw;
+        right: 10%;
         overflow: hidden;
     }
     header nav a.nav-link{
         color: white;
-        font-size: 1.7vw;
+        font-size: 1.4vw;
         font-family: 'iransans';
         text-decoration: none;
         display: block;
@@ -48,21 +47,23 @@
     }
     header .info {
         position: absolute;
-        top: 15vw;
-        right: 5vw;
+        top: 20vw;
+        width: 100%;
+        right: 0;
+        text-align: center;
     }
     header .info h1.title{
         font-family: 'iransans';
-        font-size: 12vw;
+        font-size: 8vw;
         margin: 0;
         padding: 0;
         color: white;
         font-weight: bold;
-        line-height: 15vw;
+        line-height: 10vw;
     }
     header .info h1.title2{
         font-family: 'iransans';
-        font-size: 2.3vw;
+        font-size: 2vw;
         margin: 0;
         padding: 0;
         color: rgb(236, 236, 236);
@@ -72,16 +73,19 @@
         color: white;
         font-family: 'iransans';
         font-size: 1.5vw;
-        margin-top: 2vw;
         display: block;
         width: fit-content;
-        background-color: var(--blue);
+        background-color: transparent;
+        border: white 0.2vw solid;
         padding: 0.5vw 4vw;
         border-radius: 2vw;
         cursor: pointer;
         text-decoration: none;
+        margin: auto;
+        margin-top: 2vw;
     }
     header .info a.enter:hover{
-        background-color: var(--hover);
+        background-color: var(--green);
+        border: var(--green) 0.2vw solid;
     }
 }

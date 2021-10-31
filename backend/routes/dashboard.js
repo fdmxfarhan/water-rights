@@ -22,20 +22,30 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
     }
     else if(req.user.role = 'admin')
     {
-        Notification.find({}, (err, notifications) => {
-            Transmission.find({done: false}, (err, transmissions) => {
-                res.render('./dashboard/admin-dashboard', {
-                    user: req.user,
-                    login: req.query.login,
-                    notifications,
-                    dateConvert,
-                    transmissions,
+        User.find({}, (err, users) => {
+            Acount.find({}, (err, accounts) => {
+                Notification.find({}, (err, notifications) => {
+                    Transmission.find({done: false}, (err, transmissions) => {
+                        var sumCharge = 0;
+                        if(accounts.length > 1)
+                            sumCharge = accounts.map(e => parseInt(e.charge)).reduce((a, b) => a+b);
+                        res.render('./dashboard/admin-dashboard', {
+                            user: req.user,
+                            login: req.query.login,
+                            notifications,
+                            dateConvert,
+                            transmissions,
+                            users,
+                            accounts,
+                            sumCharge,
+                        });
+                    })
+                })
+                Notification.updateMany({seen: false}, {$set: {seen: true}}, (err, notifications) => {
+                    if(err) console.log(err)
                 });
-            })
+            });
         })
-        Notification.updateMany({seen: false}, {$set: {seen: true}}, (err, notifications) => {
-            if(err) console.log(err)
-        });
     }
 });
 router.get('/users', ensureAuthenticated, (req, res, next) => {
@@ -192,12 +202,15 @@ router.get('/acount-view', ensureAuthenticated, (req, res, next) => {
     Acount.findById(acountID, (err, account) => {
         User.findById(account.ownerID, (err, user) => {
             User.find({}, (err, users) => {
-                res.render('./dashboard/acount-view', {
-                    user: req.user,
-                    viewingUser: user,
-                    account,
-                    users,
-                })
+                Acount.find({}, (err, accounts) => {
+                    res.render('./dashboard/acount-view', {
+                        user: req.user,
+                        viewingUser: user,
+                        account,
+                        users,
+                        accounts,
+                    })
+                });
             });
         });
     });

@@ -7,9 +7,9 @@ block content
     .cards-view 
         a.card.blue(href="/dashboard/users")
             i.fa.fa-user 
-            h1.number 1234
+            h1.number= users.length
             .progress-bar
-                .passed(style="width: 30%")
+                .passed(style="width: #{Math.floor((users.length/100)*100) < 100 ? Math.floor((users.length/100)*100) : 100}%")
             h1.title کاربران
         a.card.orange(href="#")
             i.fa.fa-dollar
@@ -19,15 +19,15 @@ block content
             h1.title درآمد
         a.card.green(href="#")
             i.fa.fa-credit-card
-            h1.number 1235
+            h1.number= accounts.length
             .progress-bar
-                .passed(style="width: 10%")
+                .passed(style="width: #{Math.floor((accounts.length/100)*100) < 100 ? Math.floor((accounts.length/100)*100) : 100}%")
             h1.title حساب ها
         a.card.red(href="#")
-            i.fa.fa-graduation-cap
-            h1.number 1234
+            i.fa.fa-dollar
+            h1.number= sumCharge
             .progress-bar
-                .passed(style="width: 90%")
+                .passed(style="width: #{Math.floor((sumCharge/10000)*100) < 100 ? Math.floor((sumCharge/10000)*100) : 100}%")
             h1.title شارژ کل
     
     .notifications

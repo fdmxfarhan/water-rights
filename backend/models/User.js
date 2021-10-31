@@ -43,6 +43,10 @@ var UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  chahvand:{
+    type: Boolean,
+    default: false,
+  },
 });
 
 var User = mongoose.model('User', UserSchema);

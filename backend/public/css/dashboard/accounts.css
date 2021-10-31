@@ -106,4 +106,16 @@
         text-align: center;
     }
     .inline.red{color: var(--red);display: inline;}
+    .linked-account{
+        cursor: pointer;
+    }
+    .linked-account:hover{
+        color: var(--blue);
+    }
+    td.charge{
+        color: var(--green);
+        font-weight: bold;
+        text-decoration: none;
+        text-align: center;
+    }
 }

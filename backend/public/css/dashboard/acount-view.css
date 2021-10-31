@@ -1,6 +1,8 @@
 @media only screen and (min-width: 800px) {
     .two-column{
         overflow: hidden;
+        width: 90%;
+        margin: 2vw auto;
     }
     .two-column .column{
         width: 50%;
@@ -24,22 +26,28 @@
         box-shadow: 0 0 0.5vw 0.2vw rgba(0, 0, 0, 0.2);
         padding: 0;
         background-color: white; */
-        margin-top: 2vw;
+        /* margin-top: 2vw; */
         margin-bottom: 1vw;
     }
     .two-column .column .select-input label{
-        padding: 0.5vw 1vw;
+        /* padding: 0.5vw 1vw; */
         font-family: 'iransans';
-        font-size: 1.1vw;
+        font-size: 1vw;
+        display: block;
+        margin: 0;
+        margin-bottom: -0.5vw;
+        /* line-height: 0; */
     }
     .two-column .column .select-input select{
         font-size: 1vw;
         padding: 0.6vw;
-        width: 40%;
+        display: block;
+        width: 80%;
         border: none;
         font-family: 'iransans';
         background-color: transparent;
         border-bottom: var(--lightgray) 0.2vw solid;
+        margin-top: 0;
     }
     .two-column .column .select-input select:focus{
         outline: none;
@@ -94,9 +102,16 @@
         text-align: center;
         padding: 0.7vw 0;
     }
+    .two-column .column .select-input i{
+        font-size: 1vw;
+        color: var(--blue);
+        width: 2vw;
+        text-align: center;
+        padding: 0.7vw 0;
+    }
     .two-column .column label{
         font-family: 'iransans';
-        font-size: 1.1vw;
+        font-size: 1vw;
         color: var(--text);
         padding-left: 1vw;
     }
@@ -164,7 +179,7 @@
         background-color: var(--hover);
     }
     .complete-license-info {
-        width: 90%;
+        width: 100%;
         margin: auto;
     }
     .complete-license-info h1.title{
@@ -184,5 +199,42 @@
         margin-top: 2vw;
         margin-bottom: 1vw;
     }
-
+    .charge h1{
+        color: var(--text);
+        font-family: 'iransans';
+        font-size: 1.3vw;
+        text-align: center;
+        padding-top: 1vw;
+        border-bottom: var(--lightgray) 0.1vw solid;
+    }
+    .charge h2{
+        color: var(--green);
+        font-size: 2vw;
+        line-height: 1vw;
+        text-align: center;
+        font-family: 'iransans';
+    }
+    .charge h2 .cm{
+        display: inline;
+        color: var(--gray);
+        font-size: 0.8vw;
+        font-family: 'iransans';
+        /* font-weight: normal; */
+        padding-right: 0.5vw;
+    }
+    a.link-to-account{
+        color: var(--blue);
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        text-decoration: none;
+        display: block;
+        width: fit-content;
+        margin-right: 2vw;
+    }
+    a.link-to-account:hover{
+        color: var(--hover);
+    }
+    a.link-to-account i{
+        padding: 0 0.5vw;
+    }
 }

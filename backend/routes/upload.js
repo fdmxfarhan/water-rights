@@ -106,7 +106,6 @@ router.post('/admin-register', ensureAuthenticated, upload.single('myFile'), (re
         }
     }
 });
-
 router.post('/user-file', ensureAuthenticated, upload.single('myFile'), (req, res, next) => {
     var {userID, title} = req.body;
     var file = req.file;
@@ -122,7 +121,6 @@ router.post('/user-file', ensureAuthenticated, upload.single('myFile'), (req, re
         });
     }
 });
-
 router.post('/add-chah', ensureAuthenticated, upload.single('myFile'), (req, res, next) => {
     var {userID, license} = req.body;
     var file = req.file;
@@ -153,7 +151,6 @@ router.post('/add-chah', ensureAuthenticated, upload.single('myFile'), (req, res
         })
     }
 });
-
 router.post('/add-account-chah', ensureAuthenticated, upload.single('licensePic'), (req, res, next) => {
     var {userID, license, permitedUseInYear} = req.body;
     var file = req.file;
@@ -195,8 +192,10 @@ router.post('/add-account-chah', ensureAuthenticated, upload.single('licensePic'
                                 linkedAccount: newAcount._id,
                             });
                             newAcount2.save().then(doc => {
-                                req.flash('success_msg', 'حساب با موفقیت ایجاد شد');
-                                res.redirect(`/dashboard/accounts`);
+                                User.updateMany({_id: userID}, {$set: {chahvand: true}}, (err, doc) => {
+                                    req.flash('success_msg', 'حساب با موفقیت ایجاد شد');
+                                    res.redirect(`/dashboard/accounts`);
+                                })
                             });
                         });
                     }
@@ -209,10 +208,8 @@ router.post('/add-account-chah', ensureAuthenticated, upload.single('licensePic'
         }
     })
 });
-
-
 router.post('/save-chah', ensureAuthenticated, upload.single('licensePic'), (req, res, next) => {
-    var {accountID, permitedUseInYear, permitedAbdehi, permitedWorkTime, UTM, useType, wellCap, sellCap, buyCap, depth, power, abdehi, userID, pomp} = req.body;
+    var {accountID, permitedUseInYear, linkedAccount, permitedAbdehi, permitedWorkTime, UTM, useType, wellCap, sellCap, buyCap, depth, power, abdehi, userID, pomp} = req.body;
     var file = req.file;
     User.findById(userID, (err, user) => {
         Acount.findById(accountID, (err, account) => {
@@ -237,13 +234,33 @@ router.post('/save-chah', ensureAuthenticated, upload.single('licensePic'), (req
                 abdehi,
                 pomp,
                 type: 'chah',
+                linkedAccount,
             }}, (err) => {
                 if(err) console.log(err);
                 if(owner != 'undefined'){
-                    Acount.findOne({linkedAccount: accountID}, (err, account) => {
-                        if(account){
-                            req.flash('success_msg', 'اطلاعات با موفقیت ذخیره شد');
-                            res.redirect(`/dashboard/acount-view?acountID=${accountID}`);
+                    Acount.findOne({linkedAccount: accountID}, (err, chahvandiAccount) => {
+                        if(chahvandiAccount){
+                            if(chahvandiAccount._id.toString() != linkedAccount){
+                                Acount.updateMany({linkedAccount: accountID}, {$set: {linkedAccount: 'undefined'}}, (err, doc) => {
+                                    if(err) console.log(err);
+                                    Acount.updateMany({_id: linkedAccount}, {$set: {linkedAccount: accountID}}, (err, doc) => {
+                                        req.flash('success_msg', 'اطلاعات با موفقیت ذخیره شد');
+                                        res.redirect(`/dashboard/acount-view?acountID=${accountID}`);
+                                    });
+                                });
+                            }
+                            else{
+                                Acount.updateMany({_id: linkedAccount}, {$set: {linkedAccount: accountID}}, (err, doc) => {
+                                    req.flash('success_msg', 'اطلاعات با موفقیت ذخیره شد');
+                                    res.redirect(`/dashboard/acount-view?acountID=${accountID}`);
+                                });
+                            }
+                        }
+                        else if(linkedAccount != 'undefined'){
+                            Acount.updateMany({_id: linkedAccount}, {$set: {linkedAccount: accountID}}, (err, doc) => {
+                                req.flash('success_msg', 'اطلاعات با موفقیت ذخیره شد');
+                                res.redirect(`/dashboard/acount-view?acountID=${accountID}`);
+                            });
                         }
                         else{
                             Acount.find({}, (err, accounts) => {
@@ -263,20 +280,44 @@ router.post('/save-chah', ensureAuthenticated, upload.single('licensePic'), (req
                                     linkedAccount: accountID,
                                 });
                                 newAcount2.save().then(doc => {
-                                    req.flash('success_msg', 'اطلاعات با موفقیت ذخیره شد');
-                                    res.redirect(`/dashboard/acount-view?acountID=${accountID}`);
+                                    User.updateMany({_id: userID}, {$set: {chahvand: true}}, (err, doc) => {
+                                        req.flash('success_msg', 'اطلاعات با موفقیت ذخیره شد');
+                                        res.redirect(`/dashboard/acount-view?acountID=${accountID}`);
+                                    });
                                 });
                             });
                         }
-                    })
+                    });
                 }
                 else{
-                    req.flash('success_msg', 'اطلاعات با موفقیت ذخیره شد');
-                    res.redirect(`/dashboard/acount-view?acountID=${accountID}`);
+                    Acount.updateMany({_id: linkedAccount}, {$set: {linkedAccount: accountID}}, (err, doc) => {
+                        req.flash('success_msg', 'اطلاعات با موفقیت ذخیره شد');
+                        res.redirect(`/dashboard/acount-view?acountID=${accountID}`);
+                    });
                 }
             });
         });
     });
 });
+router.post('/save-chahvandi', ensureAuthenticated, upload.single('licensePic'), (req, res, next) => {
+    var {accountID, linkedAccount, userID} = req.body;
+    var file = req.file;
+    User.findById(userID, (err, user) => {
+        Acount.findById(accountID, (err, account) => {
+            var owner = account.owner;
+            if(user) owner = user.fullname;
+            Acount.updateMany({_id: accountID}, {$set: {
+                owner: owner,
+                ownerID: userID,
+                type: 'chahvandi',
+                linkedAccount,
+            }}, (err) => {
+                req.flash('success_msg', 'اطلاعات با موفقیت ذخیره شد');
+                res.redirect(`/dashboard/acount-view?acountID=${accountID}`)
+            });
+        });
+    });
+});
+
 
 module.exports = router;

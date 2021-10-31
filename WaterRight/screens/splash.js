@@ -54,7 +54,7 @@ const splash = (props) => {
     return(
         <View style={styles.container}>
             <View style={styles.blueArea}>
-                <Image style={styles.logoImage} source={require('../assets/water.png')}/>
+                <Image style={styles.logoImage} source={require('../assets/logo.png')}/>
                 <Text style={styles.titleText}>اپلیکیشن میراب</Text>
             </View>
             <View style={styles.bottomArea}>
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     logoImage: {
-        width: 100,
+        width: 150,
         height: 150,
         marginTop: 150,
     },

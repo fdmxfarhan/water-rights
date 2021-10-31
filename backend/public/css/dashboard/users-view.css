@@ -102,10 +102,20 @@
         text-decoration: none;
         display: block;
     }
+    .content-view .users-view table td.role .role-chah{
+        background-color: var(--blue);
+        color: white;
+        font-size: 0.9vw;
+        padding: 0.2vw 0.7vw;
+        border-radius: 0.5vw;
+        width: fit-content;
+        text-decoration: none;
+        display: block;
+    }
     .content-view .users-view table td.acounts h1{
         margin: 0;
         font-family: 'iransans';
-        font-size: 1.2vw;
+        font-size: 1vw;
         color: var(--text);
         padding: 0 0.5vw;
     }

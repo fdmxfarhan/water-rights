@@ -23,9 +23,12 @@ block content
                             h2
                                 a(href="tel:#{users[i].phone}")= users[i].phone
                         td.role 
-                            -if(users[i].role == 'user')
-                                a.role-user(href="/dashboard/make-admin?userID=#{users[i]._id}") user 
-                            -if(users[i].role == 'admin')
+                            -if(users[i].role == 'user'){
+                                -if(users[i].chahvand)
+                                    a.role-chah(href="/dashboard/make-admin?userID=#{users[i]._id}") چاه‌وند
+                                -else
+                                    a.role-user(href="/dashboard/make-admin?userID=#{users[i]._id}") آب‌وند
+                            -}if(users[i].role == 'admin')
                                 a.role-admin(href="/dashboard/make-user?userID=#{users[i]._id}") میراب 
                             
                         td.acounts 

@@ -35,7 +35,10 @@ block content
                                 -else
                                     .inline.red مشخص نشده
                                 h2
-                            td.charge= accounts[i].charge
+                            td.charge
+                                -if(accounts[i].blocked)
+                                    i.fa.fa-lock.red-lock
+                                | #{accounts[i].charge}
                             td
                                 a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
                                     i.fa.fa-edit
@@ -58,7 +61,10 @@ block content
                                 -else
                                     .inline.red مشخص نشده
                                 h2
-                            td.charge= accounts[i].charge
+                            td.charge
+                                -if(accounts[i].blocked)
+                                    i.fa.fa-lock.red-lock
+                                | #{accounts[i].charge}
                             td
                                 a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
                                     i.fa.fa-edit
@@ -96,7 +102,10 @@ block content
                                         -}
                                     -}else  
                                         .inline.red بدون حساب چاه
-                            td.charge= accounts[i].charge
+                            td.charge
+                                -if(accounts[i].blocked)
+                                    i.fa.fa-lock.red-lock
+                                | #{accounts[i].charge}
                             td
                                 a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
                                     i.fa.fa-edit

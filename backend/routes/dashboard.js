@@ -13,6 +13,7 @@ const mail = require('../config/mail');
 const dateConvert = require('../config/dateConvert');
 
 
+  
 router.get('/', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'user')
     {
@@ -319,7 +320,7 @@ router.get('/decline-transmission', ensureAuthenticated, (req, res, next) => {
             Acount.findById(transmission.target._id, (err, target) => {
                 var newUserNotif = new UserNotif({
                     type: 'accept-transmission',
-                    text: `انتقال شارژ ${transmission.amount} متر مکعب از حساب ${source.type == 'chah' ? source.license : source.accountNumber} به حساب ${target.type == 'chah' ? target.license : target.accountNumber} توسط میراب تایید نشد.`,
+                    text: `انتقال شارژ ${transmission.amount} متر مکعب از حساب ${source.type == 'chah' ? source.license : source.accountNumber} به حساب ${target.type == 'chah' ? target.license : target.accountNumber} توسط میراب لغو شد.`,
                     userID: source.ownerID,
                     userFullname: source.owner,
                     date: new Date(),
@@ -349,6 +350,21 @@ router.get('/confirm-register', ensureAuthenticated, (req, res, next) => {
         });
     });
 });
+router.get('/block-account', ensureAuthenticated, (req, res, next) => {
+    var {accountID} = req.query;
+    Acount.updateMany({_id: accountID}, {$set: {blocked: true}}, (err, doc) => {
+        res.redirect(`/dashboard/acount-view?acountID=${accountID}`);
+    });
+});
+router.get('/unblock-account', ensureAuthenticated, (req, res, next) => {
+    var {accountID} = req.query;
+    Acount.updateMany({_id: accountID}, {$set: {blocked: false}}, (err, doc) => {
+        res.redirect(`/dashboard/acount-view?acountID=${accountID}`);
+    });
+});
+
+
+
 
 module.exports = router;
 

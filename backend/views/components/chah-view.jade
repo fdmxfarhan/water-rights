@@ -144,3 +144,12 @@
                     h1 شارژ
                     h2 #{account.charge}
                         .cm متر مکعب
+                .block-account 
+                    -if(account.blocked)
+                        a.block(href="/dashboard/unblock-account?accountID=#{account._id}") 
+                            i.fa.fa-unlock 
+                            | باز کردن حساب
+                    -else
+                        a.block(href="/dashboard/block-account?accountID=#{account._id}") 
+                            i.fa.fa-lock 
+                            | مسدود کردن حساب

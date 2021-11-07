@@ -96,7 +96,7 @@ router.post('/compelete-reg', (req, res, next) => {
 router.post('/get-accounts', (req, res, next) => {
     const {phone} = req.body;
     User.findOne({phone: phone}, (err, user) => {
-        Acount.find({ownerID: user._id}, (err, accounts) => {
+        Acount.find({ownerID: user._id, blocked: false}, (err, accounts) => {
             var abvandi = accounts.filter(e => e.type == 'abvandi');
             var chahvandi = accounts.filter(e => e.type == 'chahvandi');
             var chah = accounts.filter(e => e.type == 'chah');

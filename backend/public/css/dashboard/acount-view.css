@@ -237,4 +237,18 @@
     a.link-to-account i{
         padding: 0 0.5vw;
     }
+    .block-account{
+        text-align: center;
+        margin-top: 2vw;
+    }
+    .block-account a{
+        text-align: center;
+        color: var(--red);
+        font-family: 'iransans';
+        font-size: 1vw;
+        text-decoration: none;
+    }
+    .block-account a i{
+        padding: 0 0.5vw;
+    }
 }

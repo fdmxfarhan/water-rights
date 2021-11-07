@@ -38,6 +38,10 @@ var AcountSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  blocked: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 var Acount = mongoose.model('Acount', AcountSchema);

@@ -36,6 +36,7 @@ const HomeScreen = (props) => {
   var [addAccountEnable, setAddAccountEnable] = useState(false);
   var [user, setUser] = useState();
   var [sum, setSum] = useState(0);
+  var [notifications, setNotifications] = useState([]);
 
   var updateSum = (accounts) => {
     if(activeTab == 'abvandi'){
@@ -91,9 +92,46 @@ const HomeScreen = (props) => {
     }
     else alert('ایجاد حساب چاه و چاه‌وندی توسط کاربران امکان پذیر نیست.');
   }
+  var readUser = () => {
+    readData().then(data => {
+        setSavedData(data);
+        if(data != null){
+            api.post('/api/phone-login', {
+                phone: data.phone,
+            }).then(res => {
+                if(res.data.correct){
+                    setUser(res.data.user);
+                }
+            }).catch(error => {
+                alert('خطا در برقراری ارتباط. لطفا اتصال اینترنت خود را چک کنید.')
+                console.log(error);
+            });
+        }
+    });
+  }
+  var readNotifications = () => {
+    readData().then(data => {
+        setSavedData(data);
+        if(data != null){
+          api.post('/api/get-notifications', {
+                phone: data.phone,
+                userID: data.user._id,
+            }).then(res => {
+                setNotifications(res.data);
+            }).catch(error => {
+                alert('خطا در برقراری ارتباط. لطفا اتصال اینترنت خود را چک کنید.')
+                console.log(error);
+            });
+        }
+    });
+  }
 
   useEffect(() => {
-    if(!readOnce) getAccounts();
+    if(!readOnce) {
+      getAccounts();
+      readUser();
+      readNotifications();
+    }
     readOnce = true;
     setReadOnce(true);
     // setInterval(getAccounts, 60000);
@@ -145,23 +183,39 @@ const HomeScreen = (props) => {
               <Text style={styles.tabButtonText}>چاه</Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity style={styles.buttonIcon}>
+          <TouchableOpacity style={styles.buttonIcon} onPress={() =>{
+              props.navigation.navigate('Notification')
+            }}>
             <Icon style={styles.headerIcon} name={'bell'}/>  
-            <View style={styles.notificationAlert} />
+            {notifications.filter(e => e.seen == false).length > 0 ? <View style={styles.notificationAlert} /> : <View></View>}
           </TouchableOpacity>
         </View>
         <Text style={styles.sumText}>{sum}</Text>
         <Text style={styles.sumTextDescription}>متر مکعب</Text>
         <View style={styles.navButtonsView}>
-          <TouchableOpacity style={styles.navButton} onPress={() => {props.navigation.navigate('Transmission')}} >
+          <TouchableOpacity style={styles.navButton} onPress={() => {
+            if(user.confirmed)
+              props.navigation.navigate('Transmission');
+            else
+              alert('حساب کاربری شما توسط میراب تایید نشده. لطفا منتظر بمانید.')
+            }} >
             <Icon style={styles.navButtonIcon} name={'arrow-up'}/>  
             <Text style={styles.navButtonText}>انتقال</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => {getAccounts();}} style={styles.navButton}>
+          <TouchableOpacity onPress={() => {
+              getAccounts();
+              readUser();
+              readNotifications();
+            }} style={styles.navButton}>
             <Icon style={styles.navButtonIcon} name={'refresh'}/>  
             <Text style={styles.navButtonText}>تازه سازی</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => setAddAccountEnable(true)} style={styles.navButton}>
+          <TouchableOpacity onPress={() => {
+            if(user.confirmed)
+              setAddAccountEnable(true)
+            else
+              alert('حساب کاربری شما توسط میراب تایید نشده. لطفا منتظر بمانید.')
+            }} style={styles.navButton}>
             <Icon style={styles.navButtonIcon} name={'plus'}/>  
             <Text style={styles.navButtonText}>ایجاد حساب</Text>
           </TouchableOpacity>

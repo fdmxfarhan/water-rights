@@ -8,6 +8,7 @@ const { ensureAuthenticated } = require('../config/auth');
 var User = require('../models/User');
 var Acount = require('../models/Acount');
 var Notification = require('../models/Notification');
+var UserNotif = require('../models/UserNotif');
 var Transmission = require('../models/Transmission');
 
 router.post('/login', (req, res, next) => {
@@ -54,6 +55,9 @@ router.post('/sendsms', (req, res, next) => {
                 res.send({
                     smsSent: true,
                     userExist: false,
+                    confirmed: false,
+                    selfRegister: true,
+                    passwordSet: false,
                 });
             }).catch(err => {if(err) console.log(err)})
         }
@@ -74,10 +78,18 @@ router.post('/check-code', (req, res, next) => {
 router.post('/compelete-reg', (req, res, next) => {
     const {firstName, lastName, idNumber, cardNumber, fatherName, job, sex, phone} = req.body;
     console.log(req.body)
-    User.updateMany({phone: phone}, {$set: {firstName, lastName, idNumber, cardNumber, fatherName, job, sex, fullname: firstName + ' ' + lastName}}, (err) => {
+    User.updateMany({phone: phone}, {$set: {passwordSet: false, selfRegister: true, confirmed: false, firstName, lastName, idNumber, cardNumber, fatherName, job, sex, fullname: firstName + ' ' + lastName}}, (err) => {
         if(err) console.log(err);
         User.findOne({phone: phone}, (err, user) => {
-            res.send({correct: true, user});
+            var newNotif = new Notification({
+                type: 'new-user',
+                text: `کاربر جدید ${firstName + ' ' + lastName} در اپلیکیشن ثبت نام کرد.`,
+                link: user._id.toString(),
+                date: new Date,
+            })
+            newNotif.save().then(doc => {
+                res.send({correct: true, user});
+            }).catch(err => console.log(err));
         })
     })
 });
@@ -160,6 +172,45 @@ router.post('/get-transmissions', (req, res, next) => {
             }
             res.send({done: true, transmissions});
         });
+    });
+});
+router.post('/change-password', (req, res, next) => {
+    var {phone, oldPassword, password, passwordConf} = req.body;
+    User.findOne({phone: phone}, (err, user) => {
+        if(user.passwordSet){
+            bcrypt.compare(password, user.password, (err, isMatch) => {
+                if(isMatch){
+                    bcrypt.genSalt(10, (err, salt) => bcrypt.hash(password, salt, (err, hash) => {
+                        User.updateMany({_id: user._id}, {$set: {password: hash}}, (err, doc) => {
+                            res.send({done: true});
+                        });
+                    }));
+                }
+                else{
+                    res.send({done: false, msg: 'رمز عبور قبلی صحیح نمیباشد.'})
+                }
+            });
+        }
+        else{
+            bcrypt.genSalt(10, (err, salt) => bcrypt.hash(password, salt, (err, hash) => {
+                User.updateMany({_id: user._id}, {$set: {password: hash, passwordSet: true}}, (err, doc) => {
+                    res.send({done: true});
+                });
+            }));
+        }
+        
+    });
+});
+router.post('/get-notifications', (req, res, next) => {
+    var {userID, phone} = req.body;
+    UserNotif.find({userID: userID}, (err, notifications) => {
+        res.send(notifications);
+    });
+});
+router.post('/seen-notifications', (req, res, next) => {
+    var {userID, phone} = req.body;
+    UserNotif.updateMany({userID: userID}, {$set: {seen: true}}, (err, notifications) => {
+        res.send({done: true});
     });
 });
 module.exports = router;

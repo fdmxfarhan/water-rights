@@ -47,6 +47,18 @@ var UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  confirmed: {
+    type: Boolean,
+    default: true,
+  },
+  selfRegister: {
+    type: Boolean,
+    default: false,
+  },
+  passwordSet: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 var User = mongoose.model('User', UserSchema);

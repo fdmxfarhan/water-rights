@@ -19,11 +19,11 @@ const LoginForm = (props) => {
     if(!props.loggedIn){
         return(
             <View style={styles.buttonsArea}>
-                {/* <TouchableOpacity 
+                <TouchableOpacity 
                     style={styles.button}
                     onPress={() => {props.navigation.navigate('PhoneLogin')}}>
-                    <Text style={[styles.buttonText, styles.blueButton]}>ثبت نام</Text>
-                </TouchableOpacity> */}
+                    <Text style={[styles.buttonText]}>ثبت نام</Text>
+                </TouchableOpacity>
                 <TouchableOpacity 
                     style={styles.button}
                     onPress={() => {props.navigation.navigate('Login')}}>
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
         direction: 'rtl',
     },
     button: {
-        width: '90%',
+        width: '40%',
         marginLeft: '5%',
         marginRight: '5%',
         borderColor: colors.blue,

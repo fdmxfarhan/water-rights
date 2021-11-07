@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {StyleSheet,View,Text,TextInput} from 'react-native';
 import colors, { lightblue } from '../components/colors';
 
-export default Input = ({navigation, title, setFunction, refrence, onSubmitEditing, returnKeyType, blurOnSubmit, keyboardType}) => {
+export default Input = ({navigation, secureTextEntry, title, setFunction, refrence, onSubmitEditing, returnKeyType, blurOnSubmit, keyboardType}) => {
   var [userInputColor, setUserInputColor] = useState('lightgray');
   var [displayLabel, setDisplayLabel] = useState('none');
 
@@ -10,6 +10,7 @@ export default Input = ({navigation, title, setFunction, refrence, onSubmitEditi
     <View>
       <Text style={[styles.label]}>{title}: </Text>
       <TextInput
+        secureTextEntry={secureTextEntry}
         style={[styles.textInput, {borderBottomColor: userInputColor}]}
         placeholder={title}
         onChange={(text) => {
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
   label: {
     fontFamily: 'iransans',
     marginTop: 20,
-    fontSize: 10,
+    fontSize: 12,
     color: colors.gray,
   },
 });

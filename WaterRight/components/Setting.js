@@ -21,11 +21,11 @@ export default Setting = ({data, title, navigation}) => {
     var [savedData, setSavedData] = useState();
     var [readOnce, setReadOnce] = useState(false);
     var [user, setUser] = useState({phone: '', fullname: ''});
-    useEffect(() => {
-        if(!readOnce){
-            readData().then(data => {
-                setSavedData(data);
-                if(data != null){
+
+    var readUser = () => {
+        readData().then(data => {
+            setSavedData(data);
+            if(data != null){
                 api.post('/api/phone-login', {
                     phone: data.phone,
                 }).then(res => {
@@ -36,8 +36,12 @@ export default Setting = ({data, title, navigation}) => {
                     alert('خطا در برقراری ارتباط. لطفا اتصال اینترنت خود را چک کنید.')
                     console.log(error);
                 });
-                }
-            });
+            }
+        });
+    }
+    useEffect(() => {
+        if(!readOnce){
+            readUser();
         }
         readOnce = true;
         setReadOnce(true);
@@ -58,7 +62,7 @@ export default Setting = ({data, title, navigation}) => {
                     </View>
                     <TouchableOpacity style={styles.buttonIcon}>
                         <Icon style={styles.headerIcon} name={'bell'}/>  
-                        <View style={styles.notificationAlert} />
+                        {/* <View style={styles.notificationAlert} /> */}
                     </TouchableOpacity>
                 </View>
                 <View style={styles.avatarView}>
@@ -68,7 +72,9 @@ export default Setting = ({data, title, navigation}) => {
                 <Text style={styles.phone}>{user.phone}</Text>
             </View>
             <View style={styles.scrollView}>
-                <TouchableOpacity style={styles.link}>
+                <TouchableOpacity style={styles.link} onPress={() => {
+                        navigation.navigate('Password');
+                    }}>
                     <Icon name={'key'} style={styles.linkIcon} />
                     <Text style={styles.linkText}>تغییر کلمه عبور</Text>
                 </TouchableOpacity>

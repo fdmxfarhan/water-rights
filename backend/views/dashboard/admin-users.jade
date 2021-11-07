@@ -6,7 +6,7 @@ block styles
 block content
     .title-view 
         h1 کاربران
-        h2 201 user, 5 admin
+        h2 #{users.filter(e => e.role == 'user').length} user, #{users.filter(e => e.role == 'admin').length} admin
     .content-view 
         .users-view 
             table 

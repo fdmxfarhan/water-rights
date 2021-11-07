@@ -7,6 +7,7 @@ const { ensureAuthenticated } = require('../config/auth');
 var User = require('../models/User');
 var Acount = require('../models/Acount');
 var Notification = require('../models/Notification');
+var UserNotif = require('../models/UserNotif');
 var Transmission = require('../models/Transmission');
 const mail = require('../config/mail');
 const dateConvert = require('../config/dateConvert');
@@ -267,7 +268,6 @@ var getSandoghRight = (source, target, amount) => {
     }
     return 0;
 }
-
 router.get('/accept-transmission', ensureAuthenticated, (req, res, next) => {
     var {transmissionID} = req.query;
 
@@ -286,6 +286,14 @@ router.get('/accept-transmission', ensureAuthenticated, (req, res, next) => {
                 if(target.type == 'chah')
                     Acount.updateMany({_id: target._id}, {$set: {sandogh: target.sandogh + sandogh}}, (err) => {});
                 Transmission.updateMany({_id: transmissionID}, {$set: {done: true, accepted: true}}, (err) => {
+                    var newUserNotif = new UserNotif({
+                        type: 'accept-transmission',
+                        text: `انتقال شارژ ${amount} متر مکعب از حساب ${source.type == 'chah' ? source.license : source.accountNumber} به حساب ${target.type == 'chah' ? target.license : target.accountNumber} توسط میراب تایید شد.`,
+                        userID: source.ownerID,
+                        userFullname: source.owner,
+                        date: new Date(),
+                    });
+                    newUserNotif.save().then(doc => {}).catch(err => console.log(err));
                     res.redirect('/dashboard');
                 });
             });
@@ -306,11 +314,41 @@ router.get('/transmissions', ensureAuthenticated, (req, res, next) => {
 })
 router.get('/decline-transmission', ensureAuthenticated, (req, res, next) => {
     var {transmissionID} = req.query;
-    Transmission.updateMany({_id: transmissionID}, {$set: {done: true, accepted: false}}, (err) => {
-        res.redirect('/dashboard');
+    Transmission.findById(transmissionID, (err, transmission) => {
+        Acount.findById(transmission.source._id, (err, source) => {
+            Acount.findById(transmission.target._id, (err, target) => {
+                var newUserNotif = new UserNotif({
+                    type: 'accept-transmission',
+                    text: `انتقال شارژ ${amount} متر مکعب از حساب ${source.type == 'chah' ? source.license : source.accountNumber} به حساب ${target.type == 'chah' ? target.license : target.accountNumber} توسط میراب تایید نشد.`,
+                    userID: source.ownerID,
+                    userFullname: source.owner,
+                    date: new Date(),
+                });
+                newUserNotif.save().then(doc => {}).catch(err => console.log(err));
+                
+                Transmission.updateMany({_id: transmissionID}, {$set: {done: true, accepted: false}}, (err) => {
+                    res.redirect('/dashboard');
+                });
+            });
+        });
     });
 });
-
+router.get('/confirm-register', ensureAuthenticated, (req, res, next) => {
+    var {userID, notifID} = req.query;
+    User.updateMany({_id: userID}, {$set: {confirmed: true}}, (err, doc) => {
+        Notification.deleteMany({_id: notifID}, (err) => {
+            var newUserNotif = new UserNotif({
+                type: 'accept-transmission',
+                text: `حساب کاربری شما توسط میراب تایید شد.`,
+                userID,
+                date: new Date(),
+            });
+            newUserNotif.save().then(doc => {}).catch(err => console.log(err));
+            
+            res.redirect('/dashboard');
+        });
+    });
+});
 
 module.exports = router;
 

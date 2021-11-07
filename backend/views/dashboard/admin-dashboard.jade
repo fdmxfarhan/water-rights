@@ -48,12 +48,21 @@ block content
                         
         -}
         -for(var i=notifications.length-1; i>=0; i--){
-            .notif(class="#{notifications[i].seen == true ? 'seen' : ''}")
-                -if(notifications[i].type == 'add-account'){ 
+            -if(notifications[i].type == 'new-user'){ 
+                .notif.nohover
+                    a
+                        .text= notifications[i].text 
+                    .date= dateConvert.get_year_month_day(notifications[i].date)
+                    .control
+                        a.accept(href="/dashboard/confirm-register?userID=#{notifications[i].link}&notifID=#{notifications[i]._id}") 
+                            i.fa.fa-check
+            -}
+            -if(notifications[i].type == 'add-account'){ 
+                .notif(class="#{notifications[i].seen == true ? 'seen' : ''}")
                     a(href="#{notifications[i].link}") 
                         .text= notifications[i].text 
                     .date= dateConvert.get_year_month_day(notifications[i].date)
-                -}
+            -}
         -}
 
 

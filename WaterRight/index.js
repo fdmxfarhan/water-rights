@@ -8,6 +8,8 @@ const Stack = createNativeStackNavigator();
 import splash from './screens/splash';
 import login from './screens/login';
 import register from './screens/register';
+import password from './screens/password';
+import notification from './screens/notification';
 import home from './screens/home';
 import acount from './screens/acount';
 import phoneLogin from './screens/phoneLogin';
@@ -125,6 +127,41 @@ const App = (props) => {
                         },
                     })}
                 />
+                <Stack.Screen 
+                    name="Password" 
+                    component={password} 
+                    options={({ route }) => ({ 
+                        headerShown: false,
+                        title: 'تغییر رمز عبور',
+                        headerStyle: {
+                            backgroundColor: colors.background,
+                            textAlign: 'right',
+                        },
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                            textAlign: 'right',
+                            fontFamily: 'iransans',
+                        },
+                    })}
+                />
+                <Stack.Screen 
+                    name="Notification" 
+                    component={notification} 
+                    options={({ route }) => ({ 
+                        headerShown: false,
+                        title: 'اعلان ها',
+                        headerStyle: {
+                            backgroundColor: colors.background,
+                            textAlign: 'right',
+                        },
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                            textAlign: 'right',
+                            fontFamily: 'iransans',
+                        },
+                    })}
+                />
+                
             </Stack.Navigator>
         </NavigationContainer>
     )

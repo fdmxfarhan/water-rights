@@ -120,8 +120,9 @@ function get_hour_minute_second(time) {
 }
 
 function convertDate(date) {
-    var convertDateTime = get_year_month_day(date.substr(0, 10));
-    convertDateTime = convertDateTime[0] + "/" + convertDateTime[1] + "/" + convertDateTime[2] + " " + date.substr(10);
+    var convertDateTime = get_year_month_day(new Date(date));
+    var date = new Date(date);
+    convertDateTime = convertDateTime[0] + "/" + convertDateTime[1] + "/" + convertDateTime[2] + "  " + date.getHours() + ":" + date.getMinutes();
     return convertDateTime;
 }
 

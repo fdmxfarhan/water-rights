@@ -43,8 +43,9 @@ const splash = (props) => {
                         console.log('not correct')
                     }
                 }).catch(function (error) {
-                    setLoggedIn(false);
+                    // setLoggedIn(false);
                     console.log(error);
+                    alert('خطا در برقراری ارتباط. لطفا اتصال اینترنت خود را چک کنید.')
                 });
             }
             else setLoggedIn(false);

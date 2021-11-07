@@ -60,7 +60,7 @@ export default History = ({data, title, navigation}) => {
                     </View>
                     <TouchableOpacity style={styles.buttonIcon}>
                         <Icon style={styles.headerIcon} name={'bell'}/>  
-                        <View style={styles.notificationAlert} />
+                        {/* <View style={styles.notificationAlert} /> */}
                     </TouchableOpacity>
                 </View>
             </View>

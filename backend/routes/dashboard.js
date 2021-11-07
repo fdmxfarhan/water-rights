@@ -319,7 +319,7 @@ router.get('/decline-transmission', ensureAuthenticated, (req, res, next) => {
             Acount.findById(transmission.target._id, (err, target) => {
                 var newUserNotif = new UserNotif({
                     type: 'accept-transmission',
-                    text: `انتقال شارژ ${amount} متر مکعب از حساب ${source.type == 'chah' ? source.license : source.accountNumber} به حساب ${target.type == 'chah' ? target.license : target.accountNumber} توسط میراب تایید نشد.`,
+                    text: `انتقال شارژ ${transmission.amount} متر مکعب از حساب ${source.type == 'chah' ? source.license : source.accountNumber} به حساب ${target.type == 'chah' ? target.license : target.accountNumber} توسط میراب تایید نشد.`,
                     userID: source.ownerID,
                     userFullname: source.owner,
                     date: new Date(),

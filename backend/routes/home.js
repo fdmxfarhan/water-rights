@@ -44,7 +44,7 @@ router.post('/form', (req, res, next) => {
             formNumber: 1,
         }
         },
-        path: "./public/output.pdf",
+        path: "public/output.pdf",
         type: "",
     };
 

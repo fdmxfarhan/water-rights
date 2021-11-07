@@ -18,43 +18,44 @@ router.get('/form', (req, res, next) => {
 
 router.post('/form', (req, res, next) => {
     var {fullname, accountNumber, maximum, idNumber} = req.body;
-    var html = fs.readFileSync('public/t.html', 'utf8');
-    var options = {
-        format: "A3",
-        orientation: "portrait",
-        border: "5mm",
-        header: {
-            height: "0",
-            contents: ''
-        },
-        footer: {
-            height: "0mm",
-            contents: {}
-        }
-    };
-    var document = {
-        html: html,
-        data: {
-        info: {
-            fullname: fullname,
-            accountNumber: accountNumber,
-            maximum: maximum,
-            idNumber: idNumber,
-            date: convertDate(new Date()),
-            formNumber: 1,
-        }
-        },
-        path: "public/output.pdf",
-        type: "",
-    };
-
-    pdf.create(document, options)
-        .then((r) => {
-            res.send("<a href='/output.pdf' target='_blank'>دانلود</a>")
-        })
-        .catch((error) => {
-            console.error(error);
-        });
+    fs.readFile('public/t.html', 'utf8', (err, html) => {
+        var options = {
+            format: "A3",
+            orientation: "portrait",
+            border: "5mm",
+            header: {
+                height: "0",
+                contents: ''
+            },
+            footer: {
+                height: "0mm",
+                contents: {}
+            }
+        };
+        var document = {
+            html: html,
+            data: {
+            info: {
+                fullname: fullname,
+                accountNumber: accountNumber,
+                maximum: maximum,
+                idNumber: idNumber,
+                date: convertDate(new Date()),
+                formNumber: 1,
+            }
+            },
+            path: "public/output.pdf",
+            type: "",
+        };
+    
+        pdf.create(document, options)
+            .then((r) => {
+                res.send("<a href='/output.pdf' target='_blank'>دانلود</a>")
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    });
 
 })
 

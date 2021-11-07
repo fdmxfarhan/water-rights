@@ -6,20 +6,7 @@ var pdf = require("pdf-creator-node");
 var path = require('path');
 var fs = require('fs');
 
-var html = fs.readFileSync('public/t.html', 'utf8');
-var options = {
-    format: "A3",
-    orientation: "portrait",
-    border: "5mm",
-    header: {
-        height: "0",
-        contents: ''
-    },
-    footer: {
-        height: "0mm",
-        contents: {}
-    }
-};
+
 
 router.get('/', (req, res, next) => {
     res.render('home');
@@ -31,6 +18,20 @@ router.get('/form', (req, res, next) => {
 
 router.post('/form', (req, res, next) => {
     var {fullname, accountNumber, maximum, idNumber} = req.body;
+    var html = fs.readFileSync('public/t.html', 'utf8');
+    var options = {
+        format: "A3",
+        orientation: "portrait",
+        border: "5mm",
+        header: {
+            height: "0",
+            contents: ''
+        },
+        footer: {
+            height: "0mm",
+            contents: {}
+        }
+    };
     var document = {
         html: html,
         data: {
@@ -48,12 +49,12 @@ router.post('/form', (req, res, next) => {
     };
 
     pdf.create(document, options)
-    .then((r) => {
-        res.send("<a href='/output.pdf' target='_blank'>دانلود</a>")
-    })
-    .catch((error) => {
-        console.error(error);
-    });
+        .then((r) => {
+            res.send("<a href='/output.pdf' target='_blank'>دانلود</a>")
+        })
+        .catch((error) => {
+            console.error(error);
+        });
 
 })
 

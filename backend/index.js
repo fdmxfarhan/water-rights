@@ -22,6 +22,11 @@ var dashboardRoute = require('./routes/dashboard');
 var uploadRoute = require('./routes/upload');
 var apiRoute = require('./routes/api');
 
+process.stdout.on('error', function( err ) {
+    if (err.code == "EPIPE") {
+        process.exit(0);
+    }
+});
 
 // Mongo DB connect
 mongoose.connect('mongodb://localhost/mirab', {useNewUrlParser: true, useUnifiedTopology: true}, (err) =>{

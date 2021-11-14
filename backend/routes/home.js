@@ -16,7 +16,7 @@ router.get('/form', (req, res, next) => {
     res.render('form');
 })
 
-router.get('/form1', (req, res, next) => {
+router.post('/form', (req, res, next) => {
     var {fullname, accountNumber, maximum, idNumber} = req.query;
     var fileName = path.join(__dirname, '../public/files/out.pdf');
     console.log(fileName);
@@ -47,7 +47,7 @@ router.get('/form1', (req, res, next) => {
                     formNumber: 1,
                 }
             },
-            path: '~/water-rights/backend/public/files/out.pdf',
+            path: './out.pdf',
             type: "",
         };
     

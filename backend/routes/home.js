@@ -36,14 +36,14 @@ router.post('/form', (req, res, next) => {
         var document = {
             html: html,
             data: {
-                // info: {
-                //     fullname: fullname,
-                //     accountNumber: accountNumber,
-                //     maximum: maximum,
-                //     idNumber: idNumber,
-                //     date: convertDate(new Date()),
-                //     formNumber: 1,
-                // }
+                info: {
+                    fullname: fullname,
+                    accountNumber: accountNumber,
+                    maximum: maximum,
+                    idNumber: idNumber,
+                    date: convertDate(new Date()),
+                    formNumber: 1,
+                }
             },
             path: "public/output.pdf",
             type: "",

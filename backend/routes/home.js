@@ -20,7 +20,7 @@ router.post('/form', (req, res, next) => {
     var {fullname, accountNumber, maximum, idNumber} = req.body;
     fs.readFile('./public/t.html', 'utf8', (err, html) => {
         var options = {
-            phantomPath: phantomjs.path,
+            // phantomPath: phantomjs.path,
             format: "A4",
             orientation: "portrait",
             border: "5mm",

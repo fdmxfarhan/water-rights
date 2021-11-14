@@ -20,7 +20,7 @@ router.post('/form', (req, res, next) => {
     var {fullname, accountNumber, maximum, idNumber} = req.body;
     fs.readFile('public/t.html', 'utf8', (err, html) => {
         var options = {
-            format: "A3",
+            format: "A4",
             orientation: "portrait",
             border: "5mm",
             header: {
@@ -35,14 +35,14 @@ router.post('/form', (req, res, next) => {
         var document = {
             html: html,
             data: {
-            info: {
-                fullname: fullname,
-                accountNumber: accountNumber,
-                maximum: maximum,
-                idNumber: idNumber,
-                date: convertDate(new Date()),
-                formNumber: 1,
-            }
+                info: {
+                    fullname: fullname,
+                    accountNumber: accountNumber,
+                    maximum: maximum,
+                    idNumber: idNumber,
+                    date: convertDate(new Date()),
+                    formNumber: 1,
+                }
             },
             path: "public/output.pdf",
             type: "",

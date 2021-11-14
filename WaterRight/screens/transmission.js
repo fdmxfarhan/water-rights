@@ -19,6 +19,7 @@ import Abvandi from '../components/abvandi';
 import Chah from '../components/chah';
 import SelectAccount from '../components/selectAccount';
 import ConfirmTransmission from '../components/confirmTransmission';
+import AccountInfo from '../components/AccountInfo';
 
 const api = require('../config/api');
 const {saveData, readData} = require('../config/save');
@@ -62,26 +63,30 @@ const transmission = (props) => {
         <View style={styles.container}>
             <Header title={'انتقال شارژ'}  backID={'Main'} navigation={props.navigation}/>
             <View style={styles.content}>
-                <View style={styles.section}>
-                    <Text style={styles.label}>حساب مبداء: </Text>
-                    <TouchableOpacity style={styles.selectButton} onPress={() => {setSourceEnable(true)}}>
-                        <Text style={styles.selectButtonText}>{typeof(sourceAccount) == 'string' ? sourceAccount : sourceAccount.type == 'chah' ? sourceAccount.license : sourceAccount.accountNumber}</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.section}>
-                    <Text style={styles.label}>حساب مقصد: </Text>
-                    <TouchableOpacity style={styles.selectButton} onPress={() => {setTargetEnable(true)}}>
-                        <Text style={styles.selectButtonText}>{typeof(targetAccount) == 'string' ? targetAccount : targetAccount.type == 'chah' ? targetAccount.license : targetAccount.accountNumber}</Text>
-                    </TouchableOpacity> 
-                </View>
-                <View style={styles.section}>
-                    <Text style={styles.label}>مقدار شارژ (متر مکعب): </Text>
-                    <TextInput 
-                        keyboardType={'number-pad'}
-                        style={styles.textInput}
-                        onChange={(text) => {setAmount(text.nativeEvent.text)}}
-                        placeholder={'مقدار شارژ'} />
-                </View>
+                <ScrollView>
+                    <View style={styles.section}>
+                        <Text style={styles.label}>حساب مبداء: </Text>
+                        <TouchableOpacity style={styles.selectButton} onPress={() => {setSourceEnable(true)}}>
+                            <Text style={styles.selectButtonText}>{typeof(sourceAccount) == 'string' ? sourceAccount : sourceAccount.type == 'chah' ? sourceAccount.license : sourceAccount.accountNumber}</Text>
+                        </TouchableOpacity>
+                        <AccountInfo account={sourceAccount} />
+                    </View>
+                    <View style={styles.section}>
+                        <Text style={styles.label}>حساب مقصد: </Text>
+                        <TouchableOpacity style={styles.selectButton} onPress={() => {setTargetEnable(true)}}>
+                            <Text style={styles.selectButtonText}>{typeof(targetAccount) == 'string' ? targetAccount : targetAccount.type == 'chah' ? targetAccount.license : targetAccount.accountNumber}</Text>
+                        </TouchableOpacity> 
+                        <AccountInfo account={targetAccount} />
+                    </View>
+                    <View style={styles.section}>
+                        <Text style={styles.label}>مقدار شارژ (متر مکعب): </Text>
+                        <TextInput 
+                            keyboardType={'number-pad'}
+                            style={styles.textInput}
+                            onChange={(text) => {setAmount(text.nativeEvent.text)}}
+                            placeholder={'مقدار شارژ'} />
+                    </View>
+                </ScrollView>
             </View>
             <View style={styles.buttonView}>
                 <TouchableOpacity style={styles.submitButton} onPress={() => {

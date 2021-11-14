@@ -157,7 +157,9 @@ router.post('/add-transmission', (req, res, next) => {
         date: new Date,
     });
     newTransmission.save().then(doc =>{
-        res.send({done: true})
+        Acount.updateMany({_id: source._id}, {$set: {charge: source.charge - amount}}, (err) => {
+            res.send({done: true})
+        });
     }).catch(err => console.log(err));
 });
 router.post('/get-transmissions', (req, res, next) => {

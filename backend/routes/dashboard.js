@@ -280,7 +280,7 @@ router.get('/accept-transmission', ensureAuthenticated, (req, res, next) => {
                 var abkhan = getAbkhanRight(source, target, amount);
                 var sandogh = getSandoghRight(source, target, amount);
 
-                Acount.updateMany({_id: source._id}, {$set: {charge: source.charge - transmission.amount}}, (err) => {});
+                // Acount.updateMany({_id: source._id}, {$set: {charge: source.charge - transmission.amount}}, (err) => {});
                 Acount.updateMany({_id: target._id}, {$set: {charge: target.charge + (transmission.amount - mirab - abkhan)}}, (err) => {});
                 if(source.type == 'chah') 
                     Acount.updateMany({_id: source._id}, {$set: {sandogh: source.sandogh + sandogh}}, (err) => {});

@@ -33,7 +33,7 @@ export default Abvandi = ({item, navigation}) => {
                     </View>
                 </View>
                 <View style={styles.capView}>
-                    <Text style={styles.capTitle}>ظرفیت:</Text>
+                    <Text style={styles.capTitle}>شارژ:</Text>
                     <Text style={styles.charge}> {item.charge} </Text>
                     <Text style={styles.squareMeter}>متر مکعب</Text>
                 </View>

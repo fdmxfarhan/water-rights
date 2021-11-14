@@ -16,8 +16,8 @@ router.get('/form', (req, res, next) => {
     res.render('form');
 })
 
-router.post('/form', (req, res, next) => {
-    var {fullname, accountNumber, maximum, idNumber} = req.body;
+router.get('/form1', (req, res, next) => {
+    var {fullname, accountNumber, maximum, idNumber} = req.query;
     var fileName = path.join(__dirname, 'public/files/out.pdf');
     console.log(fileName);
     fs.readFile('./public/form1.html', 'utf8', (err, html) => {

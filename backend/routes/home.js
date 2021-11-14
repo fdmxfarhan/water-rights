@@ -51,7 +51,7 @@ router.post('/form', (req, res, next) => {
     
         pdf.create(document, options)
             .then((r) => {
-                res.send("<a href='/output.pdf' target='_blank'>دانلود</a>")
+                res.send("<a href='/output.pdf'>دانلود</a>")
             })
             .catch((error) => {
                 console.error(error);

@@ -7,7 +7,6 @@ var path = require('path');
 var fs = require('fs');
 var phantomjs = require('phantomjs');
 
-
 router.get('/', (req, res, next) => {
     res.render('home');
 });
@@ -17,9 +16,7 @@ router.get('/form', (req, res, next) => {
 })
 
 router.post('/form', (req, res, next) => {
-    var {fullname, accountNumber, maximum, idNumber} = req.query;
-    var fileName = path.join(__dirname, '../public/files/out.pdf');
-    console.log(fileName);
+    var {fullname, accountNumber, maximum, idNumber} = req.body;
     fs.readFile('./public/form1.html', 'utf8', (err, html) => {
         var options = {
             phantomPath: path.join(__dirname, '../node_modules/phantomjs/lib/phantom/bin/phantomjs'),

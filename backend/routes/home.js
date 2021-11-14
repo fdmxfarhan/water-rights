@@ -18,7 +18,7 @@ router.get('/form', (req, res, next) => {
 
 router.get('/form1', (req, res, next) => {
     var {fullname, accountNumber, maximum, idNumber} = req.query;
-    var fileName = path.join(__dirname, 'public/files/out.pdf');
+    var fileName = path.join(__dirname, '../public/files/out.pdf');
     console.log(fileName);
     fs.readFile('./public/form1.html', 'utf8', (err, html) => {
         var options = {
@@ -53,7 +53,7 @@ router.get('/form1', (req, res, next) => {
     
         pdf.create(document, options)
             .then((r) => {
-                res.send(`<a href='${fileName}'>دانلود</a>`)
+                res.send(`<a href='/files/out.pdf'>دانلود</a>`)
             })
             .catch((error) => {
                 console.error(error);

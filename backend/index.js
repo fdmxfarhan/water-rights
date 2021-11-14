@@ -47,7 +47,7 @@ fs.readFile('./public/form1.html', 'utf8', (err, html) => {
 
     pdf.create(document, options)
         .then((r) => {
-            res.send(`<a href='/files/out.pdf'>دانلود</a>`)
+            console.log(r);
         })
         .catch((error) => {
             console.error(error);

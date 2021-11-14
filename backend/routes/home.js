@@ -18,10 +18,9 @@ router.get('/form', (req, res, next) => {
 
 router.post('/form', (req, res, next) => {
     var {fullname, accountNumber, maximum, idNumber} = req.body;
-    // fs.readFile('./public/t.html', 'utf8', (err, html) => {
-    // html = fs.createReadStream('./public/t.html');
+    fs.readFile('./public/t.html', 'utf8', (err, html) => {
         var options = {
-            phantomPath: __dirname + '../node_modules/phantomjs/lib/phantom',
+            phantomPath: phantomjs.path,
             format: "A4",
             orientation: "portrait",
             border: "5mm",
@@ -32,7 +31,7 @@ router.post('/form', (req, res, next) => {
             footer: {
                 height: "0mm",
                 contents: {}
-            }
+            },
         };
         var document = {
             html: '<p>html</p>',
@@ -57,7 +56,7 @@ router.post('/form', (req, res, next) => {
             .catch((error) => {
                 console.error(error);
             });
-    // });
+    });
 
 })
 

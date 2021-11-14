@@ -17,11 +17,10 @@ router.get('/form', (req, res, next) => {
 })
 
 router.post('/form', (req, res, next) => {
-    // var {fullname, accountNumber, maximum, idNumber} = req.body;
-    // console.log(req.body);
+    var {fullname, accountNumber, maximum, idNumber} = req.body;
     fs.readFile('public/t.html', 'utf8', (err, html) => {
         var options = {
-            format: "A4",
+            format: "A3",
             orientation: "portrait",
             border: "5mm",
             header: {
@@ -37,10 +36,10 @@ router.post('/form', (req, res, next) => {
             html: html,
             data: {
                 info: {
-                    fullname: 'fullname',
-                    accountNumber: 'accountNumber',
-                    maximum: 'maximum',
-                    idNumber: 'idNumber',
+                    fullname: fullname,
+                    accountNumber: accountNumber,
+                    maximum: maximum,
+                    idNumber: idNumber,
                     date: convertDate(new Date()),
                     formNumber: 1,
                 }

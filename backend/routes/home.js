@@ -47,7 +47,7 @@ router.get('/form1', (req, res, next) => {
                     formNumber: 1,
                 }
             },
-            path: fileName,
+            path: '~/water-rights/backend/public/files/out.pdf',
             type: "",
         };
     

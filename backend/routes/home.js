@@ -18,6 +18,7 @@ router.get('/form', (req, res, next) => {
 
 router.post('/form', (req, res, next) => {
     var {fullname, accountNumber, maximum, idNumber} = req.body;
+    var fileName = Date.now().toString();
     fs.readFile('./public/form1.html', 'utf8', (err, html) => {
         var options = {
             phantomPath: '/usr/local/share/phantomjs-1.9.8-linux-x86_64/bin/phantomjs',
@@ -45,13 +46,13 @@ router.post('/form', (req, res, next) => {
                     formNumber: 1,
                 }
             },
-            path: "public/output.pdf",
+            path: `public/files/${fileName}.pdf`,
             type: "",
         };
     
         pdf.create(document, options)
             .then((r) => {
-                res.send("<a href='/output.pdf'>دانلود</a>")
+                res.send(`<a href='files/${fileName}.pdf'>دانلود</a>`)
             })
             .catch((error) => {
                 console.error(error);

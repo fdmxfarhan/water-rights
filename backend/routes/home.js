@@ -22,7 +22,7 @@ router.post('/form', (req, res, next) => {
     console.log(fileName);
     fs.readFile('./public/form1.html', 'utf8', (err, html) => {
         var options = {
-            phantomPath: path.join(__dirname, 'node_modules/phantomjs/lib/phantom/bin/phantomjs'),
+            phantomPath: path.join(__dirname, '../node_modules/phantomjs/lib/phantom/bin/phantomjs'),
             // phantomPath: '/usr/local/share/phantomjs-1.9.8-linux-x86_64/bin/phantomjs',
             format: "A4",
             orientation: "portrait",

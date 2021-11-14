@@ -24,7 +24,7 @@ router.post('/form', (req, res, next) => {
         var options = {
             phantomPath: path.join(__dirname, '../node_modules/phantomjs/lib/phantom/bin/phantomjs'),
             // phantomPath: '/usr/local/share/phantomjs-1.9.8-linux-x86_64/bin/phantomjs',
-            format: "A4",
+            format: "A3",
             orientation: "portrait",
             border: "5mm",
             header: {

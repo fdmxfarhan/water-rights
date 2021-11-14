@@ -18,6 +18,7 @@ router.get('/form', (req, res, next) => {
 
 router.post('/form', (req, res, next) => {
     var {fullname, accountNumber, maximum, idNumber} = req.body;
+    console.log(req.body);
     fs.readFile('public/t.html', 'utf8', (err, html) => {
         var options = {
             format: "A4",

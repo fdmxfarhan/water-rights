@@ -21,6 +21,7 @@ router.post('/form', (req, res, next) => {
     // fs.readFile('./public/t.html', 'utf8', (err, html) => {
     // html = fs.createReadStream('./public/t.html');
         var options = {
+phantomPath: './node_modules/phantomjs/lib/phantom',
             phantomPath: phantomjs.path,
             format: "A4",
             orientation: "portrait",

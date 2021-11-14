@@ -57,7 +57,6 @@ router.post('/form', (req, res, next) => {
                 console.error(error);
             });
     });
-
-})
+});
 
 module.exports = router;

@@ -14,9 +14,12 @@ const passport = require('passport');
 const {convertDate} = require('./config/dateConvert');
 var pdf = require("pdf-creator-node");
 var phantomjs = require('phantomjs');
+
 fs.readFile('./public/form1.html', 'utf8', (err, html) => {
     var options = {
-        phantomPath: '/usr/local/share/phantomjs-1.9.8-linux-x86_64/bin/phantomjs',
+        // phantomPath: '/usr/local/share/phantomjs-1.9.8-linux-x86_64/bin/phantomjs',
+        phantomPath: path.join(__dirname, 'node_modules/phantomjs/lib/phantom/bin/phantomjs'),
+        directory: path.join(__dirname, 'public'),
         format: "A4",
         orientation: "portrait",
         border: "5mm",

@@ -32,6 +32,7 @@
     "passport-local": "^1.0.0",
     "pdf-creator-node": "^2.2.4",
     "pdfkit": "^0.13.0",
+    "phantomjs": "^2.1.7",
     "request": "^2.88.2",
     "socket.io": "^4.0.1",
     "wkhtmltox": "^1.1.5"

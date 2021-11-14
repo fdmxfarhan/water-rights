@@ -5,6 +5,7 @@ const {convertDate} = require('../config/dateConvert');
 var pdf = require("pdf-creator-node");
 var path = require('path');
 var fs = require('fs');
+var phantomjs = require('phantomjs');
 
 
 router.get('/', (req, res, next) => {
@@ -20,6 +21,7 @@ router.post('/form', (req, res, next) => {
     // fs.readFile('./public/t.html', 'utf8', (err, html) => {
     // html = fs.createReadStream('./public/t.html');
         var options = {
+            phantomPath: phantomjs.path,
             format: "A4",
             orientation: "portrait",
             border: "5mm",

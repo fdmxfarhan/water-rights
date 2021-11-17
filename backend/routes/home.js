@@ -160,7 +160,7 @@ router.post('/form', (req, res, next) => {
             });
     });
 });
-router.get('/clearNotifs', ensureAuthenticated, (req, res, next) => {
+router.get('/clearnotifs', ensureAuthenticated, (req, res, next) => {
     if(req.role == 'admin'){
         Notification.deleteMany({}, (err, doc) => {
             res.redirect('/dashboard');

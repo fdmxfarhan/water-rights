@@ -121,6 +121,9 @@ block content
                         .item مالک حساب: 
                             .value= transmissions[i].source.owner
                     -}
+                a.forms(href="/forms?transmissionID=#{transmissions[i]._id}") 
+                    i.fa.fa-file
+                    | دریافت فرم‌ها
         -}
         -for(var i=notifications.length-1; i>=0; i--){
             -if(notifications[i].type == 'new-user'){ 

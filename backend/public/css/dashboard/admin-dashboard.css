@@ -195,6 +195,25 @@
         font-weight: normal;
         display: inline;
     }
+    .notifications a.forms{
+        color: white;
+        font-family: 'iransans';
+        font-size: 1vw;
+        background-color: var(--blue);
+        padding: 0.2vw 2vw;
+        border-radius: 0.5vw;
+        text-decoration: none;
+        display: block;
+        width: fit-content;
+        margin-top: 0.5vw;
+        float: right;
+    }
+    .notifications a.forms:hover{
+        background-color: var(--orange);
+    }
+    .notifications a.forms i{
+        padding-left: 0.5vw;
+    }
 }
 @media only screen and (max-width: 800px) {
     

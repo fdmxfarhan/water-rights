@@ -1,0 +1,47 @@
+@media only screen and (min-width: 800px) {
+    .settings-view h1.title{
+        color: var(--dark);
+        font-family: 'iransans';
+        font-size: 1.3vw;
+        width: 90%;
+        margin: 1vw auto;
+
+    }
+    .settings-view form{
+        width: 90%;
+        margin: auto;
+        margin-bottom: 2vw;
+    }
+    .settings-view form .date-input label{
+        font-family: 'iransans';
+        font-size: 1vw;
+    }
+    .settings-view form .date-input input.text{
+        font-family: 'iransans';
+        font-size: 1vw;
+        padding: 0 1vw;
+        width: 5vw;
+        border: none;
+        border-bottom: var(--blue) 0.15vw solid;
+        text-align: center;
+    }
+    .settings-view form .date-input input.text:focus{
+        outline: 0;
+        border-bottom: var(--orange) 0.15vw solid;
+    }
+    .settings-view form .date-input input.submit{
+        background-color: var(--blue);
+        font-family: 'iransans';
+        font-size: 1vw;
+        margin-right: 1vw;
+        border: none;
+        padding: 0.2vw 1vw;
+        color: white;
+        cursor: pointer;
+        text-align: center;
+        border-radius: 0.5vw;
+    }
+    .settings-view form .date-input input.submit:hover{
+        background-color: var(--orange);
+    }
+}

@@ -9,6 +9,7 @@ const mkdirp = require('mkdirp');
 const { ensureAuthenticated } = require('../config/auth');
 const User = require('../models/User');
 const Acount = require('../models/Acount');
+var Settings = require('../models/Settings');
 
 router.use(bodyparser.urlencoded({ extended: true }));
 
@@ -154,58 +155,64 @@ router.post('/add-chah', ensureAuthenticated, upload.single('myFile'), (req, res
 router.post('/add-account-chah', ensureAuthenticated, upload.single('licensePic'), (req, res, next) => {
     var {userID, license, permitedUseInYear} = req.body;
     var file = req.file;
-    Acount.findOne({license: license}, (err, acount) => {
-        if(acount){
-            req.flash('error_msg', 'شماره پروانه قبلا ثبت شده');
-            res.redirect(`/dashboard/accounts`)
-        }else{
-            User.findById(userID, (err, user) => {
-                var owner = 'undefined';
-                var licensePic = 'undefined';
-                if(user) owner = user.fullname;
-                if(file) licensePic = file.destination.slice(6) + '/' + file.originalname;
-                var newAcount = new Acount({
-                    license,
-                    licensePic,
-                    owner: owner,
-                    ownerID: userID,
-                    permitedUseInYear,
-                    type: 'chah',
-                    charge: permitedUseInYear,
+    Settings.findOne({}, (err, settings) => {
+        Acount.findOne({license: license}, (err, acount) => {
+            if(acount){
+                req.flash('error_msg', 'شماره پروانه قبلا ثبت شده');
+                res.redirect(`/dashboard/accounts`)
+            }else{
+                User.findById(userID, (err, user) => {
+                    var owner = 'undefined';
+                    var licensePic = 'undefined';
+                    if(user) owner = user.fullname;
+                    if(file) licensePic = file.destination.slice(6) + '/' + file.originalname;
+                    var newAcount = new Acount({
+                        license,
+                        licensePic,
+                        owner: owner,
+                        ownerID: userID,
+                        permitedUseInYear,
+                        type: 'chah',
+                        charge: permitedUseInYear,
+                        endDate: settings.endYearDateJ,
+                        startDate: settings.startYearDateJ,
+                    });
+                    newAcount.save().then(doc => {
+                        if(owner != 'undefined'){
+                            Acount.find({}, (err, accounts) => {
+                                var accountNumber = 114110;
+                                for(var i=0; i<accounts.length; i++)
+                                    if(accounts[i].accountNumber > accountNumber)
+                                        accountNumber = accounts[i].accountNumber
+                                var newAcount2 = new Acount({
+                                    accountNumber: accountNumber+1,
+                                    charge: 0,
+                                    owner: user.fullname,
+                                    ownerID: user._id,
+                                    type: 'chahvandi',
+                                    endDate: {year: 1400, month: 10, day: 4},
+                                    startDate: {year: 1400, month: 10, day: 4},
+                                    creationDate: new Date,
+                                    linkedAccount: newAcount._id,
+                                    endDate: settings.endYearDateJ,
+                                    startDate: settings.startYearDateJ,
+                                });
+                                newAcount2.save().then(doc => {
+                                    User.updateMany({_id: userID}, {$set: {chahvand: true}}, (err, doc) => {
+                                        req.flash('success_msg', 'حساب با موفقیت ایجاد شد');
+                                        res.redirect(`/dashboard/accounts`);
+                                    })
+                                });
+                            });
+                        }
+                        else{
+                            req.flash('success_msg', 'حساب با موفقیت ایجاد شد');
+                            res.redirect(`/dashboard/accounts`);
+                        }
+                    }).catch(err => console.log(err));
                 });
-                newAcount.save().then(doc => {
-                    if(owner != 'undefined'){
-                        Acount.find({}, (err, accounts) => {
-                            var accountNumber = 114110;
-                            for(var i=0; i<accounts.length; i++)
-                                if(accounts[i].accountNumber > accountNumber)
-                                    accountNumber = accounts[i].accountNumber
-                            var newAcount2 = new Acount({
-                                accountNumber: accountNumber+1,
-                                charge: 0,
-                                owner: user.fullname,
-                                ownerID: user._id,
-                                type: 'chahvandi',
-                                endDate: {year: 1400, month: 10, day: 4},
-                                startDate: {year: 1400, month: 10, day: 4},
-                                creationDate: new Date,
-                                linkedAccount: newAcount._id,
-                            });
-                            newAcount2.save().then(doc => {
-                                User.updateMany({_id: userID}, {$set: {chahvand: true}}, (err, doc) => {
-                                    req.flash('success_msg', 'حساب با موفقیت ایجاد شد');
-                                    res.redirect(`/dashboard/accounts`);
-                                })
-                            });
-                        });
-                    }
-                    else{
-                        req.flash('success_msg', 'حساب با موفقیت ایجاد شد');
-                        res.redirect(`/dashboard/accounts`);
-                    }
-                }).catch(err => console.log(err));
-            });
-        }
+            }
+        })
     })
 });
 router.post('/save-chah', ensureAuthenticated, upload.single('licensePic'), (req, res, next) => {
@@ -322,52 +329,60 @@ router.post('/save-chahvandi', ensureAuthenticated, upload.single('licensePic'),
 });
 router.post('/add-account-chahvandi', ensureAuthenticated, (req, res, next) => {
     var {chahID, userID} = req.body;
-    User.findById(userID, (err, user) => {
-        Acount.find({}, (err, accounts) => {
-            var accountNumber = 114110;
-            for(var i=0; i<accounts.length; i++)
-                if(accounts[i].accountNumber > accountNumber)
-                    accountNumber = accounts[i].accountNumber
-            var owner = 'undefined';
-            if(user) owner = user.fullname;
-            var newAccount = new Acount({
-                accountNumber: accountNumber+1,
-                owner,
-                ownerID: userID,
-                linkedAccount: chahID,
-                type: 'chahvandi',
-                charge: 0,
-                creationDate: new Date,
-            })
-            newAccount.save().then(doc => {
-                res.redirect(`/dashboard/acount-view?acountID=${newAccount._id}`);
-            }).catch(err => console.log(err));
-        });
+    Settings.findOne({}, (err, settings) => {
+        User.findById(userID, (err, user) => {
+            Acount.find({}, (err, accounts) => {
+                var accountNumber = 114110;
+                for(var i=0; i<accounts.length; i++)
+                    if(accounts[i].accountNumber > accountNumber)
+                        accountNumber = accounts[i].accountNumber
+                var owner = 'undefined';
+                if(user) owner = user.fullname;
+                var newAccount = new Acount({
+                    accountNumber: accountNumber+1,
+                    owner,
+                    ownerID: userID,
+                    linkedAccount: chahID,
+                    type: 'chahvandi',
+                    charge: 0,
+                    creationDate: new Date,
+                    endDate: settings.endYearDateJ,
+                    startDate: settings.startYearDateJ,
+                })
+                newAccount.save().then(doc => {
+                    res.redirect(`/dashboard/acount-view?acountID=${newAccount._id}`);
+                }).catch(err => console.log(err));
+            });
+        })
     })
 });
 router.post('/add-account-abvandi', ensureAuthenticated, (req, res, next) => {
     var {userID} = req.body;
-    User.findById(userID, (err, user) => {
-        Acount.find({}, (err, accounts) => {
-            var accountNumber = 114110;
-            for(var i=0; i<accounts.length; i++)
-                if(accounts[i].accountNumber > accountNumber)
-                    accountNumber = accounts[i].accountNumber
-            var owner = 'undefined';
-            if(user) owner = user.fullname;
-            var newAccount = new Acount({
-                accountNumber: accountNumber+1,
-                owner,
-                ownerID: userID,
-                type: 'abvandi',
-                charge: 0,
-                creationDate: new Date,
-            })
-            newAccount.save().then(doc => {
-                res.redirect(`/dashboard/acount-view?acountID=${newAccount._id}`);
-            }).catch(err => console.log(err));
+    Settings.findOne({}, (err, settings) => {
+        User.findById(userID, (err, user) => {
+            Acount.find({}, (err, accounts) => {
+                var accountNumber = 114110;
+                for(var i=0; i<accounts.length; i++)
+                    if(accounts[i].accountNumber > accountNumber)
+                        accountNumber = accounts[i].accountNumber
+                var owner = 'undefined';
+                if(user) owner = user.fullname;
+                var newAccount = new Acount({
+                    accountNumber: accountNumber+1,
+                    owner,
+                    ownerID: userID,
+                    type: 'abvandi',
+                    charge: 0,
+                    creationDate: new Date,
+                    endDate: settings.endYearDateJ,
+                    startDate: settings.startYearDateJ,
+                })
+                newAccount.save().then(doc => {
+                    res.redirect(`/dashboard/acount-view?acountID=${newAccount._id}`);
+                }).catch(err => console.log(err));
+            });
         });
-    })
+    });
 });
 
 

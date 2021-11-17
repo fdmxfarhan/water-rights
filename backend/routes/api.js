@@ -10,6 +10,7 @@ var Acount = require('../models/Acount');
 var Notification = require('../models/Notification');
 var UserNotif = require('../models/UserNotif');
 var Transmission = require('../models/Transmission');
+var Settings = require('../models/Settings');
 
 router.post('/login', (req, res, next) => {
     const {username, password} = req.body;
@@ -108,26 +109,28 @@ router.post('/add-account', (req, res, next) => {
     const {phone} = req.body;
     User.findOne({phone: phone}, (err, user) => {
         Acount.find({}, (err, accounts) => {
-            var accountNumber = 114110;
-            for(var i=0; i<accounts.length; i++)
-                if(accounts[i].accountNumber > accountNumber)
-                    accountNumber = accounts[i].accountNumber
-            var newAccount = new Acount({
-                accountNumber: accountNumber+1,
-                charge: 0,
-                owner: user.fullname,
-                ownerID: user._id,
-                type: 'abvandi',
-                endDate: {year: 1400, month: 10, day: 4},
-                startDate: {year: 1400, month: 10, day: 4},
-                creationDate: new Date,
-            });
-            newAccount.save().then(doc => {
-                res.send({done: true, newAccount});
-            }).catch(err => {
-                if(err) console.log(err);
-                res.send({done: false});
-            });
+            Settings.findOne({}, (err, settings) => {
+                var accountNumber = 114110;
+                for(var i=0; i<accounts.length; i++)
+                    if(accounts[i].accountNumber > accountNumber)
+                        accountNumber = accounts[i].accountNumber
+                var newAccount = new Acount({
+                    accountNumber: accountNumber+1,
+                    charge: 0,
+                    owner: user.fullname,
+                    ownerID: user._id,
+                    type: 'abvandi',
+                    endDate: settings.endYearDateJ,
+                    startDate: settings.startYearDateJ,
+                    creationDate: new Date,
+                });
+                newAccount.save().then(doc => {
+                    res.send({done: true, newAccount});
+                }).catch(err => {
+                    if(err) console.log(err);
+                    res.send({done: false});
+                });
+            })
         })
     });
 });
@@ -215,4 +218,10 @@ router.post('/seen-notifications', (req, res, next) => {
         res.send({done: true});
     });
 });
+
+router.get('/test', (req, res, next) => {
+    var {name} = req.query;
+    res.send(`hello ${name}`);
+})
+
 module.exports = router;

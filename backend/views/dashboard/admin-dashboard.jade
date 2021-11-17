@@ -11,24 +11,26 @@ block content
             .progress-bar
                 .passed(style="width: #{Math.floor((users.length/100)*100) < 100 ? Math.floor((users.length/100)*100) : 100}%")
             h1.title کاربران
-        a.card.orange(href="#")
-            i.fa.fa-dollar
-            h1.number 1234 تومان
-            .progress-bar
-                .passed(style="width: 50%")
-            h1.title درآمد
-        a.card.green(href="#")
+        a.card.green(href="/dashboard/accounts")
             i.fa.fa-credit-card
             h1.number= accounts.length
             .progress-bar
                 .passed(style="width: #{Math.floor((accounts.length/100)*100) < 100 ? Math.floor((accounts.length/100)*100) : 100}%")
             h1.title حساب ها
+        a.card.orange(href="#")
+            i.fa.fa-dollar
+            h1.number #{mirab.charge} 
+                .cm متر مکعب
+            .progress-bar
+                .passed(style="width: #{Math.floor((mirab.charge/sumCharge)*100) < 100 ? Math.floor((mirab.charge/sumCharge)*100) : 100}%")
+            h1.title حساب میراب
         a.card.red(href="#")
             i.fa.fa-dollar
-            h1.number= sumCharge
+            h1.number #{abkhan.charge} 
+                .cm متر مکعب
             .progress-bar
-                .passed(style="width: #{Math.floor((sumCharge/10000)*100) < 100 ? Math.floor((sumCharge/10000)*100) : 100}%")
-            h1.title شارژ کل
+                .passed(style="width: #{Math.floor((abkhan.charge/sumCharge)*100) < 100 ? Math.floor((abkhan.charge/sumCharge)*100) : 100}%")
+            h1.title حساب آبخوان
     
     .notifications
         -for(var i=transmissions.length-1; i>=0; i--){

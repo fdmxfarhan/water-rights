@@ -251,4 +251,10 @@
     .block-account a i{
         padding: 0 0.5vw;
     }
+    .dates .date{
+        font-family: 'iransans';
+        font-size: 1vw;
+        color: var(--text);
+        text-align: center;
+    }
 }

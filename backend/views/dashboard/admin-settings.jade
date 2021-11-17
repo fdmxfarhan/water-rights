@@ -1,0 +1,39 @@
+extends layout
+
+block styles
+    link(rel="stylesheet", href="/css/dashboard/admin-settings.css")
+    link(rel="stylesheet", href="/css/dashboard/users-view.css")
+
+block content
+    .title-view 
+        h1 تنظیمات
+        h2
+    .content-view 
+        .users-view 
+            .settings-view
+                h1.title تنظیمات سال آبی
+                form(action="/dashboard/set-start-year" method="POST") 
+                    .date-input
+                        label(for="day") تاریخ آغاز سال آبی: 
+                        input.text(type="number" name="day" placeholder="روز" value="#{settings.startYearDateJ.day}")
+                        | /
+                        input.text(type="number" name="month" placeholder="ماه" value="#{settings.startYearDateJ.month}")
+                        | /
+                        input.text(type="number" name="year" placeholder="سال" value="#{settings.startYearDateJ.year}")
+                        input.submit(type="submit" value="ثبت")
+                form(action="/dashboard/set-end-year" method="POST") 
+                    .date-input
+                        label(for="day") تاریخ پایان سال آبی: 
+                        input.text(type="number" name="day" placeholder="روز" value="#{settings.endYearDateJ.day}")
+                        | /
+                        input.text(type="number" name="month" placeholder="ماه" value="#{settings.endYearDateJ.month}")
+                        | /
+                        input.text(type="number" name="year" placeholder="سال" value="#{settings.endYearDateJ.year}")
+                        input.submit(type="submit" value="ثبت")
+        .user-control 
+            .control 
+                
+    
+
+    script.
+        $('#link5').addClass('active');

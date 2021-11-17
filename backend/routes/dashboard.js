@@ -9,10 +9,61 @@ var Acount = require('../models/Acount');
 var Notification = require('../models/Notification');
 var UserNotif = require('../models/UserNotif');
 var Transmission = require('../models/Transmission');
+var Settings = require('../models/Settings');
 const mail = require('../config/mail');
 const dateConvert = require('../config/dateConvert');
 
-
+Acount.findOne({type: 'mirab'}, (err, account) => {
+    if(!account){
+        var newAccount = new Acount({
+            type: 'mirab',
+            license: 'mirab',
+            owner: 'میراب',
+            ownerID: 'mirab',
+            charge: 0,
+            creationDate: new Date(),
+        });
+        newAccount.save().then(res => {}).catch(err => {
+            if(err) console.log(err);
+        });
+    }
+});
+Acount.findOne({type: 'abkhan'}, (err, account) => {
+    if(!account){
+        var newAccount = new Acount({
+            type: 'abkhan',
+            license: 'abkhan',
+            owner: 'آبخوان',
+            ownerID: 'abkhan',
+            charge: 0,
+            creationDate: new Date(),
+        });
+        newAccount.save().then(res => {}).catch(err => {
+            if(err) console.log(err);
+        });
+    }
+});
+Settings.findOne({}, (err, settings) => {
+    if(!settings){
+        var startYearDate = new Date();
+        var endYearDate = new Date(startYearDate.getFullYear()+1, startYearDate.getMonth(), startYearDate.getDate());
+        var startJ =  dateConvert.get_year_month_day(startYearDate);
+        var endJ =  dateConvert.get_year_month_day(endYearDate);
+        var newSettings = new Settings({
+            startYearDate,
+            endYearDate,
+            startYearDateS: dateConvert.convertDate(startYearDate),
+            endYearDateS: dateConvert.convertDate(endYearDate),
+            startYearDateJ: {year: startJ[0], month: startJ[1], day: startJ[2]},
+            endYearDateJ: {year: endJ[0], month: endJ[1], day: endJ[2]},
+        });
+        newSettings.save().then(doc => {
+            console.log(newSettings);
+        }).catch(err => {
+            if(err) console.log(err);
+        });
+    }
+})
   
 router.get('/', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'user')
@@ -26,26 +77,32 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
     {
         User.find({}, (err, users) => {
             Acount.find({}, (err, accounts) => {
-                Notification.find({}, (err, notifications) => {
-                    Transmission.find({done: false}, (err, transmissions) => {
-                        var sumCharge = 0;
-                        if(accounts.length > 1)
-                            sumCharge = accounts.map(e => parseInt(e.charge)).reduce((a, b) => a+b);
-                        res.render('./dashboard/admin-dashboard', {
-                            user: req.user,
-                            login: req.query.login,
-                            notifications,
-                            dateConvert,
-                            transmissions,
-                            users,
-                            accounts,
-                            sumCharge,
+                Acount.findOne({type: 'mirab'}, (err, mirab) => {
+                    Acount.findOne({type: 'abkhan'}, (err, abkhan) => {
+                        Notification.find({}, (err, notifications) => {
+                            Transmission.find({done: false}, (err, transmissions) => {
+                                var sumCharge = 0;
+                                if(accounts.length > 1)
+                                    sumCharge = accounts.map(e => parseInt(e.charge)).reduce((a, b) => a+b);
+                                res.render('./dashboard/admin-dashboard', {
+                                    user: req.user,
+                                    login: req.query.login,
+                                    notifications,
+                                    dateConvert,
+                                    transmissions,
+                                    users,
+                                    accounts,
+                                    sumCharge,
+                                    mirab,
+                                    abkhan,
+                                });
+                            })
+                        })
+                        Notification.updateMany({seen: false}, {$set: {seen: true}}, (err, notifications) => {
+                            if(err) console.log(err)
                         });
                     })
                 })
-                Notification.updateMany({seen: false}, {$set: {seen: true}}, (err, notifications) => {
-                    if(err) console.log(err)
-                });
             });
         })
     }
@@ -216,7 +273,7 @@ router.get('/acount-view', ensureAuthenticated, (req, res, next) => {
             });
         });
     });
-})
+});
 router.get('/make-admin', ensureAuthenticated, (req, res, next) => {
     var {userID} = req.query;
     if(req.user.role == 'admin'){
@@ -224,7 +281,7 @@ router.get('/make-admin', ensureAuthenticated, (req, res, next) => {
             res.redirect('/dashboard/users');
         })
     }
-})
+});
 router.get('/make-user', ensureAuthenticated, (req, res, next) => {
     var {userID} = req.query;
     if(req.user.role == 'admin'){
@@ -232,7 +289,7 @@ router.get('/make-user', ensureAuthenticated, (req, res, next) => {
             res.redirect('/dashboard/users');
         })
     }
-})
+});
 router.get('/accounts', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'admin'){
         User.find({}, (err, users) => {
@@ -246,7 +303,7 @@ router.get('/accounts', ensureAuthenticated, (req, res, next) => {
             });
         });
     }
-})
+});
 var getMirabRight = (source, target, amount) => {
     if(source.type == 'chah' && target.type == 'chahvandi')
         return 0;
@@ -271,7 +328,6 @@ var getSandoghRight = (source, target, amount) => {
 }
 router.get('/accept-transmission', ensureAuthenticated, (req, res, next) => {
     var {transmissionID} = req.query;
-
     Transmission.findById(transmissionID, (err, transmission) => {
         Acount.findById(transmission.source._id, (err, source) => {
             Acount.findById(transmission.target._id, (err, target) => {
@@ -282,6 +338,16 @@ router.get('/accept-transmission', ensureAuthenticated, (req, res, next) => {
 
                 // Acount.updateMany({_id: source._id}, {$set: {charge: source.charge - transmission.amount}}, (err) => {});
                 Acount.updateMany({_id: target._id}, {$set: {charge: target.charge + (transmission.amount - mirab - abkhan)}}, (err) => {});
+                Acount.findOne({type: 'mirab'}, (err, mirabAccount) => {
+                    Acount.updateMany({type: 'mirab'}, {$set: {charge: mirabAccount.charge+mirab}}, (err, doc) => {
+                        if(err) console.log(err);
+                    });
+                });
+                Acount.findOne({type: 'abkhan'}, (err, abkhanAccount) => {
+                    Acount.updateMany({type: 'abkhan'}, {$set: {charge: abkhanAccount.charge+abkhan}}, (err, doc) => {
+                        if(err) console.log(err);
+                    });
+                });
                 if(source.type == 'chah') 
                     Acount.updateMany({_id: source._id}, {$set: {sandogh: source.sandogh + sandogh}}, (err) => {});
                 if(target.type == 'chah')
@@ -362,8 +428,64 @@ router.get('/unblock-account', ensureAuthenticated, (req, res, next) => {
         res.redirect(`/dashboard/acount-view?acountID=${accountID}`);
     });
 });
-
-
+router.get('/settings', ensureAuthenticated, (req, res, next) => {
+    if(req.user.role == 'admin'){
+        Settings.findOne({}, (err, settings) => {
+            res.render('./dashboard/admin-settings', {
+                user: req.user,
+                settings,
+            });
+        })
+    }
+});
+router.post('/set-start-year', ensureAuthenticated, (req, res, next) => {
+    var day = parseInt(req.body.day);
+    var month = parseInt(req.body.month);
+    var year = parseInt(req.body.year);
+    var startYearDateJ = {day, month, year};
+    var endYearDateJ = {day, month, year: year+1};
+    var startG = dateConvert.jalali_to_gregorian(year, month, day);
+    var endG = dateConvert.jalali_to_gregorian(year+1, month, day);
+    var startYearDate = new Date(startG[0], startG[1]-1, startG[2]);
+    var endYearDate = new Date(endG[0], endG[1]-1, endG[2]);
+    var startYearDateS = dateConvert.convertDate(startYearDate);
+    var endYearDateS = dateConvert.convertDate(endYearDate);
+    Settings.updateMany({}, {$set: {
+        startYearDateJ,
+        endYearDateJ,
+        startYearDate,
+        endYearDate,
+        startYearDateS,
+        endYearDateS,
+    }}, (err, doc) => {
+        req.flash('success_msg', 'تغییرات با موفقیت ذخیره شد.');
+        res.redirect('/dashboard/settings');
+    })
+});
+router.post('/set-end-year', ensureAuthenticated, (req, res, next) => {
+    var day = parseInt(req.body.day);
+    var month = parseInt(req.body.month);
+    var year = parseInt(req.body.year);
+    var startYearDateJ = {day, month, year: year-1};
+    var endYearDateJ = {day, month, year};
+    var startG = dateConvert.jalali_to_gregorian(year, month, day);
+    var endG = dateConvert.jalali_to_gregorian(year+1, month, day);
+    var startYearDate = new Date(startG[0], startG[1]-1, startG[2]);
+    var endYearDate = new Date(endG[0], endG[1]-1, endG[2]);
+    var startYearDateS = dateConvert.convertDate(startYearDate);
+    var endYearDateS = dateConvert.convertDate(endYearDate);
+    Settings.updateMany({}, {$set: {
+        startYearDateJ,
+        endYearDateJ,
+        startYearDate,
+        endYearDate,
+        startYearDateS,
+        endYearDateS,
+    }}, (err, doc) => {
+        req.flash('success_msg', 'تغییرات با موفقیت ذخیره شد.');
+        res.redirect('/dashboard/settings');
+    })
+});
 
 
 module.exports = router;

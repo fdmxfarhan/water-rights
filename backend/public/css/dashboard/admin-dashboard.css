@@ -34,6 +34,11 @@
         padding-top: 1.5vw;
         padding-right: 1vw;
     }
+    .cards-view .card h1.number .cm{
+        display: inline;
+        font-size: 0.9vw;
+        font-weight: normal;
+    }
     .cards-view .card h1.title{
         font-size: 1.2vw;
         margin: 0;

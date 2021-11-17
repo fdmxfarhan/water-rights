@@ -112,6 +112,48 @@ block content
                             td
                                 a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts") 
                                     i.fa.fa-trash 
+                    -}else if(accounts[i].type == "mirab"){
+                        tr
+                            td.role
+                                .purple میراب
+                                .hidden= accounts[i].type
+                            td.user 
+                                h1 mirab
+                                h2
+                            td.acounts 
+                                h1= accounts[i].owner
+                                h2
+                            td.charge
+                                -if(accounts[i].blocked)
+                                    i.fa.fa-lock.red-lock
+                                | #{accounts[i].charge}
+                            td
+                                a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
+                                    i.fa.fa-edit
+                            td
+                                a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts") 
+                                    i.fa.fa-trash 
+                    -}else if(accounts[i].type == "abkhan"){
+                        tr
+                            td.role
+                                .purple آبخوان
+                                .hidden= accounts[i].type
+                            td.user 
+                                h1 abkhan
+                                h2
+                            td.acounts 
+                                h1= accounts[i].owner
+                                h2
+                            td.charge
+                                -if(accounts[i].blocked)
+                                    i.fa.fa-lock.red-lock
+                                | #{accounts[i].charge}
+                            td
+                                a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
+                                    i.fa.fa-edit
+                            td
+                                a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts") 
+                                    i.fa.fa-trash 
                     -}
                         
                 -}

@@ -75,6 +75,16 @@
     .tab input.submit:hover{
         background-color: var(--green);
     }
+    .role .purple{
+        background-color: var(--purple);
+        color: white;
+        font-family: 'iransans';
+        font-size: 1vw;
+        padding: 0.1vw 1vw;
+        width: fit-content;
+        border-radius: 0.5vw;
+        text-align: center;
+    }
     .role .red{
         background-color: var(--red);
         color: white;

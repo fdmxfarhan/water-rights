@@ -6,6 +6,7 @@ var pdf = require("pdf-creator-node");
 var path = require('path');
 var fs = require('fs');
 var phantomjs = require('phantomjs');
+var Notification = require('../models/Notification');
 var Transmission = require('../models/Transmission');
 var Acount = require('../models/Acount');
 var User = require('../models/User');
@@ -159,5 +160,12 @@ router.post('/form', (req, res, next) => {
             });
     });
 });
+router.get('/clearNotifs', ensureAuthenticated, (req, res, next) => {
+    if(req.role == 'admin'){
+        Notification.deleteMany({}, (err, doc) => {
+            res.redirect('/dashboard');
+        })
+    }
+})
 
 module.exports = router;

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            padding: 5%;
+            direction: rtl;
+            text-align: right;
+            font-family: 'bnazanin';
+        }
+        @font-face{
+            font-family: 'bnazanin';
+            src: url('https://meeraab.com/bnazanin.ttf');
+        }
+        .header{
+            overflow: hidden;
+            width: 70%;
+            margin: auto;
+            /* margin-top: 30px; */
+        }
+        .header img{
+            width: 80px;
+            float: right;
+        }
+        .header .info{
+            float: left;
+        }
+        .header .info h1{
+            font-family: 'bnazanin';
+            font-size: 15px;
+            font-weight: normal;
+        }
+        h1.in-the-name-of{
+            font-weight: bold;
+            font-family: 'bnazanin';
+            font-size: 17px;
+            text-align: center;
+        }
+        h1.title{
+            font-weight: bold;
+            font-family: 'bnazanin';
+            font-size: 17px;
+            text-align: center;
+        }
+        p.text{
+            font-family: 'bnazanin';
+            font-size: 15px;
+            text-align: justify;
+            width: 90%;
+            margin: auto;
+            margin-top: 20px;
+        }
+        .signs{
+            overflow: hidden;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .signs .part{
+            width: 50%;
+            float: right;
+            text-align: center;
+        }
+        .signs h1 {
+            font-weight: bold;
+            font-family: 'bnazanin';
+            font-size: 17px;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .signs h2 {
+            font-weight: normal;
+            font-family: 'bnazanin';
+            font-size: 16px;
+            margin-top: 0;
+            padding-top: 0;
+        }
+        ul{
+            width: 80%;
+            margin: auto;
+            margin-top: 20px;
+        }
+        ul li{
+            font-family: 'bnazanin';
+            font-size: 16px;
+            text-align: justify;
+        }
+        ul li span{
+            position: relative;
+            left: -20px;
+        }
+        b{
+            font-weight: bold;
+            font-size: 20px;
+        }
+        h1.right-title{
+            font-family: 'bnazanin';
+            font-size: 17px;
+            text-align: right;
+            width: 90%;
+            margin: 17px auto;
+            margin-bottom: 5px;
+        }
+        h1.footer{
+            color: gray;
+            font-family: 'bnazanin';
+            font-size: 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://meeraab.com/abmantagheei.png" alt="logo">
+        <div class="info">
+            <h1>تاریخ صدور: {{info.date}}</h1>
+            <h1>شماره فرم: {{info.formNumber}}</h1>
+        </div>
+    </div>
+    <h1 class="in-the-name-of">بسمه تعالی</h1>
+    <h1 class="title">فرم شماره 3(فرم انتقال شارژ)</h1>
+    <p class="text">
+        با سلام
+        <br>
+        اینجانب <b>{{info.fullname}}</b> با کد آب‌وندی <b>{{info.accountNumber}}</b> و شناسه ملی <b>{{info.idNumber}}</b> که پیش از این مطابق فرم شماره یک به شماره <b>{{info.form1Number}}</b> مورخه <b>{{info.form1Date}}</b> درخواست فروش خود را ثبت کرده‌ام، تایید می‌نمایم ضمن مطالعه آیین نامه بانک حقوق آب با کلیه موارد آن موافق و خواهان انتقال شارژ به میزان <b>{{info.amount}}</b> متر مکعب و تاریخ پایان اعتبار <b>{{info.endDate}}</b> به حساب آب‌وندی به شماره <b>{{info.sourceAccountNum}}</b> متعلق به آقا/شرکت <b>{{info.targetOwner}}</b> 
+        هستم و اذعان دارم کلیه حق و حقوق مترتبه را از خریدار دریافت داشته، حق هرگونه اعتراض در این خصوص را از خود سلب می‌نمایم. با امضاء این برگه، شارژ فوق از حساب اینجانب خارج گردیده و ادعایی نسبت به آن نخواهم داشت.
+    </p>
+    <div class="signs">
+        <h1>نام و نام خانوادگی:</h1>
+        <h2>امضا و اثر انگشت</h2>
+    </div>
+    <h1 class="right-title">
+        تذکر: 
+    </h1>
+    <ul class="list">
+        <li><span>با امضاء این برگه شارژ از حساب شما کسر خواهد شد و امکان بازگشت وجود ندارد.</span></li>
+        <li><span>لازم است به پیوست فرم شماره 1 خود را ضمیمه نمایید.</span></li>
+        <li><span>شارژ منتقل شده تنها مربوط سال آبی جاری است و تاثیری بر حجم آبی سال‌های بعد نخواهد داشت و کماکان شارژ سالیانه از سوی شرکت آب منطقه‌ای در ابتدای سال آبی تعیین و اعمال خواهد شد.</span></li>
+    </ul>
+    <h1 class="right-title">
+        قسمتی از موارد مهم آیین‌نامه بانک حقوق آب:
+    </h1>
+    <ul class="list">
+        <li><span>مبادله شارژ بین آب‌وندان مجاز فعال مختص به حساب چاه‌هایی است که در دوره پنج ساله منتهی به درخواست، فعال و در دست بهره‌برداری بوده، بهره‌برداری آن‌ها معتبر باشد.</span></li>
+        <li><span>متقاضیان مبادله حجم بهره‌برداری (شارژ) باید به همراه سایر مدارک تعهدنامه رسمی مبنی بر عدم درخواست تامین آب در آینده و جبران خسارات ناشی از هر گونه تخلف احتمالی در روند مبادله حجم بهره‌برداری را به شرکت تحویل نمایند.</span></li>
+        <li><span>مبادله حجم بهره‌برداری (شارژ) تنها محدود به بازه زمانی یک سال آبی بوده و انتقال حجم بهره‌برداری از یک سال آبی به سال آبی دیگر ممنوع می‌باشد. به شرط کسر سهم محیط زیست، به تاریخ پایان اعتبار شارژهای مبادله شده ، یک سال افزوده می‌شود.</span></li>
+        <li><span>هر گونه مبادله حجم بهره‌برداری (شارژ)، تنها بر روی چاه‌های دارای کنتور هوشمند آب با قابلیت قطع مجاز است و چاه‌وندان لازم صحت اطلاعات فرم و امضاء فروشنده مورد تایید است.</span></li>
+    </ul>
+    <div class="signs">
+        <h1>تاریخ، مهر و امضای کارگزار</h1>
+    </div>
+    <p class="text">
+        فرم شماره 2 خریدار <b>{{info.form2Number}}</b> مورخه <b>{{info.form2Date}}</b> متعلق به آقا/شرکت <b>{{info.targetOwner}}</b> با کد آب‌وندی <b>{{info.targetOwnerID}}</b> دریافت شد و اطلاعات فرم در تاریخ <b>{{info.date}}</b> در بانک اعمال شد.
+    </p>
+    <h1 class="footer">این برگه در دو نسخه تکمیل شود (نسخه اول کارگزار - نسخه دوم آب‌وند)</h1>
+</body>
+</html>

@@ -17,7 +17,7 @@ router.get('/form', (req, res, next) => {
 
 router.post('/form', (req, res, next) => {
     var {fullname, accountNumber, maximum, idNumber} = req.body;
-    fs.readFile('./public/form1.html', 'utf8', (err, html) => {
+    fs.readFile('./public/form2.html', 'utf8', (err, html) => {
         var options = {
             phantomPath: path.join(__dirname, '../node_modules/phantomjs/lib/phantom/bin/phantomjs'),
             // phantomPath: '/usr/local/share/phantomjs-1.9.8-linux-x86_64/bin/phantomjs',

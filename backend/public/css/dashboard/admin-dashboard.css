@@ -116,7 +116,7 @@
         padding: 0.7vw 1vw;
         color: white;
         border-radius: 1vw;
-        margin-bottom: 1vw;
+        margin-top: 1vw;
         overflow: hidden;
         background-color: var(--blue);
     }
@@ -170,7 +170,31 @@
     .notifications .notif .control a.decline{
         color: red;
     }
-    
+    .notifications .notif-info{
+        padding: 1vw;
+        overflow: hidden;
+        margin: 0;
+        /* display: none; */
+    }
+    .notifications .notif-info h1.title{
+        color: var(--blue);
+        margin: 0;
+        font-family: 'iransans';
+        font-size: 1.2vw;
+    }
+    .notifications .notif-info .part{
+        width: 50%;
+        float: right;
+    }
+    .notifications .notif-info .part .item{
+        font-weight: bold;
+        font-family: 'iransans';
+        font-size: 1vw;
+    }
+    .notifications .notif-info .part .item .value{
+        font-weight: normal;
+        display: inline;
+    }
 }
 @media only screen and (max-width: 800px) {
     

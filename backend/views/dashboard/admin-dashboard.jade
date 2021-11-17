@@ -31,10 +31,10 @@ block content
             .progress-bar
                 .passed(style="width: #{Math.floor((abkhan.charge/sumCharge)*100) < 100 ? Math.floor((abkhan.charge/sumCharge)*100) : 100}%")
             h1.title حساب آبخوان
-    
+    #transmissionnumber.hidden= transmissions.length
     .notifications
         -for(var i=transmissions.length-1; i>=0; i--){
-            .notif.nohover
+            .notif(id="transmission#{i}")
                 a
                     .text انتقال شارژ #{transmissions[i].amount} متر مکعب از حساب 
                         | #{transmissions[i].source.type == 'chah'? 'چاه ' : ''}#{transmissions[i].source.type == 'chahvandi'? 'چاه‌وندی ' : ''}#{transmissions[i].source.type == 'abvandi'? 'آب‌وندی ' : ''}
@@ -42,12 +42,85 @@ block content
                         | #{transmissions[i].target.type == 'chah'? 'چاه ' : ''}#{transmissions[i].target.type == 'chahvandi'? 'چاه‌وندی ' : ''}#{transmissions[i].target.type == 'abvandi'? 'آب‌وندی ' : ''}
                         | #{transmissions[i].target.type == 'chah' ? transmissions[i].target.license : transmissions[i].target.accountNumber} (#{transmissions[i].target.owner}).
                 .date= dateConvert.get_year_month_day(transmissions[i].date)
-                .control
+                .control.hidden(id="control#{i}")
                     a.accept(href="/dashboard/accept-transmission?transmissionID=#{transmissions[i]._id}") 
                         i.fa.fa-check
                     a.decline(href="/dashboard/decline-transmission?transmissionID=#{transmissions[i]._id}") 
                         i.fa.fa-times
+            .notif-info.hidden(id="transmission-info#{i}")
+                .part 
+                    h1.title حساب مبداء
+                    -if(transmissions[i].source.type == 'chah'){
+                        .item نوع حساب: 
+                            .value چاه
+                        .item شارژ سالیانه: 
+                            .value= transmissions[i].source.permitedUseInYear
+                        .item مصرف شده: 
+                            .value= transmissions[i].source.permitedUseInYear - transmissions[i].source.charge
+                        .item موجودی: 
+                            .value= transmissions[i].source.charge
+                        .item مالک حساب: 
+                            .value= transmissions[i].source.owner
                         
+                    -}else if(transmissions[i].source.type == 'chahvandi'){
+                        .item نوع حساب: 
+                            .value چاه‌وندی
+                        .item موجودی: 
+                            .value= transmissions[i].source.charge
+                        .item تاریخ آغاز اعتبار: 
+                            .value #{transmissions[i].source.startDate.year}/#{transmissions[i].source.startDate.month}/#{transmissions[i].source.startDate.day}
+                        .item تاریخ پایان اعتبار: 
+                            .value #{transmissions[i].source.endDate.year}/#{transmissions[i].source.endDate.month}/#{transmissions[i].source.endDate.day}
+                        .item مالک حساب: 
+                            .value= transmissions[i].source.owner
+                    -}else if(transmissions[i].source.type == 'abvandi'){
+                        .item نوع حساب: 
+                            .value آب‌وندی
+                        .item موجودی: 
+                            .value= transmissions[i].source.charge
+                        .item تاریخ آغاز اعتبار: 
+                            .value #{transmissions[i].source.startDate.year}/#{transmissions[i].source.startDate.month}/#{transmissions[i].source.startDate.day}
+                        .item تاریخ پایان اعتبار: 
+                            .value #{transmissions[i].source.endDate.year}/#{transmissions[i].source.endDate.month}/#{transmissions[i].source.endDate.day}
+                        .item مالک حساب: 
+                            .value= transmissions[i].source.owner
+                    -}
+                .part 
+                    h1.title حساب مقصد
+                    -if(transmissions[i].target.type == 'chah'){
+                        .item نوع حساب: 
+                            .value چاه
+                        .item شارژ سالیانه: 
+                            .value= transmissions[i].target.permitedUseInYear
+                        .item مصرف شده: 
+                            .value= transmissions[i].target.permitedUseInYear - transmissions[i].target.charge
+                        .item موجودی: 
+                            .value= transmissions[i].target.charge
+                        .item مالک حساب: 
+                            .value= transmissions[i].source.owner
+                    -}else if(transmissions[i].target.type == 'chahvandi'){
+                        .item نوع حساب: 
+                            .value چاه‌وندی
+                        .item موجودی: 
+                            .value= transmissions[i].target.charge
+                        .item تاریخ آغاز اعتبار: 
+                            .value #{transmissions[i].target.startDate.year}/#{transmissions[i].target.startDate.month}/#{transmissions[i].target.startDate.day}
+                        .item تاریخ پایان اعتبار: 
+                            .value #{transmissions[i].target.endDate.year}/#{transmissions[i].target.endDate.month}/#{transmissions[i].target.endDate.day}
+                        .item مالک حساب: 
+                            .value= transmissions[i].source.owner
+                    -}else if(transmissions[i].target.type == 'abvandi'){
+                        .item نوع حساب: 
+                            .value آب‌وندی
+                        .item موجودی: 
+                            .value= transmissions[i].target.charge
+                        .item تاریخ آغاز اعتبار: 
+                            .value #{transmissions[i].target.startDate.year}/#{transmissions[i].target.startDate.month}/#{transmissions[i].target.startDate.day}
+                        .item تاریخ پایان اعتبار: 
+                            .value #{transmissions[i].target.endDate.year}/#{transmissions[i].target.endDate.month}/#{transmissions[i].target.endDate.day}
+                        .item مالک حساب: 
+                            .value= transmissions[i].source.owner
+                    -}
         -}
         -for(var i=notifications.length-1; i>=0; i--){
             -if(notifications[i].type == 'new-user'){ 
@@ -66,8 +139,6 @@ block content
                     .date= dateConvert.get_year_month_day(notifications[i].date)
             -}
         -}
-
-
 
     //- .charts-view 
         .chart1 

@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $('#link1').addClass('active');
-
+    /*
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawChart);
 
@@ -53,5 +53,23 @@ $(document).ready(function(){
         var chart = new google.visualization.ColumnChart(document.getElementById('chart1'));
         chart.draw(data, options);
     }
-    
+    */
+    var transmissionnumber = parseInt(document.getElementById('transmissionnumber').textContent);
+
+    console.log(transmissionnumber);
+    var transmissions = [];
+    for(var i=0; i<transmissionnumber; i++){
+        transmissions.push({
+            btn: $(`#transmission${i}`),
+            view: $(`#transmission-info${i}`),
+            control: $(`#control${i}`),
+        })
+    }
+    transmissions.forEach(transmit => {
+        transmit.btn.click(() => {
+            transmit.view.slideToggle(500);
+            transmit.control.show();
+        })
+    });
+
 });

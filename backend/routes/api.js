@@ -218,10 +218,42 @@ router.post('/seen-notifications', (req, res, next) => {
         res.send({done: true});
     });
 });
-
 router.get('/test', (req, res, next) => {
     var {name} = req.query;
     res.send(`hello ${name}`);
-})
+});
+router.get('/GetCustomerCreditStatus', (req, res, next) => {
+    var {WaterNo, cityCode} = req.query;
+    Acount.findOne({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, (err, account) => {
+        res.send({
+            id: account._id,
+            WaterNo: WaterNo,
+            CreditStartDate: `${account.startDate.year}/${account.startDate.month}/${account.startDate.day}`,
+            CreditEndDate: `${account.endDate.year}/${account.endDate.month}/${account.endDate.day}`,
+            Volume: account.charge,
+            type: 1,
+        });
+    });
+});
+router.get('/ReportCurrentCredit', (req, res, next) => {
+    var {WaterNo, cityCode, Volume, CreditEndDate} = req.query;
+    Acount.findOne({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, (err, account) => {
+        Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {charge: parseInt(Volume)}}, (err, doc) => {
+            if(err){
+                console.log(err);
+                res.send({
+                    error: err,
+                    status: 'error',
+                });
+            }else{
+                res.send({
+                    status: 'ok',
+                });
+            }
+        })
+    });
+});
+
+
 
 module.exports = router;

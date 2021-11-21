@@ -140,6 +140,11 @@ block content
                     a(href="#{notifications[i].link}") 
                         .text= notifications[i].text 
                     .date= dateConvert.get_year_month_day(notifications[i].date)
+            -}else{
+                .notif(class="#{notifications[i].seen == true ? 'seen' : ''}")
+                    a
+                        .text= notifications[i].text 
+                    .date= dateConvert.get_year_month_day(notifications[i].date)
             -}
         -}
 

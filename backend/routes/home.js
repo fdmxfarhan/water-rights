@@ -167,5 +167,12 @@ router.get('/clearnotifs', ensureAuthenticated, (req, res, next) => {
         })
     }else res.send('access denied');
 })
+router.get('/cleartransmissions', ensureAuthenticated, (req, res, next) => {
+    if(req.user.role == 'admin'){
+        Transmission.deleteMany({}, (err, doc) => {
+            res.redirect('/dashboard');
+        })
+    }else res.send('access denied');
+})
 
 module.exports = router;

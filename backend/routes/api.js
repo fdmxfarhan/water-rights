@@ -307,7 +307,6 @@ router.get('/GetNextYearAnnualCredit', (req, res, next) => {
         })
     });
 });
-
 router.get('/RevocationOfWellLicense', (req, res, next) => {
     var {WaterNo, cityCode} = req.query;
     Acount.findOne({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, (err, account) => {
@@ -329,4 +328,5 @@ router.get('/RevocationOfWellLicense', (req, res, next) => {
         })
     });
 });
+
 module.exports = router;

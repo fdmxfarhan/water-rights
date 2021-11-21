@@ -63,8 +63,56 @@ Settings.findOne({}, (err, settings) => {
             if(err) console.log(err);
         });
     }
-})
-  
+});
+
+setInterval(() => {
+    // return;
+    Settings.findOne({}, (err, settings) => {
+        if(settings){
+            var startYearDate = settings.startYearDateJ;
+            var endtYearDate = settings.endYearDateJ;
+            now = dateConvert.getNow();
+            if(dateConvert.compareDates(now, endtYearDate) == 1){
+                console.log('Happy new watter year :)');
+                var notif = new Notification({
+                    type: 'text',
+                    text: 'ورود به سال آبی جدید',
+                    date: new Date(),
+                });
+                notif.save().then().catch(err => console.log(err));
+                settings.startYearDate  = settings.endYearDate;
+                settings.startYearDateS = dateConvert.convertDate(settings.startYearDate);
+                settings.startYearDateJ = dateConvert.arrayToObj(dateConvert.get_year_month_day(settings.endYearDate));
+                settings.endYearDateJ = {year: settings.startYearDateJ.year+1, month: settings.startYearDateJ.month, day: settings.startYearDateJ.month};
+                settings.endYearDateS = dateConvert.convertDateObject(settings.endYearDateJ);
+                settings.endYearDate  = dateConvert.jalali_to_gregorian(settings.endYearDateJ.year, settings.endYearDateJ.month, settings.endYearDateJ.day);
+                Settings.updateMany({}, {$set: {
+                    startYearDate: settings.startYearDate,
+                    startYearDateS: settings.startYearDateS,
+                    startYearDateJ: settings.startYearDateJ,
+                    endYearDateJ: settings.endYearDateJ,
+                    endYearDateS: settings.endYearDateS,
+                    endYearDate: settings.endYearDate,
+                }}).then(doc => {
+                    Acount.find({type: 'chah'}, (err, accounts) => {
+                        for (let i = 0; i < accounts.length; i++) {
+                            const account = accounts[i];
+                            // if(dateConvert.compareDates(now, account.endDate) == 1){
+                                var startDate = settings.startYearDateJ;
+                                var endDate = settings.endYearDateJ;
+                                Acount.updateMany({_id: account._id}, {startDate, endDate, charge: account.permitedUseInYear}, (err, doc) => {
+                                    if(err)console.log(err);
+                                });
+                            // }
+                        }
+                    });
+                }).catch(err => console.log(err));
+            }
+            // else console.log('not yet!')
+        }
+    })
+}, 1000 * 3);
+
 router.get('/', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'user')
     {
@@ -442,12 +490,12 @@ router.post('/set-start-year', ensureAuthenticated, (req, res, next) => {
     var day = parseInt(req.body.day);
     var month = parseInt(req.body.month);
     var year = parseInt(req.body.year);
-    var startYearDateJ = {day, month, year};
-    var endYearDateJ = {day, month, year: year+1};
+    var startYearDateJ = {day: day, month: month, year: year};
+    var endYearDateJ = {day: day, month: month, year: year+1};
     var startG = dateConvert.jalali_to_gregorian(year, month, day);
     var endG = dateConvert.jalali_to_gregorian(year+1, month, day);
-    var startYearDate = new Date(startG[0], startG[1]-1, startG[2]);
-    var endYearDate = new Date(endG[0], endG[1]-1, endG[2]);
+    var startYearDate = new Date(startG[0], startG[1]-1, startG[2], 12, 0, 0, 0);
+    var endYearDate = new Date(endG[0], endG[1]-1, endG[2], 12, 0, 0, 0);
     var startYearDateS = dateConvert.convertDate(startYearDate);
     var endYearDateS = dateConvert.convertDate(endYearDate);
     Settings.updateMany({}, {$set: {
@@ -468,10 +516,10 @@ router.post('/set-end-year', ensureAuthenticated, (req, res, next) => {
     var year = parseInt(req.body.year);
     var startYearDateJ = {day, month, year: year-1};
     var endYearDateJ = {day, month, year};
-    var startG = dateConvert.jalali_to_gregorian(year, month, day);
-    var endG = dateConvert.jalali_to_gregorian(year+1, month, day);
-    var startYearDate = new Date(startG[0], startG[1]-1, startG[2]);
-    var endYearDate = new Date(endG[0], endG[1]-1, endG[2]);
+    var startG = dateConvert.jalali_to_gregorian(year-1, month, day);
+    var endG = dateConvert.jalali_to_gregorian(year, month, day);
+    var startYearDate = new Date(startG[0], startG[1]-1, startG[2], 12, 0, 0, 0);
+    var endYearDate = new Date(endG[0], endG[1]-1, endG[2], 12, 0, 0, 0);
     var startYearDateS = dateConvert.convertDate(startYearDate);
     var endYearDateS = dateConvert.convertDate(endYearDate);
     Settings.updateMany({}, {$set: {

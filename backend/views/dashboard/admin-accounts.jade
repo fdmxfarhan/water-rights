@@ -40,8 +40,9 @@ block content
                                     i.fa.fa-lock.red-lock
                                 | #{accounts[i].charge}
                             td
-                                a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
-                                    i.fa.fa-edit
+                                -if(!accounts[i].revoked)
+                                    a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
+                                        i.fa.fa-edit
                             td
                                 a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts") 
                                     i.fa.fa-trash 
@@ -66,8 +67,9 @@ block content
                                     i.fa.fa-lock.red-lock
                                 | #{accounts[i].charge}
                             td
-                                a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
-                                    i.fa.fa-edit
+                                -if(!accounts[i].revoked)
+                                    a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
+                                        i.fa.fa-edit
                             td
                                 a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts") 
                                     i.fa.fa-trash 
@@ -107,8 +109,9 @@ block content
                                     i.fa.fa-lock.red-lock
                                 | #{accounts[i].charge}
                             td
-                                a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
-                                    i.fa.fa-edit
+                                -if(!accounts[i].revoked)
+                                    a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
+                                        i.fa.fa-edit
                             td
                                 a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts") 
                                     i.fa.fa-trash 
@@ -128,8 +131,9 @@ block content
                                     i.fa.fa-lock.red-lock
                                 | #{accounts[i].charge}
                             td
-                                a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
-                                    i.fa.fa-edit
+                                -if(!accounts[i].revoked)
+                                    a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
+                                        i.fa.fa-edit
                             td
                                 a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts") 
                                     i.fa.fa-trash 
@@ -149,13 +153,13 @@ block content
                                     i.fa.fa-lock.red-lock
                                 | #{accounts[i].charge}
                             td
-                                a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
-                                    i.fa.fa-edit
+                                -if(!accounts[i].revoked)
+                                    a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
+                                        i.fa.fa-edit
                             td
                                 a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts") 
                                     i.fa.fa-trash 
                     -}
-                        
                 -}
         .user-control 
             .control 

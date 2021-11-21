@@ -42,6 +42,18 @@ var AcountSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  usedCharge: {
+    type: Number,
+    default: 0,
+  },
+  creditType: {
+    type: Number,
+    default: 1,
+  },
+  revoked: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 var Acount = mongoose.model('Acount', AcountSchema);

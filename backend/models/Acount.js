@@ -53,7 +53,16 @@ var AcountSchema = new mongoose.Schema({
   revoked: {
     type: Boolean,
     default: false,
-  }
+  },
+  lastYearCharge: {
+    type: Number,
+    default: 0,
+  },
+  nextYearCharge: {
+    type: Number,
+    default: 0,
+  },
+
 });
 
 var Acount = mongoose.model('Acount', AcountSchema);

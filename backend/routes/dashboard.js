@@ -106,6 +106,18 @@ setInterval(() => {
                             // }
                         }
                     });
+                    Acount.find({$or: [{type: 'chahvandi'}, {type: 'abvandi'}]}, (err, accounts) => {
+                        for (let i = 0; i < accounts.length; i++) {
+                            const account = accounts[i];
+                            // if(dateConvert.compareDates(now, account.endDate) == 1){
+                                var startDate = settings.startYearDateJ;
+                                var endDate = settings.endYearDateJ;
+                                Acount.updateMany({_id: account._id}, {startDate, endDate, lastYearCharge: account.charge, charge: 0}, (err, doc) => {
+                                    if(err)console.log(err);
+                                });
+                            // }
+                        }
+                    });
                 }).catch(err => console.log(err));
             }
             // else console.log('not yet!')
@@ -408,8 +420,9 @@ router.get('/accept-transmission', ensureAuthenticated, (req, res, next) => {
                         userFullname: source.owner,
                         date: new Date(),
                     });
-                    newUserNotif.save().then(doc => {}).catch(err => console.log(err));
-                    res.redirect('/dashboard');
+                    newUserNotif.save().then(doc => {
+                        res.redirect('/dashboard');
+                    }).catch(err => console.log(err));
                 });
             });
         });

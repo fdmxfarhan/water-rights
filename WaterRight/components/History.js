@@ -32,7 +32,7 @@ export default History = ({data, title, navigation}) => {
                     }).then(res => {
                         if(res.data.done){
                             setTransmissions(res.data.transmissions);
-                            console.log(res.data.transmissions);
+                            // console.log(res.data.transmissions);
                         }
                     }).catch(error => {
                         alert('خطا در برقراری ارتباط. لطفا اتصال اینترنت خود را چک کنید.')

@@ -15,32 +15,37 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import colors from '../components/colors';
 import Header from '../components/header';
 import Abvandi from '../components/abvandi';
+import Chahvandi from '../components/chahvandi';
 import Chah from '../components/chah';
 
 const acount = (props) => {
-    const item = props.route.params.item;
+    var [account, setAccount] = useState(props.route.params.item);
     useEffect(() => {
-        console.log(item)
+
     });
-    if(item.type == "chah"){
-        var title = 'حساب چاه';
+    if(account.type == "chah"){
         return(
             <View style={styles.container}>
-                <Header title={title} navigation={props.navigation} backID={'Home'}/>
-                <Chah item={item} navigation={props.navigation} />
+                <Header title={'حساب چاه'} navigation={props.navigation} backID={'Home'}/>
+                <Chah account={account} navigation={props.navigation} />
             </View>
         )
-    }else{
-        var title;
-        if(item.type == 'abvandi') title = 'حساب آب‌وندی';
-        else if(item.type == 'chahvandi') title = 'حساب چاه‌وندی';
+    }else if(account.type == "abvandi"){
         return(
             <View style={styles.container}>
-                <Header title={title} navigation={props.navigation} backID={'Home'}/>
-                <Abvandi item={item} navigation={props.navigation} />
+                <Header title={'حساب آب‌وندی'} navigation={props.navigation} backID={'Home'}/>
+                <Abvandi account={account} navigation={props.navigation} />
+            </View>
+        )
+    }else if(account.type == "chahvandi"){
+        return(
+            <View style={styles.container}>
+                <Header title={'حساب چاه‌وندی'} navigation={props.navigation} backID={'Home'}/>
+                <Chahvandi account={account} navigation={props.navigation} />
             </View>
         )
     }
+    
 }
 
 

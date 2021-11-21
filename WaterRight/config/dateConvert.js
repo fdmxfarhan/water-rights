@@ -104,10 +104,10 @@ function gregorian_to_jalali(g_y, g_m, g_d) {
 function get_year_month_day(date) {
     var convertDate;
     var d = date.getDate();
-    var m = date.getMonth();
+    var m = date.getMonth()+1;
     var y = date.getFullYear()
     convertDate = gregorian_to_jalali(y, m, d);
-    convertDate[1] += 1;
+    // convertDate[1] += 1;
     return convertDate;
 }
 

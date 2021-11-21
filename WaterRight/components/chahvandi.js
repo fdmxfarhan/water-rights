@@ -19,7 +19,7 @@ const api = require('../config/api');
 const {saveData, readData} = require('../config/save');
 
 
-export default Abvandi = ({account, navigation}) => {
+export default Chahvandi = ({account, navigation}) => {
     var [readOnce, setReadOnce] = useState(false);
     var [transmissions, setTransmissions]  = useState([]);
     var [outTransmissions, setOutTransmissions] = useState([]);
@@ -88,7 +88,6 @@ export default Abvandi = ({account, navigation}) => {
                 </View>
                 <View style={styles.historyView}>
                     <FlatList 
-                        style={styles.flatList}
                         data={transmissions}
                         keyExtractor={item => item._id}
                         renderItem={({item}) => {
@@ -242,7 +241,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 1,
         elevation: 10,
-        maxHeight: 300,
     },
     transfer: {
         flexDirection: 'row-reverse',
@@ -268,7 +266,4 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         color: colors.green,
     },
-    flatList:{
-
-    }
 });

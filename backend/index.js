@@ -12,49 +12,6 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport'); 
 const {convertDate} = require('./config/dateConvert');
-// var pdf = require("pdf-creator-node");
-
-// fs.readFile('./public/form1.html', 'utf8', (err, html) => {
-//     var options = {
-//         // phantomPath: '/usr/local/share/phantomjs-1.9.8-linux-x86_64/bin/phantomjs',
-//         phantomPath: path.join(__dirname, 'node_modules/phantomjs/lib/phantom/bin/phantomjs'),
-//         format: "A4",
-//         orientation: "portrait",
-//         border: "5mm",
-//         header: {
-//             height: "0",
-//             contents: ''
-//         },
-//         footer: {
-//             height: "0mm",
-//             contents: {}
-//         },
-//     };
-//     var document = {
-//         html: html,
-//         data: {
-//             info: {
-//                 fullname: 'fullname',
-//                 accountNumber: 'accountNumber',
-//                 maximum: 'maximum',
-//                 idNumber: 'idNumber',
-//                 date: convertDate(new Date()),
-//                 formNumber: 1,
-//             }
-//         },
-//         path: './out.pdf',
-//         type: "",
-//     };
-
-//     pdf.create(document, options)
-//         .then((r) => {
-//             console.log(r);
-//         })
-//         .catch((error) => {
-//             console.error(error);
-//         });
-// });
-
 
 // routs requirement
 var homeRoute = require('./routes/home');

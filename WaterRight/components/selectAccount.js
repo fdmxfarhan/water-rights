@@ -161,8 +161,8 @@ export default SelectAccount = ({enabled, setAccount, setTargetAccounts, setEnab
             </View>
         )
     else {
-        setSearching(false);
-        setText('');
+        // setSearching(false);
+        // setText('');
         return(<View></View>)
     }
 }

@@ -69,6 +69,7 @@ export default History = ({data, title, navigation}) => {
                     // inverted={true}
                     // horizontal={true}
                     data={transmissions}
+                    style={styles.flatList}
                     keyExtractor={item => item._id}
                     renderItem={({item}) => {
                         return(
@@ -109,6 +110,7 @@ const styles = StyleSheet.create({
     scrollView: {
         paddingVertical: 10,
         alignItems: 'center',
+        // height: '80%',
     },
     link: {
         width: '80%',
@@ -282,4 +284,8 @@ const styles = StyleSheet.create({
         fontFamily: 'iransans',
         fontSize: 13,
     },
+    flatList: {
+        // flex: 1,
+        height: '90%',
+    }
 }); 

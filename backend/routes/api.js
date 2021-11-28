@@ -229,20 +229,21 @@ router.get('/GetCustomerCreditStatus', (req, res, next) => {
     var {WaterNo, cityCode} = req.query;
     Acount.findOne({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, (err, account) => {
         if(account){
-            res.send({
+            res.send([{
                 id: account._id,
                 WaterNo: WaterNo,
                 CreditStartDate: `${account.startDate.year}/${account.startDate.month}/${account.startDate.day}`,
                 CreditEndDate: `${account.endDate.year}/${account.endDate.month}/${account.endDate.day}`,
                 Volume: account.charge,
                 Type: 1,
-            });
+            }]);
         }
         else res.send('no account was found');
     });
 });
 router.get('/ReportCurrentCredit', (req, res, next) => {
     var {WaterNo, cityCode, Volume, CreditEndDate} = req.query;
+    console.log({WaterNo, cityCode, Volume, CreditEndDate})
     Acount.findOne({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, (err, account) => {
         Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {charge: parseFloat(Volume)}}, (err, doc) => {
             if(err){

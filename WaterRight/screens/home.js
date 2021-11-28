@@ -151,6 +151,9 @@ const HomeScreen = (props) => {
           <View style={styles.tabButtonsView}>
             <TouchableOpacity 
               onPress={() => {
+                getAccounts();
+                readUser();
+                readNotifications();
                 setActiveTab('abvandi');
                 sum = 0;
                 for(var i=0; i<acounts.abvandi.length; i++)
@@ -162,6 +165,9 @@ const HomeScreen = (props) => {
             </TouchableOpacity>
             <TouchableOpacity 
               onPress={() => {
+                getAccounts();
+                readUser();
+                readNotifications();
                 setActiveTab('chahvandi');
                 sum = 0;
                 for(var i=0; i<acounts.chahvandi.length; i++)
@@ -173,6 +179,9 @@ const HomeScreen = (props) => {
             </TouchableOpacity>
             <TouchableOpacity 
               onPress={() => {
+                getAccounts();
+                readUser();
+                readNotifications();
                 setActiveTab('chah');
                 sum = 0;
                 for(var i=0; i<acounts.chah.length; i++)

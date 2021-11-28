@@ -31,6 +31,9 @@ export default AccountInfo = ({account, navigation}) => {
                     <Text style={styles.infoText}> شارژ سالیانه: 
                         <Text style={styles.infoValue}> {account.permitedUseInYear} </Text>
                     </Text>
+                    <Text style={styles.infoText}> صندوق: 
+                        <Text style={styles.infoValue}> {account.sandogh} </Text>
+                    </Text>
                 </View>
                 <View style={styles.infoArea}>
                     <Text style={styles.infoText}>مصرف شده: 
@@ -38,6 +41,9 @@ export default AccountInfo = ({account, navigation}) => {
                     </Text>
                     <Text style={styles.infoText}>قابل انتقال: 
                         <Text style={styles.infoValue}> {account.charge} </Text>
+                    </Text>
+                    <Text style={styles.infoText}> مالک حساب: 
+                        <Text style={styles.infoValue}> {account.owner} </Text>
                     </Text>
                 </View>
             </View>
@@ -61,6 +67,9 @@ export default AccountInfo = ({account, navigation}) => {
                     <Text style={styles.infoText}> تاریخ پایان اعتبار: 
                         <Text style={styles.infoValue}> {account.endDate.year}/{account.endDate.month}/{account.endDate.day} </Text>
                     </Text>
+                    <Text style={styles.infoText}> مالک حساب: 
+                        <Text style={styles.infoValue}> {account.owner} </Text>
+                    </Text>
                 </View>
             </View>
         )
@@ -82,6 +91,9 @@ export default AccountInfo = ({account, navigation}) => {
                     </Text>
                     <Text style={styles.infoText}> تاریخ پایان اعتبار: 
                         <Text style={styles.infoValue}> {account.endDate.year}/{account.endDate.month}/{account.endDate.day} </Text>
+                    </Text>
+                    <Text style={styles.infoText}> مالک حساب: 
+                        <Text style={styles.infoValue}> {account.owner} </Text>
                     </Text>
                 </View>
             </View>

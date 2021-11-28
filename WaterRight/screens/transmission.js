@@ -34,12 +34,14 @@ const transmission = (props) => {
     var [readOnce, setReadOnce] = useState(false);
     var [savedData, setSavedData] = useState();
     var [myAcounts, setMyAcounts] = useState([]);
+    var [allAccounts, setAllAccounts] = useState([]);
     var [targetAccounts, setTargetAccounts] = useState([]);
     var [amount, setAmount] = useState('');
-
+    var [userID, setUserID] = useState('undefined');
     var getAccounts = () => {
         readData().then(data => {
             setSavedData(data);
+            setUserID(data.user._id.toString());
             if(data != null){
                 api.post('/api/get-accounts', {
                     phone: data.phone,
@@ -54,8 +56,22 @@ const transmission = (props) => {
             }
         });
     }
+    var getAllAccounts = () => {
+        api.post('/api/get-all-accounts').then(res => {
+            // allAccounts = res.data.chah;
+            // allAccounts = allAccounts.concat(res.data.chahvandi);
+            // allAccounts = allAccounts.concat(res.data.abvandi);
+            allAccounts = res.data;
+            setAllAccounts(allAccounts);
+        }).catch(error => {
+            console.log(error);
+        });
+    }
     useEffect(() => {
-        if(!readOnce) getAccounts();
+        if(!readOnce) {
+            getAccounts();
+            getAllAccounts();
+        }
         readOnce = true;
         setReadOnce(true);
     });
@@ -97,8 +113,24 @@ const transmission = (props) => {
                     <Text style={styles.submitButtonText}>انتقال</Text>
                 </TouchableOpacity>
             </View>
-            <SelectAccount enabled={sourceEnable} setAccount={setSourceAccount} setEnable={setSourceEnable} accountList={myAcounts} setTargetAccounts={setTargetAccounts} setTargetAccount={setTargetAccount}/>
-            <SelectAccount enabled={targetEnable} setAccount={setTargetAccount} setEnable={setTargetEnable} accountList={targetAccounts} setTargetAccounts={() => {}} setTargetAccount={() => {}} />
+            <SelectAccount 
+                enabled={sourceEnable} 
+                setAccount={setSourceAccount} 
+                setEnable={setSourceEnable} 
+                accountList={myAcounts} 
+                setTargetAccounts={setTargetAccounts} 
+                setTargetAccount={setTargetAccount} 
+                userID={userID}
+                allAccounts={allAccounts} />
+            <SelectAccount 
+                enabled={targetEnable} 
+                setAccount={setTargetAccount} 
+                setEnable={setTargetEnable} 
+                accountList={targetAccounts} 
+                setTargetAccounts={() => {}} 
+                setTargetAccount={() => {}}
+                userID={userID}
+                allAccounts={allAccounts} />
             <ConfirmTransmission 
                 enabled={confirmEnable} 
                 setEnable={setConfirmEnable} 

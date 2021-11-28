@@ -106,6 +106,14 @@ router.post('/get-accounts', (req, res, next) => {
         });
     });
 });
+router.post('/get-all-accounts', (req, res, next) => {
+    Acount.find({blocked: false}, (err, accounts) => {
+        var abvandi = accounts.filter(e => e.type == 'abvandi');
+        var chahvandi = accounts.filter(e => e.type == 'chahvandi');
+        var chah = accounts.filter(e => e.type == 'chah');
+        res.send({abvandi, chahvandi, chah});
+    });
+});
 router.post('/add-account', (req, res, next) => {
     const {phone} = req.body;
     User.findOne({phone: phone}, (err, user) => {
@@ -219,6 +227,8 @@ router.post('/seen-notifications', (req, res, next) => {
         res.send({done: true});
     });
 });
+
+
 
 // Saba APIs
 router.get('/test', (req, res, next) => {

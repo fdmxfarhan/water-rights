@@ -45,6 +45,7 @@ export default Abvandi = ({account, navigation}) => {
                         }
                         setOutTransmissions(outTransmissions);
                         setInTransmissions(inTransmissions);
+                        console.log(transmissions);
                     }
                 }).catch(error => {
                     alert('خطا در برقراری ارتباط. لطفا اتصال اینترنت خود را چک کنید.')

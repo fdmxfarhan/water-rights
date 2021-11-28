@@ -89,3 +89,94 @@
         border: var(--green) 0.2vw solid;
     }
 }
+@media only screen and (max-width: 800px) {
+    header{
+        position: relative;
+        overflow: hidden;
+    }
+    header img{
+        width: 100%;
+    }
+    header .dark-overlay{
+        background-color: rgba(0, 0, 0, 0.349);
+        width: 100%;
+        height: 99%;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+    header a.logo{
+        text-decoration: none;
+        position: absolute;
+        top: 3vw;
+        left: 5%;
+    }
+    header a.logo img{width: 10vw;}
+    header nav{
+        position: absolute;
+        top: 6vw;
+        right: 10%;
+        overflow: hidden;
+    }
+    header nav a.nav-link{
+        color: white;
+        font-size: 1.4vw;
+        font-family: 'iransans';
+        text-decoration: none;
+        display: block;
+        float: right;
+        padding: 0.5vw 1vw;
+        margin: 0 1vw;
+        border-bottom: transparent 0.2vw solid;
+        font-weight: bold;
+    }
+    header nav a.nav-link:hover, header nav a.nav-link.active{
+        border-bottom: white 0.2vw solid;
+    }
+    header nav a.nav-link i{
+        padding: 0 0.5vw;
+    }
+    header .info {
+        position: absolute;
+        top: 20vw;
+        width: 100%;
+        right: 0;
+        text-align: center;
+    }
+    header .info h1.title{
+        font-family: 'iransans';
+        font-size: 8vw;
+        margin: 0;
+        padding: 0;
+        color: white;
+        font-weight: bold;
+        line-height: 10vw;
+    }
+    header .info h1.title2{
+        font-family: 'iransans';
+        font-size: 2vw;
+        margin: 0;
+        padding: 0;
+        color: rgb(236, 236, 236);
+        font-weight: normal;
+    }
+    header .info a.enter{
+        color: white;
+        font-family: 'iransans';
+        font-size: 1.5vw;
+        display: block;
+        width: fit-content;
+        background-color: transparent;
+        border: white 0.2vw solid;
+        padding: 0.5vw 4vw;
+        border-radius: 2vw;
+        cursor: pointer;
+        text-decoration: none;
+        margin: auto;
+        margin-top: 2vw;
+    }
+    header .info a.enter:hover{
+        background-color: var(--green);
+        border: var(--green) 0.2vw solid;
+    }
+}

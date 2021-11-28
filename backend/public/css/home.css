@@ -33,7 +33,6 @@ body::-webkit-scrollbar {width: 0.5vw;}
 body::-webkit-scrollbar-track {background: var(--gray);}
 body::-webkit-scrollbar-thumb {background: var(--dark);}
 body::-webkit-scrollbar-thumb:hover{background: var(--blue);}
-
 .black-modal{
     display: none;
     position: fixed;
@@ -98,3 +97,37 @@ body::-webkit-scrollbar-thumb:hover{background: var(--blue);}
     }
 }
 
+@media only screen and (max-width: 800px) {
+    section{
+        overflow: hidden;
+    }
+    .intro-box {
+        width: 80%;
+        margin: 6vw auto;
+        overflow: hidden;
+    }
+    .intro-box .info{
+        float: right;
+        width: 60%;
+    }
+    .intro-box .image{
+        float: right;
+        width: 25%;
+        margin-right: 10%;
+    }
+    .intro-box .image img{
+        width: 100%;
+    }
+    .intro-box .info h1{
+        color: var(--darkblue);
+        font-family: 'iransans';
+        font-size: 1.6vw;
+    }
+    .intro-box .info p{
+        color: var(--text);
+        font-family: 'iransans';
+        font-size: 1.2vw;
+        text-align: justify;
+        direction: rtl;
+    }
+}

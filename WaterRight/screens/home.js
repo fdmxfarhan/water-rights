@@ -151,42 +151,45 @@ const HomeScreen = (props) => {
           <View style={styles.tabButtonsView}>
             <TouchableOpacity 
               onPress={() => {
+                setActiveTab('abvandi');
+                activeTab = 'abvandi';
+                sum = 0;
+                for(var i=0; i<acounts.abvandi.length; i++)
+                sum += acounts.abvandi[i].charge;
+                setSum(sum);
                 getAccounts();
                 readUser();
                 readNotifications();
-                setActiveTab('abvandi');
-                sum = 0;
-                for(var i=0; i<acounts.abvandi.length; i++)
-                  sum += acounts.abvandi[i].charge;
-                setSum(sum);
               }}
               style={[styles.tabButton, {backgroundColor: activeTab == 'abvandi' ? colors.blue : 'transparent'}]}>
               <Text style={styles.tabButtonText}>آب‌وندی</Text>
             </TouchableOpacity>
             <TouchableOpacity 
               onPress={() => {
+                setActiveTab('chahvandi');
+                activeTab = 'chahvandi';
+                sum = 0;
+                for(var i=0; i<acounts.chahvandi.length; i++)
+                sum += acounts.chahvandi[i].charge;
+                setSum(sum);
                 getAccounts();
                 readUser();
                 readNotifications();
-                setActiveTab('chahvandi');
-                sum = 0;
-                for(var i=0; i<acounts.chahvandi.length; i++)
-                  sum += acounts.chahvandi[i].charge;
-                setSum(sum);
               }}
               style={[styles.tabButton, {backgroundColor: activeTab == 'chahvandi' ? colors.blue : 'transparent'}]}>
               <Text style={styles.tabButtonText}>چاه‌وندی</Text>
             </TouchableOpacity>
             <TouchableOpacity 
               onPress={() => {
+                setActiveTab('chah');
+                activeTab = 'chah';
+                sum = 0;
+                for(var i=0; i<acounts.chah.length; i++)
+                sum += acounts.chah[i].charge;
+                setSum(sum);
                 getAccounts();
                 readUser();
                 readNotifications();
-                setActiveTab('chah');
-                sum = 0;
-                for(var i=0; i<acounts.chah.length; i++)
-                  sum += acounts.chah[i].charge;
-                setSum(sum);
               }}
               style={[styles.tabButton, {backgroundColor: activeTab == 'chah' ? colors.blue : 'transparent'}]}>
               <Text style={styles.tabButtonText}>چاه</Text>

@@ -319,19 +319,22 @@ router.get('/delete-file', ensureAuthenticated, (req, res, next) => {
 router.get('/acount-view', ensureAuthenticated, (req, res, next) => {
     var {acountID} = req.query;
     Acount.findById(acountID, (err, account) => {
-        User.findById(account.ownerID, (err, user) => {
-            User.find({}, (err, users) => {
-                Acount.find({}, (err, accounts) => {
-                    res.render('./dashboard/acount-view', {
-                        user: req.user,
-                        viewingUser: user,
-                        account,
-                        users,
-                        accounts,
-                    })
+        if(!account) res.send('Account not found');
+        else{
+            User.findById(account.ownerID, (err, user) => {
+                User.find({}, (err, users) => {
+                    Acount.find({}, (err, accounts) => {
+                        res.render('./dashboard/acount-view', {
+                            user: req.user,
+                            viewingUser: user,
+                            account,
+                            users,
+                            accounts,
+                        })
+                    });
                 });
             });
-        });
+        }
     });
 });
 router.get('/make-admin', ensureAuthenticated, (req, res, next) => {

@@ -12,6 +12,117 @@ var UserNotif = require('../models/UserNotif');
 var Transmission = require('../models/Transmission');
 var Settings = require('../models/Settings');
 
+// Saba APIs
+router.get('/test', (req, res, next) => {
+    var {name} = req.query;
+    res.send(`hello ${name}`);
+});
+router.get('/GetCustomerCreditStatus', (req, res, next) => {
+    var {WaterNo, cityCode} = req.query;
+    Acount.findOne({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, (err, account) => {
+        if(account){
+            res.send([{
+                id: account._id,
+                WaterNo: WaterNo,
+                CreditStartDate: `${account.startDate.year}/${account.startDate.month}/${account.startDate.day}`,
+                CreditEndDate: `${account.endDate.year}/${account.endDate.month}/${account.endDate.day}`,
+                Volume: account.charge,
+                Type: 1,
+            }]);
+        }
+        else res.send('no account was found');
+    });
+});
+router.get('/ReportCurrentCredit', (req, res, next) => {
+    var {WaterNo, cityCode, Volume, CreditEndDate} = req.query;
+    console.log({WaterNo, cityCode, Volume, CreditEndDate})
+    Acount.findOne({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, (err, account) => {
+        Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {charge: parseFloat(Volume)}}, (err, doc) => {
+            if(err){
+                console.log(err);
+                res.send({
+                    error: err,
+                    status: 'error',
+                });
+            }else{
+                res.send({
+                    status: 'ok',
+                });
+            }
+        })
+    });
+});
+router.get('/ReportUsedCredit', (req, res, next) => {
+    var {WaterNo, cityCode, reportUsedCredit} = req.query;
+    Acount.findOne({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, (err, account) => {
+        Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {usedCharge: parseFloat(reportUsedCredit)}}, (err, doc) => {
+            account.usedCharge = parseFloat(reportUsedCredit);
+            if(err){
+                console.log(err);
+                res.send({
+                    error: err,
+                    status: 'error',
+                });
+            }else{
+                res.send({
+                    status: 'ok',
+                    id: account._id,
+                    WaterNo: WaterNo,
+                    CreditStartDate: `${account.startDate.year}/${account.startDate.month}/${account.startDate.day}`,
+                    CreditEndDate: `${account.endDate.year}/${account.endDate.month}/${account.endDate.day}`,
+                    Volume: account.usedCharge,
+                    Type: 1,
+                });
+            }
+        })
+    });
+});
+router.get('/GetNextYearAnnualCredit', (req, res, next) => {
+    var {WaterNo, cityCode} = req.query;
+    Acount.findOne({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, (err, account) => {
+        account.startDate.year += 1;
+        account.endDate.year += 1;
+        Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {
+            startDate: account.startDate, 
+            endDate: account.endDate
+        }}, (err, doc) => {
+            if(err){
+                console.log(err);
+                res.send({
+                    error: err,
+                    status: 'error',
+                });
+            }else{
+                res.send({
+                    status: 'ok',
+                });
+            }
+        })
+    });
+});
+router.get('/RevocationOfWellLicense', (req, res, next) => {
+    var {WaterNo, cityCode} = req.query;
+    Acount.findOne({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, (err, account) => {
+        Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {
+            blocked: true,
+            revoked: true,
+        }}, (err, doc) => {
+            if(err){
+                console.log(err);
+                res.send({
+                    error: err,
+                    status: 'error',
+                });
+            }else{
+                res.send({
+                    status: 'ok',
+                });
+            }
+        })
+    });
+});
+
+
 // Mobile Application APIs
 router.post('/login', (req, res, next) => {
     const {username, password} = req.body;
@@ -230,114 +341,5 @@ router.post('/seen-notifications', (req, res, next) => {
 
 
 
-// Saba APIs
-router.get('/test', (req, res, next) => {
-    var {name} = req.query;
-    res.send(`hello ${name}`);
-});
-router.get('/GetCustomerCreditStatus', (req, res, next) => {
-    var {WaterNo, cityCode} = req.query;
-    Acount.findOne({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, (err, account) => {
-        if(account){
-            res.send([{
-                id: account._id,
-                WaterNo: WaterNo,
-                CreditStartDate: `${account.startDate.year}/${account.startDate.month}/${account.startDate.day}`,
-                CreditEndDate: `${account.endDate.year}/${account.endDate.month}/${account.endDate.day}`,
-                Volume: account.charge,
-                Type: 1,
-            }]);
-        }
-        else res.send('no account was found');
-    });
-});
-router.get('/ReportCurrentCredit', (req, res, next) => {
-    var {WaterNo, cityCode, Volume, CreditEndDate} = req.query;
-    console.log({WaterNo, cityCode, Volume, CreditEndDate})
-    Acount.findOne({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, (err, account) => {
-        Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {charge: parseFloat(Volume)}}, (err, doc) => {
-            if(err){
-                console.log(err);
-                res.send({
-                    error: err,
-                    status: 'error',
-                });
-            }else{
-                res.send({
-                    status: 'ok',
-                });
-            }
-        })
-    });
-});
-router.get('/ReportUsedCredit', (req, res, next) => {
-    var {WaterNo, cityCode, reportUsedCredit} = req.query;
-    Acount.findOne({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, (err, account) => {
-        Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {usedCharge: parseFloat(reportUsedCredit)}}, (err, doc) => {
-            account.usedCharge = parseFloat(reportUsedCredit);
-            if(err){
-                console.log(err);
-                res.send({
-                    error: err,
-                    status: 'error',
-                });
-            }else{
-                res.send({
-                    status: 'ok',
-                    id: account._id,
-                    WaterNo: WaterNo,
-                    CreditStartDate: `${account.startDate.year}/${account.startDate.month}/${account.startDate.day}`,
-                    CreditEndDate: `${account.endDate.year}/${account.endDate.month}/${account.endDate.day}`,
-                    Volume: account.usedCharge,
-                    Type: 1,
-                });
-            }
-        })
-    });
-});
-router.get('/GetNextYearAnnualCredit', (req, res, next) => {
-    var {WaterNo, cityCode} = req.query;
-    Acount.findOne({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, (err, account) => {
-        account.startDate.year += 1;
-        account.endDate.year += 1;
-        Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {
-            startDate: account.startDate, 
-            endDate: account.endDate
-        }}, (err, doc) => {
-            if(err){
-                console.log(err);
-                res.send({
-                    error: err,
-                    status: 'error',
-                });
-            }else{
-                res.send({
-                    status: 'ok',
-                });
-            }
-        })
-    });
-});
-router.get('/RevocationOfWellLicense', (req, res, next) => {
-    var {WaterNo, cityCode} = req.query;
-    Acount.findOne({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, (err, account) => {
-        Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {
-            blocked: true,
-            revoked: true,
-        }}, (err, doc) => {
-            if(err){
-                console.log(err);
-                res.send({
-                    error: err,
-                    status: 'error',
-                });
-            }else{
-                res.send({
-                    status: 'ok',
-                });
-            }
-        })
-    });
-});
 
 module.exports = router;

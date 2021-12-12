@@ -30,22 +30,22 @@ router.get('/GetCustomerCreditStatus', (req, res, next) => {
                     Volume: account.charge,
                     Type: 1,
                 },
-                {
-                    id: account._id,
-                    WaterNo: WaterNo,
-                    CreditStartDate: `${account.startDate.year}/${account.startDate.month}/${account.startDate.day}`,
-                    CreditEndDate: `${account.endDate.year}/${account.endDate.month}/${account.endDate.day}`,
-                    Volume: account.charge,
-                    Type: 2,
-                },
-                {
-                    id: account._id,
-                    WaterNo: WaterNo,
-                    CreditStartDate: `${account.startDate.year}/${account.startDate.month}/${account.startDate.day}`,
-                    CreditEndDate: `${account.endDate.year}/${account.endDate.month}/${account.endDate.day}`,
-                    Volume: account.charge,
-                    Type: 3,
-                },
+                // {
+                //     id: account._id,
+                //     WaterNo: WaterNo,
+                //     CreditStartDate: `${account.startDate.year}/${account.startDate.month}/${account.startDate.day}`,
+                //     CreditEndDate: `${account.endDate.year}/${account.endDate.month}/${account.endDate.day}`,
+                //     Volume: account.charge,
+                //     Type: 2,
+                // },
+                // {
+                //     id: account._id,
+                //     WaterNo: WaterNo,
+                //     CreditStartDate: `${account.startDate.year}/${account.startDate.month}/${account.startDate.day}`,
+                //     CreditEndDate: `${account.endDate.year}/${account.endDate.month}/${account.endDate.day}`,
+                //     Volume: account.charge,
+                //     Type: 3,
+                // },
             ]);
         }
         else res.send('no account was found');

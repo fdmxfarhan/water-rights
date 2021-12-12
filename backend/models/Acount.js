@@ -29,8 +29,22 @@ var AcountSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  nextCharge: {
+    type: Number,
+    default: 0,
+  },
+  yearCharge: {
+    type: Number,
+    default: 0,
+  },
+  
   endDate: Object,
   startDate: Object,
+  nextEndDate: Object,
+  nextStartDate: Object,
+  yearEndDate: Object,
+  yearStartDate: Object,
+  
   creationDate: Date,
   linkedAccount: String,
 

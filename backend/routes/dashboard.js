@@ -123,7 +123,7 @@ setInterval(() => {
             // else console.log('not yet!')
         }
     })
-}, 1000 * 3);
+}, 1000 * 60 * 60); // 1 hour
 
 router.get('/', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'user')

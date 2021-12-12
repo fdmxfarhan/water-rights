@@ -174,6 +174,8 @@ router.post('/add-account-chah', ensureAuthenticated, upload.single('licensePic'
                         permitedUseInYear,
                         type: 'chah',
                         charge: permitedUseInYear,
+                        nextCharge: permitedUseInYear,
+                        yearCharge: permitedUseInYear,
                         endDate: settings.endYearDateJ,
                         startDate: settings.startYearDateJ,
                     });

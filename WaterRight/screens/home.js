@@ -11,7 +11,6 @@ import {
   View,
   BackHandler,
   TouchableOpacity,
-
 } from 'react-native';
 import colors, { gray } from '../components/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -242,7 +241,6 @@ const HomeScreen = (props) => {
     </View>
   );
 }
-
 const SettingsScreen = (props) => {
   return (
     <View style={styles.container}>
@@ -292,7 +290,6 @@ const home = (props) => {
     // </NavigationContainer>
   );
 }
-
 const styles = StyleSheet.create({
   tabBar: {
     fontFamily: 'iransans',

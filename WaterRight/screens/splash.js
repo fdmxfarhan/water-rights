@@ -56,7 +56,7 @@ const splash = (props) => {
         <View style={styles.container}>
             <View style={styles.blueArea}>
                 <Image style={styles.logoImage} source={require('../assets/logo.png')}/>
-                <Text style={styles.titleText}>اپلیکیشن میراب</Text>
+                <Text style={styles.titleText}>میراب</Text>
             </View>
             <View style={styles.bottomArea}>
                 <LoginForm loggedIn={loggedIn} navigation={props.navigation}/>

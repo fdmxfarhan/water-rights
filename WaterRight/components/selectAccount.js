@@ -167,7 +167,6 @@ export default SelectAccount = ({enabled, setAccount, setTargetAccounts, setEnab
     }
 }
 
-
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',

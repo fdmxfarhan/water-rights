@@ -53,6 +53,9 @@ export default AccountInfo = ({account, navigation}) => {
         return(
             <View style={styles.container}>
                 <View style={styles.infoArea}>
+                    <Text style={styles.infoText}> مالک حساب: 
+                        <Text style={styles.infoValue}> {account.owner} </Text>
+                    </Text>
                     <Text style={styles.infoText}>نوع حساب: 
                         <Text style={styles.infoValue}> چاه‌وندی </Text>
                     </Text>
@@ -66,9 +69,6 @@ export default AccountInfo = ({account, navigation}) => {
                     </Text>
                     <Text style={styles.infoText}> تاریخ پایان اعتبار: 
                         <Text style={styles.infoValue}> {account.endDate.year}/{account.endDate.month}/{account.endDate.day} </Text>
-                    </Text>
-                    <Text style={styles.infoText}> مالک حساب: 
-                        <Text style={styles.infoValue}> {account.owner} </Text>
                     </Text>
                 </View>
             </View>
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     infoText:{
         fontFamily: 'iransans',
         color: colors.green,
-        textAlign: 'center'
+        textAlign: 'right'
     },
     infoValue:{
         fontFamily: 'iransans',

@@ -13,7 +13,7 @@ var UserNotif = require('../models/UserNotif');
 var Transmission = require('../models/Transmission');
 var Settings = require('../models/Settings');
 
-// sms2('09336448037', 'hello');
+// sms2('09336448037', 'میراب');
 // Saba APIs
 router.get('/test', (req, res, next) => {
     var {name} = req.query;
@@ -214,6 +214,7 @@ router.post('/compelete-reg', (req, res, next) => {
     User.updateMany({phone: phone}, {$set: {passwordSet: false, selfRegister: true, confirmed: false, firstName, lastName, idNumber, cardNumber, fatherName, job, sex, fullname: firstName + ' ' + lastName}}, (err) => {
         if(err) console.log(err);
         User.findOne({phone: phone}, (err, user) => {
+            sms('09336448037', 'ثبت نام جدید اپلیکیشن میراب');
             var newNotif = new Notification({
                 type: 'new-user',
                 text: `کاربر جدید ${firstName + ' ' + lastName} در اپلیکیشن ثبت نام کرد.`,
@@ -300,6 +301,7 @@ router.post('/add-transmission', (req, res, next) => {
         date: new Date,
     });
     newTransmission.save().then(doc =>{
+        sms('09336448037', 'انتقال جدید در اپلیکیشن میراب');
         Acount.updateMany({_id: source._id}, {$set: {charge: source.charge - amount}}, (err) => {
             res.send({done: true})
         });

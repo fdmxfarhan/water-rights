@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const generateCode = require('../config/generateCode');
 const sms = require('../config/sms');
+const sms2 = require('../config/sms2');
 const { ensureAuthenticated } = require('../config/auth');
 var User = require('../models/User');
 var Acount = require('../models/Acount');
@@ -12,6 +13,7 @@ var UserNotif = require('../models/UserNotif');
 var Transmission = require('../models/Transmission');
 var Settings = require('../models/Settings');
 
+// sms2('09336448037', 'hello');
 // Saba APIs
 router.get('/test', (req, res, next) => {
     var {name} = req.query;
@@ -170,7 +172,7 @@ router.post('/sendsms', (req, res, next) => {
     const {phone} = req.body;
     User.findOne({phone: phone}, (err, user) => {
         smsCode = generateCode(4);
-        sms(phone, `رمز عبور یکبار مصرف شما: ${smsCode} \n میراب`);
+        sms2(phone, `رمز عبور یکبار مصرف شما: ${smsCode} \n میراب`);
         console.log(smsCode);
         if(user){
             User.updateMany({phone: phone}, {$set: {smsCode: smsCode}}, (err, doc) => {

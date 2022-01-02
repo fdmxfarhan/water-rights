@@ -398,9 +398,15 @@ router.get('/accept-transmission', ensureAuthenticated, (req, res, next) => {
                 var mirab = getMirabRight(source, target, amount);
                 var abkhan = getAbkhanRight(source, target, amount);
                 var sandogh = getSandoghRight(source, target, amount);
-
+                console.log(target.endDate);
                 // Acount.updateMany({_id: source._id}, {$set: {charge: source.charge - transmission.amount}}, (err) => {});
-                Acount.updateMany({_id: target._id}, {$set: {charge: target.charge + (transmission.amount - mirab - abkhan)}}, (err) => {});
+                Acount.updateMany({_id: target._id}, {$set: {
+                    charge: target.charge + (transmission.amount - mirab - abkhan),
+                    endDate: {year: target.endDate.year+1, month: target.endDate.month, day: target.endDate.day},
+                }}, (err) => {
+
+                });
+
                 Acount.findOne({type: 'mirab'}, (err, mirabAccount) => {
                     Acount.updateMany({type: 'mirab'}, {$set: {charge: mirabAccount.charge+mirab}}, (err, doc) => {
                         if(err) console.log(err);

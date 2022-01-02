@@ -57,7 +57,9 @@ router.get('/ReportCurrentCredit', (req, res, next) => {
     var {WaterNo, cityCode, Volume, CreditEndDate} = req.query;
     console.log({WaterNo, cityCode, Volume, CreditEndDate})
     Acount.findOne({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, (err, account) => {
-        Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {charge: parseFloat(Volume)}}, (err, doc) => {
+        var currentCredit = account.currentCredit;
+        currentCredit.push({volume: Volume, creditEndDate});
+        Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {currentCredit}}, (err, doc) => {
             if(err){
                 console.log(err);
                 res.send({
@@ -75,8 +77,8 @@ router.get('/ReportCurrentCredit', (req, res, next) => {
 router.get('/ReportUsedCredit', (req, res, next) => {
     var {WaterNo, cityCode, reportUsedCredit} = req.query;
     Acount.findOne({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, (err, account) => {
-        Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {usedCharge: parseFloat(reportUsedCredit)}}, (err, doc) => {
-            account.usedCharge = parseFloat(reportUsedCredit);
+        Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {reportUsedCredit: reportUsedCredit}}, (err, doc) => {
+            // account.usedCharge = parseFloat(reportUsedCredit);
             if(err){
                 console.log(err);
                 res.send({
@@ -86,12 +88,12 @@ router.get('/ReportUsedCredit', (req, res, next) => {
             }else{
                 res.send({
                     status: 'ok',
-                    id: account._id,
-                    WaterNo: WaterNo,
-                    CreditStartDate: `${account.startDate.year}/${account.startDate.month}/${account.startDate.day}`,
-                    CreditEndDate: `${account.endDate.year}/${account.endDate.month}/${account.endDate.day}`,
-                    Volume: account.usedCharge,
-                    Type: 1,
+                    // id: account._id,
+                    // WaterNo: WaterNo,
+                    // CreditStartDate: `${account.startDate.year}/${account.startDate.month}/${account.startDate.day}`,
+                    // CreditEndDate: `${account.endDate.year}/${account.endDate.month}/${account.endDate.day}`,
+                    // Volume: account.usedCharge,
+                    // Type: 1,
                 });
             }
         })
@@ -100,24 +102,46 @@ router.get('/ReportUsedCredit', (req, res, next) => {
 router.get('/GetNextYearAnnualCredit', (req, res, next) => {
     var {WaterNo, cityCode} = req.query;
     Acount.findOne({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, (err, account) => {
-        account.startDate.year += 1;
-        account.endDate.year += 1;
-        Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {
-            startDate: account.startDate, 
-            endDate: account.endDate
-        }}, (err, doc) => {
-            if(err){
-                console.log(err);
-                res.send({
-                    error: err,
-                    status: 'error',
-                });
-            }else{
-                res.send({
-                    status: 'ok',
-                });
-            }
-        })
+        if(err){
+            console.log(err);
+            res.send({
+                error: err,
+                status: 'error',
+            });
+        }else if(account){
+            res.send({
+                status: 'ok',
+                id: account._id,
+                WaterNo: WaterNo,
+                CreditStartDate: `${account.startDate.year+1}/${account.startDate.month}/${account.startDate.day}`,
+                CreditEndDate: `${account.endDate.year+1}/${account.endDate.month}/${account.endDate.day}`,
+                Volume: account.permitedUseInYear,
+                Type: 1,
+            });
+        }else{
+            res.send({
+                error: 'account not found',
+                status: 'error',
+            });
+        }
+        // account.startDate.year += 1;
+        // account.endDate.year += 1;
+        // Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {
+        //     startDate: account.startDate, 
+        //     endDate: account.endDate
+        // }}, (err, doc) => {
+        //     if(err){
+        //         console.log(err);
+        //         res.send({
+        //             error: err,
+        //             status: 'error',
+        //         });
+        //     }else{
+        //         res.send({
+        //             status: 'ok',
+        //         });
+        //     }
+        // })
     });
 });
 router.get('/RevocationOfWellLicense', (req, res, next) => {

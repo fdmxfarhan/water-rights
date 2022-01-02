@@ -34,7 +34,10 @@ const login = (props) => {
         // console.log(res.data);
         if(res.data.correct){
           saveData({username, password, phone: res.data.user.phone, user: res.data.user}).then(() => {
-            props.navigation.navigate('Home');
+            if(res.data.user.passwordSet)
+              props.navigation.navigate('Home');
+            else
+              props.navigation.navigate('Password');
           });
         }
         else{

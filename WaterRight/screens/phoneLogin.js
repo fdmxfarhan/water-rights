@@ -58,7 +58,10 @@ const phoneLogin = (props) => {
       if(res.data.correct){
         if(userExist){
           saveData({phone: phone, user: res.data.user}).then(() => {
-            props.navigation.navigate('Home');
+            if(res.data.user.passwordSet)
+              props.navigation.navigate('Home');
+            else
+              props.navigation.navigate('Password');
           })
         }else{
           // alert('شماره تلفن همراه یافت نشد.');

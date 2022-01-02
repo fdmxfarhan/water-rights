@@ -57,7 +57,8 @@ const register = (props) => {
     }).then((res) => {
       if(res.data.correct){
         saveData({phone: phone, user: res.data.user}).then(() => {
-          props.navigation.navigate('Home');
+          // props.navigation.navigate('Home');
+          props.navigation.navigate('Password');
         })
       }
     }).catch((error) => {

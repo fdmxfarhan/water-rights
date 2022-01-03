@@ -17,7 +17,7 @@ import Header from '../components/header';
 import Input from '../components/input';
 
 const api = require('../config/api');
-const {saveData, readData} = require('../config/save');
+const {saveData, readData, saveNotif, clearNotif} = require('../config/save');
 
 const password = (props) => {
     var [oldPassword, setOldPassword] = useState('');
@@ -58,7 +58,11 @@ const password = (props) => {
             password,
             passwordConf,
         }).then(res => {
-            if(res.data.done)   props.navigation.navigate('Home');
+            if(res.data.done)   {
+                props.navigation.navigate('Home');
+                clearNotif();
+                saveNotif({type: 'success', text: 'تغیر کلمه عبور با موفقیت انجام شد.'});
+            }
             else                alert(res.data.msg);
         }).catch(err => {
             alert('خطا در برقراری ارتباط. لطفا اتصال اینترنت خود را چک کنید.')

@@ -13,14 +13,20 @@ import {
 } from 'react-native';
 import colors, { gray } from '../components/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useIsFocused } from "@react-navigation/native";
+import ToastNotif from './ToastNotif';
 var avatar = require('../assets/10.png');
 const api = require('../config/api');
-const {saveData, readData} = require('../config/save');
+const {saveData, readData, clearNotif, readNotif} = require('../config/save');
 
-export default Setting = ({data, title, navigation}) => {
+export default Setting = (props) => {
+    var {data, title, navigation} = props;
     var [savedData, setSavedData] = useState();
     var [readOnce, setReadOnce] = useState(false);
     var [user, setUser] = useState({phone: '', fullname: ''});
+    var [notifEnable, setNotifEnable] = useState(false);
+    var [notifText, setNotifText] = useState('');
+    const isFocused = useIsFocused();
 
     var readUser = () => {
         readData().then(data => {
@@ -40,12 +46,26 @@ export default Setting = ({data, title, navigation}) => {
         });
     }
     useEffect(() => {
+        readNotif().then(data => {
+            if(data != ''){
+                setNotifEnable(true);
+                setNotifText(data.text);
+                setTimeout(() => {
+                    setNotifEnable(false);
+                }, 3000);
+            }
+            clearNotif();
+        });
         if(!readOnce){
             readUser();
         }
         readOnce = true;
         setReadOnce(true);
-    });
+        if(isFocused){ 
+            // getInitialData();
+            setReadOnce(false);
+        }
+    }, [props, isFocused]);
     return(
         <View style={styles.settingView}>
             <View style={styles.blueArea}>
@@ -92,11 +112,15 @@ export default Setting = ({data, title, navigation}) => {
                 </TouchableOpacity>
                 
             </View>
+            <ToastNotif enable={notifEnable} text={notifText} />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    settingView: {
+        flex: 1,
+    },
     scrollView: {
         paddingVertical: 10,
         alignItems: 'center',

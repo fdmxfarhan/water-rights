@@ -306,6 +306,21 @@ router.post('/edit-user', ensureAuthenticated, (req, res, next) => {
         res.redirect(`/dashboard/user-view?userID=${userID}`);
     });
 });
+router.post('/edit-user-password', ensureAuthenticated, (req, res, next) => {
+    const {userID, password, password2} = req.body;
+    if(password == password2){
+        bcrypt.genSalt(10, (err, salt) => bcrypt.hash(password, salt, (err, hash) => {
+            User.updateMany({_id: userID}, {$set: {password: hash}}, (err) => {
+                req.flash('success_msg', 'کلمه عبور با موفقیت تغییر کرد');
+                res.redirect(`/dashboard/user-view?userID=${userID}`);
+            });
+        }));
+    }
+    else{
+        req.flash('error_msg', 'تایید کلمه عبور صحیح نمی‌باشد');
+        res.redirect(`/dashboard/user-view?userID=${userID}`);
+    }
+});
 router.get('/delete-file', ensureAuthenticated, (req, res, next) => {
     var {userID, index} = req.query;
     User.findById(userID, (err, user) => {

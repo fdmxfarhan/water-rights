@@ -43,6 +43,18 @@ block content
                         //- introductionLetter
                         //- sex
                     input.submit(type="submit" value="ثبت تغییرات")
+            .personal-info 
+                form(action="/dashboard/edit-user-password" method="POST") 
+                    input.hidden(type="text" name="userID" value="#{viewingUser._id}")
+                    .part 
+                        .text-input
+                            label(for="firstName") کلمه عبور: 
+                            input.text(type="password" name="password" placeholder="کلمه عبور")
+                    .part
+                        .text-input
+                            label(for="cardNumber") تایید کلمه عبور: 
+                            input.text(type="password" name="password2" placeholder="تایید کلمه عبور")
+                    input.submit(type="submit" value="ثبت تغییرات")
             .files-area 
                 -for(var i=0; i<viewingUser.file.length; i++){
                     a.file(href="#{viewingUser.file[i].link}" target="_blank")

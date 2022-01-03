@@ -32,6 +32,8 @@ export default SelectAccount = ({enabled, setAccount, setTargetAccounts, setEnab
                                 setText(text.nativeEvent.text)
                                 if(text.nativeEvent.text != '')
                                     setSearching(true);
+                                else
+                                    setSearching(false);
                             }}/>
                         <Icon style={styles.searchIcon} name={'search'} />
                     </View>
@@ -41,7 +43,7 @@ export default SelectAccount = ({enabled, setAccount, setTargetAccounts, setEnab
                             data={accountList}
                             keyExtractor={item => item._id}
                             renderItem={({item}) => {
-                                if(!searching && item.ownerID == userID){
+                                if(!searching && item.ownerID.toString() == userID.toString()){
                                     return(
                                         <TouchableOpacity style={styles.account} onPress={() => {
                                             setAccount(item);
@@ -254,7 +256,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row-reverse',
     },
     info: {
-        flex: 5,
+        flex: 4,
     },
     type: {
         flex: 1

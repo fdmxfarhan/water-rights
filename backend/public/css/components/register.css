@@ -1,0 +1,111 @@
+@media only screen and (min-width: 800px) {
+    .popup{
+        border-radius: 0.5vw;
+    }
+    .popup .text-input-view,
+    .popup .select-input-view,
+    .popup .date-input-view{
+        overflow: hidden;
+        margin-bottom: 0.8vw;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+    .popup .text-input-view label, 
+    .popup .date-input-view label, 
+    .popup .select-input-view label{
+        display: block;
+        float: right;
+        width: 25%;
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        text-align: left;
+        margin-left: 1vw;
+        color: var(--text);
+    }
+    .popup .text-input-view label i, 
+    .popup .date-input-view label i, 
+    .popup .select-input-view label i{
+        color: var(--blue);
+        padding-right: 0.7vw;
+    }
+    .popup .text-input-view input, 
+    .popup .date-input-view .date-input,
+    .popup .select-input-view .select{
+        display: block;
+        float: right;
+        width: 50%;
+        border: none;
+        background-color: var(--lightergray2);
+        border-radius: 0.5vw;
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        padding: 0.3vw 1vw;
+        overflow: hidden;
+    }
+    .popup .select-input-view .select{padding-top: 0;padding-bottom: 0;}
+    .popup .select-input-view .select select{
+        background-color: transparent;
+        border: none;
+        width: 100%;
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        padding: 0.3vw 0;
+    }
+    .popup .select-input-view .select select:focus,
+    .popup .text-input-view input:focus{
+        outline: none;
+    }
+    .popup .date-input-view .date-input input{
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        padding: 0 1vw;
+        margin: 0;
+        border: none;
+        width: 3vw;
+        display: block;
+        float: right;
+        background-color: transparent;
+    }
+    .popup .text-input-view input::placeholder, 
+    .popup .date-input-view .date-input input::placeholder{
+        color: var(--gray);
+    }
+    .popup .date-input-view .date-input input:focus{
+        outline: none;
+    }
+    .popup .date-input-view .date-input label{
+        font-size: 0.9vw;
+        display: block;
+        float: right;
+        padding: 0;
+        margin: 0;
+        width: fit-content;
+    }
+    .popup button.submit{
+        font-family: 'iransans';
+        display: block;
+        width: fit-content;
+        font-size: 1vw;
+        color: white;
+        background-color: var(--blue);
+        padding: 0.2vw 2vw;
+        border-radius: 0.4vw;
+        border: none;
+        margin: 0;
+        margin: auto;
+        margin-top: 1vw;
+        cursor: pointer;
+    }
+    .popup button.submit:hover{
+        background-color: var(--hover);
+    }
+    .required{
+        color: var(--red);
+        display: inline;
+        padding-right: 0.3vw;
+    }
+    .popup h1.popup-title{
+        font-size: 1.1vw;
+    }
+}

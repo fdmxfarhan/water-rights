@@ -1,0 +1,384 @@
+@media only screen and (min-width: 800px) {
+    .title-view {
+        background-color: white;
+        overflow: hidden;
+        width: 90%;
+        margin: 2vw auto;
+        box-shadow: 0 0 0.3vw 0.1vw rgba(0, 0, 0, 0.1);
+        border-radius: 0.3vw;
+    }
+    .title-view h1{
+        margin: 0;
+        padding: 1vw 2vw;
+        float: right;
+        font-family: 'iransans';
+        font-size: 1.4vw;
+        color: var(--text);
+    }
+    .title-view h2{
+        margin: 0;
+        padding: 1.5vw 2vw;
+        float: left;
+        font-family: 'iransans';
+        font-size: 1vw;
+        color: var(--lightgray);
+        direction: ltr;
+    }
+    .content-view {
+        overflow: hidden;
+        width: 90%;
+        margin: auto;
+        padding: 0 2%;
+    }
+    .content-view .users-view {
+        float: right;
+        width: 74%;
+        margin-left: 2%;
+        margin-top: 1vw;
+        margin-bottom: 1vw;
+        background-color: white;
+        box-shadow: 0 0 0.3vw 0.1vw rgba(0, 0, 0, 0.1);
+        border-radius: 0.3vw;
+    }
+    .content-view .user-control {
+        float: right;
+        width: 24%;
+    }
+    .content-view .user-control .control {
+        background-color: white;
+        box-shadow: 0 0 0.3vw 0.1vw rgba(0, 0, 0, 0.1);
+        border-radius: 0.3vw;
+        margin-top: 1vw;
+        margin-bottom: 1vw;
+        padding-bottom: 1vw;
+        position: relative;
+    }
+    .content-view .users-view .filters{
+        overflow: hidden;
+        padding: 0 2vw;
+        padding-top: 1vw;
+    }
+    .content-view .users-view .filters .check-input{
+        float: right;
+        padding-left: 1.5vw;
+        padding-top: 0.4vw;
+    }
+    .content-view .users-view .filters .check-input label{
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        color: var(--text);
+    }
+    .content-view .users-view .filters .add-user-btn{
+        background-color: var(--blue);
+        font-family: 'iransans';
+        font-size: 1vw;
+        padding: 0.2vw 2vw;
+        border-radius: 0.5vw;
+        color: white;
+        float: left;
+        cursor: pointer;
+    }
+    .content-view .users-view .filters .add-user-btn:hover{
+        background-color: var(--hover);
+    }
+    .content-view .users-view .filters .add-user-btn i{
+        padding-left: 1vw;
+        font-size: 0.8vw;
+    }
+    .content-view .users-view .filters .search-view {
+        float: right;
+        overflow: hidden;
+        border: var(--lightgray) 0.1vw solid;
+        border-radius: 1vw;
+        margin-top: 0.05vw;
+        padding: 0;
+        /* margin-right: 1vw; */
+    }
+    .content-view .users-view .filters .search-view input{
+        font-family: 'iransans';
+        margin: 0;
+        padding: 0.1vw 1vw;
+        font-size: 0.8vw;
+        border: none;
+        float: right;
+        width: 10vw;
+    }
+    .content-view .users-view .filters .search-view input:focus{
+        outline: none;
+    }
+    .content-view .users-view .filters .search-view .search-button{
+        font-size: 0.9vw;
+        padding: 0.1vw 1vw;
+        padding-right: 0;
+        color: var(--text);
+        cursor: pointer;
+        float: right;
+    }
+    .content-view .users-view .filters .search-view .search-button:hover{
+        color: var(--dark);
+    }
+    .content-view .users-view .users-list{
+        width: 95%;
+        margin: 1vw auto;
+        
+    }
+    .content-view .users-view .users-list table{
+        width: 100%;
+        border-collapse: collapse;
+        text-align: center;
+    }
+    .content-view .users-view .users-list table tr.btn{
+        cursor: pointer;
+    }
+    .content-view .users-view .users-list table tr.btn:hover{
+        background-color: var(--lightergray);
+    }
+    .content-view .users-view .users-list table th{
+        border-bottom: var(--blue) 0.1vw solid;
+        padding: 0.2vw 0;
+        font-family: 'iransans';
+        font-size: 1vw;
+    }
+    .content-view .users-view .users-list table td{
+        padding: 0.4vw 0;
+        text-align: center;
+    }
+    .content-view .users-view .users-list table td h1{
+        font-family: 'iransans';
+        font-size: 1vw;
+        margin: 0;
+        padding: 0;
+        font-weight: normal;
+    }
+    .content-view .users-view .users-list table td a.phone{
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        margin: 0;
+        padding: 0;
+        text-decoration: none;
+        color: var(--gray);
+        display: block;
+    }
+    
+    .content-view .users-view .users-list td.status{
+        overflow: hidden;
+        position: relative;
+    }
+    .content-view .users-view .users-list td.status .line{
+        width: 3%;
+        height: 0.2vw;
+        background-color: var(--blue);
+        margin-top: 2.3vw;
+        float: right;
+    }
+    .content-view .users-view .users-list td.status .state{
+        float: right;
+        overflow: hidden;
+        border: var(--lightgray) 0.1vw solid;
+        border-radius: 0.5vw;
+        background-color: white;
+        position: relative;
+        width: 6.5vw;
+        height: 5vw;
+        display: flex;
+        align-content: center;
+        align-items: center;
+    }
+    .content-view .users-view .users-list td.status .state.active{
+        background-color: var(--blue);
+        border: var(--blue) 0.1vw solid;
+        color: white;
+    }
+    .content-view .users-view .users-list td.status .state i{
+        float: right;
+        width: 15%;
+        color: var(--green);
+    }
+    .content-view .users-view .users-list td.status .state .text{
+        float: right;
+        width: 80%;
+        font-family: 'iransans';
+        font-size: 0.8vw;
+        text-align: center;
+        color: var(--text);
+    }
+    .content-view .users-view .users-list td.status .state.active .text{
+        color: white;
+    }
+    .content-view .users-view .users-list td.status .state i{
+        opacity: 0;
+    }
+    .content-view .users-view .users-list td.status .state.active i{
+        opacity: 1;
+    }
+    .content-view .users-view .users-list .message{
+        color: var(--red);
+        font-size: 1.5vw;
+        cursor: pointer;
+    }
+    .content-view .users-view .users-list .message:hover{
+        color: var(--hover);
+    }
+    .user-control .control h1.title{
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        color: var(--blue);
+        padding: 0.5vw 1vw;
+    }
+    .user-control .control h1.title i.env{
+        padding-left: 0.7vw;
+        font-size: 1vw;
+        position: relative;
+    }
+    .user-control .control i.bubble{
+        color: rgb(245, 26, 26);
+        padding-right: 0.5vw;
+        font-size: 0.6vw;
+    }
+    .user-control .control .notifications .notif{
+        background-color: var(--lightergray2);
+        width: 92%;
+        margin: auto;
+        margin-bottom: 0.5vw;
+        border-radius: 0.5vw;
+        position: relative;
+        padding-bottom: 1vw;
+    }
+    .user-control .control .notifications .notif.seen{
+        background-color: #e1e5e7;
+    }
+    .user-control .control .notifications .notif .text{
+        padding: 0.3vw 0.5vw;
+        font-family: 'iransans';
+        font-size: 0.9vw;
+    }
+    .user-control .control .notifications .notif .text .link{
+        color: var(--blue);
+        display: inline;
+        cursor: pointer;
+    }
+    .user-control .control .notifications .notif .text .link:hover{
+        color: var(--hover);
+    }
+    .user-control .control .notifications .notif .date{
+        font-family: 'iransans';
+        font-size: 0.7vw;
+        color: var(--text);
+        position: absolute;
+        left: 0.5vw;
+        bottom: 0.2vw;
+    }
+    .user-control .control .more-notif-btn{
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        text-align: center;
+        color: var(--text);
+        cursor: pointer;
+    }
+    .user-control .control .more-notif-btn:hover{
+        color: var(--blue);
+    }
+    .user-control .control i.check{
+        position: absolute;
+        color: var(--green);
+        right: 0.5vw;
+        bottom: 0.2vw;
+        font-size: 0.8vw;
+    }
+    .user-control .control i.check2{
+        position: absolute;
+        color: var(--green);
+        right: 0.8vw;
+        bottom: 0.2vw;
+        font-size: 0.8vw;
+    }
+    /* --------------- user info popup ------------------- */
+    .popup.user-info{
+        border-radius: 0.3vw;
+        padding: 0;
+        overflow: hidden;
+    }
+    .popup.user-info .close-popup{
+        top: 0.4vw;
+        left: 0.5vw;
+    }
+    .popup.user-info .user-info-view{
+        overflow: hidden;
+    }
+    .popup.user-info .user-info-view .info-view{
+        background-color: var(--lightergray2);
+        float: right;
+        width: 30%;
+        /* padding-bottom: 3vw; */
+    }
+    .popup.user-info .user-info-view .actions-view{
+        float: right;
+        width: 70%;
+        background-color: white;
+    }
+    .popup.user-info .user-info-view .info-view img.avatar{
+        width: 5vw;
+        display: block;
+        margin: auto;
+        margin-top: 2vw;
+    }
+    .popup.user-info .user-info-view .info-view h1.name{
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        margin-bottom: 1vw;
+    }
+    .popup.user-info .user-info-view .info-view .item{
+        width: 90%;
+        margin: auto;
+        overflow: hidden;
+        margin-bottom: 0.5vw;
+    }
+    .popup.user-info .user-info-view .info-view .item .name{
+        float: right;
+        width: 35%;
+        text-align: left;
+        padding-left: 0.5vw;
+        font-family: 'iransans';
+        font-size: 1vw;
+    }
+    .popup.user-info .user-info-view .info-view .item .value{
+        float: right;
+        width: 45%;
+        background-color: var(--skyblue);
+        color: white;
+        padding: 0.2vw 1vw;
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        border-radius: 0.5vw;
+        height: 1.7vw;
+    }
+    .popup.user-info .user-info-view .info-view .buttons{
+        overflow: hidden;
+        padding-top: 1vw;
+    }
+    .popup.user-info .user-info-view .info-view .buttons a{
+        font-size: 1.4vw;
+        color: var(--skyblue);
+        text-decoration: none;
+        border: var(--skyblue) 0.1vw solid;
+        width: 2.6vw;
+        padding-top: 0.2vw;
+        padding-bottom: 0;
+        display: block;
+        text-align: center;
+        border-radius: 50%;
+        float: right;
+        margin: 0.5vw 0.5vw;
+    }
+    .popup.user-info .user-info-view .info-view .buttons a:hover{
+        background-color: var(--skyblue);
+        color: white;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    
+}

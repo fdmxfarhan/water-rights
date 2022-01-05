@@ -1,0 +1,44 @@
+-for(var i=0; i<users.length; i++){
+    .popup.user-info(id="user-info-popup-#{i}")
+        i.fa.fa-times.close-popup
+        .user-info-view 
+            .info-view 
+                img.avatar(src="/img/avatar/10.png", alt="avatar")
+                h1.name= users[i].fullname
+                .item 
+                    .name نام: 
+                    .value= users[i].firstName
+                .item 
+                    .name نام خانوادگی: 
+                    .value= users[i].lastName
+                .item 
+                    .name کد ملی: 
+                    .value= users[i].idNumber
+                .item 
+                    .name شماره شناسنامه: 
+                    .value= users[i].cardNumber
+                .item 
+                    .name تاریخ تولد: 
+                    .value #{users[i].birthDate.year}/#{users[i].birthDate.month}/#{users[i].birthDate.day}
+                .item 
+                    .name آدرس: 
+                    .value= users[i].address
+                .item 
+                    .name کد پستی: 
+                    .value= users[i].postCode
+                .item 
+                    .name شماره تماس: 
+                    .value= users[i].phone
+                .buttons
+                    a.button(href="tel:#{users[i].phone}") 
+                        i.fa.fa-phone
+                    a.button(href="#") 
+                        i.fa.fa-envelope
+                    a.button(href="#") 
+                        i.fa.fa-pencil
+            .actions-view
+
+-}
+script.
+    $('#user-info-popup-0').show();
+    $('.black-modal').show();

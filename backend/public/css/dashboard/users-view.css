@@ -256,8 +256,39 @@
         /* font-weight: normal; */
         font-size: 1vw;
         color: var(--lightgray);
-    }    
-       
+    }
+    .popup .tabs-view{
+        overflow: hidden;
+        margin-bottom: 1vw;
+    }
+    .popup .tabs-view .tab-btn{
+        float: right;
+        width: 25%;
+        background-color: var(--lightergray);
+        border-bottom: var(--lightgray) 0.2vw solid;
+        text-align: center;
+        cursor: pointer;
+        font-family: 'iransans';
+        font-size: 1vw;
+        padding: 0.2vw 0;
+    }
+    .popup .tabs-view .tab-btn.active{
+        background-color: var(--lightgray);
+        border-bottom: var(--blue) 0.2vw solid;
+    }
+    .popup .tabs-view .tab-btn:hover{
+        background-color: var(--lightgray);
+    }
+    .users-view .other-role{
+        background-color: var(--purple);
+        color: white;
+        font-size: 0.9vw;
+        padding: 0.2vw 0.7vw;
+        border-radius: 0.5vw;
+        width: fit-content;
+        text-decoration: none;
+        display: block;
+    }
 }
 @media only screen and (max-width: 800px) {
     

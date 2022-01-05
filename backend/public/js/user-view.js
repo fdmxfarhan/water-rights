@@ -73,4 +73,8 @@ $(document).ready(function(){
         $('#add-chah-popup').fadeOut(500);
         $('.black-modal').fadeOut(500);
     });
+
+
+
+    
 });

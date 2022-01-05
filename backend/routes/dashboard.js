@@ -133,7 +133,7 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
             login: req.query.login
         });
     }
-    else if(req.user.role = 'admin')
+    else if(req.user.role == 'admin')
     {
         User.find({}, (err, users) => {
             Acount.find({}, (err, accounts) => {
@@ -166,6 +166,8 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
             });
         })
     }
+    else if(req.user.role == 'کارگزار')
+        res.redirect('/kargozar');
 });
 router.get('/users', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'admin'){
@@ -571,6 +573,75 @@ router.post('/set-end-year', ensureAuthenticated, (req, res, next) => {
         req.flash('success_msg', 'تغییرات با موفقیت ذخیره شد.');
         res.redirect('/dashboard/settings');
     })
+});
+
+/// Version 2.0.0 edition
+router.post('/special-admin-register', ensureAuthenticated, (req, res, next) => {
+    var {role, firstName, lastName, idNumber, cardNumber, phone, password, configpassword} = req.body;
+    const card = 0;
+    const ipAddress = req.connection.remoteAddress;
+    let errors = [];
+    if(password !== configpassword){
+        errors.push({msg: 'تایید رمز عبور صحیح نمیباشد!'});
+    }
+    /// check password length
+    if(password.length < 4){
+        errors.push({msg: 'رمز عبور شما بسیار ضعیف میباشد!'});
+    }
+    ///////////send evreything 
+    if(errors.length > 0 ){
+        User.find({}, (err, users) => {
+            res.render('./dashboard/admin-users', { 
+                user: req.user,
+                users,
+                role,
+                firstName,
+                lastName,
+                idNumber,
+                cardNumber,
+                phone,
+                password,
+                configpassword,
+                errors,
+            });
+        });
+    }
+    else if(req.user.role == 'admin'){
+        const fullname = firstName + ' ' + lastName;
+        User.findOne({$or: [{idNumber: idNumber},{phone: phone}]}).then(user =>{
+            if(user){
+                // user exist
+                errors.push({msg: 'کد ملی یا شماره تلفن قبلا ثبت شده است.'});
+                User.find({}, (err, users) => {
+                    res.render('./dashboard/admin-users', { 
+                        user: req.user,
+                        users,
+                        role,
+                        firstName,
+                        lastName,
+                        idNumber,
+                        cardNumber,
+                        phone,
+                        password,
+                        errors 
+                    });
+                });
+            }
+            else {
+                const newUser = new User({ipAddress, role, firstName, lastName, idNumber, cardNumber, phone, password, card});
+                // Hash password
+                bcrypt.genSalt(10, (err, salt) => bcrypt.hash(newUser.password, salt, (err, hash) => {
+                    if(err) console.log(err);
+                    newUser.password = hash;
+                    newUser.save().then(user => {
+                        req.flash('success_msg', 'کاربر با موفقیت ثبت شد');
+                        res.redirect('/dashboard/users');
+                    }).catch(err => console.log(err));
+                }));
+                console.log(newUser);
+            }
+        });
+    }
 });
 
 

@@ -30,9 +30,11 @@
     --green: #00DB68;
     --lightblue: #C8EBFE;
     --lightergray: #EAF2F6;
+    --lightergray2: #d9e7ee;
     --grayblue: #9CB0C4;
     --gray: #848C98;
     --red: #FF785A;
+    --skyblue: rgb(131, 167, 207);
 }
 body{
     margin: 0;
@@ -72,7 +74,6 @@ body::-webkit-scrollbar-thumb:hover{background: var(--blue);}
     padding: 0;
     margin: 0;
 }
-
 @media only screen and (min-width: 800px) {
     .dashboard .side-bar{
         background-color: var(--dark-background);
@@ -227,7 +228,7 @@ body::-webkit-scrollbar-thumb:hover{background: var(--blue);}
         display: block;
         width: 70%;
         box-shadow: 0 0 0.5vw 0.1vw rgba(0, 0, 0, 0.2);
-        border-radius: 2vw;
+        border-radius: 1vw;
         border: white 0.1vw solid;
         font-family: 'iransans';
         font-size: 1vw;
@@ -253,11 +254,11 @@ body::-webkit-scrollbar-thumb:hover{background: var(--blue);}
         display: block;
         font-family: 'iransans';
         font-size: 1.2vw;
-        border-radius: 2vw;
+        border-radius: 1vw;
         border: none;
         padding: 0.3vw 2vw;
         float: left;
-        margin-left: 2vw;
+        margin-left: 1.5vw;
         cursor: pointer;
     }
     .popup .two-side-form .part .text-input-area button.submit:hover{

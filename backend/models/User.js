@@ -7,7 +7,10 @@ var UserSchema = new mongoose.Schema({
   fatherName: String,
   idNumber: String,
   cardNumber: String,
-  birthDate: Object,
+  birthDate: {
+    type: Object,
+    default: {year: '', month: '', day: ''},
+  },
   sex: String,
   address: String,
   postCode: String,
@@ -59,6 +62,22 @@ var UserSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
+  regStatus: {
+    type: String,
+    default: 'ثبت درخواست',
+  },
+  regStatusNum: {
+    type: Number,
+    default: 1,
+  },
+  regCompelete: {
+    type: Boolean,
+    default: false,
+  },
+  messages: {
+    type: [Object],
+    default: [],
+  }
 });
 
 var User = mongoose.model('User', UserSchema);

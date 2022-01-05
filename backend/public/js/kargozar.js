@@ -19,10 +19,28 @@ $(document).ready(function(){
     $('.close-popup').click(() => {
         $('#add-user-popup').fadeOut(500);
         $('.black-modal').fadeOut(500);
+        closeAll();
     });
     $('.black-modal').click(() => {
         $('#add-user-popup').fadeOut(500);
         $('.black-modal').fadeOut(500);
+        closeAll();
     });
     
+    var usersLength = parseInt(document.getElementById('users-length').textContent);
+    var usersInfo = [];
+    for(var i=0; i<usersLength; i++){
+        usersInfo.push({btn: $(`#user-btn-${i}`), view: $(`#user-info-popup-${i}`)});
+    }
+    usersInfo.forEach(usr => {
+        usr.btn.click(() => {
+            closeAll();
+            $('.black-modal').fadeIn(500);
+            usr.view.fadeIn(500);
+        });
+    });
+    var closeAll = () => {
+        for(var i=0; i<usersLength; i++)
+            usersInfo[i].view.fadeOut(500);
+    }
 });

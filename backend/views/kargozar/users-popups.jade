@@ -1,4 +1,4 @@
-#users-length= users.length
+#users-length.hidden= users.length
 -for(var i=0; i<users.length; i++){
     .popup.user-info(id="user-info-popup-#{i}")
         i.fa.fa-times.close-popup
@@ -29,14 +29,34 @@
                     .value= users[i].postCode
                 .item 
                     .name شماره تماس: 
-                    .value= users[i].phone
+                    .value(id="phone-#{i}")= users[i].phone
                 .buttons
                     a.button(href="tel:#{users[i].phone}") 
                         i.fa.fa-phone
-                    a.button(href="#") 
+                    .button(id="sms-btn-#{i}")
                         i.fa.fa-envelope
                     a.button(href="#") 
                         i.fa.fa-pencil
-            .actions-view
+            .user-content-view
+                .state-view
+                    .state(class="#{users[i].regStatusNum > 0 ? 'active' : ''}")
+                        i.fa.fa-check 
+                        .text ثبت درخواست
+                    .line
+                    .state(class="#{users[i].regStatusNum > 1 ? 'active' : ''}")
+                        i.fa.fa-check 
+                        .text بررسی وضعیت شارژ و اعتبار بهره‌برداران
+                    .line
+                    .state(class="#{users[i].regStatusNum > 2 ? 'active' : ''}")
+                        i.fa.fa-check 
+                        .text بررسی وضعیت فنی پرونده چاه
+                    .line
+                    .state(class="#{users[i].regStatusNum > 3 ? 'active' : ''}")
+                        i.fa.fa-check 
+                        .text اصلاح نام پرونده
+                    .line
+                    .state(class="#{users[i].regStatusNum > 4 ? 'active' : ''}")
+                        i.fa.fa-check 
+                        .text تعهد نامه نمایندگی در فروش
 
 -}

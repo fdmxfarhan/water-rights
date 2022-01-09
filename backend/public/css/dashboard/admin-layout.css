@@ -179,7 +179,7 @@
         background-color: white;
         position: relative;
         width: 6.5vw;
-        height: 5vw;
+        height: 4.5vw;
         display: flex;
         align-content: center;
         align-items: center;
@@ -359,7 +359,7 @@
         overflow: hidden;
         padding-top: 1vw;
     }
-    .popup.user-info .user-info-view .info-view .buttons a{
+    .popup.user-info .user-info-view .info-view .buttons .button{
         font-size: 1.4vw;
         color: var(--skyblue);
         text-decoration: none;
@@ -372,10 +372,67 @@
         border-radius: 50%;
         float: right;
         margin: 0.5vw 0.5vw;
+        cursor: pointer;
     }
-    .popup.user-info .user-info-view .info-view .buttons a:hover{
+    .popup.user-info .user-info-view .info-view .buttons .button:hover{
         background-color: var(--skyblue);
         color: white;
+    }
+
+
+
+
+
+    .user-content-view .state-view{
+        overflow: hidden;
+        padding: 1.5vw 2vw;
+    }
+    .user-content-view .state-view .line{
+        width: 3%;
+        height: 0.2vw;
+        background-color: var(--blue);
+        margin-top: 2.3vw;
+        float: right;
+    }
+    .user-content-view .state-view .state{
+        float: right;
+        overflow: hidden;
+        border: var(--lightgray) 0.1vw solid;
+        border-radius: 0.5vw;
+        background-color: white;
+        position: relative;
+        width: 7.5vw;
+        height: 4vw;
+        display: flex;
+        align-content: center;
+        align-items: center;
+    }
+    .user-content-view .state-view .state.active{
+        background-color: var(--blue);
+        border: var(--blue) 0.1vw solid;
+        color: white;
+    }
+    .user-content-view .state-view .state i{
+        float: right;
+        width: 15%;
+        color: var(--green);
+    }
+    .user-content-view .state-view .state .text{
+        float: right;
+        width: 80%;
+        font-family: 'iransans';
+        font-size: 0.8vw;
+        text-align: center;
+        color: var(--text);
+    }
+    .user-content-view .state-view .state.active .text{
+        color: white;
+    }
+    .user-content-view .state-view .state i{
+        opacity: 0;
+    }
+    .user-content-view .state-view .state.active i{
+        opacity: 1;
     }
 }
 

@@ -30,7 +30,12 @@ $(document).ready(function(){
     var usersLength = parseInt(document.getElementById('users-length').textContent);
     var usersInfo = [];
     for(var i=0; i<usersLength; i++){
-        usersInfo.push({btn: $(`#user-btn-${i}`), view: $(`#user-info-popup-${i}`)});
+        usersInfo.push({
+            btn: $(`#user-btn-${i}`), 
+            view: $(`#user-info-popup-${i}`),
+            phone: $(`#phone-${i}`),
+            smsButton: $(`#sms-btn-${i}`),
+        });
     }
     usersInfo.forEach(usr => {
         usr.btn.click(() => {
@@ -38,9 +43,16 @@ $(document).ready(function(){
             $('.black-modal').fadeIn(500);
             usr.view.fadeIn(500);
         });
+        usr.smsButton.click(() => {
+            $('.sms-pannel').slideDown(500);
+        })
     });
+    $('.close-sms').click(() => {
+        $('.sms-pannel').slideUp(500);
+    })
     var closeAll = () => {
         for(var i=0; i<usersLength; i++)
             usersInfo[i].view.fadeOut(500);
+        $('.sms-pannel').slideUp(500);
     }
 });

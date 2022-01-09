@@ -1,0 +1,17 @@
+.sms-pannel
+    i.fa.fa-times.close-sms
+    .title
+        i.fa.fa-envelope 
+        | ارسال پیام به 
+        #sms-phone 09336448037
+    .messages
+        //- -for(var i=0; i<10; i++){
+        .message 
+            .text این یک پیام آزمایشی جهت نمایش در قسمت اس ام اس است.
+            .date 1400/2/4
+            i.fa.fa-check.check
+        //- -}
+    .send-msg 
+        input(type="text" id="message" placeholder="ارسال پیام ...")
+        button#send-btn 
+            i.fa.fa-send

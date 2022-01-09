@@ -3,6 +3,7 @@ extends layout
 block styles
     link(rel="stylesheet", href="/css/dashboard/dashboard.css")
     link(rel="stylesheet", href="/css/components/register.css")
+    link(rel="stylesheet", href="/css/components/sms.css")
 
 block content
     .message-area
@@ -99,4 +100,5 @@ block content
                 .more-notif-btn مشاهده پیام های خوانده شده
     include register
     include users-popups
+    include ../components/sms
     script(src="/js/kargozar.js") 

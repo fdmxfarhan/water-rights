@@ -1,0 +1,129 @@
+.sms-pannel{
+    display: none;
+    z-index: 110;
+    position: fixed;
+    right: 1vw;
+    bottom: 1vw;
+    background-color: white;
+    border-radius: 1vw;
+    padding: 1vw 1vw;
+    width: 25vw;
+    border: var(--lightergray) 0.1vw solid;
+    box-shadow: 0 0 0.3vw 0.1vw rgba(0, 0, 0, 0.2);
+}
+.sms-pannel .close-sms{
+    position: absolute;
+    top: 0.6vw;
+    left: 1vw;
+    cursor: pointer;
+    font-size: 1.2vw;
+}
+.sms-pannel .close-sms:hover{
+    color: var(--hover);
+}
+.sms-pannel .title{
+    font-family: 'iransans';
+    font-size: 1vw;
+    color: var(--text);
+    margin-bottom: 1vw;
+}
+.sms-pannel .title #sms-phone{
+    display: inline;
+    font-family: 'iransans';
+    font-size: 1vw;
+    color: var(--text);
+    margin-bottom: 1vw;
+}
+.sms-pannel .title i{
+    padding-left: 0.6vw;
+}
+.sms-pannel .messages{
+    height: 20vw;
+    overflow-y: scroll;
+}
+.sms-pannel .messages::-webkit-scrollbar {width: 0.3vw;}
+.sms-pannel .messages::-webkit-scrollbar-track {background: var(--lightergray);}
+.sms-pannel .messages::-webkit-scrollbar-thumb {background: var(--lightgray);}
+.sms-pannel .messages::-webkit-scrollbar-thumb:hover{background: var(--gray);}
+.sms-pannel .messages .message{
+    background-color: var(--lightergray2);
+    width: 92%;
+    margin: auto;
+    margin-bottom: 0.5vw;
+    border-radius: 0.5vw;
+    position: relative;
+    padding-bottom: 1vw;
+}
+.sms-pannel .messages .message.seen{
+    background-color: #e1e5e7;
+}
+.sms-pannel .messages .message .text{
+    padding: 0.3vw 0.5vw;
+    font-family: 'iransans';
+    font-size: 0.9vw;
+}
+.sms-pannel .messages .message .text .link{
+    color: var(--blue);
+    display: inline;
+    cursor: pointer;
+}
+.sms-pannel .messages .message .text .link:hover{
+    color: var(--hover);
+}
+.sms-pannel .messages .message .date{
+    font-family: 'iransans';
+    font-size: 0.7vw;
+    color: var(--text);
+    position: absolute;
+    left: 0.5vw;
+    bottom: 0.2vw;
+}
+.sms-pannel .messages .message i.check{
+    position: absolute;
+    color: var(--green);
+    right: 0.5vw;
+    bottom: 0.2vw;
+    font-size: 0.8vw;
+}
+.user-control .control i.check2{
+    position: absolute;
+    color: var(--green);
+    right: 0.8vw;
+    bottom: 0.2vw;
+    font-size: 0.8vw;
+}
+.sms-pannel .send-msg{
+    overflow: hidden;
+    margin-top: 1vw;
+    /* border: var(--lightgray) 0.1vw solid; */
+    background-color: var(--lightergray2);
+    border-radius: 0.6vw;
+
+}
+.sms-pannel .send-msg input{
+    display: block;
+    float: right;
+    font-family: 'iransans';
+    font-size: 1vw;
+    padding: 0.3vw 1vw;
+    width: 80%;
+    border: none;
+    background-color: transparent;
+}
+.sms-pannel .send-msg input:focus{
+    outline: none;
+}
+.sms-pannel .send-msg button{
+    float: left;
+    display: block;
+    width: 11%;
+    border: none;
+    text-align: center;
+    background-color: transparent;
+    padding-top: 0.5vw;
+    cursor: pointer;
+    font-size: 1vw;
+}
+.sms-pannel .send-msg button:hover{
+    color: var(--blue);
+}

@@ -10,6 +10,7 @@ var Notification = require('../models/Notification');
 var Transmission = require('../models/Transmission');
 var Acount = require('../models/Acount');
 var User = require('../models/User');
+const sms = require('../config/sms');
 
 router.get('/', (req, res, next) => {
     res.render('home');

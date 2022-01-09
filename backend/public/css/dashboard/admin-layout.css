@@ -357,7 +357,7 @@
     }
     .popup.user-info .user-info-view .info-view .buttons{
         overflow: hidden;
-        padding-top: 1vw;
+        padding-top: 4vw;
     }
     .popup.user-info .user-info-view .info-view .buttons .button{
         font-size: 1.4vw;
@@ -386,6 +386,7 @@
     .user-content-view .state-view{
         overflow: hidden;
         padding: 1.5vw 2vw;
+        padding-bottom: 0;
     }
     .user-content-view .state-view .line{
         width: 3%;
@@ -433,6 +434,48 @@
     }
     .user-content-view .state-view .state.active i{
         opacity: 1;
+    }
+    .state-view h1.title{
+        font-family: 'iransans';
+        font-size: 1vw;
+        padding: 0;
+        margin: 0;
+        color: var(--text);
+        padding-bottom: 0.5vw;
+    }
+    .state-view .buttons-view {
+        overflow: hidden;
+        margin-bottom: 1vw;
+    }
+    .state-view .buttons-view button.submit.next{
+        float: left;
+        padding: 0.2vw 2vw;
+        background-color: var(--darkblue);
+    }
+    .state-view .buttons-view button.submit.next:hover{
+        background-color: var(--green);
+    }
+    .state-view .buttons-view button.submit.next i{
+        padding-right: 0.5vw;
+        font-size: 0.8vw;
+    }
+    .state-view .access-denied{
+        text-align: center;
+    }
+    .state-view .access-denied h1{
+        font-family: 'iransans';
+        font-size: 1.3vw;
+        margin-top: 5vw;
+    }
+    .state-view .access-denied h1 i{
+        color: rgb(192, 179, 0);
+        padding-left: 0.5vw;
+        font-size: 1vw;
+    }
+    .state-view .access-denied p{
+        font-family: 'iransans';
+        font-size: 1vw;
+        color: var(--text);
     }
 }
 

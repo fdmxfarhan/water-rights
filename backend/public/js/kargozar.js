@@ -31,10 +31,13 @@ $(document).ready(function(){
     var usersInfo = [];
     for(var i=0; i<usersLength; i++){
         usersInfo.push({
+            id: i,
             btn: $(`#user-btn-${i}`), 
             view: $(`#user-info-popup-${i}`),
             phone: $(`#phone-${i}`),
             smsButton: $(`#sms-btn-${i}`),
+            fileInputOverlay: $(`#file-input-overlay-${i}`),
+            fileInput: $(`.file-input-${i}`),
         });
     }
     usersInfo.forEach(usr => {
@@ -46,6 +49,9 @@ $(document).ready(function(){
         usr.smsButton.click(() => {
             $('.sms-pannel').slideDown(500);
         })
+        usr.fileInput.change(() => {
+            console.log(usr.fileInput);
+        })
     });
     $('.close-sms').click(() => {
         $('.sms-pannel').slideUp(500);
@@ -55,4 +61,8 @@ $(document).ready(function(){
             usersInfo[i].view.fadeOut(500);
         $('.sms-pannel').slideUp(500);
     }
+
+
+
+
 });

@@ -1,0 +1,97 @@
+-if(user.role == 'کارگزار'){
+    form(action="/kargozar" method="POST")
+        input.hidden(type="text" name="ownerID" value="#{users[i]._id}")
+        input.hidden(type="text" name="owner" value="#{users[i].fullname}")
+        input.hidden(type="text" name="userIndex" value="#{i}")
+        h1.title تعریف حساب چاه
+        .two-side-form
+            .part
+                .text-input-view
+                    label(for="license") شماره پروانه: 
+                        .required *
+                        //- i.fa.fa-pencil
+                    input.textinput(type="text" placeholder="شماره پروانه" name="license" value= "#{ typeof license != 'undefined' ? license: '' }" required)
+                .text-input-view
+                    label(for="permitedUseInYear") اجازه برداشت سالیانه:
+                        .required *
+                        //- i.fa.fa-pencil
+                    input.textinput(type="number" placeholder="اجازه برداشت سالیانه" name="permitedUseInYear" value= "#{ typeof permitedUseInYear != 'undefined' ? permitedUseInYear: '' }" required)
+                .file-input-view
+                    label(for="licensePic") اسکن پروانه: 
+                    .file-input-overlay(id="file-input-overlay-#{i}")
+                        | انتخاب فایل
+                        input.file-input(type="file" name="licensePic" required class="file-input-#{i}")
+                .text-input-view
+                    label(for="permitedAbdehi") آب دهی مجاز:
+                        //- i.fa.fa-user
+                    input.textinput(type="number" placeholder="آب دهی مجاز (لیتر بر ثانیه)" name="permitedAbdehi" value= "#{ typeof permitedAbdehi != 'undefined' ? permitedAbdehi: '' }")
+                .text-input-view
+                    label(for="permitedWorkTime") ساعت کارکرد مجاز:
+                        //- i.fa.fa-credit-card
+                    input.textinput(type="number" placeholder="ساعت کارکرد مجاز" name="permitedWorkTime" value= "#{ typeof permitedWorkTime != 'undefined' ? permitedWorkTime: '' }")
+                .text-input-view
+                    label(for="UTM") UTM: 
+                        .required *
+                        //- i.fa.fa-pencil
+                    input.textinput(type="text" placeholder="UTM" name="UTM" value= "#{ typeof UTM != 'undefined' ? UTM: '' }" required)
+                .select-input-view
+                    label(for="useType") نوع بهره‌برداری: 
+                        //- i.fa.fa-intersex
+                    .select
+                        select(name="useType") 
+                            option(value="شرب") شرب
+                            option(value="صنعت") صنعت
+                            option(value="کشاورزی") کشاورزی
+                            option(value="فضای سبز") فضای سبز
+                            option(value="شرکت آب") شرکت آب
+                .select-input-view
+                    label(for="pomp") نوع پمپ: 
+                        //- i.fa.fa-intersex
+                    .select
+                        select(name="pomp") 
+                            option(value="شناور") شناور
+                            option(value="شفت و غلاف") شفت و غلاف
+                            option(value="سایر") سایر
+            .part
+                .text-input-view
+                    label(for="wellCap") WellCap: 
+                        //- i.fa.fa-user
+                    input.textinput(type="number" placeholder="نام پدر" name="wellCap" value= "#{ typeof wellCap != 'undefined' ? wellCap: '' }")
+                .text-input-view
+                    label(for="sellCap") SellCap: 
+                        //- i.fa.fa-map-marker
+                    input.textinput(type="number" placeholder="SellCap" name="sellCap" value= "#{ typeof sellCap != 'undefined' ? sellCap: '' }")
+                .text-input-view
+                    label(for="buyCap") BuyCap: 
+                        //- i.fa.fa-inbox
+                    input.textinput(type="number" placeholder="BuyCap" name="buyCap" value= "#{ typeof buyCap != 'undefined' ? buyCap: '' }")
+                .text-input-view
+                    label(for="depth") عمق چاه: 
+                        //- i.fa.fa-phone
+                    input.textinput(type="number" placeholder="عمق چاه" name="depth" value= "#{ typeof depth != 'undefined' ? depth: '' }")
+                .text-input-view
+                    label(for="power") توان چاه: 
+                        //- i.fa.fa-phone
+                    input.textinput(type="number" placeholder="توان چاه (وات)" name="power" value= "#{ typeof power != 'undefined' ? power: '' }")
+                .text-input-view
+                    label(for="abdehi") آبدهی چاه: 
+                        //- i.fa.fa-phone
+                    input.textinput(type="number" placeholder="آبدهی چاه" name="abdehi" value= "#{ typeof abdehi != 'undefined' ? abdehi: '' }")
+                .text-input-view
+                    label(for="farmingType") نوع کشت: 
+                        //- i.fa.fa-phone
+                    input.textinput(type="number" placeholder="نوع کشت" name="farmingType" value= "#{ typeof farmingType != 'undefined' ? farmingType: '' }")
+                .text-input-view
+                    label(for="area") مساحت زمین: 
+                        //- i.fa.fa-phone
+                    input.textinput(type="number" placeholder="مساحت زمین (متر مکعب)" name="area" value= "#{ typeof area != 'undefined' ? area: '' }")
+        .buttons-view
+            button.submit.next(type="submit") مرحله بعد
+                i.fa.fa-chevron-left
+-}else{
+    .access-denied 
+        h1 
+            i.fa.fa-warning
+            | دسترسی مجاز نیست
+        p قبل از ادامه فرایند ابتدا درخواست ورود به بازار آب باید توسط کارشناس کارگزار ثبت و تایید گردد.
+-}

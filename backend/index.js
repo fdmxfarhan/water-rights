@@ -20,6 +20,8 @@ var dashboardRoute = require('./routes/dashboard');
 var uploadRoute = require('./routes/upload');
 var apiRoute = require('./routes/api');
 var kargozarRoute = require('./routes/kargozar');
+var tashakolRoute = require('./routes/tashakol');
+var abmantagheiRoute = require('./routes/abmantaghei');
 
 
 // Mongo DB connect
@@ -75,6 +77,9 @@ const port = 3000
 
 // Upload
 app.use('/upload', uploadRoute);
+app.use('/kargozar', kargozarRoute);
+app.use('/tashakol', tashakolRoute);
+app.use('/abmantaghei', abmantagheiRoute);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -88,14 +93,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-
 // Routes Handlers
 app.use('/', homeRoute);
 app.use('/users', usersRoute);
 app.use('/dashboard', dashboardRoute);
 app.use('/api', apiRoute);
-app.use('/kargozar', kargozarRoute);
-
 
 
 // catch 404 and forward to error handler

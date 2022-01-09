@@ -58,5 +58,6 @@
                     .state(class="#{users[i].regStatusNum > 4 ? 'active' : ''}")
                         i.fa.fa-check 
                         .text تعهد نامه نمایندگی در فروش
-
+                .state-view(class="#{users[i].regStatusNum != 0 ? 'hidden': ''}" id="state-0-view-#{i}")
+                    include reg-state-0
 -}

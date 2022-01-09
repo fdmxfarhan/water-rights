@@ -1,0 +1,77 @@
+.popup#add-user-popup
+    i.fa.fa-times.close-popup
+    h1.popup-title ثبت درخواست ورود به بازار حقوق آب
+    form(action="/dashboard/admin-register" method="POST")
+        .two-side-form
+            .part
+                .text-input-view
+                    label(for="firstName") نام: 
+                        i.fa.fa-pencil
+                    input.textinput(type="text" placeholder="نام" name="firstName" value= "#{ typeof firstName != 'undefined' ? firstName: '' }")
+                .text-input-view
+                    label(for="lastName") نام خانوادگی:
+                        i.fa.fa-pencil
+                    input.textinput(type="text" placeholder="نام خانوادگی" name="lastName" value= "#{ typeof lastName != 'undefined' ? lastName: '' }")
+                .text-input-view
+                    label(for="idNumber") کد ملی:
+                        .required *
+                        i.fa.fa-user
+                    input.textinput(type="text" placeholder="کد ملی" name="idNumber" value= "#{ typeof idNumber != 'undefined' ? idNumber: '' }" required autocomplete="off")
+                .text-input-view
+                    label(for="cardNumber") شماره شناسنامه:
+                        i.fa.fa-credit-card
+                    input.textinput(type="text" placeholder="شماره شناسنامه" name="cardNumber" value= "#{ typeof cardNumber != 'undefined' ? cardNumber: '' }")
+                .date-input-view
+                    label(for="day") تاریخ تولد: 
+                        i.fa.fa-calendar
+                    .date-input
+                        input(type="Number" name="birthDay" placeholder="روز" )
+                        label(for="month") / 
+                        input(type="Number" name="birthMonth" placeholder="ماه" )
+                        label(for="year") / 
+                        input(type="Number" name="birthYear" placeholder="سال" value="1380" )     
+                .select-input-view
+                    label(for="sex") جنسیت: 
+                        i.fa.fa-intersex
+                    .select
+                        select(name="sex") 
+                            option(value="خانم") خانم
+                            option(value="آقای") آقا
+            .part
+                .text-input-view
+                    label(for="fatherName") نام پدر
+                        i.fa.fa-user
+                    input.textinput(type="text" placeholder="نام پدر" name="fatherName" value= "#{ typeof fatherName != 'undefined' ? fatherName: '' }")
+                .text-input-view
+                    label(for="address") نشانی
+                        i.fa.fa-map-marker
+                    input.textinput(type="text" placeholder="نشانی" name="address" value= "#{ typeof address != 'undefined' ? address: '' }")
+                .text-input-view
+                    label(for="postCode") کد پستی
+                        i.fa.fa-inbox
+                    input.textinput(type="text" placeholder="کد پستی" name="postCode" value= "#{ typeof postCode != 'undefined' ? postCode: '' }")
+                .text-input-view
+                    label(for="phone") شماره تماس
+                        .required *
+                        i.fa.fa-phone
+                    input.textinput(type="text" placeholder="شماره تماس" name="phone" value= "#{ typeof phone != 'undefined' ? phone: '' }" required autocomplete="off")
+                .text-input-view
+                    label(for="password") رمز عبور
+                        .required *
+                        i.fa.fa-key
+                    input.textinput(type="password" placeholder="رمز عبور" name="password" value= "#{ typeof psw != 'undefined' ? psw: '' }" required autocomplete="off")
+                .text-input-view
+                    label(for="configpassword") تایید رمز عبور
+                        .required *
+                        i.fa.fa-check
+                    input.textinput(type="password" placeholder="تایید رمز عبور" name="configpassword" value= "#{ typeof configpsw != 'undefined' ? configpsw: '' }" required)
+                //- label(for="myFile") معرفی نامه: 
+                //- input.file(type="file" name="myFile" required)
+        button.submit(type="submit") ثبت نام
+
+-if(errors){
+    script.
+        $('#add-user-popup').show();
+        $('.black-modal').show();
+-}
+

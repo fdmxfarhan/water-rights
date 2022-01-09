@@ -132,8 +132,7 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
             user: req.user,
             login: req.query.login
         });
-    }
-    else if(req.user.role == 'admin')
+    }else if(req.user.role == 'admin')
     {
         User.find({}, (err, users) => {
             Acount.find({}, (err, accounts) => {
@@ -165,9 +164,13 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
                 })
             });
         })
-    }
-    else if(req.user.role == 'کارگزار')
+    }else if(req.user.role == 'کارگزار'){
         res.redirect('/kargozar');
+    }else if(req.user.role == 'تشکل'){
+        res.redirect('/tashakol');
+    }else if(req.user.role == 'آب منطقه‌ای'){
+        res.redirect('/abmantaghei');
+    }
 });
 router.get('/users', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'admin'){

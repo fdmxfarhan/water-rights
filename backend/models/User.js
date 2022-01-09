@@ -68,7 +68,7 @@ var UserSchema = new mongoose.Schema({
   },
   regStatusNum: {
     type: Number,
-    default: 1,
+    default: 0,
   },
   regCompelete: {
     type: Boolean,

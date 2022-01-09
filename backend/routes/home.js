@@ -180,18 +180,22 @@ router.get('/test', (req, res, next) => {
 })
 router.post('/transmit', (req, res, next) => {
     var {source, target, amount} = req.body;
-    var newTransmission = new Transmission({
-        source,
-        target,
-        amount,
-        date: new Date,
-    });
-    newTransmission.save().then(doc =>{
-        sms('09336448037', 'انتقال جدید در اپلیکیشن میراب');
-        Acount.updateMany({_id: source._id}, {$set: {charge: source.charge - amount}}, (err) => {
-            res.send({done: true});
-        });
-    }).catch(err => console.log(err));
+    Acount.findById(source, (err, s) => {
+        Acount.findById(target, (err, t) => {
+            var newTransmission = new Transmission({
+                source: s,
+                target: t,
+                amount,
+                date: new Date,
+            });
+            newTransmission.save().then(doc =>{
+                sms('09336448037', 'انتقال جدید در اپلیکیشن میراب');
+                Acount.updateMany({_id: source._id}, {$set: {charge: source.charge - amount}}, (err) => {
+                    res.send({done: true});
+                });
+            }).catch(err => console.log(err));
+        })
+    })
 })
 
 module.exports = router;

@@ -38,7 +38,7 @@ block content
                             td.charge
                                 -if(accounts[i].blocked)
                                     i.fa.fa-lock.red-lock
-                                | #{accounts[i].charge}
+                                | #{Math.floor(accounts[i].charge*10)/10}
                             td
                                 -if(!accounts[i].revoked)
                                     a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
@@ -65,7 +65,7 @@ block content
                             td.charge
                                 -if(accounts[i].blocked)
                                     i.fa.fa-lock.red-lock
-                                | #{accounts[i].charge}
+                                | #{Math.floor(accounts[i].charge*10)/10}
                             td
                                 -if(!accounts[i].revoked)
                                     a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
@@ -107,7 +107,7 @@ block content
                             td.charge
                                 -if(accounts[i].blocked)
                                     i.fa.fa-lock.red-lock
-                                | #{accounts[i].charge}
+                                | #{Math.floor(accounts[i].charge*10)/10}
                             td
                                 -if(!accounts[i].revoked)
                                     a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
@@ -129,7 +129,7 @@ block content
                             td.charge
                                 -if(accounts[i].blocked)
                                     i.fa.fa-lock.red-lock
-                                | #{accounts[i].charge}
+                                | #{Math.floor(accounts[i].charge*10)/10}
                             td
                                 -if(!accounts[i].revoked)
                                     a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
@@ -151,7 +151,7 @@ block content
                             td.charge
                                 -if(accounts[i].blocked)
                                     i.fa.fa-lock.red-lock
-                                | #{accounts[i].charge}
+                                | #{Math.floor(accounts[i].charge*10)/10}
                             td
                                 -if(!accounts[i].revoked)
                                     a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 

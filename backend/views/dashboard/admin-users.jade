@@ -37,7 +37,7 @@ block content
                                 
                             td.acounts 
                                 -if(users[i].role == 'user'){
-                                    h1 6 حساب
+                                    h1 #{users[i].numberOfAbvandi + users[i].numberOfChahvandi + users[i].numberOfChah} حساب چاه حساب
                                     h2 #{users[i].numberOfAbvandi} حساب آب‌وندی، #{users[i].numberOfChahvandi} حساب چاه‌وندی و #{users[i].numberOfChah} حساب چاه
                                 -}else
                                     h1= users[i].idNumber

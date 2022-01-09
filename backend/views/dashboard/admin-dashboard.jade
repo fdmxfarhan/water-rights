@@ -19,14 +19,14 @@ block content
             h1.title حساب ها
         a.card.orange(href="#")
             i.fa.fa-dollar
-            h1.number #{mirab.charge} 
+            h1.number #{Math.floor(mirab.charge*10)/10} 
                 .cm متر مکعب
             .progress-bar
                 .passed(style="width: #{Math.floor((mirab.charge/sumCharge)*100) < 100 ? Math.floor((mirab.charge/sumCharge)*100) : 100}%")
             h1.title حساب میراب
         a.card.red(href="#")
             i.fa.fa-dollar
-            h1.number #{abkhan.charge} 
+            h1.number #{Math.floor(abkhan.charge*10)/10} 
                 .cm متر مکعب
             .progress-bar
                 .passed(style="width: #{Math.floor((abkhan.charge/sumCharge)*100) < 100 ? Math.floor((abkhan.charge/sumCharge)*100) : 100}%")

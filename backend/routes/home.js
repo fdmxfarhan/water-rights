@@ -190,7 +190,8 @@ router.post('/transmit', (req, res, next) => {
             });
             newTransmission.save().then(doc =>{
                 sms('09336448037', 'انتقال جدید در اپلیکیشن میراب');
-                Acount.updateMany({_id: source._id}, {$set: {charge: source.charge - amount}}, (err) => {
+                Acount.updateMany({_id: source}, {$set: {charge: s.charge - amount}}, (err) => {
+                    if(err) console.log(err);
                     res.send({done: true});
                 });
             }).catch(err => console.log(err));

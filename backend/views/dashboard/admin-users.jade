@@ -17,35 +17,37 @@ block content
                     th 
                     th 
                 -for(var i=0; i<users.length; i++){
-                    tr 
-                        td.user 
-                            h1= users[i].fullname
-                            h2
-                                a(href="tel:#{users[i].phone}")= users[i].phone
-                        td.role 
-                            -if(users[i].role == 'user'){
-                                -if(users[i].chahvand)
-                                    a.role-chah(href="/dashboard/make-admin?userID=#{users[i]._id}") چاه‌وند
-                                -else
-                                    a.role-user(href="/dashboard/make-admin?userID=#{users[i]._id}") آب‌وند
-                            -}else if(users[i].role == 'admin'){
-                                a.role-admin(href="/dashboard/make-user?userID=#{users[i]._id}") میراب 
-                            -}else{
-                                .other-role= users[i].role
-                            -}
-                            
-                        td.acounts 
-                            -if(users[i].role == 'user'){
-                                h1 6 حساب
-                                h2 #{users[i].numberOfAbvandi} حساب آب‌وندی، #{users[i].numberOfChahvandi} حساب چاه‌وندی و #{users[i].numberOfChah} حساب چاه
-                            -}else
-                                h1= users[i].idNumber
-                        td
-                            a.edit(href="/dashboard/user-view?userID=#{users[i]._id}") 
-                                i.fa.fa-eye 
-                        td
-                            a.trash(href="/dashboard/delete-user?userID=#{users[i]._id}") 
-                                i.fa.fa-trash 
+                    -if(user.role == 'admin' || (user.role != 'admin' && users[i].role == 'user')){
+                        tr 
+                            td.user 
+                                h1= users[i].fullname
+                                h2
+                                    a(href="tel:#{users[i].phone}")= users[i].phone
+                            td.role 
+                                -if(users[i].role == 'user'){
+                                    -if(users[i].chahvand)
+                                        a.role-chah(href="/dashboard/make-admin?userID=#{users[i]._id}") چاه‌وند
+                                    -else
+                                        a.role-user(href="/dashboard/make-admin?userID=#{users[i]._id}") آب‌وند
+                                -}else if(users[i].role == 'admin'){
+                                    a.role-admin(href="/dashboard/make-user?userID=#{users[i]._id}") میراب 
+                                -}else{
+                                    .other-role= users[i].role
+                                -}
+                                
+                            td.acounts 
+                                -if(users[i].role == 'user'){
+                                    h1 6 حساب
+                                    h2 #{users[i].numberOfAbvandi} حساب آب‌وندی، #{users[i].numberOfChahvandi} حساب چاه‌وندی و #{users[i].numberOfChah} حساب چاه
+                                -}else
+                                    h1= users[i].idNumber
+                            td
+                                a.edit(href="/dashboard/user-view?userID=#{users[i]._id}") 
+                                    i.fa.fa-eye 
+                            td
+                                a.trash(href="/dashboard/delete-user?userID=#{users[i]._id}") 
+                                    i.fa.fa-trash 
+                    -}
                 -}
         .user-control 
             .control 

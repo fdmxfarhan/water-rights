@@ -173,7 +173,7 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
     }
 });
 router.get('/users', ensureAuthenticated, (req, res, next) => {
-    if(req.user.role == 'admin'){
+    if(req.user.role != 'user'){
         User.find({}, (err, users) => {
             Acount.find({}, (err, accounts) => {
                 for(var i=0; i<users.length; i++){
@@ -194,7 +194,7 @@ router.get('/users', ensureAuthenticated, (req, res, next) => {
     else res.send('Access Denied');
 });
 router.get('/delete-user', ensureAuthenticated, (req, res, next) => {
-    if(req.user.role == 'admin'){
+    if(req.user.role != 'user'){
         User.deleteOne({_id: req.query.userID}, (err) => {
             req.flash('success_msg', 'کاربر با موفقیت حذف شد');
             res.redirect('/dashboard/users');
@@ -203,7 +203,7 @@ router.get('/delete-user', ensureAuthenticated, (req, res, next) => {
 });
 router.get('/delete-acount', ensureAuthenticated, (req, res, next) => {
     var { redirect } = req.query;
-    if(req.user.role == 'admin'){
+    if(req.user.role != 'user'){
         Acount.deleteOne({_id: req.query.acountID}, (err) => {
             req.flash('success_msg', 'حساب با موفقیت حذف شد');
             if(redirect)
@@ -215,7 +215,7 @@ router.get('/delete-acount', ensureAuthenticated, (req, res, next) => {
 });
 router.get('/user-view', ensureAuthenticated, (req, res, next) => {
     var {userID} = req.query;
-    if(req.user.role == 'admin'){
+    if(req.user.role != 'user'){
         User.findById(userID, (err, viewingUser) => {
             Acount.find({ownerID: userID}, (err, acounts) => {
                 res.render('./dashboard/admin-user-view', {
@@ -261,7 +261,7 @@ router.post('/admin-register', ensureAuthenticated, (req, res, next) => {
             });
         });
     }
-    else if(req.user.role == 'admin'){
+    else if(req.user.role != 'user'){
         const fullname = firstName + ' ' + lastName;
         User.findOne({$or: [{idNumber: idNumber},{phone: phone}]}).then(user =>{
             if(user){
@@ -359,7 +359,7 @@ router.get('/acount-view', ensureAuthenticated, (req, res, next) => {
 });
 router.get('/make-admin', ensureAuthenticated, (req, res, next) => {
     var {userID} = req.query;
-    if(req.user.role == 'admin'){
+    if(req.user.role != 'user'){
         User.updateMany({_id: userID}, {$set: {role: 'admin'}}, (err) => {
             res.redirect('/dashboard/users');
         })
@@ -367,14 +367,14 @@ router.get('/make-admin', ensureAuthenticated, (req, res, next) => {
 });
 router.get('/make-user', ensureAuthenticated, (req, res, next) => {
     var {userID} = req.query;
-    if(req.user.role == 'admin'){
+    if(req.user.role != 'user'){
         User.updateMany({_id: userID}, {$set: {role: 'user'}}, (err) => {
             res.redirect('/dashboard/users');
         })
     }
 });
 router.get('/accounts', ensureAuthenticated, (req, res, next) => {
-    if(req.user.role == 'admin'){
+    if(req.user.role != 'user'){
         User.find({}, (err, users) => {
             Acount.find({}, (err, accounts) => {
                 res.render('./dashboard/admin-accounts', {
@@ -458,7 +458,7 @@ router.get('/accept-transmission', ensureAuthenticated, (req, res, next) => {
     });
 });
 router.get('/transmissions', ensureAuthenticated, (req, res, next) => {
-    if(req.user.role == 'admin'){
+    if(req.user.role != 'user'){
         Transmission.find({}, (err, transmissions) => {
             res.render('./dashboard/admin-transmissions', {
                 user: req.user,
@@ -520,7 +520,7 @@ router.get('/unblock-account', ensureAuthenticated, (req, res, next) => {
     });
 });
 router.get('/settings', ensureAuthenticated, (req, res, next) => {
-    if(req.user.role == 'admin'){
+    if(req.user.role != 'user'){
         Settings.findOne({}, (err, settings) => {
             res.render('./dashboard/admin-settings', {
                 user: req.user,
@@ -609,7 +609,7 @@ router.post('/special-admin-register', ensureAuthenticated, (req, res, next) => 
             });
         });
     }
-    else if(req.user.role == 'admin'){
+    else if(req.user.role != 'user'){
         const fullname = firstName + ' ' + lastName;
         User.findOne({$or: [{idNumber: idNumber},{phone: phone}]}).then(user =>{
             if(user){

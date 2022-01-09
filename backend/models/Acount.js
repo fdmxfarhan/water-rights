@@ -80,6 +80,14 @@ var AcountSchema = new mongoose.Schema({
     type: Object
   },
   currentCredit: [Object],
+  usedCredit: {
+    type: Number,
+    default: 0,
+  },
+  leftCredit: {
+    type: Number,
+    default: 0,
+  },
 
 });
 

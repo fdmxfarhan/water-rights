@@ -173,7 +173,7 @@ router.post('/add-account-chah', ensureAuthenticated, upload.single('licensePic'
                         ownerID: userID,
                         permitedUseInYear,
                         type: 'chah',
-                        charge: permitedUseInYear,
+                        charge: permitedUseInYear*0.1,
                         nextCharge: permitedUseInYear,
                         yearCharge: permitedUseInYear,
                         endDate: settings.endYearDateJ,

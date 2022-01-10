@@ -198,5 +198,24 @@ router.post('/transmit', (req, res, next) => {
         })
     })
 })
+router.get('/reg-next', (req, res, next) => {
+    var {id} = req.query;
+    User.findById(id, (err, user) => {
+        if(err) res.send(err);
+        User.updateMany({_id: id}, {$set: {regStatusNum: user.regStatusNum+1}}, (err) => {
+            if(err) res.send(err);
+            else res.send('Ok');
+        })
+    })
+})
+router.get('/reg-prev', (req, res, next) => {
+    var {id} = req.query;
+    User.findById(id, (err, user) => {
+        User.updateMany({_id: id}, {$set: {regStatusNum: user.regStatusNum-1}}, (err) => {
+            if(err) res.send(err);
+            else res.send('Ok');
+        })
+    })
+})
 
 module.exports = router;

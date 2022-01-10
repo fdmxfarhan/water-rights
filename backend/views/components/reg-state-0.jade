@@ -1,6 +1,6 @@
 -if(user.role == 'کارگزار'){
-    form(action="/kargozar" method="POST")
-        input.hidden(type="text" name="ownerID" value="#{users[i]._id}")
+    form(action="/kargozar/add-chah-account" enctype="multipart/form-data" method="POST")
+        input.hidden(type="text" name="userID" value="#{users[i]._id}")
         input.hidden(type="text" name="owner" value="#{users[i].fullname}")
         input.hidden(type="text" name="userIndex" value="#{i}")
         h1.title تعریف حساب چاه
@@ -10,18 +10,18 @@
                     label(for="license") شماره پروانه: 
                         .required *
                         //- i.fa.fa-pencil
-                    input.textinput(type="text" placeholder="شماره پروانه" name="license" value= "#{ typeof license != 'undefined' ? license: '' }" required)
+                    input.textinput(type="text" placeholder="شماره پروانه" name="license" value= "#{ typeof license != 'undefined' ? license: '' }" required oninvalid="this.setCustomValidity('لطفا این مورد را تکمیل نمایید')")
                 .text-input-view
                     label(for="permitedUseInYear") اجازه برداشت سالیانه:
                         .required *
                         //- i.fa.fa-pencil
-                    input.textinput(type="number" placeholder="اجازه برداشت سالیانه" name="permitedUseInYear" value= "#{ typeof permitedUseInYear != 'undefined' ? permitedUseInYear: '' }" required)
+                    input.textinput(type="number" placeholder="اجازه برداشت سالیانه" name="permitedUseInYear" value= "#{ typeof permitedUseInYear != 'undefined' ? permitedUseInYear: '' }" required  oninvalid="this.setCustomValidity('لطفا این مورد را تکمیل نمایید')")
                 .file-input-view
                     label(for="licensePic") اسکن پروانه: 
                     .file-input-overlay(id="file-input-overlay-#{i}")
                         i.fa.fa-check.check(id="file-check-#{i}")
                         .filename(id="file-name-#{i}") انتخاب فایل
-                        input.file-input(type="file" name="licensePic" required class="file-input-#{i}")
+                        input.file-input(type="file" name="licensePic" required class="file-input-#{i}" )
                 .text-input-view
                     label(for="permitedAbdehi") آب دهی مجاز:
                         //- i.fa.fa-user
@@ -32,9 +32,8 @@
                     input.textinput(type="number" placeholder="ساعت کارکرد مجاز" name="permitedWorkTime" value= "#{ typeof permitedWorkTime != 'undefined' ? permitedWorkTime: '' }")
                 .text-input-view
                     label(for="UTM") UTM: 
-                        .required *
                         //- i.fa.fa-pencil
-                    input.textinput(type="text" placeholder="UTM" name="UTM" value= "#{ typeof UTM != 'undefined' ? UTM: '' }" required)
+                    input.textinput(type="text" placeholder="UTM" name="UTM" value= "#{ typeof UTM != 'undefined' ? UTM: '' }")
                 .select-input-view
                     label(for="useType") نوع بهره‌برداری: 
                         //- i.fa.fa-intersex
@@ -57,7 +56,7 @@
                 .text-input-view
                     label(for="wellCap") WellCap: 
                         //- i.fa.fa-user
-                    input.textinput(type="number" placeholder="نام پدر" name="wellCap" value= "#{ typeof wellCap != 'undefined' ? wellCap: '' }")
+                    input.textinput(type="number" placeholder="WellCap" name="wellCap" value= "#{ typeof wellCap != 'undefined' ? wellCap: '' }")
                 .text-input-view
                     label(for="sellCap") SellCap: 
                         //- i.fa.fa-map-marker
@@ -69,7 +68,7 @@
                 .text-input-view
                     label(for="depth") عمق چاه: 
                         //- i.fa.fa-phone
-                    input.textinput(type="number" placeholder="عمق چاه" name="depth" value= "#{ typeof depth != 'undefined' ? depth: '' }")
+                    input.textinput(type="number" placeholder="عمق چاه (متر)" name="depth" value= "#{ typeof depth != 'undefined' ? depth: '' }")
                 .text-input-view
                     label(for="power") توان چاه: 
                         //- i.fa.fa-phone
@@ -77,15 +76,15 @@
                 .text-input-view
                     label(for="abdehi") آبدهی چاه: 
                         //- i.fa.fa-phone
-                    input.textinput(type="number" placeholder="آبدهی چاه" name="abdehi" value= "#{ typeof abdehi != 'undefined' ? abdehi: '' }")
+                    input.textinput(type="number" placeholder="آبدهی چاه (لیتر بر ثانیه)" name="abdehi" value= "#{ typeof abdehi != 'undefined' ? abdehi: '' }")
                 .text-input-view
                     label(for="farmingType") نوع کشت: 
                         //- i.fa.fa-phone
-                    input.textinput(type="number" placeholder="نوع کشت" name="farmingType" value= "#{ typeof farmingType != 'undefined' ? farmingType: '' }")
+                    input.textinput(type="text" placeholder="نوع کشت" name="farmingType" value= "#{ typeof farmingType != 'undefined' ? farmingType: '' }")
                 .text-input-view
                     label(for="area") مساحت زمین: 
                         //- i.fa.fa-phone
-                    input.textinput(type="number" placeholder="مساحت زمین (متر مکعب)" name="area" value= "#{ typeof area != 'undefined' ? area: '' }")
+                    input.textinput(type="number" placeholder="مساحت زمین (متر مربع)" name="area" value= "#{ typeof area != 'undefined' ? area: '' }")
         .buttons-view
             button.submit.next(type="submit") مرحله بعد
                 i.fa.fa-chevron-left
@@ -94,5 +93,5 @@
         h1 
             i.fa.fa-warning
             | دسترسی مجاز نیست
-        p قبل از ادامه فرایند ابتدا درخواست ورود به بازار آب باید توسط کارشناس کارگزار ثبت و تایید گردد.
+        p جهت ادامه فرایند ابتدا درخواست ورود به بازار آب باید توسط کارشناس کارگزار ثبت و تایید گردد.
 -}

@@ -86,14 +86,9 @@ $(document).ready(function(){
     // $('#link3').addClass('active');
     $('#tab2').hide();
     $('#tab3').hide();
-
     $('#add-account-btn').click(() => {
         $('#add-account-popup').fadeIn(500);
         $('.black-modal').fadeIn(500);
-    });
-    $('.black-modal').click(() => {
-        $('#add-account-popup').fadeOut(500);
-        $('.black-modal').fadeOut(500);
     });
     $('.close-popup').click(() => {
         $('#add-account-popup').fadeOut(500);
@@ -122,7 +117,45 @@ $(document).ready(function(){
         $('#tab3').show();
         $('#tab-btn3').addClass('active');
     });
-
-    
-
+    $('#transmission-source').click(() => {
+        $('.black-modal').fadeIn(500);
+        $('#select-source-popup').fadeIn(500);
+    })
+    $('#transmission-target').click(() => {
+        $('.black-modal').fadeIn(500);
+        $('#select-target-popup').fadeIn(500);
+    })
+    $('.black-modal').click(() => {
+        $('#add-account-popup').fadeOut(500);
+        $('.black-modal').fadeOut(500);
+        $('#select-source-popup').fadeOut(500);
+        $('#select-target-popup').fadeOut(500);
+    });
+    $('.close-popup').click(() => {
+        $('#add-account-popup').fadeOut(500);
+        $('.black-modal').fadeOut(500);
+        $('#select-source-popup').fadeOut(500);
+        $('#select-target-popup').fadeOut(500);
+    });
+    var accountsLength = parseInt(document.getElementById('accounts-length').textContent);
+    var selectAccounts = [];
+    for (let i = 0; i < accountsLength; i++) {
+        selectAccounts.push({
+            id: i,
+            sourceOption: $(`#option-source-${i}`),
+            targetOption: $(`#option-target-${i}`),
+        });
+    }
+    selectAccounts.forEach(option => {
+        option.sourceOption.click(() => {
+            $('.black-modal').fadeOut(500);
+            $('#select-source-popup').fadeOut(500);
+            $('#select-target-popup').fadeOut(500);
+        });
+        option.targetOption.click(() => {
+            $('.black-modal').fadeOut(500);
+            $('#select-source-popup').fadeOut(500);
+            $('#select-target-popup').fadeOut(500);
+        });
+    });
 });

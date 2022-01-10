@@ -85,7 +85,7 @@
     .content-view .users-view table td.role .role-user{
         background-color: var(--green);
         color: white;
-        font-size: 0.9vw;
+        font-size: 0.8vw;
         padding: 0.2vw 0.7vw;
         border-radius: 0.5vw;
         width: fit-content;
@@ -95,7 +95,7 @@
     .content-view .users-view table td.role .role-admin{
         background-color: var(--orange);
         color: white;
-        font-size: 0.9vw;
+        font-size: 0.8vw;
         padding: 0.2vw 0.7vw;
         border-radius: 0.5vw;
         width: fit-content;
@@ -105,7 +105,7 @@
     .content-view .users-view table td.role .role-chah{
         background-color: var(--blue);
         color: white;
-        font-size: 0.9vw;
+        font-size: 0.8vw;
         padding: 0.2vw 0.7vw;
         border-radius: 0.5vw;
         width: fit-content;

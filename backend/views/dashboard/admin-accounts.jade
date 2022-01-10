@@ -180,89 +180,26 @@ block content
                 a.add-user#add-account-btn
                     i.fa.fa-plus 
                     | افزودن حساب
-            //- .statistics
-            //-     h1.title مشاهده سریع حساب ها
-            //-     .acount 
-            //-         .info
-            //-             h1 حساب آب‌وندی
-            //-             h2 از 1/2/3 تا 4/5/6
-            //-         .cap 1000 
-            //-             span &#13221;
-            //-     .acount 
-            //-         .info
-            //-             h1 حساب چاه‌وندی
-            //-             h2 از 1/2/3 تا 4/5/6
-            //-         .cap 1500 
-            //-             span &#13221;
-            //-     .acount 
-            //-         .info
-            //-             h1 حساب آب‌وندی
-            //-             h2 از 1/2/3 تا 4/5/6
-            //-         .cap 500 
-            //-             span &#13221;
-            //-     .acount 
-            //-         .info
-            //-             h1 حساب چاه
-            //-             h2 از 1/2/3 تا 4/5/6
-            //-         .cap 1000 
-            //-             span &#13221;
-            //-     .acount 
-            //-         .info
-            //-             h1 حساب آب‌وندی
-            //-             h2 از 1/2/3 تا 4/5/6
-            //-         .cap 2000 
-            //-             span &#13221;
-    .popup#add-account-popup
-        i.fa.fa-times.close-popup
-        //- h1.popup-title افزودن حساب
-        .tab-buttons 
-            .tab-btn#tab-btn1.active حساب چاه
-            .tab-btn#tab-btn2 حساب چاه‌وندی
-            .tab-btn#tab-btn3 حساب آب‌وندی
-        .tab#tab1 
-            form(action="/upload/add-account-chah" enctype="multipart/form-data" method="POST") 
-                .text-input
-                    label(for="license") شماره پروانه بهره برداری:
-                    input(type="text" name="license" id="license" placeholder="00000" required)
-                .text-input
-                    label(for="permitedUseInYear") اجازه برداشت سالیانه:
-                    input(type="number" name="permitedUseInYear" id="permitedUseInYear" placeholder="00 متر مکعب" required)
-                .select-input
-                    label(for="userID") کاربر:
-                    select(name="userID" id="userID") 
-                        option(value="undefined") انتخاب کاربر
-                        -for(var i=0; i<users.length; i++)
-                            option(value="#{users[i]._id}") #{users[i].fullname} (#{users[i].phone})
-                .file-upload 
-                    label(for="licensePic") اسکن پروانه بهره برداری:
-                    input(type="file" name="licensePic" id="licensePic")
-                input.submit(type="submit" value="ثبت")
-        .tab#tab2 
-            form(action="/upload/add-account-chahvandi" method="POST") 
-                .select-input
-                    label(for="chahID") حساب چاه:
-                    select(name="chahID" id="chahID") 
-                        option(value="undefined") انتخاب حساب جاه
-                        -for(var i=0; i<accounts.length; i++)
-                            -if(accounts[i].type == "chah")
-                                option(value="#{accounts[i]._id}") #{accounts[i].license} (#{accounts[i].owner})
-                .select-input
-                    label(for="userID") کاربر:
-                    select(name="userID" id="userID") 
-                        option(value="undefined") انتخاب کاربر
-                        -for(var i=0; i<users.length; i++)
-                            option(value="#{users[i]._id}") #{users[i].fullname} (#{users[i].phone})
-                input.submit(type="submit" value="ثبت")
-        .tab#tab3 
-            form(action="/upload/add-account-abvandi" method="POST") 
-                .select-input
-                    label(for="userID") کاربر:
-                    select(name="userID" id="userID") 
-                        option(value="undefined") انتخاب کاربر
-                        -for(var i=0; i<users.length; i++)
-                            option(value="#{users[i]._id}") #{users[i].fullname} (#{users[i].phone})
-                input.submit(type="submit" value="ثبت")
-        
+            .control
+                form.transmission(action="/dashboard/transmission") 
+                    h1.title
+                        i.fa.fa-arrows-h
+                        | انتقال شارژ
+                    h1.name حساب مبداء:
+                    .select-account#transmission-source
+                        .name#source-name انتخاب کنید
+                        .type#source-type 
+                    h1.name حساب مقصد:
+                    .select-account#transmission-target
+                        .name#source-name انتخاب کنید
+                        .type#source-type 
+                    h1.name مقدار شارژ:
+                    input.hidden(type="text" name="sourceID" value="")
+                    input.hidden(type="text" name="targetID" value="")
+                    input.text(type="number" name="amount" step="0.01" placeholder="متر مکعب")
+                    button.submit(type="submit") انتقال
+    include ../components/add-account-popup
+    include ../components/select-account
     script(src="/js/accounts.js") 
     script.
         $('#link3').addClass('active');

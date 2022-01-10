@@ -132,4 +132,155 @@
         color: red;
         padding-left: 0.5vw;
     }
+    .control form.transmission h1.title{
+        font-family: 'iransans';
+        font-size: 1.2vw;
+        color: var(--blue);
+        padding: 0.3vw 1vw;
+    }
+    .control form.transmission h1.title i{
+        padding-left: 0.5vw;
+    }
+    .control form.transmission h1.name{
+        font-family: 'iransans';
+        font-size: 1vw;
+        color: var(--dark);
+        padding: 0.3vw 1vw;
+        font-weight: normal;
+        margin: 0;
+        padding: 0;
+        padding: 0 1vw;
+    }
+    .control form.transmission .select-account{
+        width: 80%;
+        margin: auto;
+        padding: 0.2vw 0.7vw;
+        border: var(--lightgray) 0.1vw solid;
+        border-radius: 0.5vw;
+        font-family: 'iransans';
+        font-size: 1vw;
+        color: var(--text);
+        overflow: hidden;
+        margin-bottom: 1vw;
+        cursor: pointer;
+    }
+    .control form.transmission .select-account:hover{
+        border: var(--blue) 0.1vw solid;
+        color: var(--blue);
+    }
+    .control form.transmission .select-account .name{
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        float: right;
+    }
+    .control form.transmission .select-account .type{
+        font-family: 'iransans';
+        font-size: 0.8vw;
+        float: left;
+        padding-top: 0.1vw;
+    }
+    .control form.transmission input.text{
+        display: block;
+        width: 80%;
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        margin: auto;
+        padding: 0.2vw 0.7vw;
+        border: var(--lightgray) 0.1vw solid;
+        border-radius: 0.5vw;
+    }
+    .control form.transmission input.text:focus{
+        outline: none;
+        border: var(--blue) 0.1vw solid;
+    }
+    .control form.transmission button.submit{
+        color: white;
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        background-color: var(--blue);
+        padding: 0.3vw 0.7vw;
+        width: 90%;
+        margin: auto;
+        display: block;
+        margin-top: 1vw;
+        border: none;
+        border-radius: 0.3vw;
+        cursor: pointer;
+    }
+    .control form.transmission button.submit:hover{
+        background-color: var(--green);
+    }
+    .select-list{
+        max-height: 30vw;
+        overflow-y: scroll;
+        width: 100%;
+        margin-top: 1vw;
+    }
+    .select-list::-webkit-scrollbar {width: 0.3vw;}
+    .select-list::-webkit-scrollbar-track {background: var(--lightergray);}
+    .select-list::-webkit-scrollbar-thumb {background: var(--lightgray);}
+    .select-list::-webkit-scrollbar-thumb:hover{background: var(--gray);}
+    .select-list table{
+        font-family: 'iransans';
+        text-align: center;
+        border-collapse: collapse;
+        width: 98%;
+    }
+    .select-list table tr{
+        cursor: pointer;
+    }
+    .select-list table tr:hover{
+        background-color: var(--lightgray);
+    }
+    .select-list table th{
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        border-bottom: var(--lightgray) 0.1vw solid;
+        color: var(--text);
+    }
+    .select-list table td{
+        border-bottom: var(--lightergray) 0.1vw solid;
+        padding: 0.1vw 0;
+    }
+    .select-list table td h1{
+        font-family: 'iransans';
+        font-size: 1vw;
+        padding: 0;
+        margin: 0;
+        font-weight: normal;
+    }
+    .select-list table td.role *{
+        font-size: 0.8vw;
+        padding: 0 0.5vw;
+        border-radius: 0.3vw;
+    }
+    .select-search-view {
+        border-bottom: var(--lightgray) 0.1vw solid;
+        width: 90%;
+        margin: auto;
+        overflow: hidden;
+    }
+    .select-search-view input{
+        margin: 0;
+        outline: 0;
+        border: none;
+        display: block;
+        float: right;
+        width: 90%;
+        font-family: 'iransans';
+        font-size: 1vw;
+        padding-right: 1vw;
+    }
+    .select-search-view button{
+        border: none;
+        display: block;
+        float: right;
+        font-size: 1vw;
+        color: var(--text);
+        background-color: transparent;
+        cursor: pointer;
+    }
+    .select-search-view button:hover{
+        color: var(--hover);
+    }
 }

@@ -60,4 +60,12 @@
                         .text تعهد نامه نمایندگی در فروش
                 .state-view(class="#{users[i].regStatusNum != 0 ? 'hidden': ''}" id="state-0-view-#{i}")
                     include reg-state-0
+                .state-view(class="#{users[i].regStatusNum != 1 ? 'hidden': ''}" id="state-1-view-#{i}")
+                    include reg-state-1
+                
+-}
+-if(userIndex){
+    script.
+        $('#user-info-popup-#{userIndex}').show();
+        $('.black-modal').show();
 -}

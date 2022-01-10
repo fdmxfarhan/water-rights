@@ -222,6 +222,26 @@
         /* font-weight: normal; */
         padding-right: 0.5vw;
     }
+    .charge .item{
+        overflow: hidden;
+        width: 90%;
+        margin: auto;
+    }
+    .charge .item .name{
+        float: right;
+        color: var(--text);
+        font-family: 'iransans';
+        font-size: 1vw;
+    }
+    .charge .item .value{
+        float: right;
+        color: var(--green);
+        font-family: 'iransans';
+        font-size: 1vw;
+        font-weight: bold;
+        margin-right: 0.4vw;
+    }
+    
     a.link-to-account{
         color: var(--blue);
         font-family: 'iransans';
@@ -257,4 +277,5 @@
         color: var(--text);
         text-align: center;
     }
+
 }

@@ -3,7 +3,7 @@
         h1 حساب آب‌وندی #{account.accountNumber} 
     .content-view 
         .users-view 
-            form(action="/upload/save-abvandi" enctype="multipart/form-data" method="POST") 
+            form(action="/upload/save-abvandi" method="POST") 
                 input.hidden(type="text" name="accountID" value="#{account._id}")
                 .two-column
                     .title اطلاعات حساب جاه‌وندی
@@ -21,6 +21,18 @@
                                         option(value="#{users[i]._id}") #{users[i].fullname} (#{users[i].phone})
                                 -}
                     .column
+                        .text-input 
+                            i.fa.fa-pencil 
+                            label(for="charge") شارژ فعلی:
+                            input(type="number" name="charge" placeholder="00 متر مکعب" value="#{typeof(account.charge) == 'undefined' ? '' : account.charge}" step="0.01")
+                        .text-input 
+                            i.fa.fa-pencil 
+                            label(for="usedCredit") شارژ مصرف شده:
+                            input(type="number" name="usedCredit" placeholder="00 متر مکعب" value="#{typeof(account.usedCredit) == 'undefined' ? '' : account.usedCredit}" step="0.01")
+                        .text-input 
+                            i.fa.fa-pencil 
+                            label(for="leftCredit") شارژ باقی مانده:
+                            input(type="number" name="leftCredit" placeholder="00 متر مکعب" value="#{typeof(account.leftCredit) == 'undefined' ? '' : account.leftCredit}" step="0.01")
                         
                 button.submit(type="submit")
                     i.fa.fa-save
@@ -34,6 +46,13 @@
                     h1 شارژ
                     h2 #{Math.floor(account.charge*10)/10}
                         .cm متر مکعب
+                    .item 
+                        .name مصرف شده: 
+                        .value= Math.floor(account.usedCredit*10)/10
+                    .item 
+                        .name باقی مانده: 
+                        .value= Math.floor(account.leftCredit*10)/10
+                    
                 .dates 
                     .date تاریخ آغاز اعتبار: #{account.startDate.year}/#{account.startDate.month}/#{account.startDate.day}
                     .date تاریخ پایان اعتبار: #{account.endDate.year}/#{account.endDate.month}/#{account.endDate.day}

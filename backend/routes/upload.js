@@ -218,7 +218,7 @@ router.post('/add-account-chah', ensureAuthenticated, upload.single('licensePic'
     })
 });
 router.post('/save-chah', ensureAuthenticated, upload.single('licensePic'), (req, res, next) => {
-    var {accountID, permitedUseInYear, linkedAccount, permitedAbdehi, permitedWorkTime, UTM, useType, wellCap, sellCap, buyCap, depth, power, abdehi, userID, pomp, farmingType, area} = req.body;
+    var {charge, usedCredit, leftCredit, accountID, permitedUseInYear, linkedAccount, permitedAbdehi, permitedWorkTime, UTM, useType, wellCap, sellCap, buyCap, depth, power, abdehi, userID, pomp, farmingType, area} = req.body;
     var file = req.file;
     User.findById(userID, (err, user) => {
         Acount.findById(accountID, (err, account) => {
@@ -246,6 +246,9 @@ router.post('/save-chah', ensureAuthenticated, upload.single('licensePic'), (req
                 linkedAccount,
                 farmingType, 
                 area,
+                charge, 
+                usedCredit, 
+                leftCredit,
             }}, (err) => {
                 if(err) console.log(err);
                 if(owner != 'undefined'){
@@ -311,7 +314,7 @@ router.post('/save-chah', ensureAuthenticated, upload.single('licensePic'), (req
     });
 });
 router.post('/save-chahvandi', ensureAuthenticated, upload.single('licensePic'), (req, res, next) => {
-    var {accountID, linkedAccount, userID} = req.body;
+    var {charge, usedCredit, leftCredit, accountID, linkedAccount, userID} = req.body;
     var file = req.file;
     User.findById(userID, (err, user) => {
         Acount.findById(accountID, (err, account) => {
@@ -322,6 +325,26 @@ router.post('/save-chahvandi', ensureAuthenticated, upload.single('licensePic'),
                 ownerID: userID,
                 type: 'chahvandi',
                 linkedAccount,
+                charge, usedCredit, leftCredit, 
+            }}, (err) => {
+                req.flash('success_msg', 'اطلاعات با موفقیت ذخیره شد');
+                res.redirect(`/dashboard/acount-view?acountID=${accountID}`)
+            });
+        });
+    });
+});
+router.post('/save-abvandi', ensureAuthenticated, (req, res, next) => {
+    var {charge, usedCredit, leftCredit, accountID, userID} = req.body;
+    console.log(accountID)
+    User.findById(userID, (err, user) => {
+        Acount.findById(accountID, (err, account) => {
+            var owner = account.owner;
+            if(user) owner = user.fullname;
+            Acount.updateMany({_id: accountID}, {$set: {
+                owner: owner,
+                ownerID: userID,
+                type: 'abvandi',
+                charge, usedCredit, leftCredit, 
             }}, (err) => {
                 req.flash('success_msg', 'اطلاعات با موفقیت ذخیره شد');
                 res.redirect(`/dashboard/acount-view?acountID=${accountID}`)

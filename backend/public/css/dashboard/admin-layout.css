@@ -186,7 +186,7 @@
     }
     .content-view .users-view .users-list td.status .state.active{
         background-color: green;
-        border: var(--blue) 0.1vw solid;
+        border: green 0.1vw solid;
         color: white;
     }
     .content-view .users-view .users-list td.status .state i{
@@ -409,8 +409,8 @@
         align-items: center;
     }
     .user-content-view .state-view .state.active{
-        background-color: var(--blue);
-        border: var(--blue) 0.1vw solid;
+        background-color: green;
+        border: green 0.1vw solid;
         color: white;
     }
     .user-content-view .state-view .state i{
@@ -480,6 +480,7 @@
     .cards-view{
         overflow: hidden;
         padding: 1vw;
+        padding-bottom: 0;
     }
     .cards-view .card{
         float: right;

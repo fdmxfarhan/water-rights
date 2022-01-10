@@ -185,7 +185,7 @@
         align-items: center;
     }
     .content-view .users-view .users-list td.status .state.active{
-        background-color: var(--blue);
+        background-color: green;
         border: var(--blue) 0.1vw solid;
         color: white;
     }

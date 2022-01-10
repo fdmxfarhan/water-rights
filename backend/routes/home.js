@@ -15,7 +15,6 @@ const sms = require('../config/sms');
 router.get('/', (req, res, next) => {
     res.render('home');
 });
-
 router.get('/forms', ensureAuthenticated, (req, res, next) => {
     var {transmissionID} = req.query;
     Transmission.findById(transmissionID, (err, transmission) => {
@@ -113,11 +112,9 @@ router.get('/forms', ensureAuthenticated, (req, res, next) => {
         });
     });
 });
-
 router.get('/form', (req, res, next) => {
     res.render('form');
 })
-
 router.post('/form', (req, res, next) => {
     var {fullname, accountNumber, maximum, idNumber} = req.body;
     fs.readFile('./public/form3.html', 'utf8', (err, html) => {

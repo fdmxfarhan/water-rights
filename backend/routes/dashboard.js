@@ -631,7 +631,7 @@ router.post('/special-admin-register', ensureAuthenticated, (req, res, next) => 
                 });
             }
             else {
-                const newUser = new User({ipAddress, role, firstName, lastName, idNumber, cardNumber, phone, password, card});
+                const newUser = new User({fullname, ipAddress, role, firstName, lastName, idNumber, cardNumber, phone, password, card});
                 // Hash password
                 bcrypt.genSalt(10, (err, salt) => bcrypt.hash(newUser.password, salt, (err, hash) => {
                     if(err) console.log(err);

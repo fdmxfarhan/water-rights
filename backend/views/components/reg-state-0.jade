@@ -19,7 +19,8 @@
                 .file-input-view
                     label(for="licensePic") اسکن پروانه: 
                     .file-input-overlay(id="file-input-overlay-#{i}")
-                        | انتخاب فایل
+                        i.fa.fa-check.check(id="file-check-#{i}")
+                        .filename(id="file-name-#{i}") انتخاب فایل
                         input.file-input(type="file" name="licensePic" required class="file-input-#{i}")
                 .text-input-view
                     label(for="permitedAbdehi") آب دهی مجاز:

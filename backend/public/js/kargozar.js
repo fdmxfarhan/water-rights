@@ -38,6 +38,8 @@ $(document).ready(function(){
             smsButton: $(`#sms-btn-${i}`),
             fileInputOverlay: $(`#file-input-overlay-${i}`),
             fileInput: $(`.file-input-${i}`),
+            fileName: $(`#file-name-${i}`),
+            fileCheck: $(`#file-check-${i}`),
         });
     }
     usersInfo.forEach(usr => {
@@ -50,7 +52,11 @@ $(document).ready(function(){
             $('.sms-pannel').slideDown(500);
         })
         usr.fileInput.change(() => {
-            console.log(usr.fileInput);
+            var fullPath = usr.fileInput.val()
+            var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
+            var fileName = fullPath.substring(startIndex+1);
+            usr.fileName.html(fileName);
+            usr.fileCheck.show();
         })
     });
     $('.close-sms').click(() => {

@@ -47,6 +47,7 @@
         padding: 0.3vw 1vw;
         overflow: hidden;
     }
+    
     .popup .select-input-view .select{padding-top: 0;padding-bottom: 0;}
     .popup .select-input-view .select select{
         background-color: transparent;
@@ -117,6 +118,32 @@
         text-align: right;
         color: var(--gray);
         cursor: pointer;
+        overflow: hidden;
+        padding: 0 1vw;
+    }
+    .popup .file-input-view .file-input-overlay i.check{
+        float: right;
+        width: 10%;
+        padding: 0.5vw 0;
+        text-align: center;
+        color: var(--green);
+        display: none;
+    }
+    .popup .file-input-view .file-input-overlay .filename{
+        /* display: inline; */
+        float: right;
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        color: var(--gray);
+        padding: 0.3vw 1vw;
+        /* background-color: darkblue; */
+        overflow: hidden;
+        width: 70%;
+        margin: 0;
+        white-space: nowrap ;
+    }
+    .popup .file-input-view .file-input-overlay:hover .filename{
+        color: var(--darkblue);
     }
     .popup .file-input-view .file-input-overlay input{
         position: absolute;

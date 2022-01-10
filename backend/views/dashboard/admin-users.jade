@@ -17,7 +17,7 @@ block content
                     th 
                     th 
                 -for(var i=0; i<users.length; i++){
-                    -if(user.role == 'admin' || (user.role != 'admin' && users[i].role == 'user')){
+                    -if(user.role == 'admin' || (user.role == 'کارگزار' && users[i].role != 'admin') || (user.role != 'admin' && users[i].role == 'user')){
                         tr 
                             td.user 
                                 h1= users[i].fullname

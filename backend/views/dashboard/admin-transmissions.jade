@@ -19,19 +19,24 @@ block content
                     th تاریخ
                     th 
                 -for(var i=transmissions.length-1; i>=0; i--){
-                    tr
-                        td.role= i+1
-                        td.user 
-                            h1= transmissions[i].source.type == 'chah'? transmissions[i].source.license : transmissions[i].source.accountNumber
-                            h2= transmissions[i].source.owner
-                        td.acounts 
-                            h1= transmissions[i].target.type == 'chah'? transmissions[i].target.license : transmissions[i].target.accountNumber
-                            h2= transmissions[i].target.owner
-                        td.charge= transmissions[i].amount
-                        td= dateConvert.get_year_month_day(transmissions[i].date)
-                        td
-                            a.edit(href="/dashboard/transmissions-view?transmissionsID=#{transmissions[i]._id}") 
-                                i.fa.fa-external-link
+                    //- 
+                    //-         Temperary Condition
+                    //- 
+                    -if(transmissions[i].source.type != 'chah' && transmissions[i].target.type != 'chah'){
+                        tr
+                            td.role= i+1
+                            td.user 
+                                h1= transmissions[i].source.type == 'chah'? transmissions[i].source.license : transmissions[i].source.accountNumber
+                                h2= transmissions[i].source.owner
+                            td.acounts 
+                                h1= transmissions[i].target.type == 'chah'? transmissions[i].target.license : transmissions[i].target.accountNumber
+                                h2= transmissions[i].target.owner
+                            td.charge= transmissions[i].amount
+                            td= dateConvert.get_year_month_day(transmissions[i].date)
+                            td
+                                a.edit(href="/dashboard/transmissions-view?transmissionsID=#{transmissions[i]._id}") 
+                                    i.fa.fa-external-link
+                    -}
                 -}
         .user-control 
             .control 

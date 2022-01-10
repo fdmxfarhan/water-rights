@@ -13,6 +13,34 @@ block content
                 ul 
                     li به پنل کاربری خود خوش آمدید
         -}
+    .cards-view 
+        a.card.blue(href="/dashboard/users")
+            i.fa.fa-user 
+            h1.number= users.length
+            .progress-bar
+                .passed(style="width: #{Math.floor((users.length/100)*100) < 100 ? Math.floor((users.length/100)*100) : 100}%")
+            h1.title کاربران
+        a.card.green(href="/dashboard/accounts")
+            i.fa.fa-credit-card
+            h1.number= accounts.length
+            .progress-bar
+                .passed(style="width: #{Math.floor((accounts.length/100)*100) < 100 ? Math.floor((accounts.length/100)*100) : 100}%")
+            h1.title حساب ها
+        a.card.orange(href="#")
+            i.fa.fa-dollar
+            h1.number #{Math.floor(mirab.charge*10)/10} 
+                .cm متر مکعب
+            .progress-bar
+                .passed(style="width: #{Math.floor((mirab.charge/sumCharge)*100) < 100 ? Math.floor((mirab.charge/sumCharge)*100) : 100}%")
+            h1.title حساب میراب
+        a.card.red(href="#")
+            i.fa.fa-dollar
+            h1.number #{Math.floor(abkhan.charge*10)/10} 
+                .cm متر مکعب
+            .progress-bar
+                .passed(style="width: #{Math.floor((abkhan.charge/sumCharge)*100) < 100 ? Math.floor((abkhan.charge/sumCharge)*100) : 100}%")
+            h1.title حساب آبخوان
+    
     .title-view 
         h1 داشبورد
         h2 11

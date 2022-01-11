@@ -40,10 +40,16 @@ $(document).ready(function(){
             fileInput: $(`.file-input-${i}`),
             fileName: $(`#file-name-${i}`),
             fileCheck: $(`#file-check-${i}`),
+            notifButton: $(`#notif-user-btn-${i}`),
         });
     }
     usersInfo.forEach(usr => {
         usr.btn.click(() => {
+            closeAll();
+            $('.black-modal').fadeIn(500);
+            usr.view.fadeIn(500);
+        });
+        usr.notifButton.click(() => {
             closeAll();
             $('.black-modal').fadeIn(500);
             usr.view.fadeIn(500);

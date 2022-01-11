@@ -36,7 +36,7 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
         Acount.find({}, (err, accounts) => {
             Acount.findOne({type: 'mirab'}, (err, mirab) => {
                 Acount.findOne({type: 'abkhan'}, (err, abkhan) => {
-                    Notification.find({}, (err, notifications) => {
+                    AdminNotif.find({}, (err, notifications) => {
                         Transmission.find({done: false}, (err, transmissions) => {
                             var sumCharge = 0;
                             if(accounts.length > 1)
@@ -123,9 +123,11 @@ router.post('/add-chah-account', ensureAuthenticated, upload.single('licensePic'
                                         text: `درخواست ورود به بازار ${user.fullname} توسط کارشناس کارگزار ثبت شد. جهت بررسی و تایید وضعیت شارژ و اعتبار کلیک کنید.`,
                                         date: new Date(),
                                         userID: userID,
-                                    })
-                                    req.flash('success_msg', 'حساب با موفقیت ایجاد شد');
-                                    res.redirect(`/kargozar?userIndex=${userIndex}`);
+                                    });
+                                    newAdminNotif.save().then(doc => {
+                                        req.flash('success_msg', 'حساب چاه با موفقیت ایجاد شد');
+                                        res.redirect(`/kargozar?userIndex=${userIndex}`);
+                                    }).catch(err => console.log(err));
                                 })
                             });
                         });

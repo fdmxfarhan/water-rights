@@ -45,57 +45,68 @@ block content
                         th وضعیت
                         th پیام ها
                     -for(var i=0; i<users.length; i++){
-                        tr.btn(id="user-btn-#{i}") 
-                            td
-                                h1= users[i].fullname
-                                a.phone(href="tel:#{users[i].phone}")= users[i].phone
-                            td.status
-                                .state(class="#{users[i].regStatusNum > 0 ? 'active' : ''}")
-                                    i.fa.fa-check 
-                                    .text ثبت درخواست
-                                .line
-                                .state(class="#{users[i].regStatusNum > 1 ? 'active' : ''}")
-                                    i.fa.fa-check 
-                                    .text بررسی وضعیت شارژ و اعتبار بهره‌برداران
-                                .line
-                                .state(class="#{users[i].regStatusNum > 2 ? 'active' : ''}")
-                                    i.fa.fa-check 
-                                    .text بررسی وضعیت فنی پرونده چاه
-                                .line
-                                .state(class="#{users[i].regStatusNum > 3 ? 'active' : ''}")
-                                    i.fa.fa-check 
-                                    .text اصلاح نام پرونده
-                                .line
-                                .state(class="#{users[i].regStatusNum > 4 ? 'active' : ''}")
-                                    i.fa.fa-check 
-                                    .text تعهد نامه نمایندگی در فروش
-                            td 
-                                -if(users[i].messages.length > 0)
-                                    i.fa.fa-envelope.message
+                        -if(users[i].role == 'user'){
+                            tr.btn(id="user-btn-#{i}") 
+                                td
+                                    h1= users[i].fullname
+                                    a.phone(href="tel:#{users[i].phone}")= users[i].phone
+                                td.status
+                                    .state(class="#{users[i].regStatusNum > 0 ? 'active' : ''}")
+                                        i.fa.fa-check 
+                                        .text ثبت درخواست
+                                    .line
+                                    .state(class="#{users[i].regStatusNum > 1 ? 'active' : ''}")
+                                        i.fa.fa-check 
+                                        .text بررسی وضعیت شارژ و اعتبار بهره‌برداران
+                                    .line
+                                    .state(class="#{users[i].regStatusNum > 2 ? 'active' : ''}")
+                                        i.fa.fa-check 
+                                        .text بررسی وضعیت فنی پرونده چاه
+                                    .line
+                                    .state(class="#{users[i].regStatusNum > 3 ? 'active' : ''}")
+                                        i.fa.fa-check 
+                                        .text اصلاح نام پرونده
+                                    .line
+                                    .state(class="#{users[i].regStatusNum > 4 ? 'active' : ''}")
+                                        i.fa.fa-check 
+                                        .text تعهد نامه نمایندگی در فروش
+                                td 
+                                    -if(users[i].messages.length > 0)
+                                        i.fa.fa-envelope.message
+                        -}
                     -}
         .user-control
             .control 
                 h1.title
                     i.fa.fa-envelope.env
                     | اعلان ها
-                    i.fa.fa-circle.bubble
+                    -if(notifications.filter(e => e.target == 'آب منطقه‌ای').length > 0)
+                        i.fa.fa-circle.bubble
                 .notifications
-                    -for(var i=0; i<3; i++){
-                        .notif
-                            .text وضعیت فنی کنتور برای 
-                                .link کاربر آزمایشی 
-                                | توسط تشکل آب بران تایید شد.
-                            .date 1400/5/1
+                    -for(var i=0; i<notifications.length; i++){
+                        -if(notifications[i].target == 'آب منطقه‌ای' && !notifications[i].seen){
+                            .notif
+                                .text= notifications[i].text + ' '
+                                    -if(notifications[i].userID){
+                                        -var index = users.map(e => e._id.toString()).indexOf(notifications[i].userID)
+                                        .link(id="notif-user-btn-#{index}") مشاهده کاربر
+                                    -}
+                                .date= dateConvert.convertDate(notifications[i].date)
+                        -}
                     -}
                 .notifications.seen.hidden
-                    -for(var i=0; i<3; i++){
-                        .notif.seen
-                            .text وضعیت فنی کنتور برای 
-                                .link کاربر آزمایشی 
-                                | توسط تشکل آب بران تایید شد.
-                            .date 1400/5/1
-                            i.fa.fa-check.check
-                            i.fa.fa-check.check2
+                    -for(var i=0; i<notifications.length; i++){
+                        -if(notifications[i].target == 'آب منطقه‌ای' && notifications[i].seen){
+                            .notif.seen
+                                .text= notifications[i].text + ' '
+                                    -if(notifications[i].userID){
+                                        -var index = users.map(e => e._id.toString()).indexOf(notifications[i].userID)
+                                        .link(id="notif-user-btn-#{index}") مشاهده کاربر
+                                    -}
+                                .date= dateConvert.convertDate(notifications[i].date)
+                                i.fa.fa-check.check
+                                i.fa.fa-check.check2
+                        -}
                     -}
                 .more-notif-btn مشاهده پیام های خوانده شده
     //- include register

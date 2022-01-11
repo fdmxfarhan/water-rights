@@ -32,7 +32,7 @@ block content
                     input.check(type="checkbox" id="filter4")
                     label(for="filter4") مالک چاه
                 .search-view 
-                    input.search(type="text" id="search-text")
+                    input.search(type="text" id="search-text" placeholder="جستجو...")
                     .search-button
                         i.fa.fa-search
                 //- .add-user-btn 
@@ -89,6 +89,7 @@ block content
                                 .text= notifications[i].text + ' '
                                     -if(notifications[i].userID){
                                         -var index = users.map(e => e._id.toString()).indexOf(notifications[i].userID)
+                                        br
                                         .link(id="notif-user-btn-#{index}") مشاهده کاربر
                                     -}
                                 .date= dateConvert.convertDate(notifications[i].date)
@@ -101,6 +102,7 @@ block content
                                 .text= notifications[i].text + ' '
                                     -if(notifications[i].userID){
                                         -var index = users.map(e => e._id.toString()).indexOf(notifications[i].userID)
+                                        br
                                         .link(id="notif-user-btn-#{index}") مشاهده کاربر
                                     -}
                                 .date= dateConvert.convertDate(notifications[i].date)

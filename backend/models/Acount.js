@@ -88,7 +88,8 @@ var AcountSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-
+  licenseConfirmed: {type: Boolean, default: false},
+  counterConfirmed: {type: Boolean, default: false},
 });
 
 var Acount = mongoose.model('Acount', AcountSchema);

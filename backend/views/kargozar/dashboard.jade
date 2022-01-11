@@ -108,46 +108,34 @@ block content
                 h1.title
                     i.fa.fa-envelope.env
                     | اعلان ها
-                    i.fa.fa-circle.bubble
+                    -if(notifications.filter(e => e.target == 'کارگزار' && !e.seen).length > 0)
+                        i.fa.fa-circle.bubble
                 .notifications
-                    .notif
-                        .text وضعیت فنی کنتور برای 
-                            .link کاربر آزمایشی 
-                            | توسط تشکل آب بران تایید شد.
-                        .date 1400/5/1
-                    .notif
-                        .text وضعیت شارژ و اعتبار بهره‌برداران برای 
-                            .link کاربر آزمایشی 
-                            | سازمان آب منطقه‌ای تایید شد.
-                        .date 1400/5/1
-                    .notif
-                        .text درخواست کالیبراسیون (به روز رسانی کنتور) برای 
-                            .link کاربر آزمایشی 
-                            | توسط تشکل آب‌بران ثبت شد و در انتظار تایید می‌باشد.
-                        .date 1400/5/1
+                    -for(var i=notifications.length-1; i>=0; i--){
+                        -if(notifications[i].target == 'کارگزار' && !notifications[i].seen){
+                            .notif
+                                .text= notifications[i].text + ' '
+                                    -if(notifications[i].userID){
+                                        -var index = users.map(e => e._id.toString()).indexOf(notifications[i].userID)
+                                        .link(id="notif-user-btn-#{index}") مشاهده کاربر
+                                    -}
+                                .date= dateConvert.convertDate(notifications[i].date)
+                        -}
+                    -}
                 .notifications.seen.hidden
-                    .notif.seen
-                        .text وضعیت فنی کنتور برای 
-                            .link کاربر آزمایشی 
-                            | توسط تشکل آب بران تایید شد.
-                        .date 1400/5/1
-                        i.fa.fa-check.check
-                        i.fa.fa-check.check2
-                    .notif.seen
-                        .text وضعیت شارژ و اعتبار بهره‌برداران برای 
-                            .link کاربر آزمایشی 
-                            | سازمان آب منطقه‌ای تایید شد.
-                        .date 1400/5/1
-                        i.fa.fa-check.check
-                        i.fa.fa-check.check2
-                    .notif.seen
-                        .text درخواست کالیبراسیون (به روز رسانی کنتور) برای 
-                            .link کاربر آزمایشی 
-                            | توسط تشکل آب‌بران ثبت شد و در انتظار تایید می‌باشد.
-                        .date 1400/5/1
-                        i.fa.fa-check.check
-                        i.fa.fa-check.check2
-                    
+                    -for(var i=notifications.length-1; i>=0; i--){
+                        -if(notifications[i].target == 'کارگزار' && notifications[i].seen){
+                            .notif.seen
+                                .text= notifications[i].text + ' '
+                                    -if(notifications[i].userID){
+                                        -var index = users.map(e => e._id.toString()).indexOf(notifications[i].userID)
+                                        .link(id="notif-user-btn-#{index}") مشاهده کاربر
+                                    -}
+                                .date= dateConvert.convertDate(notifications[i].date)
+                                i.fa.fa-check.check
+                                i.fa.fa-check.check2
+                        -}
+                    -}
                 .more-notif-btn مشاهده پیام های خوانده شده
     include register
     include ../components/users-popups

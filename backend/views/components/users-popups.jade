@@ -62,6 +62,8 @@
                     include reg-state-0
                 .state-view(class="#{users[i].regStatusNum != 1 ? 'hidden': ''}" id="state-1-view-#{i}")
                     include reg-state-1
+                .state-view(class="#{users[i].regStatusNum != 2 ? 'hidden': ''}" id="state-2-view-#{i}")
+                    include reg-state-2
                 
 -}
 -if(userIndex){

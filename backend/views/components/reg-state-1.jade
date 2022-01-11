@@ -58,17 +58,31 @@
                     img(src="#{chah.licensePic}", alt="")
                     .download 
                         i.fa.fa-cloud-download
-        p کارشناس محترم، لطفا تایید بفرمایید که طی 24 ساعت گذشته، بهره بردار فروشنده کارت خود را در کنتور قرار داده و آخرین اطلاعات شارژ بروزرسانی شده است.
+        p کارشناس محترم، لطفا تایید بفرمایید که طی 24 ساعت گذشته، بهره بردار فروشنده کارت خود را در کنتور قرار داده و آخرین اطلاعات شارژ بروزرسانی شده است. در صورت نیاز شارژ سالیانه، مصرف شده یا باقی مانده را ویرایش نمایید.
         form(action="/abmantaghei/confirm-charge" method="POST")
+            input.hidden(type="text" name="userID" value="#{users[i]._id}")
+            input.hidden(type="text" name="owner" value="#{users[i].fullname}")
+            input.hidden(type="text" name="userIndex" value="#{i}")
+            input.hidden(type="text" name="chahID" value="#{chah._id}")
             .two-side-form
                 .part
                     .comment 
                         label(for="comment") نظر کارشناس:
                         textarea#comment(name="comment" placeholder="نظر خود را بنویسید...")
                 .part
-                    .normal-text-input
-                        label(for="charge") شارژ فعلی حساب چاه:
-                        input(type="number" name="charge" placeholder="شارژ فعلی حساب چاه")
+                    //- .normal-text-input
+                    //-     label(for="charge") شارژ فعلی حساب چاه:
+                    //-     input(type="number" name="charge" placeholder="شارژ فعلی حساب چاه")
+                    .triple-text-input 
+                        .normal-text-input
+                            label(for="permitedUseInYear") شارژ سالیانه:
+                            input(type="number" name="permitedUseInYear" placeholder="شارژ سالیانه" value="#{chah.permitedUseInYear}")
+                        .normal-text-input
+                            label(for="usedCredit") مصرف شده:
+                            input(type="number" name="usedCredit" placeholder="مصرف شده" value="#{chah.usedCredit}")
+                        .normal-text-input
+                            label(for="leftCredit") باقی مانده:
+                            input(type="number" name="leftCredit" placeholder="باقی مانده" value="#{chah.leftCredit}")
                     .buttons 
                         button.times(type="submit" name="confirm" value="false")
                             i.fa.fa-times

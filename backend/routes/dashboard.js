@@ -166,7 +166,7 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
         })
     }else if(req.user.role == 'کارگزار'){
         res.redirect('/kargozar');
-    }else if(req.user.role == 'تشکل'){
+    }else if(req.user.role == 'تشکل آب بران'){
         res.redirect('/tashakol');
     }else if(req.user.role == 'آب منطقه‌ای'){
         res.redirect('/abmantaghei');

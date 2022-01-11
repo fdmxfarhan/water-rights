@@ -77,7 +77,13 @@ var UserSchema = new mongoose.Schema({
   messages: {
     type: [Object],
     default: [],
-  }
+  },
+  failedCredit: {type: Boolean, default: false},
+  comment0: {type: String, default: ''},
+  comment1: {type: String, default: ''},
+  comment2: {type: String, default: ''},
+  comment3: {type: String, default: ''},
+  comment4: {type: String, default: ''},
 });
 
 var User = mongoose.model('User', UserSchema);

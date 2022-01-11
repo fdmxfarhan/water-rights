@@ -70,7 +70,102 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
     // });
 });
 router.post('/confirm-charge', ensureAuthenticated, (req, res, next) => {
+    var {userID, owner, userIndex, chahID, comment, permitedUseInYear, usedCredit, leftCredit, confirm} = req.body;
     console.log(req.body);
+    if(confirm == 'true'){
+        Acount.updateMany({_id: chahID}, {$set: {permitedUseInYear, usedCredit, leftCredit}}, (err, doc) => {
+            User.findById(userID, (err, user) => {
+                User.updateMany({_id: userID}, {$set: {comment1: comment, regStatusNum: user.regStatusNum+1}}, (err, doc) => {
+                    AdminNotif.updateMany({$or: [{target: 'آب منطقه‌ای', type: 'state-0', userID: userID}, {target: 'کارگزار', type: 'state-1', userID: userID}]}, {$set: {seen: true}}, (err, doc) => {
+                        if(err) console.log(err);
+                        var newAdminNotif = new AdminNotif({
+                            target: 'کارگزار',
+                            type: 'state-1',
+                            text: `وضعیت شارژ و اعتبار بهره‌برداران حساب ${user.fullname} توسط کارشناس آب منطقه‌ای تایید شد.`,
+                            date: new Date(),
+                            userID: userID,
+                        });
+                        newAdminNotif.save().then(doc => {
+                            req.flash('success_msg', 'وضعیت شارژ تایید شد.');
+                            res.redirect(`/abmantaghei?userIndex=${userIndex}`);
+                        }).catch(err => console.log(err));
+                    });
+                });
+            });
+        });
+    }
+    else{
+        Acount.updateMany({_id: chahID}, {$set: {permitedUseInYear, usedCredit, leftCredit}}, (err, doc) => {
+            User.findById(userID, (err, user) => {
+                User.updateMany({_id: userID}, {$set: {comment1: comment, failedCredit: true}}, (err, doc) => {
+                    AdminNotif.updateMany({$or: [{target: 'آب منطقه‌ای', type: 'state-0', userID: userID}, {target: 'کارگزار', type: 'state-1', userID: userID}]}, {$set: {seen: true}}, (err, doc) => {
+                        if(err) console.log(err);
+                        var newAdminNotif = new AdminNotif({
+                            target: 'کارگزار',
+                            type: 'state-1',
+                            text: `وضعیت شارژ و اعتبار بهره‌برداران حساب ${user.fullname} توسط کارشناس آب منطقه‌ای رد شد. نظر کارشناس: ${comment}\n`,
+                            date: new Date(),
+                            userID: userID,
+                        });
+                        newAdminNotif.save().then(doc => {
+                            req.flash('success_msg', 'به کارگزار اطلاع داده شد.');
+                            res.redirect(`/abmantaghei?userIndex=${userIndex}`);
+                        }).catch(err => console.log(err));
+                    });
+                });
+            });
+        });
+    }
+});
+router.post('/confirm-technical', ensureAuthenticated, (req, res, next) => {
+    var {userID, owner, userIndex, chahID, comment, licenseConfirmed, counterConfirmed, confirm} = req.body;
+    if(!licenseConfirmed) licenseConfirmed = false;
+    else                  licenseConfirmed = true;
+    if(!counterConfirmed) counterConfirmed = false;
+    else                  counterConfirmed = true;
+    User.findById(userID, (err, user) => {
+        Acount.updateMany({_id: chahID}, {$set: {licenseConfirmed, counterConfirmed}}, (err) => {
+            if(err) console.log(err);
+            if(licenseConfirmed && counterConfirmed){
+                User.updateMany({_id: userID}, {$set: {comment2: comment, regStatusNum: user.regStatusNum+1}}, (err) => {
+                    if(err) console.log(err);
+                    AdminNotif.updateMany({$or: [{target: 'کارگزار', type: 'state-1', userID: userID}, {target: 'تشکل آب بران', type: 'state-2', userID: userID}]}, {$set: {seen: true}}, (err, doc) => {
+                        if(err) console.log(err);
+                        var newAdminNotif = new AdminNotif({
+                            target: 'کارگزار',
+                            type: 'state-2',
+                            text: `وضعیت فنی پرونه چاه ${user.fullname} توسط کارشناس آب منطقه‌ای تایید شد.`,
+                            date: new Date(),
+                            userID: userID,
+                        });
+                        newAdminNotif.save().then(doc => {
+                            req.flash('success_msg', 'اطلاعات ثبت شد.');
+                            res.redirect(`/abmantaghei?userIndex=${userIndex}`);
+                        }).catch(err => console.log(err));
+                    });
+                })
+            }
+            else if(!counterConfirmed){
+                User.updateMany({_id: userID}, {$set: {comment2: comment}}, (err) => {
+                    AdminNotif.updateMany({$or: [{target: 'کارگزار', type: 'state-1', userID: userID}]}, {$set: {seen: true}}, (err, doc) => {
+                        if(err) console.log(err);
+                        var newAdminNotif = new AdminNotif({
+                            target: 'تشکل آب بران',
+                            type: 'state-2',
+                            text: `حساب چاه ${user.fullname} در انتظار صدور درخواست کالیبراسیون کنتور است.`,
+                            date: new Date(),
+                            userID: userID,
+                        });
+                        newAdminNotif.save().then(doc => {
+                            req.flash('success_msg', 'اطلاعات ثبت شد.');
+                            res.redirect(`/abmantaghei?userIndex=${userIndex}`);
+                        }).catch(err => console.log(err));
+                    });
+                });
+            }
+        });
+    });
+    
 });
 module.exports = router;
 

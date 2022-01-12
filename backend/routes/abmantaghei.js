@@ -181,41 +181,43 @@ router.post('/change-doc', ensureAuthenticated, upload.fields([{name: `newLicens
     var {userID, owner, userIndex, chahID, comment, confirm} = req.body;
     var file1 = req.body.newLicensePic;
     var file2 = req.body.document;
-    var newLicensePic = '';
-    var type1 = 'undefined';
-    if(file1) {
-        newLicensePic = file1.destination.slice(6) + '/' + file1.originalname;
-        type1 = file1.mimetype.split('/')[0];
-    }
-    var document = '';
-    var type2 = 'undefined';
-    if(file2) {
-        document = file2.destination.slice(6) + '/' + file2.originalname;
-        type2 = file2.mimetype.split('/')[0];
-    }
-    
-    User.findById(userID, (err, user) => {
-        Acount.updateMany({_id: chahID}, {$set: {licensePic: newLicensePic}}, (err) => {
-            if(err) console.log(err);
-            User.updateMany({_id: userID}, {$set: {comment3: comment, regStatusNum: user.regStatusNum+1, file3: {link: document, type: type2}}}, (err) => {
+    Acount.findById(chahID, (err, chah) => {
+        var newLicensePic = chah.licensePic;
+        var type1 = 'undefined';
+        if(file1) {
+            newLicensePic = file1.destination.slice(6) + '/' + file1.originalname;
+            type1 = file1.mimetype.split('/')[0];
+        }
+        var document = '';
+        var type2 = 'undefined';
+        if(file2) {
+            document = file2.destination.slice(6) + '/' + file2.originalname;
+            type2 = file2.mimetype.split('/')[0];
+        }
+        
+        User.findById(userID, (err, user) => {
+            Acount.updateMany({_id: chahID}, {$set: {licensePic: newLicensePic}}, (err) => {
                 if(err) console.log(err);
-                AdminNotif.updateMany({$or: [{target: 'کارگزار', userID: userID}, {target: 'تشکل آب بران', userID: userID}, {target: 'آب منطقه‌ای', userID: userID}]}, {$set: {seen: true}}, (err, doc) => {
+                User.updateMany({_id: userID}, {$set: {comment3: comment, regStatusNum: user.regStatusNum+1, file3: {link: document, type: type2}}}, (err) => {
                     if(err) console.log(err);
-                    var newAdminNotif = new AdminNotif({
-                        target: 'کارگزار',
-                        type: 'state-3',
-                        text: `اصلاح نام پرونده ${user.fullname} توسط کارشناس آب منطقه‌ای تکمیل شد.`,
-                        date: new Date(),
-                        userID: userID,
+                    AdminNotif.updateMany({$or: [{target: 'کارگزار', userID: userID}, {target: 'تشکل آب بران', userID: userID}, {target: 'آب منطقه‌ای', userID: userID}]}, {$set: {seen: true}}, (err, doc) => {
+                        if(err) console.log(err);
+                        var newAdminNotif = new AdminNotif({
+                            target: 'کارگزار',
+                            type: 'state-3',
+                            text: `اصلاح نام پرونده ${user.fullname} توسط کارشناس آب منطقه‌ای تکمیل شد.`,
+                            date: new Date(),
+                            userID: userID,
+                        });
+                        newAdminNotif.save().then(doc => {
+                            req.flash('success_msg', 'اطلاعات ثبت شد.');
+                            res.redirect(`/abmantaghei?userIndex=${userIndex}`);
+                        }).catch(err => console.log(err));
                     });
-                    newAdminNotif.save().then(doc => {
-                        req.flash('success_msg', 'اطلاعات ثبت شد.');
-                        res.redirect(`/abmantaghei?userIndex=${userIndex}`);
-                    }).catch(err => console.log(err));
-                });
-            })
+                })
+            });
         });
-    });
+    })
     
 });
 

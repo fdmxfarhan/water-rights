@@ -1,4 +1,65 @@
--if(user.role == 'کارگزار'){
+-if(users[i].regStatusNum > 0){
+    -var chahs = accounts.filter(e => e.type == 'chah');
+    -var index = chahs.map(e => e.ownerID).indexOf(users[i]._id.toString());
+    -if(index != -1){
+        -var chah  = chahs[index]
+        .completed-state-view
+            .state-chah-info
+                .info.two-part
+                    .part
+                        .item 
+                            .name شماره پروانه: 
+                            .value= chah.license
+                        .item 
+                            .name اجازه برداشت سالیانه:
+                            .value= chah.permitedUseInYear
+                        .item 
+                            .name آب دهی مجاز:
+                            .value= chah.permitedAbdehi
+                        .item 
+                            .name ساعت کارکرد مجاز:
+                            .value= chah.permitedWorkTime
+                        .item 
+                            .name UTM: 
+                            .value= chah.UTM
+                        .item 
+                            .name نوع بهره‌برداری: 
+                            .value= chah.useType
+                        .item 
+                            .name نوع پمپ: 
+                            .value= chah.pomp
+                    .part
+                        .item 
+                            .name WellCap: 
+                            .value= chah.wellCap
+                        .item 
+                            .name SellCap: 
+                            .value= chah.sellCap
+                        .item 
+                            .name BuyCap: 
+                            .value= chah.buyCap
+                        .item 
+                            .name عمق چاه: 
+                            .value= chah.depth
+                        .item 
+                            .name توان چاه: 
+                            .value= chah.power
+                        .item 
+                            .name آبدهی چاه: 
+                            .value= chah.abdehi
+                        .item 
+                            .name نوع کشت: 
+                            .value= chah.farmingType
+                        .item 
+                            .name مساحت زمین: 
+                            .value= chah.area
+                .picture 
+                    a(href="#{chah.licensePic}" download) 
+                        img(src="#{chah.licensePic}", alt="")
+                        .download 
+                            i.fa.fa-cloud-download
+    -}
+-}else if(user.role == 'کارگزار'){
     form(action="/kargozar/add-chah-account" enctype="multipart/form-data" method="POST")
         input.hidden(type="text" name="userID" value="#{users[i]._id}")
         input.hidden(type="text" name="owner" value="#{users[i].fullname}")

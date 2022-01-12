@@ -755,6 +755,23 @@
         color: var(--green);
         padding-left: 0.5vw;
     }
+    .completed-state-view a.download{
+        text-align: right;
+        display: block;
+    }
+    .completed-state-view a.download i{
+        padding-left: 0.5vw;
+    }
+    .completed-state-view .check-input-view .checked{
+        color: var(--dark);
+        font-size: 1vw;
+        font-family: 'iransans';
+    }
+    .completed-state-view .check-input-view .checked i{
+        color: var(--green);
+        font-size: 1vw;
+        padding-left: 0.5vw;
+    }
 }
 
 @media only screen and (max-width: 800px) {

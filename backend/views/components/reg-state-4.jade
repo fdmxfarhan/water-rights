@@ -1,4 +1,22 @@
--if(user.role == 'کارگزار'){
+-if(users[i].regStatusNum > 4){
+    -var chahs = accounts.filter(e => e.type == 'chah');
+    -var index = chahs.map(e => e.ownerID).indexOf(users[i]._id.toString());
+    -if(index != -1){
+        -var chah  = chahs[index]
+        br
+        .completed-state-view
+            .two-side-form
+                .part
+                    .comment 
+                        label(for="comment") نظر کارشناس:
+                        textarea#comment(name="comment" disabled)= users[i].comment4
+                .part
+                    br
+                    a.download(href="#{users[i].commitmentLetter}") 
+                        i.fa.fa-cloud-download 
+                        | دانلود تعهدنامه نمایندگی در فروش
+    -}
+-}else if(user.role == 'کارگزار'){
     h1.chah-title تعهدنامه نمایندگی در فروش
     p کارشناس محترم، لطفا فرم تعهد نامه نمایندگی در فروش را از لینک زیر دانلود کرده و پس از تکمیل آن توسط نماینده، اسکن آن را در قسمت مربوطه آپلود نمایید.
     a.download(href="" download) 

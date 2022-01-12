@@ -150,6 +150,4 @@ $(document).ready(function(){
             usersInfo[i].view.fadeOut(500);
         $('.sms-pannel').slideUp(500);
     }
-
-
 });

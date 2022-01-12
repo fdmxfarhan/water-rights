@@ -408,11 +408,15 @@
         display: flex;
         align-content: center;
         align-items: center;
+        cursor: pointer;
     }
     .user-content-view .state-view .state.active{
         background-color: green;
         border: green 0.1vw solid;
         color: white;
+    }
+    .user-content-view .state-view .state.selected{
+        border: var(--red) 0.2vw solid;
     }
     .user-content-view .state-view .state i{
         float: right;
@@ -477,6 +481,7 @@
         font-family: 'iransans';
         font-size: 1vw;
         color: var(--text);
+        text-align: center;
     }
     .cards-view{
         overflow: hidden;
@@ -641,6 +646,7 @@
         color: var(--text);
         padding-top: 0.5vw;
         padding-bottom: 0.4vw;
+        text-align: justify;
     }
     .state-view .part .comment{
         text-align: right;
@@ -709,6 +715,13 @@
         float: left;
         margin-top: 0;
     }
+    .state-view .part .buttons button.left-absolute{
+        position: absolute;
+        bottom: 1vw;
+        left: 0.5vw;
+        width: 8vw;
+    }
+    .state-view .file-input-view label.right{text-align: right;}
     .state-view .part .buttons button i {padding-left: 0.5vw;}
     .state-view .part .buttons button.times{background-color: rgb(235, 61, 18);}
     .state-view .part .buttons button.check{background-color: rgb(13, 190, 13);}
@@ -717,6 +730,30 @@
     .state-view .part .check-input-view {
         text-align: right;
         margin-top: 0.5vw;
+    }
+    .access-denied.margin0 h1{
+        margin-top: 1vw;
+    }
+    .state-view a.download{
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        color: var(--blue);
+        text-decoration: none;
+    }
+    .state-view a.download:hover{
+        color: var(--hover);
+    }
+    .state-view h1.success{
+        font-family: 'iransans';
+        font-size: 1vw;
+        color: var(--dark);
+        text-align: center;
+        margin-top: 2vw;
+    }
+    .state-view h1.success i{
+        font-size: 1vw;
+        color: var(--green);
+        padding-left: 0.5vw;
     }
 }
 

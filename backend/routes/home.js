@@ -10,6 +10,7 @@ var Notification = require('../models/Notification');
 var Transmission = require('../models/Transmission');
 var Acount = require('../models/Acount');
 var User = require('../models/User');
+var AdminNotif = require('../models/AdminNotif');
 const sms = require('../config/sms');
 
 router.get('/', (req, res, next) => {
@@ -159,9 +160,11 @@ router.post('/form', (req, res, next) => {
     });
 });
 router.get('/clearnotifs', ensureAuthenticated, (req, res, next) => {
-    if(req.user.role == 'admin'){
+    if(req.user.role != 'user'){
         Notification.deleteMany({}, (err, doc) => {
-            res.redirect('/dashboard');
+            AdminNotif.deleteMany({}, (err, doc) => {
+                res.redirect('/dashboard');
+            })
         })
     }else res.send('access denied');
 })

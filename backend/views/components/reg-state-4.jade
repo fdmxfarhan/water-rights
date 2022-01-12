@@ -1,0 +1,35 @@
+-if(user.role == 'کارگزار'){
+    h1.chah-title تعهدنامه نمایندگی در فروش
+    p کارشناس محترم، لطفا فرم تعهد نامه نمایندگی در فروش را از لینک زیر دانلود کرده و پس از تکمیل آن توسط نماینده، اسکن آن را در قسمت مربوطه آپلود نمایید.
+    a.download(href="" download) 
+        i.fa.fa-cloud-download 
+        | دانلود فرم تعهدنامه نمایندگی در فروش
+    br
+    form(action="/kargozar/commitment" enctype="multipart/form-data" method="POST")
+            input.hidden(type="text" name="userID" value="#{users[i]._id}")
+            input.hidden(type="text" name="owner" value="#{users[i].fullname}")
+            input.hidden(type="text" name="userIndex" value="#{i}")
+            .two-side-form
+                .part
+                    .comment 
+                        label(for="comment") نظر کارشناس:
+                        textarea#comment(name="comment" placeholder="نظر خود را بنویسید...")
+                .part
+                    br
+                    .file-input-view
+                        label.right(for="commitmentLetter") اسکن تعهدنامه: 
+                        .file-input-overlay(id="file-input-overlay-#{i}")
+                            i.fa.fa-check.check(id="file-check-#{i}")
+                            .filename(id="file-name-#{i}") انتخاب فایل
+                            input.file-input(type="file" name="commitmentLetter" class="file-input-#{i}" )
+                    .buttons 
+                        button.check.left-absolute(type="submit" name="confirm" value="true")
+                            i.fa.fa-check
+                            | تایید
+-}else{
+    .access-denied 
+        h1 
+            i.fa.fa-warning
+            | نیازمند تایید کارشناس کارگزار
+        p این قسمت توسط کارشناس کارگزار تکمیل می‌گردد.
+-}

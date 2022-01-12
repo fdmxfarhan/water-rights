@@ -626,19 +626,19 @@ router.post('/special-admin-register', ensureAuthenticated, (req, res, next) => 
                         cardNumber,
                         phone,
                         password,
-                        errors 
+                        errors,
                     });
                 });
             }
             else {
-                const newUser = new User({fullname, ipAddress, role, firstName, lastName, idNumber, cardNumber, phone, password, card});
+                const newUser = new User({fullname, ipAddress, role, firstName, lastName, idNumber, cardNumber, phone, password, card, confirmed: false});
                 // Hash password
                 bcrypt.genSalt(10, (err, salt) => bcrypt.hash(newUser.password, salt, (err, hash) => {
                     if(err) console.log(err);
                     newUser.password = hash;
                     newUser.save().then(user => {
                         req.flash('success_msg', 'کاربر با موفقیت ثبت شد');
-                        res.redirect('/dashboard/users');
+                        res.redirect('/dashboard');
                     }).catch(err => console.log(err));
                 }));
                 console.log(newUser);

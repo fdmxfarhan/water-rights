@@ -1,4 +1,28 @@
+// request permission on page load
+document.addEventListener('DOMContentLoaded', function() {
+    if (!Notification) {
+        alert('Desktop notifications not available in your browser. Try Chromium.');
+        return;
+    }
+    if (Notification.permission !== 'granted')
+        Notification.requestPermission();
+});
+function notifyMe() {
+    if (Notification.permission !== 'granted')
+        Notification.requestPermission();
+    else {
+        var notification = new Notification('Notification title', {
+            icon: 'http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
+            body: 'Hey there! You\'ve been notified!',
+        });
+        notification.onclick = function() {
+            window.open('http://stackoverflow.com/a/13328397/1269037');
+        };
+    }
+}
+
 $(document).ready(function(){
+    notifyMe();
     $('#link1').addClass('active');
 
     $('.close-success-msg').click(() => {
@@ -41,6 +65,17 @@ $(document).ready(function(){
             fileName: $(`#file-name-${i}`),
             fileCheck: $(`#file-check-${i}`),
             notifButton: $(`#notif-user-btn-${i}`),
+            state1select: $(`#state-1-select-${i}`),
+            state2select: $(`#state-2-select-${i}`),
+            state3select: $(`#state-3-select-${i}`),
+            state4select: $(`#state-4-select-${i}`),
+            state5select: $(`#state-5-select-${i}`),
+            state1view: $(`#state-1-view-${i}`),
+            state2view: $(`#state-2-view-${i}`),
+            state3view: $(`#state-3-view-${i}`),
+            state4view: $(`#state-4-view-${i}`),
+            state5view: $(`#state-5-view-${i}`),
+            state6view: $(`#state-6-view-${i}`),
         });
     }
     usersInfo.forEach(usr => {
@@ -56,14 +91,80 @@ $(document).ready(function(){
         });
         usr.smsButton.click(() => {
             $('.sms-pannel').slideDown(500);
-        })
+        });
         usr.fileInput.change(() => {
             var fullPath = usr.fileInput.val()
             var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
             var fileName = fullPath.substring(startIndex+1);
             usr.fileName.html(fileName);
             usr.fileCheck.show();
+        });
+        usr.state1select.click(() => {
+            usr.state1select.addClass('selected');
+            usr.state2select.removeClass('selected');
+            usr.state3select.removeClass('selected');
+            usr.state4select.removeClass('selected');
+            usr.state5select.removeClass('selected');
+            usr.state1view.show();
+            usr.state2view.hide();
+            usr.state3view.hide();
+            usr.state4view.hide();
+            usr.state5view.hide();
+            usr.state6view.hide();
         })
+        usr.state2select.click(() => {
+            usr.state2select.addClass('selected');
+            usr.state1select.removeClass('selected');
+            usr.state3select.removeClass('selected');
+            usr.state4select.removeClass('selected');
+            usr.state5select.removeClass('selected');
+            usr.state2view.show();
+            usr.state1view.hide();
+            usr.state3view.hide();
+            usr.state4view.hide();
+            usr.state5view.hide();
+            usr.state6view.hide();
+        })
+        usr.state3select.click(() => {
+            usr.state3select.addClass('selected');
+            usr.state2select.removeClass('selected');
+            usr.state1select.removeClass('selected');
+            usr.state4select.removeClass('selected');
+            usr.state5select.removeClass('selected');
+            usr.state3view.show();
+            usr.state2view.hide();
+            usr.state1view.hide();
+            usr.state4view.hide();
+            usr.state5view.hide();
+            usr.state6view.hide();
+        })
+        usr.state4select.click(() => {
+            usr.state4select.addClass('selected');
+            usr.state2select.removeClass('selected');
+            usr.state3select.removeClass('selected');
+            usr.state1select.removeClass('selected');
+            usr.state5select.removeClass('selected');
+            usr.state4view.show();
+            usr.state2view.hide();
+            usr.state3view.hide();
+            usr.state1view.hide();
+            usr.state5view.hide();
+            usr.state6view.hide();
+        })
+        usr.state5select.click(() => {
+            usr.state5select.addClass('selected');
+            usr.state2select.removeClass('selected');
+            usr.state3select.removeClass('selected');
+            usr.state4select.removeClass('selected');
+            usr.state1select.removeClass('selected');
+            usr.state5view.show();
+            usr.state2view.hide();
+            usr.state3view.hide();
+            usr.state4view.hide();
+            usr.state1view.hide();
+            usr.state6view.hide();
+        })
+        
     });
     $('.close-sms').click(() => {
         $('.sms-pannel').slideUp(500);
@@ -73,8 +174,6 @@ $(document).ready(function(){
             usersInfo[i].view.fadeOut(500);
         $('.sms-pannel').slideUp(500);
     }
-
-
 
 
 });

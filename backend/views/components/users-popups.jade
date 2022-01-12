@@ -39,31 +39,37 @@
                         i.fa.fa-pencil
             .user-content-view
                 .state-view
-                    .state(class="#{users[i].regStatusNum > 0 ? 'active' : ''}")
+                    .state(class="#{users[i].regStatusNum > 0 ? 'active' : ''} #{users[i].regStatusNum == 0 ? 'selected' : ''}" id="state-1-select-#{i}")
                         i.fa.fa-check 
                         .text ثبت درخواست
                     .line
-                    .state(class="#{users[i].regStatusNum > 1 ? 'active' : ''}")
+                    .state(class="#{users[i].regStatusNum > 1 ? 'active' : ''} #{users[i].regStatusNum == 1 ? 'selected' : ''}" id="state-2-select-#{i}")
                         i.fa.fa-check 
                         .text بررسی وضعیت شارژ و اعتبار بهره‌برداران
                     .line
-                    .state(class="#{users[i].regStatusNum > 2 ? 'active' : ''}")
+                    .state(class="#{users[i].regStatusNum > 2 ? 'active' : ''} #{users[i].regStatusNum == 2 ? 'selected' : ''}" id="state-3-select-#{i}")
                         i.fa.fa-check 
                         .text بررسی وضعیت فنی پرونده چاه
                     .line
-                    .state(class="#{users[i].regStatusNum > 3 ? 'active' : ''}")
+                    .state(class="#{users[i].regStatusNum > 3 ? 'active' : ''} #{users[i].regStatusNum == 3 ? 'selected' : ''}" id="state-4-select-#{i}")
                         i.fa.fa-check 
                         .text اصلاح نام پرونده
                     .line
-                    .state(class="#{users[i].regStatusNum > 4 ? 'active' : ''}")
+                    .state(class="#{users[i].regStatusNum > 4 ? 'active' : ''} #{users[i].regStatusNum == 4 ? 'selected' : ''}" id="state-5-select-#{i}")
                         i.fa.fa-check 
                         .text تعهد نامه نمایندگی در فروش
-                .state-view(class="#{users[i].regStatusNum != 0 ? 'hidden': ''}" id="state-0-view-#{i}")
+                .state-view(class="#{users[i].regStatusNum != 0 ? 'hidden': ''}" id="state-1-view-#{i}")
                     include reg-state-0
-                .state-view(class="#{users[i].regStatusNum != 1 ? 'hidden': ''}" id="state-1-view-#{i}")
+                .state-view(class="#{users[i].regStatusNum != 1 ? 'hidden': ''}" id="state-2-view-#{i}")
                     include reg-state-1
-                .state-view(class="#{users[i].regStatusNum != 2 ? 'hidden': ''}" id="state-2-view-#{i}")
+                .state-view(class="#{users[i].regStatusNum != 2 ? 'hidden': ''}" id="state-3-view-#{i}")
                     include reg-state-2
+                .state-view(class="#{users[i].regStatusNum != 3 ? 'hidden': ''}" id="state-4-view-#{i}")
+                    include reg-state-3
+                .state-view(class="#{users[i].regStatusNum != 4 ? 'hidden': ''}" id="state-5-view-#{i}")
+                    include reg-state-4
+                .state-view(class="#{users[i].regStatusNum != 5 ? 'hidden': ''}" id="state-6-view-#{i}")
+                    include reg-state-5
                 
 -}
 -if(userIndex){

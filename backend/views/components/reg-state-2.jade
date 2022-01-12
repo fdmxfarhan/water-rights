@@ -58,32 +58,56 @@
                     img(src="#{chah.licensePic}", alt="")
                     .download 
                         i.fa.fa-cloud-download
-        p کارشناس محترم، لطفا تایید بفرمایید که پروانه بهره‌برداری حساب چاه، معتبر بوده و کنتور کالیبره می‌باشد. در صورت کالیبره نبودن کنتور به تشکل آب بران اطلاع داده خواهد شد و پس از دریافت گواهی صحت عملکرد کنتور مجددا به شما اطلاع داده خواهد شد.
-        form(action="/abmantaghei/confirm-technical" method="POST")
-            input.hidden(type="text" name="userID" value="#{users[i]._id}")
-            input.hidden(type="text" name="owner" value="#{users[i].fullname}")
-            input.hidden(type="text" name="userIndex" value="#{i}")
-            input.hidden(type="text" name="chahID" value="#{chah._id}")
-            .two-side-form
-                .part
-                    .comment 
-                        label(for="comment") نظر کارشناس:
-                        textarea#comment(name="comment" placeholder="نظر خود را بنویسید...")
-                .part
-                    //- .normal-text-input
-                    //-     label(for="charge") شارژ فعلی حساب چاه:
-                    //-     input(type="number" name="charge" placeholder="شارژ فعلی حساب چاه")
-                    .check-input-view 
-                        input(type="checkbox" id="licenseConfirmed")
-                        label(for="licenseConfirmed") پروانه بهره‌برداری معتبر می‌باشد
-                    .check-input-view 
-                        input(type="checkbox" id="counterConfirmed")
-                        label(for="counterConfirmed") کنتور کالیبره است
-                    
-                    .buttons 
-                        button.submit.left(type="submit" name="confirm" value="true")
-                            i.fa.fa-save
-                            | ثبت
+        -if(users[i].counterNotCalibrated){
+            .access-denied.margin0
+                h1 
+                    i.fa.fa-warning
+                    | در حال بررسی
+                p درخواست کالیبراسیون کنتور توسط کارشناس تشکل آب بران در حال بررسی می‌باشد. پس از دریافت گواهی صحت عملکرد کنتور مجددا اطلاع داده خواهد شد.
+                -if(chah.calibrateIssued)
+                    p
+                        i.fa.fa-check
+                        | درخواست کالیبراسیون توسط تشکل آب بران صادر شد
+
+        -}else{
+            p کارشناس محترم، لطفا تایید بفرمایید که پروانه بهره‌برداری حساب چاه، معتبر بوده و کنتور کالیبره می‌باشد. در صورت کالیبره نبودن کنتور به تشکل آب بران اطلاع داده خواهد شد و پس از دریافت گواهی صحت عملکرد کنتور مجددا به شما اطلاع داده خواهد شد.
+            form(action="/abmantaghei/confirm-technical" enctype="multipart/form-data" method="POST")
+                input.hidden(type="text" name="userID" value="#{users[i]._id}")
+                input.hidden(type="text" name="owner" value="#{users[i].fullname}")
+                input.hidden(type="text" name="userIndex" value="#{i}")
+                input.hidden(type="text" name="chahID" value="#{chah._id}")
+                .two-side-form
+                    .part
+                        .comment 
+                            label(for="comment") نظر کارشناس:
+                            textarea#comment(name="comment" placeholder="نظر خود را بنویسید...")
+                    .part
+                        //- .normal-text-input
+                        //-     label(for="charge") شارژ فعلی حساب چاه:
+                        //-     input(type="number" name="charge" placeholder="شارژ فعلی حساب چاه")
+                        .check-input-view 
+                            -if(chah.licenseConfirmed)
+                                input(type="checkbox" id="licenseConfirmed" name="licenseConfirmed" value="true")
+                            -else
+                                input(type="checkbox" id="licenseConfirmed" name="licenseConfirmed" value="true")
+                            label(for="licenseConfirmed") پروانه بهره‌برداری معتبر می‌باشد
+                        .check-input-view 
+                            -if(chah.counterConfirmed)
+                                input(type="checkbox" id="counterConfirmed" name="counterConfirmed" value="true")
+                            -else
+                                input(type="checkbox" id="counterConfirmed" name="counterConfirmed" value="true")
+                            label(for="counterConfirmed") کنتور کالیبره است
+                        .file-input-view
+                            label.right(for="document") آپلود مدارک: 
+                            .file-input-overlay(id="file-input-overlay-#{i}")
+                                i.fa.fa-check.check(id="file-check-#{i}")
+                                .filename(id="file-name-#{i}") انتخاب فایل
+                                input.file-input(type="file" name="document" class="file-input-#{i}" )
+                        .buttons 
+                            button.submit.left(type="submit" name="confirm" value="true")
+                                i.fa.fa-save
+                                | ثبت
+        -}
     -} else {
         .access-denied 
             h1 
@@ -151,7 +175,7 @@
                     .download 
                         i.fa.fa-cloud-download
         p کارشناس محترم، لطفا درخواست کالیبراسیون (به روز رسانی کنتور) برای کاربر صادر نموده و پس از دریافت گواهی صحت عملکرد کنتور دو مورد زیر را تایید نمایید.
-        form(action="/abmantaghei/confirm-technical" method="POST")
+        form(action="/tashakol/calibrate" enctype="multipart/form-data" method="POST")
             input.hidden(type="text" name="userID" value="#{users[i]._id}")
             input.hidden(type="text" name="owner" value="#{users[i].fullname}")
             input.hidden(type="text" name="userIndex" value="#{i}")
@@ -166,14 +190,23 @@
                     //-     label(for="charge") شارژ فعلی حساب چاه:
                     //-     input(type="number" name="charge" placeholder="شارژ فعلی حساب چاه")
                     .check-input-view 
-                        input(type="checkbox" id="CalibrateIssuanced")
-                        label(for="CalibrateIssuanced") درخواست کالیبراسیون صادر شد
+                        -if(chah.calibrateIssued)
+                            input(type="checkbox" id="calibrateIssued" name="calibrateIssued" value="true" checked)
+                        -else
+                            input(type="checkbox" id="calibrateIssued" name="calibrateIssued" value="true")
+                        label(for="calibrateIssued") درخواست کالیبراسیون صادر شد
                     .check-input-view 
-                        input(type="checkbox" id="counterCalibrateConfirmed")
+                        -if(chah.counterCalibrateConfirmed)
+                            input(type="checkbox" id="counterCalibrateConfirmed" name="counterCalibrateConfirmed" value="true" checked)
+                        -else
+                            input(type="checkbox" id="counterCalibrateConfirmed" name="counterCalibrateConfirmed" value="true")
                         label(for="counterCalibrateConfirmed") گواهی صحت عملکرد کنتور دریافت شد
                     .file-input-view
-                        input(type="file" name="calibrateLicense")
-                    
+                        label.right(for="calibrateLicense") گواهی صحت عملکرد: 
+                        .file-input-overlay(id="file-input-overlay-#{i}")
+                            i.fa.fa-check.check(id="file-check-#{i}")
+                            .filename(id="file-name-#{i}") انتخاب فایل
+                            input.file-input(type="file" name="calibrateLicense" class="file-input-#{i}" )
                     .buttons 
                         button.submit.left(type="submit" name="confirm" value="true")
                             i.fa.fa-save
@@ -189,5 +222,5 @@
         h1 
             i.fa.fa-warning
             | نیازمند تایید کارشناس آب منطقه‌ای
-        p جهت ادامه فرایند، باید وضعیت شارژ و اعتبار بهره‌برداران توسط کارشناس آب منطقه‌ای تایید گردد.
+        p جهت ادامه فرایند، باید وضعیت فنی پرونده چاه توسط کارشناس آب منطقه‌ای تایید گردد.
 -}

@@ -137,6 +137,21 @@ router.post('/add-chah-account', ensureAuthenticated, upload.single('licensePic'
         })
     })
 });
+router.post('/commitment', ensureAuthenticated, upload.single('commitmentLetter'), (req, res, next) => {
+    var {userID, owner, userIndex, comment} = req.body;
+    var file = req.file;
+    var commitmentLetter = '';
+    if(file) commitmentLetter = file.destination.slice(6) + '/' + file.originalname;
+    User.findById(userID, (err, user) => {
+        AdminNotif.updateMany({$or: [{target: 'کارگزار', userID: userID}, {target: 'تشکل آب بران', userID: userID}, {target: 'آب منطقه‌ای', userID: userID}]}, {$set: {seen: true}}, (err, doc) => {
+            User.updateMany({_id: userID}, {$set: {comment4: comment, regStatusNum: user.regStatusNum+1, commitmentLetter, confirmed: true}}, (err) => {
+                sms(user.phone, 'فرایند ورود به بازار آب تکمیل شد. \nمیراب')
+                req.flash('success_msg', 'حساب چاه با موفقیت ایجاد شد');
+                res.redirect(`/kargozar?userIndex=${userIndex}`);
+            });
+        });
+    });
+});
 
 
 module.exports = router;

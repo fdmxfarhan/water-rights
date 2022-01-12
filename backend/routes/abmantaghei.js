@@ -16,6 +16,8 @@ const dateConvert = require('../config/dateConvert');
 var bodyparser = require('body-parser');
 const multer = require('multer');
 const mkdirp = require('mkdirp');
+const sms = require('../config/sms');
+const sms2 = require('../config/sms2');
 
 router.use(bodyparser.urlencoded({ extended: true }));
 var storage = multer.diskStorage({
@@ -117,17 +119,25 @@ router.post('/confirm-charge', ensureAuthenticated, (req, res, next) => {
         });
     }
 });
-router.post('/confirm-technical', ensureAuthenticated, (req, res, next) => {
+router.post('/confirm-technical', ensureAuthenticated, upload.fields([{name: `document`, maxCount: 1}]),(req, res, next) => {
     var {userID, owner, userIndex, chahID, comment, licenseConfirmed, counterConfirmed, confirm} = req.body;
     if(!licenseConfirmed) licenseConfirmed = false;
     else                  licenseConfirmed = true;
     if(!counterConfirmed) counterConfirmed = false;
     else                  counterConfirmed = true;
+    var file = req.body.document;
+    var document = '';
+    var type = 'undefined';
+    if(file) {
+        document = file.destination.slice(6) + '/' + file.originalname;
+        type = file.mimetype.split('/')[0];
+    }
+
     User.findById(userID, (err, user) => {
         Acount.updateMany({_id: chahID}, {$set: {licenseConfirmed, counterConfirmed}}, (err) => {
             if(err) console.log(err);
             if(licenseConfirmed && counterConfirmed){
-                User.updateMany({_id: userID}, {$set: {comment2: comment, regStatusNum: user.regStatusNum+1}}, (err) => {
+                User.updateMany({_id: userID}, {$set: {comment2: comment, regStatusNum: user.regStatusNum+1, file2: {link: document, type}}}, (err) => {
                     if(err) console.log(err);
                     AdminNotif.updateMany({$or: [{target: 'کارگزار', type: 'state-1', userID: userID}, {target: 'تشکل آب بران', type: 'state-2', userID: userID}]}, {$set: {seen: true}}, (err, doc) => {
                         if(err) console.log(err);
@@ -146,7 +156,7 @@ router.post('/confirm-technical', ensureAuthenticated, (req, res, next) => {
                 })
             }
             else if(!counterConfirmed){
-                User.updateMany({_id: userID}, {$set: {comment2: comment}}, (err) => {
+                User.updateMany({_id: userID}, {$set: {comment2: comment, counterNotCalibrated: true}}, (err) => {
                     AdminNotif.updateMany({$or: [{target: 'کارگزار', type: 'state-1', userID: userID}]}, {$set: {seen: true}}, (err, doc) => {
                         if(err) console.log(err);
                         var newAdminNotif = new AdminNotif({
@@ -167,5 +177,48 @@ router.post('/confirm-technical', ensureAuthenticated, (req, res, next) => {
     });
     
 });
+router.post('/change-doc', ensureAuthenticated, upload.fields([{name: `newLicensePic`, maxCount: 1}, {name: `document`, maxCount: 1}]),(req, res, next) => {
+    var {userID, owner, userIndex, chahID, comment, confirm} = req.body;
+    var file1 = req.body.newLicensePic;
+    var file2 = req.body.document;
+    var newLicensePic = '';
+    var type1 = 'undefined';
+    if(file1) {
+        newLicensePic = file1.destination.slice(6) + '/' + file1.originalname;
+        type1 = file1.mimetype.split('/')[0];
+    }
+    var document = '';
+    var type2 = 'undefined';
+    if(file2) {
+        document = file2.destination.slice(6) + '/' + file2.originalname;
+        type2 = file2.mimetype.split('/')[0];
+    }
+    
+    User.findById(userID, (err, user) => {
+        Acount.updateMany({_id: chahID}, {$set: {licensePic: newLicensePic}}, (err) => {
+            if(err) console.log(err);
+            User.updateMany({_id: userID}, {$set: {comment3: comment, regStatusNum: user.regStatusNum+1, file3: {link: document, type: type2}}}, (err) => {
+                if(err) console.log(err);
+                AdminNotif.updateMany({$or: [{target: 'کارگزار', userID: userID}, {target: 'تشکل آب بران', userID: userID}, {target: 'آب منطقه‌ای', userID: userID}]}, {$set: {seen: true}}, (err, doc) => {
+                    if(err) console.log(err);
+                    var newAdminNotif = new AdminNotif({
+                        target: 'کارگزار',
+                        type: 'state-3',
+                        text: `اصلاح نام پرونده ${user.fullname} توسط کارشناس آب منطقه‌ای تکمیل شد.`,
+                        date: new Date(),
+                        userID: userID,
+                    });
+                    newAdminNotif.save().then(doc => {
+                        req.flash('success_msg', 'اطلاعات ثبت شد.');
+                        res.redirect(`/abmantaghei?userIndex=${userIndex}`);
+                    }).catch(err => console.log(err));
+                });
+            })
+        });
+    });
+    
+});
+
+
 module.exports = router;
 

@@ -90,6 +90,9 @@ var AcountSchema = new mongoose.Schema({
   },
   licenseConfirmed: {type: Boolean, default: false},
   counterConfirmed: {type: Boolean, default: false},
+  calibrateIssued: {type: Boolean, default: false},
+  counterCalibrateConfirmed: {type: Boolean, default: false},
+  calibrateLicense: {type: Object, default: {link: '', type: 'undefined'}},
 });
 
 var Acount = mongoose.model('Acount', AcountSchema);

@@ -1,0 +1,44 @@
+-if(user.role == 'آب منطقه‌ای'){
+    -var chahs = accounts.filter(e => e.type == 'chah');
+    -var index = chahs.map(e => e.ownerID).indexOf(users[i]._id.toString());
+    -if(index != -1){
+        -var chah  = chahs[index];
+        h1.chah-title اصلاح نام پرونده
+        p کارشناس محترم، در صورتی که مشکلی در باب مالکیت/بهره‌برداری نمایندگان و بهره‌برداران وجود داشته باشد (اعم از تغییر نام نماینده، فوت نماینده، انحصار وراث و ...)، درخواست اصلاح نام در پروانه بهره‌برداری انجام شده و پروانه بهره‌برداری اصلاح شده آپلود گردد.
+        p در صورت عدم نیاز به تغییر پروانه بهره‌برداری بر روی گزینه تایید کلیک کنید.
+        form(action="/abmantaghei/change-doc" enctype="multipart/form-data" method="POST")
+            input.hidden(type="text" name="userID" value="#{users[i]._id}")
+            input.hidden(type="text" name="owner" value="#{users[i].fullname}")
+            input.hidden(type="text" name="userIndex" value="#{i}")
+            input.hidden(type="text" name="chahID" value="#{chah._id}")
+            .two-side-form
+                .part
+                    .comment 
+                        label(for="comment") نظر کارشناس:
+                        textarea#comment(name="comment" placeholder="نظر خود را بنویسید...")
+                .part
+                    br
+                    .file-input-view
+                        label.right(for="newLicensePic") اسکن پروانه: 
+                        .file-input-overlay(id="file-input-overlay-#{i}")
+                            i.fa.fa-check.check(id="file-check-#{i}")
+                            .filename(id="file-name-#{i}") انتخاب فایل
+                            input.file-input(type="file" name="newLicensePic" class="file-input-#{i}" )
+                    .file-input-view
+                            label.right(for="document") آپلود مدارک: 
+                            .file-input-overlay(id="file-input-overlay-#{i}")
+                                i.fa.fa-check.check(id="file-check-#{i}")
+                                .filename(id="file-name-#{i}") انتخاب فایل
+                                input.file-input(type="file" name="document" class="file-input-#{i}" )
+                    .buttons 
+                        button.check.left-absolute(type="submit" name="confirm" value="true")
+                            i.fa.fa-check
+                            | تایید
+    -}
+-}else{
+    .access-denied 
+        h1 
+            i.fa.fa-warning
+            | نیازمند تایید کارشناس آب منطقه‌ای
+        p جهت ادامه فرایند، باید اصلاح نام پرونده توسط کارشناس آب منطقه‌ای تکمیل گردد.
+-}

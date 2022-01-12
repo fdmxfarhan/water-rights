@@ -84,6 +84,14 @@ var UserSchema = new mongoose.Schema({
   comment2: {type: String, default: ''},
   comment3: {type: String, default: ''},
   comment4: {type: String, default: ''},
+  tashakolComment: {type: String, default: ''},
+  file0: {type: Object, default: {link: '', type: 'undefined'}},
+  file1: {type: Object, default: {link: '', type: 'undefined'}},
+  file2: {type: Object, default: {link: '', type: 'undefined'}},
+  file3: {type: Object, default: {link: '', type: 'undefined'}},
+  file4: {type: Object, default: {link: '', type: 'undefined'}},
+  counterNotCalibrated: {type: Boolean, default: false},
+  commitmentLetter: String,
 });
 
 var User = mongoose.model('User', UserSchema);

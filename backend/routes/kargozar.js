@@ -143,7 +143,7 @@ router.post('/commitment', ensureAuthenticated, upload.single('commitmentLetter'
     var commitmentLetter = '';
     if(file) commitmentLetter = file.destination.slice(6) + '/' + file.originalname;
     User.findById(userID, (err, user) => {
-        AdminNotif.updateMany({$or: [{target: 'کارگزار', userID: userID}, {target: 'تشکل آب بران', userID: userID}, {target: 'آب منطقه‌ای', userID: userID}]}, {$set: {seen: true}}, (err, doc) => {
+        AdminNotif.updateMany({userID: userID}, {$set: {seen: true}}, (err, doc) => {
             User.updateMany({_id: userID}, {$set: {comment4: comment, regStatusNum: user.regStatusNum+1, commitmentLetter, confirmed: true}}, (err) => {
                 sms(user.phone, 'فرایند ورود به بازار آب تکمیل شد. \nمیراب')
                 req.flash('success_msg', 'حساب چاه با موفقیت ایجاد شد');

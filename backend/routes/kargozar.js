@@ -71,6 +71,82 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
     //     });
     // });
 });
+router.post('/register-user', ensureAuthenticated, (req, res, next) => {
+    const {firstName, lastName, idNumber, cardNumber, birthDay, birthMonth, birthYear, sex, fatherName, address, postCode, phone, password, configpassword} = req.body;
+    const role = 'user', card = 0;
+    const ipAddress = req.connection.remoteAddress;
+    let errors = [];
+    if(password !== configpassword){
+        errors.push({msg: 'تایید رمز عبور صحیح نمیباشد!'});
+    }
+    /// check password length
+    if(password.length < 4){
+        errors.push({msg: 'رمز عبور شما بسیار ضعیف میباشد!'});
+    }
+    ///////////send evreything 
+    if(errors.length > 0 ){
+        User.find({}, (err, users) => {
+            res.render('./dashboard/admin-users', { 
+                user: req.user,
+                users,
+                firstName, 
+                lastName, 
+                idNumber, 
+                cardNumber, 
+                birthDay, 
+                birthMonth, 
+                birthYear, 
+                sex, 
+                fatherName, 
+                address, 
+                postCode, 
+                phone, 
+                errors,
+            });
+        });
+    }
+    else if(req.user.role != 'user'){
+        const fullname = firstName + ' ' + lastName;
+        User.findOne({$or: [{idNumber: idNumber},{phone: phone}]}).then(user =>{
+            if(user){
+                // user exist
+                errors.push({msg: 'کد ملی یا شماره تلفن قبلا ثبت شده است.'});
+                User.find({}, (err, users) => {
+                    res.render('./dashboard/admin-users', { 
+                        user: req.user,
+                        users,
+                        firstName, 
+                        lastName, 
+                        idNumber, 
+                        cardNumber, 
+                        birthDay, 
+                        birthMonth, 
+                        birthYear,
+                        sex, 
+                        fatherName, 
+                        address, 
+                        postCode, 
+                        phone, 
+                        errors 
+                    });
+                });
+            }
+            else {
+                const newUser = new User({ipAddress, fullname, firstName, lastName, idNumber, cardNumber, birthDate: {day: birthDay, month: birthMonth, year: birthYear}, sex, fatherName, address, postCode, phone, password, role, card});
+                // Hash password
+                bcrypt.genSalt(10, (err, salt) => bcrypt.hash(newUser.password, salt, (err, hash) => {
+                    if(err) console.log(err);
+                    newUser.password = hash;
+                    newUser.save().then(user => {
+                        req.flash('success_msg', 'کاربر با موفقیت ثبت شد');
+                        res.redirect(`/kargozar?userIndex=${req.body.userIndex}`);
+                    }).catch(err => console.log(err));
+                }));
+                console.log(newUser);
+            }
+        });
+    }
+});
 router.post('/add-chah-account', ensureAuthenticated, upload.single('licensePic'), (req, res, next) => {
     var {userID, owner, userIndex, license, permitedUseInYear, permitedAbdehi, permitedWorkTime, UTM, useType, pomp, wellCap, sellCap, buyCap, depth, power, abdehi, farmingType, area} = req.body;
     var file = req.file;

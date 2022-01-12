@@ -1,7 +1,8 @@
 .popup#add-user-popup
     i.fa.fa-times.close-popup
     h1.popup-title ثبت درخواست ورود به بازار حقوق آب
-    form(action="/dashboard/admin-register" method="POST")
+    form(action="/kargozar/register-user" method="POST")
+        input.hidden(type="text" name="userIndex" value="#{users.length}")
         .two-side-form
             .part
                 .text-input-view

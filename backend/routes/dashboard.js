@@ -288,7 +288,7 @@ router.post('/admin-register', ensureAuthenticated, (req, res, next) => {
                 });
             }
             else {
-                const newUser = new User({ipAddress, fullname, firstName, lastName, idNumber, cardNumber, birthDay, birthMonth, birthYear, sex, fatherName, address, postCode, phone, password, role, card});
+                const newUser = new User({ipAddress, fullname, firstName, lastName, idNumber, cardNumber, birthDate: {day: birthDay, month: birthMonth, year: birthYear}, sex, fatherName, address, postCode, phone, password, role, card});
                 // Hash password
                 bcrypt.genSalt(10, (err, salt) => bcrypt.hash(newUser.password, salt, (err, hash) => {
                     if(err) console.log(err);
@@ -638,7 +638,7 @@ router.post('/special-admin-register', ensureAuthenticated, (req, res, next) => 
                     newUser.password = hash;
                     newUser.save().then(user => {
                         req.flash('success_msg', 'کاربر با موفقیت ثبت شد');
-                        res.redirect('/dashboard');
+                        res.redirect('/dashboard/users');
                     }).catch(err => console.log(err));
                 }));
                 console.log(newUser);

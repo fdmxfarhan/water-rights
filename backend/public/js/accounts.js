@@ -143,7 +143,11 @@ $(document).ready(function(){
         selectAccounts.push({
             id: i,
             sourceOption: $(`#option-source-${i}`),
+            sourceContent: $(`#option-source-content-${i}`).text(),
+            sourceName: $(`#option-source-name-${i}`).text(),
             targetOption: $(`#option-target-${i}`),
+            targetContent: $(`#option-target-content-${i}`).text(),
+            targetName: $(`#option-target-name-${i}`).text(),
         });
     }
     selectAccounts.forEach(option => {
@@ -151,11 +155,20 @@ $(document).ready(function(){
             $('.black-modal').fadeOut(500);
             $('#select-source-popup').fadeOut(500);
             $('#select-target-popup').fadeOut(500);
+            $('#transmission-sourceID').addClass('selected');
+            document.getElementById('source-name').textContent = option.sourceName;
+            document.getElementById('transmission-sourceID').value = option.sourceContent;
         });
         option.targetOption.click(() => {
             $('.black-modal').fadeOut(500);
             $('#select-source-popup').fadeOut(500);
             $('#select-target-popup').fadeOut(500);
+            $('#transmission-targetID').addClass('selected');
+            document.getElementById('target-name').textContent = option.targetName;
+            document.getElementById('transmission-targetID').value = option.targetContent;
         });
     });
+
+
+
 });

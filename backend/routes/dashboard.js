@@ -12,6 +12,8 @@ var Transmission = require('../models/Transmission');
 var Settings = require('../models/Settings');
 const mail = require('../config/mail');
 const dateConvert = require('../config/dateConvert');
+const sms = require('../config/sms');
+const sms2 = require('../config/sms2');
 
 Acount.findOne({type: 'mirab'}, (err, account) => {
     if(!account){
@@ -646,7 +648,26 @@ router.post('/special-admin-register', ensureAuthenticated, (req, res, next) => 
         });
     }
 });
-
+router.post('/transmit', (req, res, next) => {
+    var {sourceID, targetID, amount} = req.body;
+    Acount.findById(sourceID, (err, source) => {
+        Acount.findById(targetID, (err, target) => {
+            var newTransmission = new Transmission({
+                source,
+                target,
+                amount,
+                date: new Date,
+            });
+            newTransmission.save().then(doc =>{
+                sms('09336448037', 'انتقال جدید در اپلیکیشن میراب');
+                Acount.updateMany({_id: sourceID}, {$set: {charge: source.charge - amount}}, (err) => {
+                    if(err) console.log(err);
+                    res.redirect('/dashboard/accounts');
+                });
+            }).catch(err => console.log(err));
+        })
+    })
+})
 
 module.exports = router;
 

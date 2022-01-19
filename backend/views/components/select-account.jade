@@ -18,6 +18,8 @@
                         td.role
                             .red چاه
                             .hidden= accounts[i].type
+                            .hidden(id="option-source-content-#{i}")= accounts[i]._id
+                            .hidden(id="option-source-name-#{i}")= accounts[i].license
                         td.user 
                             h1= accounts[i].license
                         td.acounts 
@@ -34,6 +36,8 @@
                         td.role
                             .green آب‌وندی
                             .hidden= accounts[i].type
+                            .hidden(id="option-source-content-#{i}")= accounts[i]._id
+                            .hidden(id="option-source-name-#{i}")= accounts[i].accountNumber
                         td.user 
                             h1= accounts[i].accountNumber
                         td.acounts 
@@ -50,6 +54,8 @@
                         td.role
                             .blue چاه‌وندی
                             .hidden= accounts[i].type
+                            .hidden(id="option-source-content-#{i}")= accounts[i]._id
+                            .hidden(id="option-source-name-#{i}")= accounts[i].accountNumber
                         td.user 
                             h1= accounts[i].accountNumber
                         td.acounts 
@@ -66,6 +72,8 @@
                         td.role
                             .purple میراب
                             .hidden= accounts[i].type
+                            .hidden(id="option-source-content-#{i}")= accounts[i]._id
+                            .hidden(id="option-source-name-#{i}") mirab
                         td.user 
                             h1 mirab
                         td.acounts 
@@ -79,6 +87,8 @@
                         td.role
                             .purple آبخوان
                             .hidden= accounts[i].type
+                            .hidden(id="option-source-content-#{i}")= accounts[i]._id
+                            .hidden(id="option-source-name-#{i}") abkhan
                         td.user 
                             h1 abkhan
                         td.acounts 
@@ -108,6 +118,8 @@
                         td.role
                             .red چاه
                             .hidden= accounts[i].type
+                            .hidden(id="option-target-content-#{i}")= accounts[i]._id
+                            .hidden(id="option-target-name-#{i}")= accounts[i].license
                         td.user 
                             h1= accounts[i].license
                         td.acounts 
@@ -124,6 +136,8 @@
                         td.role
                             .green آب‌وندی
                             .hidden= accounts[i].type
+                            .hidden(id="option-target-content-#{i}")= accounts[i]._id
+                            .hidden(id="option-target-name-#{i}")= accounts[i].accountNumber
                         td.user 
                             h1= accounts[i].accountNumber
                         td.acounts 
@@ -140,6 +154,8 @@
                         td.role
                             .blue چاه‌وندی
                             .hidden= accounts[i].type
+                            .hidden(id="option-target-content-#{i}")= accounts[i]._id
+                            .hidden(id="option-target-name-#{i}")= accounts[i].accountNumber
                         td.user 
                             h1= accounts[i].accountNumber
                         td.acounts 
@@ -156,6 +172,8 @@
                         td.role
                             .purple میراب
                             .hidden= accounts[i].type
+                            .hidden(id="option-target-content-#{i}")= accounts[i]._id
+                            .hidden(id="option-target-name-#{i}") mirab
                         td.user 
                             h1 mirab
                         td.acounts 
@@ -169,6 +187,8 @@
                         td.role
                             .purple آبخوان
                             .hidden= accounts[i].type
+                            .hidden(id="option-target-content-#{i}")= accounts[i]._id
+                            .hidden(id="option-target-name-#{i}") abkhan
                         td.user 
                             h1 abkhan
                         td.acounts 

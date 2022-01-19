@@ -181,7 +181,7 @@ block content
                     i.fa.fa-plus 
                     | افزودن حساب
             .control
-                form.transmission(action="/dashboard/transmission") 
+                form.transmission(action="/dashboard/transmit" method="POST") 
                     h1.title
                         i.fa.fa-arrows-h
                         | انتقال شارژ
@@ -191,11 +191,11 @@ block content
                         .type#source-type 
                     h1.name حساب مقصد:
                     .select-account#transmission-target
-                        .name#source-name انتخاب کنید
-                        .type#source-type 
+                        .name#target-name انتخاب کنید
+                        .type#target-type 
                     h1.name مقدار شارژ:
-                    input.hidden(type="text" name="sourceID" value="")
-                    input.hidden(type="text" name="targetID" value="")
+                    input.hidden(type="text" name="sourceID" value="" id="transmission-sourceID")
+                    input.hidden(type="text" name="targetID" value="" id="transmission-targetID")
                     input.text(type="number" name="amount" step="0.01" placeholder="متر مکعب")
                     button.submit(type="submit") انتقال
     include ../components/add-account-popup

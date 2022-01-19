@@ -168,6 +168,10 @@
         border: var(--blue) 0.1vw solid;
         color: var(--blue);
     }
+    .control form.transmission .select-account.selected{
+        border: var(--green) 0.1vw solid;
+        color: var(--green);
+    }
     .control form.transmission .select-account .name{
         font-family: 'iransans';
         font-size: 0.9vw;

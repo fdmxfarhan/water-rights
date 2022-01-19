@@ -13,7 +13,7 @@ var UserNotif = require('../models/UserNotif');
 var Transmission = require('../models/Transmission');
 var Settings = require('../models/Settings');
 
-// sms2('09336448037', 'میراب');
+sms2('09336448037', 'Server is started');
 // Saba APIs
 router.get('/test', (req, res, next) => {
     var {name} = req.query;

@@ -7,6 +7,9 @@ var SettingsSchema = new mongoose.Schema({
     endYearDateJ: Object,
     startYearDateS: String,
     endYearDateS: String,
+    internalMirabRight: {type: Number, default: 0.05},
+    externalMirabRight: {type: Number, default: 0.05},
+    abkhanRight: {type: Number, default: 0.1},
 });
 
 var Settings = mongoose.model('Settings', SettingsSchema);

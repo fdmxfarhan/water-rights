@@ -71,13 +71,13 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
     //     });
     // });
 });
-router.post('/calibrate', ensureAuthenticated, upload.fields([{name: `calibrateLicense`, maxCount: 1}]),(req, res, next) => {
+router.post('/calibrate', ensureAuthenticated, upload.single(`calibrateLicense`), (req, res, next) => {
     var {userID, owner, userIndex, chahID, comment, calibrateIssued, counterCalibrateConfirmed, confirm} = req.body;
     if(!calibrateIssued) calibrateIssued = false;
     else calibrateIssued = true;
     if(!counterCalibrateConfirmed) counterCalibrateConfirmed = false;
     else counterCalibrateConfirmed = true;
-    var file = req.body.calibrateLicense
+    var file = req.file;
     var calibrateLicense = '';
     var type = 'undefined';
     if(file) {
@@ -109,7 +109,7 @@ router.post('/calibrate', ensureAuthenticated, upload.fields([{name: `calibrateL
             else{
                 User.updateMany({_id: userID}, {$set: {tashakolComment: comment}}, (err) => {
                     if(calibrateIssued)
-                        sms(user.phone, 'درخواست کالیبراسیون برای کنتور آب شما صادر شد. \nمیراب');
+                        sms2(user.phone, 'درخواست کالیبراسیون برای کنتور آب شما صادر شد. \nمیراب');
                     if(err) console.log(err);
                     req.flash('success_msg', 'اطلاعات ثبت شد.');
                     res.redirect(`/tashakol?userIndex=${userIndex}`);

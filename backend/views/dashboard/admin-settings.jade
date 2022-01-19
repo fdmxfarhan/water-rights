@@ -30,10 +30,20 @@ block content
                         | /
                         input.text(type="number" name="year" placeholder="سال" value="#{settings.endYearDateJ.year}")
                         input.submit(type="submit" value="ثبت")
+            .settings-view
+                h1.title سهم میراب و آبخوان
+                form(action="/dashboard/set-rights" method="POST") 
+                    .text-input-view
+                        label(for="abkhanRight") سهم آبخوان (درصد): 
+                        input(type="number" name="abkhanRight" value="#{settings.abkhanRight*100}")
+                    .text-input-view
+                        label(for="internalMirabRight") سهم میراب داخل بازار (درصد): 
+                        input(type="number" name="internalMirabRight" value="#{settings.internalMirabRight*100}")
+                    .text-input-view
+                        label(for="externalMirabRight") سهم میراب بین بانک و بازار (درصد): 
+                        input(type="number" name="externalMirabRight" value="#{settings.externalMirabRight*100}")
+                    input.submit(type="submit" value="ثبت")
         .user-control 
             .control 
-                
-    
-
     script.
         $('#link5').addClass('active');

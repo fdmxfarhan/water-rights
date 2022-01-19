@@ -772,6 +772,17 @@
         font-size: 1vw;
         padding-left: 0.5vw;
     }
+    .check-input-view a.link{
+        font-family: 'iransans';
+        font-size: 1vw;
+        color: var(--blue);
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .check-input-view a.link:hover{
+        color: var(--hover);
+    }
+
 }
 
 @media only screen and (max-width: 800px) {

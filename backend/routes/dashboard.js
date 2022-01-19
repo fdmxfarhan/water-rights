@@ -389,71 +389,74 @@ router.get('/accounts', ensureAuthenticated, (req, res, next) => {
         });
     }
 });
-var getMirabRight = (source, target, amount) => {
+var getMirabRight = (source, target, amount, settings) => {
     if(source.type == 'chah' && target.type == 'chahvandi')
         return 0;
-    return amount * 0.05
+    if(source.type == 'chahvandi' && target.type == 'chah')
+        return amount * settings.externalMirabRight;
+    return amount * settings.internalMirabRight;
 }
-var getAbkhanRight = (source, target, amount) => {
+var getAbkhanRight = (source, target, amount, settings) => {
     if(source.type == 'chahvandi' && target.type == 'chah'){
-        if((amount - getMirabRight(source, target, amount)) * 0.1 - target.sandogh  < 0) return 0;
-        return (amount - getMirabRight(source, target, amount)) * 0.1 - target.sandogh;
+        if((amount - getMirabRight(source, target, amount)) * settings.abkhanRight - target.sandogh  < 0) return 0;
+        return (amount - getMirabRight(source, target, amount, settings)) * settings.abkhanRight - target.sandogh;
     }
     return 0;
 }
-var getSandoghRight = (source, target, amount) => {
+var getSandoghRight = (source, target, amount, settings) => {
     if(source.type == 'chah' && target.type == 'chahvandi'){
         return amount * 0.1
     }
     else if(source.type == 'chahvandi' && target.type == 'chah'){
-        if((amount - getMirabRight(source, target, amount)) * 0.1 - target.sandogh  < 0) return -(amount - getMirabRight(source, target, amount)) * 0.1
+        if((amount - getMirabRight(source, target, amount, settings)) * 0.1 - target.sandogh  < 0) 
+            return -(amount - getMirabRight(source, target, amount, settings)) * 0.1
         return -target.sandogh; 
     }
     return 0;
 }
 router.get('/accept-transmission', ensureAuthenticated, (req, res, next) => {
     var {transmissionID} = req.query;
-    Transmission.findById(transmissionID, (err, transmission) => {
-        Acount.findById(transmission.source._id, (err, source) => {
-            Acount.findById(transmission.target._id, (err, target) => {
-                var amount = transmission.amount;
-                var mirab = getMirabRight(source, target, amount);
-                var abkhan = getAbkhanRight(source, target, amount);
-                var sandogh = getSandoghRight(source, target, amount);
-                console.log(target.endDate);
-                // Acount.updateMany({_id: source._id}, {$set: {charge: source.charge - transmission.amount}}, (err) => {});
-                Acount.updateMany({_id: target._id}, {$set: {
-                    charge: target.charge + (transmission.amount - mirab - abkhan),
-                    endDate: {year: target.endDate.year+1, month: target.endDate.month, day: target.endDate.day},
-                }}, (err) => {
-
-                });
-
-                Acount.findOne({type: 'mirab'}, (err, mirabAccount) => {
-                    Acount.updateMany({type: 'mirab'}, {$set: {charge: mirabAccount.charge+mirab}}, (err, doc) => {
-                        if(err) console.log(err);
+    Settings.findOne({}, (err, settings) => {
+        Transmission.findById(transmissionID, (err, transmission) => {
+            Acount.findById(transmission.source._id, (err, source) => {
+                Acount.findById(transmission.target._id, (err, target) => {
+                    var amount = transmission.amount;
+                    var mirab = getMirabRight(source, target, amount, settings);
+                    var abkhan = getAbkhanRight(source, target, amount, settings);
+                    var sandogh = getSandoghRight(source, target, amount, settings);
+                    console.log(target.endDate);
+                    // Acount.updateMany({_id: source._id}, {$set: {charge: source.charge - transmission.amount}}, (err) => {});
+                    Acount.updateMany({_id: target._id}, {$set: {
+                        charge: target.charge + (transmission.amount - mirab - abkhan),
+                        endDate: {year: target.endDate.year+1, month: target.endDate.month, day: target.endDate.day},
+                    }}, (err) => {});
+                    
+                    Acount.findOne({type: 'mirab'}, (err, mirabAccount) => {
+                        Acount.updateMany({type: 'mirab'}, {$set: {charge: mirabAccount.charge+mirab}}, (err, doc) => {
+                            if(err) console.log(err);
+                        });
                     });
-                });
-                Acount.findOne({type: 'abkhan'}, (err, abkhanAccount) => {
-                    Acount.updateMany({type: 'abkhan'}, {$set: {charge: abkhanAccount.charge+abkhan}}, (err, doc) => {
-                        if(err) console.log(err);
+                    Acount.findOne({type: 'abkhan'}, (err, abkhanAccount) => {
+                        Acount.updateMany({type: 'abkhan'}, {$set: {charge: abkhanAccount.charge+abkhan}}, (err, doc) => {
+                            if(err) console.log(err);
+                        });
                     });
-                });
-                if(source.type == 'chah') 
-                    Acount.updateMany({_id: source._id}, {$set: {sandogh: source.sandogh + sandogh}}, (err) => {});
-                if(target.type == 'chah')
-                    Acount.updateMany({_id: target._id}, {$set: {sandogh: target.sandogh + sandogh}}, (err) => {});
-                Transmission.updateMany({_id: transmissionID}, {$set: {done: true, accepted: true}}, (err) => {
-                    var newUserNotif = new UserNotif({
-                        type: 'accept-transmission',
-                        text: `انتقال شارژ ${amount} متر مکعب از حساب ${source.type == 'chah' ? source.license : source.accountNumber} به حساب ${target.type == 'chah' ? target.license : target.accountNumber} توسط میراب تایید شد.`,
-                        userID: source.ownerID,
-                        userFullname: source.owner,
-                        date: new Date(),
+                    if(source.type == 'chah') 
+                        Acount.updateMany({_id: source._id}, {$set: {sandogh: source.sandogh + sandogh}}, (err) => {});
+                    if(target.type == 'chah')
+                        Acount.updateMany({_id: target._id}, {$set: {sandogh: target.sandogh + sandogh}}, (err) => {});
+                    Transmission.updateMany({_id: transmissionID}, {$set: {done: true, accepted: true}}, (err) => {
+                        var newUserNotif = new UserNotif({
+                            type: 'accept-transmission',
+                            text: `انتقال شارژ ${amount} متر مکعب از حساب ${source.type == 'chah' ? source.license : source.accountNumber} به حساب ${target.type == 'chah' ? target.license : target.accountNumber} توسط میراب تایید شد.`,
+                            userID: source.ownerID,
+                            userFullname: source.owner,
+                            date: new Date(),
+                        });
+                        newUserNotif.save().then(doc => {
+                            res.redirect('/dashboard');
+                        }).catch(err => console.log(err));
                     });
-                    newUserNotif.save().then(doc => {
-                        res.redirect('/dashboard');
-                    }).catch(err => console.log(err));
                 });
             });
         });
@@ -578,6 +581,16 @@ router.post('/set-end-year', ensureAuthenticated, (req, res, next) => {
         req.flash('success_msg', 'تغییرات با موفقیت ذخیره شد.');
         res.redirect('/dashboard/settings');
     })
+});
+router.post('/set-rights', ensureAuthenticated, (req, res, next) => {
+    var {abkhanRight, internalMirabRight, externalMirabRight} = req.body;
+    Settings.updateMany({}, {$set: {
+        abkhanRight: abkhanRight/100, 
+        internalMirabRight: internalMirabRight/100, 
+        externalMirabRight: externalMirabRight/100
+    }}, (err, doc) => {
+        res.redirect('/dashboard/settings');
+    });
 });
 
 /// Version 2.0.0 edition

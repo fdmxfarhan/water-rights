@@ -192,7 +192,7 @@ router.post('/add-chah-account', ensureAuthenticated, upload.single('licensePic'
                             });
                             newAcount2.save().then(doc => {
                                 User.updateMany({_id: userID}, {$set: {chahvand: true, regStatusNum: user.regStatusNum+1}}, (err, doc) => {
-                                    sms(user.phone, 'حساب چاه شما در سامانه میراب ثبت شد\nمیراب');
+                                    sms2(user.phone, 'حساب چاه شما در سامانه میراب ثبت شد\nمیراب');
                                     var newAdminNotif = new AdminNotif({
                                         target: 'آب منطقه‌ای',
                                         type: 'state-0',
@@ -221,7 +221,7 @@ router.post('/commitment', ensureAuthenticated, upload.single('commitmentLetter'
     User.findById(userID, (err, user) => {
         AdminNotif.updateMany({userID: userID}, {$set: {seen: true}}, (err, doc) => {
             User.updateMany({_id: userID}, {$set: {comment4: comment, regStatusNum: user.regStatusNum+1, commitmentLetter, confirmed: true}}, (err) => {
-                sms(user.phone, 'فرایند ورود به بازار آب تکمیل شد. \nمیراب')
+                sms2(user.phone, 'فرایند ورود به بازار آب تکمیل شد. \nمیراب')
                 req.flash('success_msg', 'حساب چاه با موفقیت ایجاد شد');
                 res.redirect(`/kargozar?userIndex=${userIndex}`);
             });

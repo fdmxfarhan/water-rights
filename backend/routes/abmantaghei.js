@@ -119,20 +119,19 @@ router.post('/confirm-charge', ensureAuthenticated, (req, res, next) => {
         });
     }
 });
-router.post('/confirm-technical', ensureAuthenticated, upload.fields([{name: `document`, maxCount: 1}]),(req, res, next) => {
+router.post('/confirm-technical', ensureAuthenticated, upload.single(`document`),(req, res, next) => {
     var {userID, owner, userIndex, chahID, comment, licenseConfirmed, counterConfirmed, confirm} = req.body;
     if(!licenseConfirmed) licenseConfirmed = false;
     else                  licenseConfirmed = true;
     if(!counterConfirmed) counterConfirmed = false;
     else                  counterConfirmed = true;
-    var file = req.body.document;
+    var file = req.file;
     var document = '';
     var type = 'undefined';
     if(file) {
         document = file.destination.slice(6) + '/' + file.originalname;
         type = file.mimetype.split('/')[0];
     }
-
     User.findById(userID, (err, user) => {
         Acount.updateMany({_id: chahID}, {$set: {licenseConfirmed, counterConfirmed}}, (err) => {
             if(err) console.log(err);

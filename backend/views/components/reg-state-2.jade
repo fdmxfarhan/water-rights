@@ -177,6 +177,10 @@
                             -else
                                 input(type="checkbox" id="counterConfirmed" name="counterConfirmed" value="true")
                             label(for="counterConfirmed") کنتور کالیبره است
+                            -if(chah.calibrateLicense.type != 'undefined')
+                                a.link(href="#{chah.calibrateLicense.link}" target="_blank") 
+                                    i.fa.fa-cloud-download 
+                                    | گواهی صحت عملکرد
                         .file-input-view
                             label.right(for="document") آپلود مدارک: 
                             .file-input-overlay(id="file-input-overlay-#{i}")

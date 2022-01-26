@@ -8,164 +8,189 @@
                 .two-column
                     .column
                         .title اطلاعات پروانه بهره برداری چاه
-                        .text-input 
-                            i.fa.fa-pencil 
+                        .text-input-view
+                            //- i.fa.fa-pencil 
                             label(for="license") شماره پروانه:
                             input(type="text" name="license" placeholder="XXXX" value="#{typeof(account.license) == 'undefined' ? '' : account.license}" disabled)
-                        .text-input
-                            i.fa.fa-pencil 
+                        .text-input-view
+                            //- i.fa.fa-pencil 
                             label(for="permitedUseInYear") اجازه برداشت سالیانه:
                             input(type="number" name="permitedUseInYear" id="permitedUseInYear" placeholder="00 لیتر" value="#{typeof(account.permitedUseInYear) == 'undefined' ? '' : account.permitedUseInYear}")
-                        .text-input 
-                            i.fa.fa-pencil 
+                        .text-input-view 
+                            //- i.fa.fa-pencil 
                             label(for="permitedAbdehi") آبدهی مجاز (لیتر بر ثانیه):
                             input(type="number" name="permitedAbdehi" placeholder="00 لیتر بر ثانیه" value="#{typeof(account.permitedAbdehi) == 'undefined' ? '' : account.permitedAbdehi}")
-                        .text-input 
-                            i.fa.fa-pencil 
+                        .text-input-view 
+                            //- i.fa.fa-pencil 
                             label(for="permitedWorkTime") ساعت کارکرد مجاز:
                             input(type="number" name="permitedWorkTime" placeholder="00 لیتر" value="#{typeof(account.permitedWorkTime) == 'undefined' ? '' : account.permitedWorkTime}")
-                        .text-input 
-                            i.fa.fa-pencil 
+                        .text-input-view 
+                            //- i.fa.fa-pencil 
                             label(for="UTM") UTM:
                             input(type="text" name="UTM" placeholder="00" value="#{typeof(account.UTM) == 'undefined' ? '' : account.UTM}")
-                        .select-input
+                        .select-input-view
                             label(for="useType")
-                                i.fa.fa-pencil 
+                                //- i.fa.fa-pencil 
                                 |  نوع بهره برداری: 
-                            select(id="useType" name="useType") 
-                                -if(account.useType == 'شرب')
-                                    option(selected value="شرب" ) شرب
-                                -else 
-                                    option(value="شرب" ) شرب
-                                -if(account.useType == 'صنعت')
-                                    option(selected value="صنعت" ) صنعت
-                                -else 
-                                    option(value="صنعت" ) صنعت
-                                -if(account.useType == 'کشاورزی')
-                                    option(selected value="کشاورزی" ) کشاورزی
-                                -else 
-                                    option(value="کشاورزی" ) کشاورزی
-                                -if(account.useType == 'فضای سبز')
-                                    option(selected value="فضای سبز") فضای سبز
-                                -else 
-                                    option(value="فضای سبز") فضای سبز
-                                -if(account.useType == 'شرکت آب')
-                                    option(selected value="شرکت آب") شرکت آب
-                                -else 
-                                    option(value="شرکت آب") شرکت آب
-                        .select-input.hidden
+                            .select
+                                select(id="useType" name="useType") 
+                                    -if(account.useType == 'شرب')
+                                        option(selected value="شرب" ) شرب
+                                    -else 
+                                        option(value="شرب" ) شرب
+                                    -if(account.useType == 'صنعت')
+                                        option(selected value="صنعت" ) صنعت
+                                    -else 
+                                        option(value="صنعت" ) صنعت
+                                    -if(account.useType == 'کشاورزی')
+                                        option(selected value="کشاورزی" ) کشاورزی
+                                    -else 
+                                        option(value="کشاورزی" ) کشاورزی
+                                    -if(account.useType == 'فضای سبز')
+                                        option(selected value="فضای سبز") فضای سبز
+                                    -else 
+                                        option(value="فضای سبز") فضای سبز
+                                    -if(account.useType == 'شرکت آب')
+                                        option(selected value="شرکت آب") شرکت آب
+                                    -else 
+                                        option(value="شرکت آب") شرکت آب
+                        .select-input-viwe.hidden
                             label(for="userID")
-                                i.fa.fa-pencil 
+                                //- i.fa.fa-pencil 
                                 | کاربر:
-                            select(name="userID" id="userID" ) 
-                                option(value="undefined") انتخاب کاربر
-                                -for(var i=0; i<users.length; i++){
-                                    -if(account.ownerID == users[i]._id)
-                                        option(value="#{users[i]._id}" selected) #{users[i].fullname} (#{users[i].phone})
-                                    -else
-                                        option(value="#{users[i]._id}") #{users[i].fullname} (#{users[i].phone})
-                                -}
-                        .select-input
-                            label(for="linkedAccount") 
-                                i.fa.fa-pencil 
-                                | حساب چاه‌وندی متصل:
-                            select(name="linkedAccount" id="linkedAccount") 
-                                option(value="undefined") انتخاب حساب
-                                -for(var i=0; i<accounts.length; i++){
-                                    -if(accounts[i].type == 'chahvandi'){
-                                        -if(accounts[i].linkedAccount == account._id.toString())
-                                            option(value="#{accounts[i]._id}" selected) #{accounts[i].accountNumber}
+                            .select
+                                select(name="userID" id="userID" ) 
+                                    option(value="undefined") انتخاب کاربر
+                                    -for(var i=0; i<users.length; i++){
+                                        -if(account.ownerID == users[i]._id)
+                                            option(value="#{users[i]._id}" selected) #{users[i].fullname} (#{users[i].phone})
                                         -else
-                                            option(value="#{accounts[i]._id}") #{accounts[i].accountNumber}
+                                            option(value="#{users[i]._id}") #{users[i].fullname} (#{users[i].phone})
                                     -}
-                                -}
-                        .file-upload 
+                        .select-input-view
+                            label(for="linkedAccount") 
+                                //- i.fa.fa-pencil 
+                                | حساب چاه‌وندی متصل:
+                            .select
+                                select(name="linkedAccount" id="linkedAccount") 
+                                    option(value="undefined") انتخاب حساب
+                                    -for(var i=0; i<accounts.length; i++){
+                                        -if(accounts[i].type == 'chahvandi'){
+                                            -if(accounts[i].linkedAccount == account._id.toString())
+                                                option(value="#{accounts[i]._id}" selected) #{accounts[i].accountNumber}
+                                            -else
+                                                option(value="#{accounts[i]._id}") #{accounts[i].accountNumber}
+                                        -}
+                                    -}
+                        .file-input-view
                             label(for="licensePic") اسکن پروانه بهره برداری:
-                            input(type="file" name="licensePic" id="licensePic")
-                        -if(account.licensePic)
-                            img.license(src="#{account.licensePic}")
-                    .column
-                        .title اطلاعات فیزیکی چاه
-                        .text-input 
-                            i.fa.fa-pencil 
-                            label(for="wellCap") WellCap:
-                            input(type="number" name="wellCap" placeholder="00 لیتر" value="#{typeof(account.wellCap) == 'undefined' ? '' : account.wellCap}")
-                        .text-input 
-                            i.fa.fa-pencil 
-                            label(for="sellCap") SellCap:
-                            input(type="number" name="sellCap" placeholder="00 لیتر" value="#{typeof(account.sellCap) == 'undefined' ? '' : account.sellCap}")
-                        .text-input 
-                            i.fa.fa-pencil 
-                            label(for="buyCap") BuyCap:
-                            input(type="number" name="buyCap" placeholder="00 لیتر" value="#{typeof(account.buyCap) == 'undefined' ? '' : account.buyCap}")
-                        .text-input 
-                            i.fa.fa-pencil 
-                            label(for="depth") عمق چاه (متر):
-                            input(type="number" name="depth" placeholder="00 متر" value="#{typeof(account.depth) == 'undefined' ? '' : account.depth}")
-                        .text-input 
-                            i.fa.fa-pencil 
-                            label(for="power") توان چاه (وات):
-                            input(type="number" name="power" placeholder="00 وات" value="#{typeof(account.power) == 'undefined' ? '' : account.power}")
-                        .text-input 
-                            i.fa.fa-pencil 
-                            label(for="abdehi") آبدهی چاه (لیتر بر ثانیه):
-                            input(type="number" name="abdehi" placeholder="00 متر بر ثانیه" value="#{typeof(account.abdehi) == 'undefined' ? '' : account.abdehi}")
-                        .text-input 
-                            i.fa.fa-pencil 
-                            label(for="farmingType") نوع کشت:
-                            input(type="text" name="farmingType" placeholder="نوع کشت" value="#{typeof(account.farmingType) == 'undefined' ? '' : account.farmingType}")
-                        .text-input 
-                            i.fa.fa-pencil 
-                            label(for="area") مساحت زمین:
-                            input(type="number" name="area" placeholder="00 متر مربع" value="#{typeof(account.area) == 'undefined' ? '' : account.area}")
-                        .select-input
-                            label(for="pomp") 
-                                i.fa.fa-pencil 
-                                | نوع پمپ: 
-                            select(id="pomp" name="pomp") 
-                                -if(account.pomp == 'شناور')
-                                    option(selected value="شناور") شناور
-                                -else
-                                    option(value="شناور") شناور
-                                -if(account.pomp == 'شفت و غلاف')
-                                    option(selected value="شفت و غلاف") شفت و غلاف
-                                -else
-                                    option(value="شفت و غلاف") شفت و غلاف
-                                -if(account.pomp == 'سایر')
-                                    option(selected value="سایر") سایر
-                                -else
-                                    option(value="سایر") سایر
-                        .text-input 
-                            i.fa.fa-pencil 
+                            .file-input-overlay(id="file-input-overlay-#{i}")
+                                i.fa.fa-check.check(id="file-check-#{i}")
+                                .filename(id="file-name-#{i}") انتخاب فایل
+                                input.file-input(type="file" name="licensePic" required class="file-input-#{i}" )
+                        .text-input-view 
+                            //- i.fa.fa-pencil 
                             label(for="charge") شارژ فعلی:
                             input(type="number" name="charge" placeholder="00 متر مکعب" value="#{typeof(account.charge) == 'undefined' ? '' : account.charge}" step="0.01")
-                        .text-input 
-                            i.fa.fa-pencil 
+                        .text-input-view 
+                            //- i.fa.fa-pencil 
                             label(for="usedCredit") شارژ مصرف شده:
                             input(type="number" name="usedCredit" placeholder="00 متر مکعب" value="#{typeof(account.usedCredit) == 'undefined' ? '' : account.usedCredit}" step="0.01")
-                        .text-input 
-                            i.fa.fa-pencil 
+                        .text-input-view 
+                            //- i.fa.fa-pencil 
                             label(for="leftCredit") شارژ باقی مانده:
                             input(type="number" name="leftCredit" placeholder="00 متر مکعب" value="#{typeof(account.leftCredit) == 'undefined' ? '' : account.leftCredit}" step="0.01")
                         
-                button.submit(type="submit")
-                    i.fa.fa-save
+                        //- -if(account.licensePic)
+                        //-     img.license(src="#{account.licensePic}")
+                    .column
+                        .title اطلاعات فیزیکی چاه
+                        .text-input-view 
+                            //- i.fa.fa-pencil 
+                            label(for="wellCap") WellCap:
+                            input(type="number" name="wellCap" placeholder="00 لیتر" value="#{typeof(account.wellCap) == 'undefined' ? '' : account.wellCap}")
+                        .text-input-view 
+                            //- i.fa.fa-pencil 
+                            label(for="sellCap") SellCap:
+                            input(type="number" name="sellCap" placeholder="00 لیتر" value="#{typeof(account.sellCap) == 'undefined' ? '' : account.sellCap}")
+                        .text-input-view 
+                            //- i.fa.fa-pencil 
+                            label(for="buyCap") BuyCap:
+                            input(type="number" name="buyCap" placeholder="00 لیتر" value="#{typeof(account.buyCap) == 'undefined' ? '' : account.buyCap}")
+                        .text-input-view 
+                            //- i.fa.fa-pencil 
+                            label(for="depth") عمق چاه (متر):
+                            input(type="number" name="depth" placeholder="00 متر" value="#{typeof(account.depth) == 'undefined' ? '' : account.depth}")
+                        .text-input-view 
+                            //- i.fa.fa-pencil 
+                            label(for="power") توان چاه (وات):
+                            input(type="number" name="power" placeholder="00 وات" value="#{typeof(account.power) == 'undefined' ? '' : account.power}")
+                        .text-input-view 
+                            //- i.fa.fa-pencil 
+                            label(for="abdehi") آبدهی چاه (لیتر بر ثانیه):
+                            input(type="number" name="abdehi" placeholder="00 متر بر ثانیه" value="#{typeof(account.abdehi) == 'undefined' ? '' : account.abdehi}")
+                        .text-input-view 
+                            //- i.fa.fa-pencil 
+                            label(for="farmingType") نوع کشت:
+                            input(type="text" name="farmingType" placeholder="نوع کشت" value="#{typeof(account.farmingType) == 'undefined' ? '' : account.farmingType}")
+                        .text-input-view 
+                            //- i.fa.fa-pencil 
+                            label(for="area") مساحت زمین:
+                            input(type="number" name="area" placeholder="00 متر مربع" value="#{typeof(account.area) == 'undefined' ? '' : account.area}")
+                        .select-input-view
+                            label(for="pomp") 
+                                //- i.fa.fa-pencil 
+                                | نوع پمپ: 
+                            .select
+                                select(id="pomp" name="pomp") 
+                                    -if(account.pomp == 'شناور')
+                                        option(selected value="شناور") شناور
+                                    -else
+                                        option(value="شناور") شناور
+                                    -if(account.pomp == 'شفت و غلاف')
+                                        option(selected value="شفت و غلاف") شفت و غلاف
+                                    -else
+                                        option(value="شفت و غلاف") شفت و غلاف
+                                    -if(account.pomp == 'سایر')
+                                        option(selected value="سایر") سایر
+                                    -else
+                                        option(value="سایر") سایر
+                        
+                        button.submit(type="submit")
+                            i.fa.fa-save
+                            | ذخیره
         .user-control 
             .control 
                 .charge 
                     h1 شارژ
-                    h2 #{Math.floor(account.charge*10)/10}
-                        .cm متر مکعب
+                    //- h2 #{Math.floor(account.charge*10)/10}
+                    //-     .cm متر مکعب
                     .item 
-                        .name مصرف شده: 
+                        .name شارژ سالیانه: 
+                        .value= Math.floor(account.permitedUseInYear*10)/10
+                            .cm متر مکعب
+                    .item 
+                        .name حجم مصرف شده: 
                         .value= Math.floor(account.usedCredit*10)/10
+                            .cm متر مکعب
                     .item 
-                        .name باقی مانده: 
+                        .name حجم باقی مانده: 
                         .value= Math.floor(account.leftCredit*10)/10
-                    
-                .dates 
-                    .date تاریخ آغاز اعتبار: #{account.startDate.year}/#{account.startDate.month}/#{account.startDate.day}
-                    .date تاریخ پایان اعتبار: #{account.endDate.year}/#{account.endDate.month}/#{account.endDate.day}
+                            .cm متر مکعب
+                    .item 
+                        .name حجم فروخته شده: 
+                        .value= Math.floor(account.soldCredit*10)/10
+                            .cm متر مکعب
+                    .item 
+                        .name اجازه فروش سالیانه: 
+                        .value= Math.floor(account.sellCap*10)/10
+                            .cm متر مکعب
+                    .item 
+                        .name تاریخ آغاز اعتبار: 
+                        .value.gray #{account.startDate.year}/#{account.startDate.month}/#{account.startDate.day}
+                    .item 
+                        .name تاریخ پایان اعتبار: 
+                        .value.gray #{account.endDate.year}/#{account.endDate.month}/#{account.endDate.day}
                 .block-account 
                     -if(account.blocked)
                         a.block(href="/dashboard/unblock-account?accountID=#{account._id}") 

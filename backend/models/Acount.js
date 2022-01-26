@@ -48,46 +48,20 @@ var AcountSchema = new mongoose.Schema({
   creationDate: Date,
   linkedAccount: String,
 
-  sandogh: {
-    type: Number,
-    default: 0,
-  },
-  blocked: {
-    type: Boolean,
-    default: false,
-  },
-  usedCharge: {
-    type: Number,
-    default: 0,
-  },
-  creditType: {
-    type: Number,
-    default: 1,
-  },
-  revoked: {
-    type: Boolean,
-    default: false,
-  },
-  lastYearCharge: {
-    type: Number,
-    default: 0,
-  },
-  nextYearCharge: {
-    type: Number,
-    default: 0,
-  },
+  sandogh: {type: Number, default: 0},
+  blocked: {type: Boolean, default: false},
+  usedCharge: {type: Number, default: 0},
+  creditType: {type: Number, default: 1},
+  revoked: {type: Boolean, default: false},
+  lastYearCharge: {type: Number, default: 0},
+  nextYearCharge: {type: Number, default: 0},
   reportUsedCredit: {
     type: Object
   },
   currentCredit: [Object],
-  usedCredit: {
-    type: Number,
-    default: 0,
-  },
-  leftCredit: {
-    type: Number,
-    default: 0,
-  },
+  usedCredit: {type: Number, default: 0},
+  leftCredit: {type: Number, default: 0},
+  soldCredit: {type: Number, default: 0},
   licenseConfirmed: {type: Boolean, default: false},
   counterConfirmed: {type: Boolean, default: false},
   calibrateIssued: {type: Boolean, default: false},

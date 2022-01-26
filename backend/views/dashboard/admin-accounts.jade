@@ -44,7 +44,7 @@ block content
                                     a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
                                         i.fa.fa-edit
                             td
-                                a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts") 
+                                a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts" onclick="makeSure(event)") 
                                     i.fa.fa-trash 
                     -}else if(accounts[i].type == "abvandi"){
                         tr(class="#{i>1 && accounts[i-1].ownerID == accounts[i].ownerID ? 'no-border': ''}")
@@ -71,7 +71,7 @@ block content
                                     a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
                                         i.fa.fa-edit
                             td
-                                a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts") 
+                                a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts" onclick="makeSure(event)") 
                                     i.fa.fa-trash 
                     -}else if(accounts[i].type == "chahvandi"){
                         tr(class="#{i>1 && accounts[i-1].ownerID == accounts[i].ownerID ? 'no-border': ''}")
@@ -113,7 +113,7 @@ block content
                                     a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
                                         i.fa.fa-edit
                             td
-                                a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts") 
+                                a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts" onclick="makeSure(event)") 
                                     i.fa.fa-trash 
                     -}else if(accounts[i].type == "mirab"){
                         tr
@@ -203,5 +203,11 @@ block content
     script(src="/js/accounts.js") 
     script.
         $('#link3').addClass('active');
+        function makeSure(e)
+        {
+            if(!confirm('Are you sure?')) {
+                e.preventDefault();
+            }
+        }
 
 

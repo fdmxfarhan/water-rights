@@ -198,8 +198,10 @@ router.get('/users', ensureAuthenticated, (req, res, next) => {
 router.get('/delete-user', ensureAuthenticated, (req, res, next) => {
     if(req.user.role != 'user'){
         User.deleteOne({_id: req.query.userID}, (err) => {
-            req.flash('success_msg', 'کاربر با موفقیت حذف شد');
-            res.redirect('/dashboard/users');
+            Acount.deleteOne({ownerID: req.query.userID}, (err) => {
+                req.flash('success_msg', 'کاربر با موفقیت حذف شد');
+                res.redirect('/dashboard/users');
+            });
         });
     }
 });

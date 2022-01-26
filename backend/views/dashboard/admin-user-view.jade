@@ -7,36 +7,36 @@ block styles
 block content
     .title-view 
         h1= viewingUser.sex + ' ' + viewingUser.fullname 
-        h2= viewingUser.role
+        h2= viewingUser.username
     .content-view 
         .users-view 
             .personal-info 
                 form(action="/dashboard/edit-user" method="POST") 
                     input.hidden(type="text" name="userID" value="#{viewingUser._id}")
                     .part 
-                        .text-input
+                        .text-input-view
                             label(for="firstName") نام: 
                             input.text(type="text" name="firstName" placeholder="نام" value="#{viewingUser.firstName}" required)
-                        .text-input
+                        .text-input-view
                             label(for="lastName") نام خانوادگی: 
                             input.text(type="text" name="lastName" placeholder="نام خانوادگی" value="#{viewingUser.lastName}" required)
-                        .text-input
+                        .text-input-view
                             label(for="fatherName") نام پدر: 
                             input.text(type="text" name="fatherName" placeholder="نام پدر" value="#{viewingUser.fatherName}")
-                        .text-input
+                        .text-input-view
                             label(for="idNumber") کد ملی: 
                             input.text(type="text" name="idNumber" placeholder="کد ملی" value="#{viewingUser.idNumber}" required)
                     .part
-                        .text-input
+                        .text-input-view
                             label(for="cardNumber") شماره شناسنامه: 
                             input.text(type="text" name="cardNumber" placeholder="شماره شناسنامه" value="#{viewingUser.cardNumber}" required)
-                        .text-input
+                        .text-input-view
                             label(for="address") آدرس: 
                             input.text(type="text" name="address" placeholder="آدرس" value="#{viewingUser.address}")
-                        .text-input
+                        .text-input-view
                             label(for="postCode") کد پستی: 
                             input.text(type="text" name="postCode" placeholder="کد پستی" value="#{viewingUser.postCode}")
-                        .text-input
+                        .text-input-view
                             label(for="phone") تلفن: 
                             input.text(type="text" name="phone" placeholder="تلفن" value="#{viewingUser.phone}" required)
                         //- birthDate
@@ -47,15 +47,51 @@ block content
                 form(action="/dashboard/edit-user-password" method="POST") 
                     input.hidden(type="text" name="userID" value="#{viewingUser._id}")
                     .part 
-                        .text-input
+                        .text-input-view
                             label(for="firstName") کلمه عبور: 
                             input.text(type="password" name="password" placeholder="کلمه عبور")
                     .part
-                        .text-input
+                        .text-input-view
                             label(for="cardNumber") تایید کلمه عبور: 
                             input.text(type="password" name="password2" placeholder="تایید کلمه عبور")
                     input.submit(type="submit" value="ثبت تغییرات")
             .files-area 
+                -if(viewingUser.file0.link != ''){
+                    a.file(href="#{viewingUser.file0.link}" target="_blank")
+                        -if(viewingUser.file0.link.slice(viewingUser.file0.link.length-3, viewingUser.file0.link.length) != 'pdf')
+                            img(src="#{viewingUser.file0.link}")
+                        -else
+                            img(src="/img/pdf.jpg", alt="")
+                -}
+                -if(viewingUser.file1.link != ''){
+                    a.file(href="#{viewingUser.file1.link}" target="_blank")
+                        -if(viewingUser.file1.link.slice(viewingUser.file1.link.length-3, viewingUser.file1.link.length) != 'pdf')
+                            img(src="#{viewingUser.file1.link}")
+                        -else
+                            img(src="/img/pdf.jpg", alt="")
+                -}
+                -if(viewingUser.file2.link != ''){
+                    a.file(href="#{viewingUser.file2.link}" target="_blank")
+                        -if(viewingUser.file2.link.slice(viewingUser.file2.link.length-3, viewingUser.file2.link.length) != 'pdf')
+                            img(src="#{viewingUser.file2.link}")
+                        -else
+                            img(src="/img/pdf.jpg", alt="")
+                -}
+                -if(viewingUser.file3.link != ''){
+                    a.file(href="#{viewingUser.file3.link}" target="_blank")
+                        -if(viewingUser.file3.link.slice(viewingUser.file3.link.length-3, viewingUser.file3.link.length) != 'pdf')
+                            img(src="#{viewingUser.file3.link}")
+                        -else
+                            img(src="/img/pdf.jpg", alt="")
+                -}
+                -if(viewingUser.file4.link != ''){
+                    a.file(href="#{viewingUser.file4.link}" target="_blank")
+                        -if(viewingUser.file4.link.slice(viewingUser.file4.link.length-3, viewingUser.file4.link.length) != 'pdf')
+                            img(src="#{viewingUser.file4.link}")
+                        -else
+                            img(src="/img/pdf.jpg", alt="")
+                -}
+                
                 -for(var i=0; i<viewingUser.file.length; i++){
                     a.file(href="#{viewingUser.file[i].link}" target="_blank")
                         img(src="#{viewingUser.file[i].link}")
@@ -82,20 +118,20 @@ block content
                         -for(var i=0; i<acounts.length; i++){
                             -if(acounts[i].type == 'abvandi')
                                 tr 
-                                    td= i+1
+                                    td.actions= i+1
                                     td= acounts[i].accountNumber
                                     td= acounts[i].charge
                                     //- td= acounts.find(e => e._id.toString() == acounts[i].linkedAccount).license
-                                    td 
-                                        a.green(href="#") 
+                                    td.actions
+                                        a.green(href="/dashboard/acount-view?acountID=#{acounts[i]._id}") 
                                             i.fa.fa-edit
-                                        a.red(href="#") 
-                                            i.fa.fa-trash
+                                        //- a.red(href="/dashboard/delete-acount?acountID=#{acounts[i]._id}&redirect=/dashboard/user-view?userID=#{viewingUser._id}") 
+                                        //-     i.fa.fa-trash
                         -}
-                    a.add-acount#add-abvandi-btn
-                        i.fa.fa-plus 
-                        | افزودن حساب آب‌وندی
-                .content#tab-content2.invisible
+                    //- a.add-acount#add-abvandi-btn
+                    //-     i.fa.fa-plus 
+                    //-     | افزودن حساب آب‌وندی
+                .content#tab-content2.hidden
                     table 
                         tr 
                             th ردیف
@@ -111,40 +147,40 @@ block content
                                     td= acounts[i].charge
                                     td= acounts.find(e => e._id.toString() == acounts[i].linkedAccount).license
                                     td 
-                                        a.green(href="#") 
+                                        a.green(href="/dashboard/acount-view?acountID=#{acounts[i]._id}") 
                                             i.fa.fa-edit
-                                        a.red(href="#") 
-                                            i.fa.fa-trash
+                                        //- a.red(href="/dashboard/delete-acount?acountID=#{acounts[i]._id}&redirect=/dashboard/user-view?userID=#{viewingUser._id}") 
+                                        //-     i.fa.fa-trash
                         -}
-                    a.add-acount#add-chahvandi-btn
-                        i.fa.fa-plus 
-                        | افزودن حساب چاه‌وندی
-                .content#tab-content3.invisible
+                    //- a.add-acount#add-chahvandi-btn
+                    //-     i.fa.fa-plus 
+                    //-     | افزودن حساب چاه‌وندی
+                .content#tab-content3.hidden
                     table 
                         tr 
                             th ردیف
                             th شماره پروانه
-                            th ظرفیت خرید
-                            th ظرفیت فروش
-                            th ظرفیت کل
+                            th شارژ سالیانه
+                            th مصرف شده
+                            th باقی مانده
                             th 
                         -var chah = acounts.filter(e => e.type == 'chah');
                         -for(var i=0; i<chah.length; i++){
                             tr 
                                 td= i+1
                                 td= chah[i].license
-                                td= chah[i].buyCap
-                                td= chah[i].sellCap
-                                td= chah[i].wellCap
+                                td= chah[i].permitedUseInYear
+                                td= chah[i].usedCredit
+                                td= chah[i].leftCredit
                                 td 
                                     a.green(href="/dashboard/acount-view?acountID=#{chah[i]._id}") 
                                         i.fa.fa-edit
-                                    a.red(href="/dashboard/delete-acount?acountID=#{chah[i]._id}&userID=#{viewingUser._id}") 
-                                        i.fa.fa-trash
+                                    //- a.red(href="/dashboard/delete-acount?acountID=#{chah[i]._id}&userID=#{viewingUser._id}") 
+                                    //-     i.fa.fa-trash
                         -}
-                    a.add-acount#add-chah-btn
-                        i.fa.fa-plus 
-                        | افزودن حساب چاه
+                    //- a.add-acount#add-chah-btn
+                    //-     i.fa.fa-plus 
+                    //-     | افزودن حساب چاه
         .user-control 
             .control 
                 

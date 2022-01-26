@@ -13,22 +13,22 @@ block content
             table(id="myTable")
                 tr 
                     th نوع حساب
-                    th شماره حساب/پروانه
+                    th شماره حساب
                     th مالک حساب
                     th شارژ (متر مکعب)
                     th 
                     th 
                 -for(var i=0; i<accounts.length; i++){
                     -if(accounts[i].type == "chah"){
-                        tr(id="chah#{accounts[i].license}")
+                        tr(id="chah#{accounts[i].license}" class="#{i>1 && accounts[i-1].ownerID == accounts[i].ownerID ? 'no-border': ''}")
                             td.role
                                 .red چاه
                                 .hidden= accounts[i].type
                             td.user 
-                                h1= accounts[i].license
-                                h2
-                                    -if(accounts[i].licensePic != 'undefined')
-                                        a(href="#{accounts[i].licensePic}" target="_blank") پروانه بهره برداری
+                                h1= accounts[i].accountNumber
+                                //- h2
+                                //-     -if(accounts[i].licensePic != 'undefined')
+                                //-         a(href="#{accounts[i].licensePic}" target="_blank") پروانه بهره برداری
                             td.acounts 
                                 -if(accounts[i].owner != 'undefined')
                                     h1= accounts[i].owner
@@ -47,7 +47,7 @@ block content
                                 a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts") 
                                     i.fa.fa-trash 
                     -}else if(accounts[i].type == "abvandi"){
-                        tr
+                        tr(class="#{i>1 && accounts[i-1].ownerID == accounts[i].ownerID ? 'no-border': ''}")
                             td.role
                                 .green آب‌وندی
                                 .hidden= accounts[i].type
@@ -74,7 +74,7 @@ block content
                                 a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts") 
                                     i.fa.fa-trash 
                     -}else if(accounts[i].type == "chahvandi"){
-                        tr
+                        tr(class="#{i>1 && accounts[i-1].ownerID == accounts[i].ownerID ? 'no-border': ''}")
                             td.role
                                 .blue چاه‌وندی
                                 .hidden= accounts[i].type
@@ -86,24 +86,24 @@ block content
                                     h1= accounts[i].owner
                                 -else
                                     .inline.red مشخص نشده
-                                h2
-                                    -if(accounts[i].linkedAccount != 'undefined'){
-                                        -var linkedAccount = accounts[accounts.map(e => e._id.toString()).indexOf(accounts[i].linkedAccount)]
-                                        -if(typeof(linkedAccount) != 'undefined'){
-                                            .linked-account(id="button#{linkedAccount.license}") متصل به حساب چاه #{linkedAccount.license}
-                                            script.
-                                                $(document).ready(() => {
-                                                    $('#button#{linkedAccount.license}').mouseenter(() => {
-                                                        $('#chah#{linkedAccount.license}').css('background-color', '#e9e9ff');
-                                                    })
-                                                    $('#button#{linkedAccount.license}').mouseleave(() => {
-                                                        $('#chah#{linkedAccount.license}').css('background-color', '#ffffff');
-                                                    })
+                                //- h2
+                                //-     -if(accounts[i].linkedAccount != 'undefined'){
+                                //-         -var linkedAccount = accounts[accounts.map(e => e._id.toString()).indexOf(accounts[i].linkedAccount)]
+                                //-         -if(typeof(linkedAccount) != 'undefined'){
+                                //-             .linked-account(id="button#{linkedAccount.license}") متصل به حساب چاه #{linkedAccount.license}
+                                //-             script.
+                                //-                 $(document).ready(() => {
+                                //-                     $('#button#{linkedAccount.license}').mouseenter(() => {
+                                //-                         $('#chah#{linkedAccount.license}').css('background-color', '#e9e9ff');
+                                //-                     })
+                                //-                     $('#button#{linkedAccount.license}').mouseleave(() => {
+                                //-                         $('#chah#{linkedAccount.license}').css('background-color', '#ffffff');
+                                //-                     })
                                                     
-                                                })
-                                        -}
-                                    -}else  
-                                        .inline.red بدون حساب چاه
+                                //-                 })
+                                //-         -}
+                                //-     -}else  
+                                //-         .inline.red بدون حساب چاه
                             td.charge
                                 -if(accounts[i].blocked)
                                     i.fa.fa-lock.red-lock

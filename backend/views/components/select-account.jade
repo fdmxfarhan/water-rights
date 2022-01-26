@@ -19,9 +19,9 @@
                             .red چاه
                             .hidden= accounts[i].type
                             .hidden(id="option-source-content-#{i}")= accounts[i]._id
-                            .hidden(id="option-source-name-#{i}")= accounts[i].license
+                            .hidden(id="option-source-name-#{i}")= accounts[i].accountNumber
                         td.user 
-                            h1= accounts[i].license
+                            h1= accounts[i].accountNumber
                         td.acounts 
                             -if(accounts[i].owner != 'undefined')
                                 h1= accounts[i].owner
@@ -119,9 +119,9 @@
                             .red چاه
                             .hidden= accounts[i].type
                             .hidden(id="option-target-content-#{i}")= accounts[i]._id
-                            .hidden(id="option-target-name-#{i}")= accounts[i].license
+                            .hidden(id="option-target-name-#{i}")= accounts[i].accountNumber
                         td.user 
-                            h1= accounts[i].license
+                            h1= accounts[i].accountNumber
                         td.acounts 
                             -if(accounts[i].owner != 'undefined')
                                 h1= accounts[i].owner

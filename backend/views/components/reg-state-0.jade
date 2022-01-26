@@ -71,6 +71,11 @@
         .two-side-form
             .part
                 .text-input-view
+                    label(for="accountNumber") کد اشتراک: 
+                        .required *
+                        //- i.fa.fa-pencil
+                    input.textinput(type="text" placeholder="کد اشتراک" name="accountNumber" value= "#{ typeof accountNumber != 'undefined' ? accountNumber: '' }" required oninvalid="this.setCustomValidity('لطفا این مورد را تکمیل نمایید')")
+                .text-input-view
                     label(for="license") شماره پروانه: 
                         .required *
                         //- i.fa.fa-pencil
@@ -149,9 +154,9 @@
                     label(for="area") مساحت زمین: 
                         //- i.fa.fa-phone
                     input.textinput(type="number" placeholder="مساحت زمین (متر مربع)" name="area" value= "#{ typeof area != 'undefined' ? area: '' }")
-        .buttons-view
-            button.submit.next(type="submit") مرحله بعد
-                i.fa.fa-chevron-left
+                .buttons-view
+                    button.submit.next(type="submit") مرحله بعد
+                        i.fa.fa-chevron-left
 -}else{
     .access-denied 
         h1 

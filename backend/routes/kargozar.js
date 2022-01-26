@@ -133,28 +133,50 @@ router.post('/register-user', ensureAuthenticated, (req, res, next) => {
                 });
             }
             else {
-                const newUser = new User({ipAddress, fullname, firstName, lastName, idNumber, cardNumber, birthDate: {day: birthDay, month: birthMonth, year: birthYear}, sex, fatherName, address, postCode, phone, password, role, card});
-                // Hash password
-                bcrypt.genSalt(10, (err, salt) => bcrypt.hash(newUser.password, salt, (err, hash) => {
-                    if(err) console.log(err);
-                    newUser.password = hash;
-                    newUser.save().then(user => {
-                        req.flash('success_msg', 'کاربر با موفقیت ثبت شد');
-                        res.redirect(`/kargozar?userIndex=${req.body.userIndex}`);
-                    }).catch(err => console.log(err));
-                }));
+                Acount.find({}, (err, accounts) => {
+                    var accountNumber = 114110;
+                    for(var i=0; i<accounts.length; i++)
+                        if(accounts[i].accountNumber > accountNumber)
+                            accountNumber = accounts[i].accountNumber
+                    const newUser = new User({username: accountNumber,ipAddress, fullname, firstName, lastName, idNumber, cardNumber, birthDate: {day: birthDay, month: birthMonth, year: birthYear}, sex, fatherName, address, postCode, phone, password, role, card});
+                    // Hash password
+                    bcrypt.genSalt(10, (err, salt) => bcrypt.hash(newUser.password, salt, (err, hash) => {
+                        if(err) console.log(err);
+                        newUser.password = hash;
+                        newUser.save().then(user => {
+                            Settings.findOne({}, (err, settings) => {
+                                var owner = 'undefined';
+                                if(newUser) owner = newUser.fullname;
+                                var newAccount = new Acount({
+                                    accountNumber: accountNumber+1,
+                                    owner,
+                                    ownerID: newUser._id,
+                                    type: 'abvandi',
+                                    charge: 0,
+                                    creationDate: new Date,
+                                    endDate: settings.endYearDateJ,
+                                    startDate: settings.startYearDateJ,
+                                })
+                                newAccount.save().then(doc => {
+                                    req.flash(`success_msg', 'کاربر با کد آب وندی ${newAccount.accountNumber} ثبت شد`);
+                                    res.redirect(`/kargozar?userIndex=${req.body.userIndex}`);
+                                }).catch(err => console.log(err));
+                            });
+                        }).catch(err => console.log(err));
+                    }));
+                });
                 console.log(newUser);
             }
         });
     }
 });
 router.post('/add-chah-account', ensureAuthenticated, upload.single('licensePic'), (req, res, next) => {
-    var {userID, owner, userIndex, license, permitedUseInYear, permitedAbdehi, permitedWorkTime, UTM, useType, pomp, wellCap, sellCap, buyCap, depth, power, abdehi, farmingType, area} = req.body;
+    var {accountNumber, userID, owner, userIndex, license, permitedUseInYear, permitedAbdehi, permitedWorkTime, UTM, useType, pomp, wellCap, sellCap, buyCap, depth, power, abdehi, farmingType, area} = req.body;
     var file = req.file;
     Settings.findOne({}, (err, settings) => {
-        Acount.findOne({license: license}, (err, acount) => {
+        Acount.findOne({$or: [{license: license}, {accountNumber: accountNumber}]}, (err, acount) => {
             if(acount){
-                req.flash('error_msg', 'شماره پروانه قبلا ثبت شده');
+                req.flash('error_msg', 'شماره پروانه یا کد اشتراک قبلا ثبت شده');
                 res.redirect(`/kargozar?userIndex=${userIndex}`);
             }else{
                 User.findById(userID, (err, user) => {
@@ -173,13 +195,14 @@ router.post('/add-chah-account', ensureAuthenticated, upload.single('licensePic'
                         yearCharge: permitedUseInYear,
                         endDate: settings.endYearDateJ,
                         startDate: settings.startYearDateJ,
+                        accountNumber,
                     });
                     newAcount.save().then(doc => {
                         Acount.find({}, (err, accounts) => {
-                            var accountNumber = 114110;
-                            for(var i=0; i<accounts.length; i++)
-                                if(accounts[i].accountNumber > accountNumber)
-                                    accountNumber = accounts[i].accountNumber
+                            // var accountNumber = 114110;
+                            // for(var i=0; i<accounts.length; i++)
+                            //     if(accounts[i].accountNumber > accountNumber)
+                            //         accountNumber = accounts[i].accountNumber
                             var newAcount2 = new Acount({
                                 accountNumber: accountNumber+1,
                                 charge: 0,
@@ -190,6 +213,7 @@ router.post('/add-chah-account', ensureAuthenticated, upload.single('licensePic'
                                 linkedAccount: newAcount._id,
                                 endDate: settings.endYearDateJ,
                                 startDate: settings.startYearDateJ,
+                                accountNumber: accountNumber+'1',
                             });
                             newAcount2.save().then(doc => {
                                 User.updateMany({_id: userID}, {$set: {chahvand: true, regStatusNum: user.regStatusNum+1}}, (err, doc) => {

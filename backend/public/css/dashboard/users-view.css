@@ -60,10 +60,13 @@
         margin: 0;
         padding: 0;
     }
+    .content-view .users-view table tr.no-border td{
+        border-top: none;
+    }
     .content-view .users-view table td.user h1{
         margin: 0;
         font-family: 'iransans';
-        font-size: 1.1vw;
+        font-size: 1vw;
         color: var(--text);
         padding: 0 0.5vw;
     }
@@ -115,7 +118,7 @@
     .content-view .users-view table td.acounts h1{
         margin: 0;
         font-family: 'iransans';
-        font-size: 1vw;
+        font-size: 0.9vw;
         color: var(--text);
         padding: 0 0.5vw;
     }
@@ -128,7 +131,7 @@
     }
     .content-view .users-view table td a.edit{
         padding: 0 0.5vw;
-        font-size: 1.5vw;
+        font-size: 1.3vw;
         color: var(--green);
     }
     .content-view .users-view table td a.edit:hover{
@@ -136,7 +139,7 @@
     }
     .content-view .users-view table td a.trash{
         padding: 0 0.5vw;
-        font-size: 1.5vw;
+        font-size: 1.3vw;
         color: var(--orange);
     }
     .content-view .users-view table td a.trash:hover{

@@ -79,7 +79,7 @@
         background-color: var(--purple);
         color: white;
         font-family: 'iransans';
-        font-size: 1vw;
+        font-size: 0.9vw;
         padding: 0.1vw 1vw;
         width: fit-content;
         border-radius: 0.5vw;
@@ -89,7 +89,7 @@
         background-color: var(--red);
         color: white;
         font-family: 'iransans';
-        font-size: 1vw;
+        font-size: 0.9vw;
         padding: 0.1vw 1vw;
         width: fit-content;
         border-radius: 0.5vw;
@@ -99,7 +99,7 @@
         background-color: var(--green);
         color: white;
         font-family: 'iransans';
-        font-size: 1vw;
+        font-size: 0.9vw;
         padding: 0.1vw 1vw;
         width: fit-content;
         border-radius: 0.5vw;
@@ -109,7 +109,7 @@
         background-color: var(--blue);
         color: white;
         font-family: 'iransans';
-        font-size: 1vw;
+        font-size: 0.9vw;
         padding: 0.1vw 1vw;
         width: fit-content;
         border-radius: 0.5vw;

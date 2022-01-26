@@ -43,8 +43,8 @@
         color: var(--blue);
     }
     .personal-info{
-        width: 90%;
-        margin: auto;
+        width: 100%;
+        margin: 1.5vw auto;
     }
     .personal-info form{
         overflow: hidden;
@@ -84,7 +84,7 @@
         outline: none;
         border-bottom: var(--blue) 0.1vw solid;
     }
-    .personal-info input.submit{
+    /* .personal-info input.submit{
         border: none;
         background-color: var(--blue);
         font-family: 'iransans';
@@ -97,7 +97,7 @@
     }
     .personal-info input.submit:hover{
         background-color: var(--hover);
-    }
+    } */
     .tab-view {
         width: 85%;
         margin: 1vw auto;
@@ -112,10 +112,10 @@
         width: 33.33%;
         text-align: center;
         padding: 0.6vw 0;
-        font-size: 1.2vw;
+        font-size: 1vw;
         color: var(--text);
         cursor: pointer;
-        border-bottom: white 0.4vw solid;
+        border-bottom: white 0.2vw solid;
     }
     .tab-view .tabs-area .tab#tab1{
         border-top-right-radius: 1vw;
@@ -124,32 +124,40 @@
         border-top-left-radius: 1vw;
     }
     .tab-view .tabs-area .tab:hover{
-        border-bottom: var(--lightgray) 0.4vw solid;
+        border-bottom: var(--lightgray) 0.2vw solid;
     }
     .tab-view .tabs-area .tab.active{
-        border-bottom: var(--gray) 0.4vw solid;
+        border-bottom: var(--gray) 0.2vw solid;
     }
     .tab-view .content{
         overflow: hidden;
         margin-top: 0.5vw;
-        background-color: white;
+        /* background-color: var(--lightergray); */
+        border: var(--gray) 0.1vw solid;
+        border-radius: 0.5vw;
+        
     }
     .tab-view .content table{
         width: 90%;
-        margin: 1vw auto;
+        margin: 0.3vw auto;
         text-align: center;
     }
     .tab-view .content table th{
-        color: var(--blue);
-        padding: 0.5vw 0;
+        color: var(--darkblue);
+        text-align: center;
+        padding: 0.2vw 0;
     }
     .tab-view .content table td{
         border-top: var(--lightgray) 0.1vw solid;
         padding: 0.3vw 0;
         color: var(--dark);
+        text-align: center;
+    }
+    .tab-view .content table td.actions{
+        width: 5vw;
     }
     .tab-view .content table td a{
-        font-size: 1.2vw;
+        font-size: 1.5vw;
         text-decoration: none;
         padding-left: 0.5vw;
         cursor: pointer;
@@ -385,6 +393,107 @@
     }
     .popup .two-column button.submit:hover{
         background-color: var(--hover);
+    }
+    .personal-info .text-input-view,
+    .personal-info .select-input-view,
+    .personal-info .date-input-view,
+    .personal-info .file-input-view{
+        overflow: hidden;
+        margin-bottom: 0.8vw;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+    .personal-info .text-input-view label, 
+    .personal-info .date-input-view label, 
+    .personal-info .select-input-view label,
+    .personal-info .file-input-view label{
+        display: block;
+        float: right;
+        width: 30%;
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        text-align: left;
+        margin-left: 0.5vw;
+        color: var(--text);
+    }
+    .personal-info .text-input-view label i, 
+    .personal-info .date-input-view label i, 
+    .personal-info .select-input-view label i,
+    .personal-info .file-input-view label i{
+        color: var(--blue);
+        padding-right: 0.5vw;
+    }
+    .personal-info .text-input-view input, 
+    .personal-info .date-input-view .date-input,
+    .personal-info .select-input-view .select,
+    .personal-info .file-input-view .file-input-overlay{
+        display: block;
+        float: right;
+        width: 50%;
+        border: none;
+        background-color: var(--lightergray2);
+        border-radius: 0.5vw;
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        padding: 0.3vw 1vw;
+        overflow: hidden;
+    }
+    
+    .personal-info .select-input-view .select{padding-top: 0;padding-bottom: 0;}
+    .personal-info .select-input-view .select select{
+        background-color: transparent;
+        border: none;
+        width: 100%;
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        padding: 0.3vw 0;
+    }
+    .personal-info .select-input-view .select select:focus,
+    .personal-info .text-input-view input:focus{
+        outline: none;
+    }
+    .personal-info .date-input-view .date-input input{
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        padding: 0 1vw;
+        margin: 0;
+        border: none;
+        width: 3vw;
+        display: block;
+        float: right;
+        background-color: transparent;
+    }
+    .personal-info .text-input-view input::placeholder, 
+    .personal-info .date-input-view .date-input input::placeholder{
+        color: var(--gray);
+    }
+    .personal-info .date-input-view .date-input input:focus{
+        outline: none;
+    }
+    .personal-info .date-input-view .date-input label{
+        font-size: 0.9vw;
+        display: block;
+        float: right;
+        padding: 0;
+        margin: 0;
+        width: fit-content;
+    }
+    input.submit{
+        font-family: 'iransans';
+        display: block;
+        width: fit-content;
+        font-size: 1vw;
+        color: white;
+        background-color: var(--blue);
+        padding: 0.2vw 2vw;
+        border-radius: 0.4vw;
+        border: none;
+        margin: 0;
+        margin: auto;
+        /* margin-left: 3.1vw; */
+        margin-top: 2vw;
+        cursor: pointer;
     }
 }
 

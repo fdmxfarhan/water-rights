@@ -1,17 +1,28 @@
-.sms-pannel
-    i.fa.fa-times.close-sms
-    .title
-        i.fa.fa-envelope 
-        | ارسال پیام به 
-        #sms-phone 09336448037
-    .messages
-        //- -for(var i=0; i<10; i++){
-        .message 
-            .text این یک پیام آزمایشی جهت نمایش در قسمت اس ام اس است.
-            .date 1400/2/4
-            i.fa.fa-check.check
-        //- -}
-    .send-msg 
-        input(type="text" id="message" placeholder="ارسال پیام ...")
-        button#send-btn 
-            i.fa.fa-send
+-for(var i=0; i<users.length; i++){
+    .sms-pannel(id="sms-panel-#{i}")
+        i.fa.fa-times.close-sms
+        .title
+            i.fa.fa-envelope 
+            | ارسال نظر
+            #sms-phone 
+        .messages(id="sms-panel-doc-#{i}")
+            -for(var j=0; j<users[i].comments.length; j++){
+                .message 
+                    .name= users[i].comments[j].role
+                    .text= users[i].comments[j].msg
+                    .date= users[i].comments[j].date
+                    i.fa.fa-check.check
+            -}
+        form.send-msg(action="/dashboard/send-message" method="POST")
+            input.hidden(type="text" name="userID" value="#{users[i]._id}")
+            input.hidden(type="text" name="userIndex" value="#{i}")
+            input.hidden(type="text" name="role" value="#{user.role}")
+            input.block(type="text" name="message" placeholder="ارسال پیام ...")
+            button#send-btn 
+                i.fa.fa-send
+-}
+-if(smsIndex){
+    script.
+        $('#sms-panel-#{userIndex}').show();
+        $('.black-modal').show();
+-}

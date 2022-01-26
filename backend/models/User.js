@@ -80,6 +80,7 @@ var UserSchema = new mongoose.Schema({
   },
   failedCredit: {type: Boolean, default: false},
   comment0: {type: String, default: ''},
+  comments: {type: [Object], default: []},
   comment1: {type: String, default: ''},
   comment2: {type: String, default: ''},
   comment3: {type: String, default: ''},

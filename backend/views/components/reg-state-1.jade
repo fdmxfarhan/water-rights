@@ -55,7 +55,10 @@
                         .value= chah.area
             .picture 
                 a(href="#{chah.licensePic}" download) 
-                    img(src="#{chah.licensePic}", alt="")
+                    -if(chah.licensePic.slice(chah.licensePic.length-3, chah.licensePic.length) != 'pdf')
+                        img(src="#{chah.licensePic}", alt="")
+                    -else
+                        img(src="/img/pdf.jpg", alt="")
                     .download 
                         i.fa.fa-cloud-download
         br
@@ -137,7 +140,10 @@
                         .value= chah.area
             .picture 
                 a(href="#{chah.licensePic}" download) 
-                    img(src="#{chah.licensePic}", alt="")
+                    -if(chah.licensePic.slice(chah.licensePic.length-3, chah.licensePic.length) != 'pdf')
+                        img(src="#{chah.licensePic}", alt="")
+                    -else
+                        img(src="/img/pdf.jpg", alt="")
                     .download 
                         i.fa.fa-cloud-download
         p کارشناس محترم، لطفا تایید بفرمایید که طی 24 ساعت گذشته، بهره بردار فروشنده کارت خود را در کنتور قرار داده و آخرین اطلاعات شارژ بروزرسانی شده است. در صورت نیاز شارژ سالیانه، مصرف شده یا باقی مانده را ویرایش نمایید.

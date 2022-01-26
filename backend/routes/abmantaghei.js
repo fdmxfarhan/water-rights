@@ -53,6 +53,7 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
                                 mirab,
                                 abkhan,
                                 userIndex: req.query.userIndex,
+                                smsIndex: req.query.smsIndex,
                             });
                         })
                     })
@@ -219,7 +220,6 @@ router.post('/change-doc', ensureAuthenticated, upload.fields([{name: `newLicens
     })
     
 });
-
 
 module.exports = router;
 

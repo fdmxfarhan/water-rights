@@ -62,6 +62,13 @@
     font-family: 'iransans';
     font-size: 0.9vw;
 }
+.sms-pannel .messages .message .name{
+    padding: 0.3vw 0.5vw;
+    font-family: 'iransans';
+    font-size: 0.9vw;
+    font-weight: bold;
+    color: var(--darkblue);
+}
 .sms-pannel .messages .message .text .link{
     color: var(--blue);
     display: inline;
@@ -100,7 +107,7 @@
     border-radius: 0.6vw;
 
 }
-.sms-pannel .send-msg input{
+.sms-pannel .send-msg input.block{
     display: block;
     float: right;
     font-family: 'iransans';
@@ -110,7 +117,7 @@
     border: none;
     background-color: transparent;
 }
-.sms-pannel .send-msg input:focus{
+.sms-pannel .send-msg input.block:focus{
     outline: none;
 }
 .sms-pannel .send-msg button{
@@ -127,3 +134,4 @@
 .sms-pannel .send-msg button:hover{
     color: var(--blue);
 }
+input.hidden{display: none;}

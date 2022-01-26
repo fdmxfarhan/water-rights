@@ -132,10 +132,10 @@ block content
                                 | #{Math.floor(accounts[i].charge*10)/10}
                             td
                                 -if(!accounts[i].revoked)
-                                    a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
+                                    a.edit.invisible
                                         i.fa.fa-edit
                             td
-                                a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts") 
+                                a.trash.invisible
                                     i.fa.fa-trash 
                     -}else if(accounts[i].type == "abkhan"){
                         tr
@@ -154,27 +154,27 @@ block content
                                 | #{Math.floor(accounts[i].charge*10)/10}
                             td
                                 -if(!accounts[i].revoked)
-                                    a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
+                                    a.edit.invisible
                                         i.fa.fa-edit
                             td
-                                a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts") 
+                                a.trash.invisible
                                     i.fa.fa-trash 
                     -}
                 -}
         .user-control 
             .control 
                 .search-view
-                    input(id="searchInput" type="text" placeholder="جستجو" onchange="search()")
+                    input(id="searchInput" type="text" placeholder="جستجو" onkeyup="search()")
                     button(onclick="search()")
                         i.fa.fa-search
                 .check-boxes
-                    input.check(type="checkbox" id="check-abvandi" checked onchange="abvandiCheck()")
+                    input.check(type="checkbox" id="check-abvandi" onchange="abvandiCheck()")
                     label(for="check-abvandi") حساب های آب‌وندی
                     br
-                    input.check(type="checkbox" id="check-chahvandi" checked onchange="chahvandiCheck()")
+                    input.check(type="checkbox" id="check-chahvandi" onchange="chahvandiCheck()")
                     label(for="check-chahvandi") حساب های چاه‌وندی
                     br
-                    input.check(type="checkbox" id="check-chah" checked onchange="chahCheck()")
+                    input.check(type="checkbox" id="check-chah" onchange="chahCheck()")
                     label(for="check-chah") حساب های چاه
                     
                 a.add-user#add-account-btn

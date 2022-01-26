@@ -38,26 +38,32 @@
                     a.button(href="#") 
                         i.fa.fa-pencil
             .user-content-view
-                .state-view
+                .state-view.view1
+                    .space
                     .state(class="#{users[i].regStatusNum > 0 ? 'active' : ''} #{users[i].regStatusNum == 0 ? 'selected' : ''}" id="state-1-select-#{i}")
                         i.fa.fa-check 
                         .text ثبت درخواست
+                        .person کارشناس کارگزار
                     .line
                     .state(class="#{users[i].regStatusNum > 1 ? 'active' : ''} #{users[i].regStatusNum == 1 ? 'selected' : ''}" id="state-2-select-#{i}")
                         i.fa.fa-check 
                         .text بررسی وضعیت شارژ و اعتبار بهره‌برداران
+                        .person کارشناس آب منطقه‌ای
                     .line
                     .state(class="#{users[i].regStatusNum > 2 ? 'active' : ''} #{users[i].regStatusNum == 2 ? 'selected' : ''}" id="state-3-select-#{i}")
                         i.fa.fa-check 
                         .text بررسی وضعیت فنی پرونده چاه
+                        .person اداره آب منطقه‌ای و تشکل آب بران
                     .line
                     .state(class="#{users[i].regStatusNum > 3 ? 'active' : ''} #{users[i].regStatusNum == 3 ? 'selected' : ''}" id="state-4-select-#{i}")
                         i.fa.fa-check 
                         .text اصلاح نام پرونده
+                        .person کارشناس آب منطقه‌ای
                     .line
                     .state(class="#{users[i].regStatusNum > 4 ? 'active' : ''} #{users[i].regStatusNum == 4 ? 'selected' : ''}" id="state-5-select-#{i}")
                         i.fa.fa-check 
                         .text تعهد نامه نمایندگی در فروش
+                        .person کارشناس کارگزار
                 .state-view(class="#{users[i].regStatusNum != 0 ? 'hidden': ''}" id="state-1-view-#{i}")
                     include reg-state-0
                 .state-view(class="#{users[i].regStatusNum != 1 ? 'hidden': ''}" id="state-2-view-#{i}")

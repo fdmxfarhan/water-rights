@@ -681,6 +681,20 @@ router.post('/transmit', (req, res, next) => {
         })
     })
 })
-
+router.post('/send-message', ensureAuthenticated, (req, res, next) => {
+    var {userID, userIndex, role, message} = req.body;
+    User.findById(userID, (err, user) => {
+        if(user){
+            var comments = user.comments;
+            comments.push({msg: message, role, date: dateConvert.convertDate(new Date())});
+            User.updateMany({_id: userID}, {$set: {comments}}, (err) => {
+                if(role == 'کارگزار') res.redirect(`/kargozar?userIndex=${userIndex}&smsIndex=${userIndex}`);
+                if(role == 'آب منطقه‌ای') res.redirect(`/abmantaghei?userIndex=${userIndex}&smsIndex=${userIndex}`);
+                if(role == 'تشکل آب بران') res.redirect(`/tashakol?userIndex=${userIndex}&smsIndex=${userIndex}`);
+            })
+        }
+        else res.send('user not found');
+    })
+})
 module.exports = router;
 

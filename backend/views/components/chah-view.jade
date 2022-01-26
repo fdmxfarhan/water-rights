@@ -1,13 +1,13 @@
 .complete-license-info 
     .title-view 
-        h1 حساب چاه #{account.license} 
+        h1 اطلاعات حساب چاه #{account.license} 
     .content-view 
         .users-view 
             form(action="/upload/save-chah" enctype="multipart/form-data" method="POST") 
                 input.hidden(type="text" name="accountID" value="#{account._id}")
                 .two-column
                     .column
-                        .title اطلاعات پروانه
+                        .title اطلاعات پروانه بهره برداری چاه
                         .text-input 
                             i.fa.fa-pencil 
                             label(for="license") شماره پروانه:
@@ -53,11 +53,11 @@
                                     option(selected value="شرکت آب") شرکت آب
                                 -else 
                                     option(value="شرکت آب") شرکت آب
-                        .select-input
+                        .select-input.hidden
                             label(for="userID")
                                 i.fa.fa-pencil 
                                 | کاربر:
-                            select(name="userID" id="userID") 
+                            select(name="userID" id="userID" ) 
                                 option(value="undefined") انتخاب کاربر
                                 -for(var i=0; i<users.length; i++){
                                     -if(account.ownerID == users[i]._id)
@@ -85,7 +85,7 @@
                         -if(account.licensePic)
                             img.license(src="#{account.licensePic}")
                     .column
-                        .title اطلاعات فیزیکی
+                        .title اطلاعات فیزیکی چاه
                         .text-input 
                             i.fa.fa-pencil 
                             label(for="wellCap") WellCap:

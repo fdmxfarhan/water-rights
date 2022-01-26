@@ -53,6 +53,7 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
                                 mirab,
                                 abkhan,
                                 userIndex: req.query.userIndex,
+                                smsIndex: req.query.smsIndex,
                             });
                         })
                     })

@@ -99,8 +99,8 @@ block content
                                         i.fa.fa-check 
                                         .text تعهد نامه نمایندگی در فروش
                                 td 
-                                    -if(users[i].messages.length > 0)
-                                        i.fa.fa-envelope.message
+                                    //- -if(users[i].messages.length > 0)
+                                    i.fa.fa-envelope.message(id="sms-btn2-#{i}")
                         -}
                     -}
         .user-control

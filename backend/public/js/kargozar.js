@@ -36,6 +36,9 @@ $(document).ready(function(){
             view: $(`#user-info-popup-${i}`),
             phone: $(`#phone-${i}`),
             smsButton: $(`#sms-btn-${i}`),
+            smsButton2: $(`#sms-btn2-${i}`),
+            smsPanel: $(`#sms-panel-${i}`),
+            smsPanelDoc: document.getElementById(`sms-panel-doc-${i}`),
             fileInputOverlay: $(`#file-input-overlay-${i}`),
             fileInput: $(`.file-input-${i}`),
             fileName: $(`#file-name-${i}`),
@@ -56,7 +59,7 @@ $(document).ready(function(){
     }
     usersInfo.forEach(usr => {
         usr.btn.click(() => {
-            closeAll();
+            // closeAll();
             $('.black-modal').fadeIn(500);
             usr.view.fadeIn(500);
         });
@@ -66,7 +69,12 @@ $(document).ready(function(){
             usr.view.fadeIn(500);
         });
         usr.smsButton.click(() => {
-            $('.sms-pannel').slideDown(500);
+            usr.smsPanel.slideDown(500);
+            usr.smsPanelDoc.scrollTop = usr.smsPanelDoc.scrollHeight;
+        });
+        usr.smsButton2.click(() => {
+            usr.smsPanel.slideDown(500);
+            usr.smsPanelDoc.scrollTop = usr.smsPanelDoc.scrollHeight;
         });
         usr.fileInput.change(() => {
             var fullPath = usr.fileInput.val()
@@ -143,11 +151,19 @@ $(document).ready(function(){
         
     });
     $('.close-sms').click(() => {
-        $('.sms-pannel').slideUp(500);
+        for(var i=0; i<usersLength; i++)
+            usersInfo[i].smsPanel.fadeOut(500);
     })
+    $(document).keyup(function(e) {
+        if (e.key === "Escape") {
+           closeAll();
+            $('.black-modal').fadeOut(500);
+       }
+   });
     var closeAll = () => {
         for(var i=0; i<usersLength; i++)
             usersInfo[i].view.fadeOut(500);
-        $('.sms-pannel').slideUp(500);
+        for(var i=0; i<usersLength; i++)
+            usersInfo[i].smsPanel.fadeOut(500);
     }
 });

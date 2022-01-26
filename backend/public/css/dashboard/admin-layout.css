@@ -383,11 +383,23 @@
 
 
 
-
+    .user-content-view{
+        padding-right: 1vw;
+    }
     .user-content-view .state-view{
         overflow: hidden;
         padding: 1.5vw 2vw;
         padding-bottom: 0;
+    }
+    .user-content-view .state-view.view1{
+        overflow: visible;
+        height: 5.3vw;
+        width: 100%;
+    }
+    .user-content-view .state-view.view1 .space{
+        float: right;
+        height: 4vw;
+        width: 1%;
     }
     .user-content-view .state-view .line{
         width: 3%;
@@ -398,7 +410,7 @@
     }
     .user-content-view .state-view .state{
         float: right;
-        overflow: hidden;
+        /* overflow: hidden; */
         border: var(--lightgray) 0.1vw solid;
         border-radius: 0.5vw;
         background-color: white;
@@ -430,6 +442,14 @@
         font-size: 0.8vw;
         text-align: center;
         color: var(--text);
+    }
+    .user-content-view .state-view .state .person{
+        color: gray;
+        font-size: 0.8vw;
+        position: absolute;
+        top: 4.3vw;
+        text-align: center;
+        width: 100%;
     }
     .user-content-view .state-view .state.active .text{
         color: white;

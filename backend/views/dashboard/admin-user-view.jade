@@ -16,20 +16,20 @@ block content
                     .part 
                         .text-input
                             label(for="firstName") نام: 
-                            input.text(type="text" name="firstName" placeholder="نام" value="#{viewingUser.firstName}")
+                            input.text(type="text" name="firstName" placeholder="نام" value="#{viewingUser.firstName}" required)
                         .text-input
                             label(for="lastName") نام خانوادگی: 
-                            input.text(type="text" name="lastName" placeholder="نام خانوادگی" value="#{viewingUser.lastName}")
+                            input.text(type="text" name="lastName" placeholder="نام خانوادگی" value="#{viewingUser.lastName}" required)
                         .text-input
                             label(for="fatherName") نام پدر: 
                             input.text(type="text" name="fatherName" placeholder="نام پدر" value="#{viewingUser.fatherName}")
                         .text-input
                             label(for="idNumber") کد ملی: 
-                            input.text(type="text" name="idNumber" placeholder="کد ملی" value="#{viewingUser.idNumber}")
+                            input.text(type="text" name="idNumber" placeholder="کد ملی" value="#{viewingUser.idNumber}" required)
                     .part
                         .text-input
                             label(for="cardNumber") شماره شناسنامه: 
-                            input.text(type="text" name="cardNumber" placeholder="شماره شناسنامه" value="#{viewingUser.cardNumber}")
+                            input.text(type="text" name="cardNumber" placeholder="شماره شناسنامه" value="#{viewingUser.cardNumber}" required)
                         .text-input
                             label(for="address") آدرس: 
                             input.text(type="text" name="address" placeholder="آدرس" value="#{viewingUser.address}")
@@ -38,7 +38,7 @@ block content
                             input.text(type="text" name="postCode" placeholder="کد پستی" value="#{viewingUser.postCode}")
                         .text-input
                             label(for="phone") تلفن: 
-                            input.text(type="text" name="phone" placeholder="تلفن" value="#{viewingUser.phone}")
+                            input.text(type="text" name="phone" placeholder="تلفن" value="#{viewingUser.phone}" required)
                         //- birthDate
                         //- introductionLetter
                         //- sex

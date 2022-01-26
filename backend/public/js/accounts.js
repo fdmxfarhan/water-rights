@@ -50,36 +50,80 @@ function hideAccount(accountType){
         }       
     }
 }
+function hideSpecialAccounts(){
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+    for (i = 1; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0].getElementsByTagName("div")[1];
+        // console.log(td);
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue == 'mirab' || txtValue == 'abkhan') {
+                tr[i].style.display = "none";
+            }
+        }       
+    }
+}
+function showSpecialAccounts(){
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+    for (i = 1; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0].getElementsByTagName("div")[1];
+        // console.log(td);
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue == 'mirab' || txtValue == 'abkhan') {
+                tr[i].style.display = "";
+            }
+        }       
+    }
+}
+
+var filterAccounts = () =>{
+    var chah = document.getElementById('check-chah').checked;
+    var chahvandi = document.getElementById('check-chahvandi').checked;
+    var abvandi = document.getElementById('check-abvandi').checked;
+    
+    if(chah) showAccount('chah');
+    else     hideAccount('chah');
+    if(chahvandi) showAccount('chahvandi');
+    else     hideAccount('chahvandi');
+    if(abvandi) showAccount('abvandi');
+    else     hideAccount('abvandi');
+    hideSpecialAccounts();
+    
+}
 
 function chahCheck()
 {
-    console.log(document.getElementById('check-chah'))
-    if (document.getElementById('check-chah').checked) 
-    {
+    if (!document.getElementById('check-chah').checked && !document.getElementById('check-chahvandi').checked && !document.getElementById('check-abvandi').checked) {
         showAccount('chah');
-    } else {
-        hideAccount('chah');
-    }  
+        showAccount('chahvandi');
+        showAccount('abvandi');
+        showSpecialAccounts();
+    }
+    else filterAccounts();
+    
 }
 function chahvandiCheck()
 {
-    console.log(document.getElementById('check-chahvandi'))
-    if (document.getElementById('check-chahvandi').checked) 
-    {
+    if (!document.getElementById('check-chah').checked && !document.getElementById('check-chahvandi').checked && !document.getElementById('check-abvandi').checked) {
+        showAccount('chah');
         showAccount('chahvandi');
-    } else {
-        hideAccount('chahvandi');
-    }  
+        showAccount('abvandi');
+        showSpecialAccounts();
+    }
+    else filterAccounts();
 }
 function abvandiCheck()
 {
-    console.log(document.getElementById('check-abvandi'))
-    if (document.getElementById('check-abvandi').checked) 
-    {
+    if (!document.getElementById('check-chah').checked && !document.getElementById('check-chahvandi').checked && !document.getElementById('check-abvandi').checked) {
+        showAccount('chah');
+        showAccount('chahvandi');
         showAccount('abvandi');
-    } else {
-        hideAccount('abvandi');
-    }  
+        showSpecialAccounts();
+    }
+    else filterAccounts();
 }
 
 $(document).ready(function(){

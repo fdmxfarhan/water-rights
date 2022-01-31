@@ -47,27 +47,24 @@ block content
     .content-view 
         .users-view 
             .filters 
+                //- .check-input
+                //-     input.check(type="checkbox" id="filter1")
+                //-     label(for="filter1") نیازمند بررسی
                 .check-input
-                    input.check(type="checkbox" id="filter1")
-                    label(for="filter1") نیازمند بررسی
-                .check-input
-                    input.check(type="checkbox" id="filter2")
+                    input.check(type="checkbox" id="filter2" onChange="filter2()")
                     label(for="filter2") تکمیل شده
                 .check-input
                     input.check(type="checkbox" id="filter3")
                     label(for="filter3") ناقص
-                .check-input
-                    input.check(type="checkbox" id="filter4")
-                    label(for="filter4") مالک چاه
                 .search-view 
-                    input.search(type="text" id="search-text" placeholder="جستجو...")
+                    input.search(type="text" id="search-text" placeholder="جستجو..." onkeyup="search()")
                     .search-button
                         i.fa.fa-search
                 .add-user-btn 
                     i.fa.fa-plus 
                     | ثبت درخواست
             .users-list 
-                table 
+                table#myTable
                     tr 
                         th کاربر
                         th وضعیت

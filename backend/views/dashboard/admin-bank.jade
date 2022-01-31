@@ -1,0 +1,213 @@
+extends layout
+
+block styles
+    link(rel="stylesheet", href="/css/dashboard/users-view.css")
+    link(rel="stylesheet", href="/css/dashboard/accounts.css")
+
+block content
+    .title-view 
+        h1 حساب ها
+        h2 #{accounts.length} حساب
+    .content-view 
+        .users-view 
+            table(id="myTable")
+                tr 
+                    th نوع حساب
+                    th شماره حساب
+                    th مالک حساب
+                    th شارژ (متر مکعب)
+                    th 
+                    th 
+                -for(var i=0; i<accounts.length; i++){
+                    -if(accounts[i].type == "chah"){
+                        tr(id="chah#{accounts[i].license}" class="#{i>1 && accounts[i-1].ownerID == accounts[i].ownerID ? 'no-border': ''}")
+                            td.role
+                                .red چاه
+                                .hidden= accounts[i].type
+                            td.user 
+                                h1= accounts[i].accountNumber
+                                //- h2
+                                //-     -if(accounts[i].licensePic != 'undefined')
+                                //-         a(href="#{accounts[i].licensePic}" target="_blank") پروانه بهره برداری
+                            td.acounts 
+                                -if(accounts[i].owner != 'undefined')
+                                    h1= accounts[i].owner
+                                -else
+                                    .inline.red مشخص نشده
+                                h2
+                            td.charge
+                                -if(accounts[i].blocked)
+                                    i.fa.fa-lock.red-lock
+                                | #{Math.floor(accounts[i].charge*10)/10}
+                            td
+                                -if(!accounts[i].revoked)
+                                    a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
+                                        i.fa.fa-edit
+                            td
+                                a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts" onclick="makeSure(event)") 
+                                    i.fa.fa-trash 
+                    -}else if(accounts[i].type == "abvandi"){
+                        tr(class="#{i>1 && accounts[i-1].ownerID == accounts[i].ownerID ? 'no-border': ''}")
+                            td.role
+                                .green آب‌وندی
+                                .hidden= accounts[i].type
+                            td.user 
+                                h1= accounts[i].accountNumber
+                                h2
+                                    //- -if(accounts[i].licensePic != 'undefined')
+                                    //-     a(href="#{accounts[i].licensePic}" target="_blank") پروانه بهره برداری
+                            td.acounts 
+                                -if(accounts[i].owner != 'undefined')
+                                    h1= accounts[i].owner
+                                -else
+                                    .inline.red مشخص نشده
+                                h2
+                            td.charge
+                                -if(accounts[i].blocked)
+                                    i.fa.fa-lock.red-lock
+                                | #{Math.floor(accounts[i].charge*10)/10}
+                            td
+                                -if(!accounts[i].revoked)
+                                    a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
+                                        i.fa.fa-edit
+                            td
+                                a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts" onclick="makeSure(event)") 
+                                    i.fa.fa-trash 
+                    -}else if(accounts[i].type == "chahvandi"){
+                        tr(class="#{i>1 && accounts[i-1].ownerID == accounts[i].ownerID ? 'no-border': ''}")
+                            td.role
+                                .blue چاه‌وندی
+                                .hidden= accounts[i].type
+                            td.user 
+                                h1= accounts[i].accountNumber
+                                h2
+                            td.acounts 
+                                -if(accounts[i].owner != 'undefined')
+                                    h1= accounts[i].owner
+                                -else
+                                    .inline.red مشخص نشده
+                                //- h2
+                                //-     -if(accounts[i].linkedAccount != 'undefined'){
+                                //-         -var linkedAccount = accounts[accounts.map(e => e._id.toString()).indexOf(accounts[i].linkedAccount)]
+                                //-         -if(typeof(linkedAccount) != 'undefined'){
+                                //-             .linked-account(id="button#{linkedAccount.license}") متصل به حساب چاه #{linkedAccount.license}
+                                //-             script.
+                                //-                 $(document).ready(() => {
+                                //-                     $('#button#{linkedAccount.license}').mouseenter(() => {
+                                //-                         $('#chah#{linkedAccount.license}').css('background-color', '#e9e9ff');
+                                //-                     })
+                                //-                     $('#button#{linkedAccount.license}').mouseleave(() => {
+                                //-                         $('#chah#{linkedAccount.license}').css('background-color', '#ffffff');
+                                //-                     })
+                                                    
+                                //-                 })
+                                //-         -}
+                                //-     -}else  
+                                //-         .inline.red بدون حساب چاه
+                            td.charge
+                                -if(accounts[i].blocked)
+                                    i.fa.fa-lock.red-lock
+                                | #{Math.floor(accounts[i].charge*10)/10}
+                            td
+                                -if(!accounts[i].revoked)
+                                    a.edit(href="/dashboard/acount-view?acountID=#{accounts[i]._id}") 
+                                        i.fa.fa-edit
+                            td
+                                a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts" onclick="makeSure(event)") 
+                                    i.fa.fa-trash 
+                    -}else if(accounts[i].type == "mirab"){
+                        tr
+                            td.role
+                                .purple میراب
+                                .hidden= accounts[i].type
+                            td.user 
+                                h1 mirab
+                                h2
+                            td.acounts 
+                                h1= accounts[i].owner
+                                h2
+                            td.charge
+                                -if(accounts[i].blocked)
+                                    i.fa.fa-lock.red-lock
+                                | #{Math.floor(accounts[i].charge*10)/10}
+                            td
+                                -if(!accounts[i].revoked)
+                                    a.edit.invisible
+                                        i.fa.fa-edit
+                            td
+                                a.trash.invisible
+                                    i.fa.fa-trash 
+                    -}else if(accounts[i].type == "abkhan"){
+                        tr
+                            td.role
+                                .purple آبخوان
+                                .hidden= accounts[i].type
+                            td.user 
+                                h1 abkhan
+                                h2
+                            td.acounts 
+                                h1= accounts[i].owner
+                                h2
+                            td.charge
+                                -if(accounts[i].blocked)
+                                    i.fa.fa-lock.red-lock
+                                | #{Math.floor(accounts[i].charge*10)/10}
+                            td
+                                -if(!accounts[i].revoked)
+                                    a.edit.invisible
+                                        i.fa.fa-edit
+                            td
+                                a.trash.invisible
+                                    i.fa.fa-trash 
+                    -}
+                -}
+        .user-control 
+            .control 
+                .search-view
+                    input(id="searchInput" type="text" placeholder="جستجو" onkeyup="search()")
+                    button(onclick="search()")
+                        i.fa.fa-search
+                .check-boxes
+                    input.check(type="checkbox" id="check-abvandi" onchange="abvandiCheck()")
+                    label(for="check-abvandi") حساب های آب‌وندی
+                    br
+                    input.check(type="checkbox" id="check-chahvandi" onchange="chahvandiCheck()")
+                    label(for="check-chahvandi") حساب های چاه‌وندی
+                    br
+                    input.check(type="checkbox" id="check-chah" onchange="chahCheck()")
+                    label(for="check-chah") حساب های چاه
+                    
+                a.add-user#add-account-btn
+                    i.fa.fa-plus 
+                    | افزودن حساب
+            //- .control
+            //-     form.transmission(action="/dashboard/transmit" method="POST") 
+            //-         h1.title
+            //-             i.fa.fa-arrows-h
+            //-             | انتقال شارژ
+            //-         h1.name حساب مبداء:
+            //-         .select-account#transmission-source
+            //-             .name#source-name انتخاب کنید
+            //-             .type#source-type 
+            //-         h1.name حساب مقصد:
+            //-         .select-account#transmission-target
+            //-             .name#target-name انتخاب کنید
+            //-             .type#target-type 
+            //-         h1.name مقدار شارژ:
+            //-         input.hidden(type="text" name="sourceID" value="" id="transmission-sourceID")
+            //-         input.hidden(type="text" name="targetID" value="" id="transmission-targetID")
+            //-         input.text(type="number" name="amount" step="0.01" placeholder="متر مکعب")
+            //-         button.submit(type="submit") انتقال
+    include ../components/add-account-popup
+    include ../components/select-account
+    script(src="/js/accounts.js") 
+    script.
+        $('#link3').addClass('active');
+        function makeSure(e)
+        {
+            if(!confirm('Are you sure?')) {
+                e.preventDefault();
+            }
+        }
+
+

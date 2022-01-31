@@ -70,6 +70,41 @@
         color: var(--text);
         padding: 0 0.5vw;
     }
+    .content-view .users-view table td.accounts a{
+        display: block;
+        font-family: 'iransans';
+        font-size: 1vw;
+        text-decoration: none;
+        color: var(--text);
+    }
+    .content-view .users-view table td.accounts a:hover{
+        color: var(--blue);
+    }
+    .content-view .users-view table td.accounts a .charge{
+        display: inline;
+        color: var(--green);
+        font-weight: bold;
+    }
+    .content-view .users-view table td.accounts a .charge .cm{
+        display: inline;
+        color: var(--text);
+        font-weight: normal;
+        font-size: 0.7vw;
+        margin-right: 0.5vw;
+    }
+    .content-view .users-view table td.forms a{
+        display: block;
+        font-family: 'iransans';
+        font-size: 1vw;
+        text-decoration: none;
+        color: var(--text);
+    }
+    .content-view .users-view table td.forms a:hover{
+        color: var(--blue);
+    }
+    .content-view .users-view table td.forms a .charge{
+        display: inline;
+    }
     .content-view .users-view table td.user h2{
         font-family: 'iransans';
         font-size: 0.9vw;
@@ -128,6 +163,32 @@
         color: var(--lightgray);
         margin: 0;
         padding: 0 0.5vw;
+    }
+    .content-view .users-view table td.market-role h1{
+        font-family: 'iransans';
+        font-size: 1vw;
+        color: var(--dark);
+        margin: 0;
+        padding: 0;
+    }
+    .content-view .users-view table td.market-role .change-role {
+        /* display: none; */
+        overflow: hidden;
+    }
+    .content-view .users-view table tr:hover td.market-role .change-role {
+        display: block;
+    }
+    .content-view .users-view table td.market-role .change-role a{
+        font-family: 'iransans';
+        display: block;
+        float: right;
+        font-size: 0.8vw;
+        color: var(--blue);
+        text-decoration: none;
+        margin-left: 0.5vw;
+    }
+    .content-view .users-view table td.market-role .change-role a:hover{
+        color: var(--hover);
     }
     .content-view .users-view table td a.edit{
         padding: 0 0.5vw;

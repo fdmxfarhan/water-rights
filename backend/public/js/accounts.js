@@ -174,12 +174,16 @@ $(document).ready(function(){
         $('.black-modal').fadeOut(500);
         $('#select-source-popup').fadeOut(500);
         $('#select-target-popup').fadeOut(500);
+        $('#form1-download-popup').fadeOut(500);
+        $('#form2-download-popup').fadeOut(500);
     });
     $('.close-popup').click(() => {
         $('#add-account-popup').fadeOut(500);
         $('.black-modal').fadeOut(500);
         $('#select-source-popup').fadeOut(500);
         $('#select-target-popup').fadeOut(500);
+        $('#form1-download-popup').fadeOut(500);
+        $('#form2-download-popup').fadeOut(500);
     });
     var accountsLength = parseInt(document.getElementById('accounts-length').textContent);
     var selectAccounts = [];

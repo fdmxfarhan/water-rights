@@ -12,8 +12,13 @@ var Transmission = require('../models/Transmission');
 var Settings = require('../models/Settings');
 const mail = require('../config/mail');
 const dateConvert = require('../config/dateConvert');
+const {convertDate} = require('../config/dateConvert');
 const sms = require('../config/sms');
 const sms2 = require('../config/sms2');
+var pdf = require("pdf-creator-node");
+var fs = require('fs');
+var path = require('path');
+var phantomjs = require('phantomjs');
 
 Acount.findOne({type: 'mirab'}, (err, account) => {
     if(!account){
@@ -677,7 +682,8 @@ router.post('/transmit', (req, res, next) => {
                 sms('09336448037', 'انتقال جدید در اپلیکیشن میراب');
                 Acount.updateMany({_id: sourceID}, {$set: {charge: source.charge - amount}}, (err) => {
                     if(err) console.log(err);
-                    res.redirect('/dashboard/accounts');
+                    // res.redirect('/dashboard/accounts');
+                    res.redirect('/dashboard/market');
                 });
             }).catch(err => console.log(err));
         })
@@ -698,5 +704,152 @@ router.post('/send-message', ensureAuthenticated, (req, res, next) => {
         else res.send('user not found');
     })
 })
+router.get('/market', ensureAuthenticated, (req, res, next) => {
+    var {makeForm1, makeForm2, userID} = req.query;
+    if(req.user.role != 'user'){
+        User.find({role: 'user'}, (err, users) => {
+            Acount.find({}, (err, accounts) => {
+                for (let i = 0; i < users.length; i++) {
+                    users[i].accounts = accounts.filter(e => e.ownerID == users[i]._id.toString());
+                }
+                var options = {
+                    phantomPath: path.join(__dirname, '../node_modules/phantomjs/lib/phantom/bin/phantomjs'),
+                    // phantomPath: '/usr/local/share/phantomjs-1.9.8-linux-x86_64/bin/phantomjs',
+                    format: "A3",
+                    orientation: "portrait",
+                    border: "5mm",
+                    header: {
+                        height: "0",
+                        contents: ''
+                    },
+                    footer: {
+                        height: "0mm",
+                        contents: {}
+                    },
+                };
+
+                if(makeForm1){
+                    User.findById(userID, (err, user) => {
+                        Acount.findOne({type: 'chah', ownerID: user._id}, (err, chah) => {
+                            ///  an error must be accured when ther is no chah account
+                            ///  attention !!!
+                            fs.readFile('./public/form1.html', 'utf8', (err, form1) => {
+                                var document1 = {
+                                    html: form1,
+                                    data: {
+                                        info: {
+                                            fullname: user.fullname,
+                                            accountNumber: user.username,
+                                            maximum: chah.sellCap,
+                                            idNumber: user.idNumber,
+                                            date: convertDate(new Date()),
+                                            formNumber: 1,
+                                            amount: '.................',
+                                        }
+                                    },
+                                    path: 'public/files/form1.pdf',
+                                    type: "",
+                                };
+                                pdf.create(document1, options).then((r) => {
+                                    res.render('./dashboard/admin-market', {
+                                        user: req.user,
+                                        users,
+                                        accounts,
+                                        typeToString: (type) =>{
+                                            if(type == 'chah') return 'چاه'
+                                            if(type == 'chahvandi') return 'چاه‌وندی'
+                                            if(type == 'abvandi') return 'آب‌وندی'
+                                        },
+                                        makeForm1: true,
+                                    });
+                                }).catch((error) => {console.error(error)});
+                            });
+                        });
+                    });
+                }
+                else if(makeForm2){
+                    User.findById(userID, (err, user) => {
+                        Acount.findOne({type: 'chah', ownerID: user._id}, (err, chah) => {
+                            fs.readFile('./public/form2.html', 'utf8', (err, form2) => {
+                                var document2 = {
+                                    html: form2,
+                                    data: {
+                                        info: {
+                                            fullname: user.fullname,
+                                            accountNumber: user.username,
+                                            maximum: chah.buyCap,
+                                            idNumber: sourceUser.idNumber,
+                                            date: convertDate(new Date()),
+                                            formNumber: 1,
+                                            amount: '.................',
+                                        }
+                                    },
+                                    path: 'public/files/form2.pdf',
+                                    type: "",
+                                };
+                                pdf.create(document2, options).then((r) => {
+                                    res.render('./dashboard/admin-market', {
+                                        user: req.user,
+                                        users,
+                                        accounts,
+                                        typeToString: (type) =>{
+                                            if(type == 'chah') return 'چاه'
+                                            if(type == 'chahvandi') return 'چاه‌وندی'
+                                            if(type == 'abvandi') return 'آب‌وندی'
+                                        },
+                                        makeForm2: true,
+                                    });
+                                }).catch((error) => {console.error(error)});
+                            });
+                        });
+                    });
+                }
+                else{
+                    res.render('./dashboard/admin-market', {
+                        user: req.user,
+                        users,
+                        accounts,
+                        typeToString: (type) =>{
+                            if(type == 'chah') return 'چاه'
+                            if(type == 'chahvandi') return 'چاه‌وندی'
+                            if(type == 'abvandi') return 'آب‌وندی'
+                        }
+                    });
+                }
+            });
+        });
+    }
+});
+router.get('/bank', ensureAuthenticated, (req, res, next) => {
+    if(req.user.role != 'user'){
+        User.find({}, (err, users) => {
+            Acount.find({}, (err, accounts) => {
+                res.render('./dashboard/admin-bank', {
+                    user: req.user,
+                    users,
+                    accounts,
+                    
+                });
+            });
+        });
+    }
+});
+router.get('/change-to-buyer', ensureAuthenticated, (req, res, next) => {
+    var {userID} = req.query;
+    User.updateMany({_id: userID}, {$set: {marketRole: 'خریدار'}}, (err) => {
+        req.flash('success_msg', 'تغیرات انجام شد.');
+        res.redirect('/dashboard/market');
+    })
+});
+router.get('/change-to-seller', ensureAuthenticated, (req, res, next) => {
+    var {userID} = req.query;
+    User.updateMany({_id: userID}, {$set: {marketRole: 'فروشنده'}}, (err) => {
+        req.flash('success_msg', 'تغیرات انجام شد.');
+        res.redirect('/dashboard/market');
+    })
+});
+
+
+
 module.exports = router;
 

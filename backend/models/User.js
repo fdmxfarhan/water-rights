@@ -93,6 +93,7 @@ var UserSchema = new mongoose.Schema({
   file4: {type: Object, default: {link: '', type: 'undefined'}},
   counterNotCalibrated: {type: Boolean, default: false},
   commitmentLetter: String,
+  marketRole: {type: String, default: ''},
 });
 
 var User = mongoose.model('User', UserSchema);

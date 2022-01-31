@@ -1,3 +1,35 @@
+function search() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("search-text");
+    filter = input.value;
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+    // console.log(tr);
+    for (i = 1; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0].getElementsByTagName("h1")[0];
+        td2 = tr[i].getElementsByTagName("td")[0].getElementsByTagName("a")[0];
+        // console.log(td);
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            txtValue2 = td2.textContent || td2.innerText;
+            if (txtValue.indexOf(filter) > -1 || txtValue2.indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
+
+var filter2 = () => {
+    var checked = document.getElementById('filter2').checked;
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+    for (let i = 1; i < tr.length; i++) {
+                
+    }
+}
+
 $(document).ready(function(){
     $('#link1').addClass('active');
 

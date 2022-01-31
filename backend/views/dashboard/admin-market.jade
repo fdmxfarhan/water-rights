@@ -31,7 +31,7 @@ block content
                         td.accounts
                             -for(var j=0; j<users[i].accounts.length; j++){
                                 a(href="/dashboard/acount-view?acountID=#{users[i].accounts[j]._id}") #{users[i].accounts[j].accountNumber} (#{typeToString(users[i].accounts[j].type)}): 
-                                    .charge= users[i].accounts[j].charge
+                                    .charge= Math.floor(users[i].accounts[j].charge*10)/10
                                         .cm متر مکعب
                             -}
                         td.forms

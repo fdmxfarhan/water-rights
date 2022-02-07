@@ -1,6 +1,6 @@
 .complete-license-info 
     .title-view 
-        h1 اطلاعات حساب چاه #{account.license} 
+        h1 اطلاعات حساب چاه #{account.accountNumber} 
     .content-view 
         .users-view 
             form(action="/upload/save-chah" enctype="multipart/form-data" method="POST") 
@@ -12,6 +12,10 @@
                             //- i.fa.fa-pencil 
                             label(for="license") شماره پروانه:
                             input(type="text" name="license" placeholder="XXXX" value="#{typeof(account.license) == 'undefined' ? '' : account.license}" disabled)
+                        .text-input-view
+                            //- i.fa.fa-pencil 
+                            label(for="accountNumber") کد اشتراک:
+                            input(type="text" name="accountNumber" placeholder="XXXX" value="#{typeof(account.accountNumber) == 'undefined' ? '' : account.accountNumber}")
                         .text-input-view
                             //- i.fa.fa-pencil 
                             label(for="permitedUseInYear") اجازه برداشت سالیانه:
@@ -87,7 +91,7 @@
                             .file-input-overlay(id="file-input-overlay-#{i}")
                                 i.fa.fa-check.check(id="file-check-#{i}")
                                 .filename(id="file-name-#{i}") انتخاب فایل
-                                input.file-input(type="file" name="licensePic" required class="file-input-#{i}" )
+                                input.file-input(type="file" name="licensePic" class="file-input-#{i}" )
                         .text-input-view 
                             //- i.fa.fa-pencil 
                             label(for="charge") شارژ فعلی:

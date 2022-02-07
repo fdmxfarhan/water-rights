@@ -218,7 +218,7 @@ router.post('/add-account-chah', ensureAuthenticated, upload.single('licensePic'
     })
 });
 router.post('/save-chah', ensureAuthenticated, upload.single('licensePic'), (req, res, next) => {
-    var {charge, usedCredit, leftCredit, accountID, permitedUseInYear, linkedAccount, permitedAbdehi, permitedWorkTime, UTM, useType, wellCap, sellCap, buyCap, depth, power, abdehi, userID, pomp, farmingType, area} = req.body;
+    var {charge, usedCredit, accountNumber, leftCredit, accountID, permitedUseInYear, linkedAccount, permitedAbdehi, permitedWorkTime, UTM, useType, wellCap, sellCap, buyCap, depth, power, abdehi, userID, pomp, farmingType, area} = req.body;
     var file = req.file;
     User.findById(userID, (err, user) => {
         Acount.findById(accountID, (err, account) => {
@@ -249,6 +249,7 @@ router.post('/save-chah', ensureAuthenticated, upload.single('licensePic'), (req
                 charge, 
                 usedCredit, 
                 leftCredit,
+                accountNumber,
             }}, (err) => {
                 if(err) console.log(err);
                 if(owner != 'undefined'){

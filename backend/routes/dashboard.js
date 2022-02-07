@@ -744,7 +744,7 @@ router.get('/market', ensureAuthenticated, (req, res, next) => {
                                             idNumber: user.idNumber,
                                             date: convertDate(new Date()),
                                             formNumber: 1,
-                                            amount: '.................',
+                                            amount: '.................................',
                                         }
                                     },
                                     path: 'public/files/form1.pdf',
@@ -781,7 +781,7 @@ router.get('/market', ensureAuthenticated, (req, res, next) => {
                                             idNumber: sourceUser.idNumber,
                                             date: convertDate(new Date()),
                                             formNumber: 1,
-                                            amount: '.................',
+                                            amount: '.................................',
                                         }
                                     },
                                     path: 'public/files/form2.pdf',

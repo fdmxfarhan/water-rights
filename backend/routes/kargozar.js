@@ -138,7 +138,7 @@ router.post('/register-user', ensureAuthenticated, (req, res, next) => {
                     for(var i=0; i<accounts.length; i++)
                         if(accounts[i].accountNumber > accountNumber)
                             accountNumber = accounts[i].accountNumber
-                    const newUser = new User({username: accountNumber,ipAddress, fullname, firstName, lastName, idNumber, cardNumber, birthDate: {day: birthDay, month: birthMonth, year: birthYear}, sex, fatherName, address, postCode, phone, password, role, card});
+                    const newUser = new User({username: accountNumber+1,ipAddress, fullname, firstName, lastName, idNumber, cardNumber, birthDate: {day: birthDay, month: birthMonth, year: birthYear}, sex, fatherName, address, postCode, phone, password, role, card});
                     // Hash password
                     bcrypt.genSalt(10, (err, salt) => bcrypt.hash(newUser.password, salt, (err, hash) => {
                         if(err) console.log(err);

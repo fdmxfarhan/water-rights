@@ -335,7 +335,7 @@ router.post('/save-chahvandi', ensureAuthenticated, upload.single('licensePic'),
     });
 });
 router.post('/save-abvandi', ensureAuthenticated, (req, res, next) => {
-    var {charge, usedCredit, leftCredit, accountID, userID} = req.body;
+    var {charge, usedCredit, leftCredit, accountID, userID, accountNumber} = req.body;
     console.log(accountID)
     User.findById(userID, (err, user) => {
         Acount.findById(accountID, (err, account) => {
@@ -345,10 +345,15 @@ router.post('/save-abvandi', ensureAuthenticated, (req, res, next) => {
                 owner: owner,
                 ownerID: userID,
                 type: 'abvandi',
-                charge, usedCredit, leftCredit, 
+                charge, 
+                usedCredit, 
+                leftCredit, 
+                accountNumber,
             }}, (err) => {
-                req.flash('success_msg', 'اطلاعات با موفقیت ذخیره شد');
-                res.redirect(`/dashboard/acount-view?acountID=${accountID}`)
+                User.updateMany({_id: userID}, {$set: {username: accountNumber}}, (err) => {
+                    req.flash('success_msg', 'اطلاعات با موفقیت ذخیره شد');
+                    res.redirect(`/dashboard/acount-view?acountID=${accountID}`)
+                });
             });
         });
     });

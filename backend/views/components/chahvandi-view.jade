@@ -47,6 +47,10 @@
                                             option(value="#{accounts[i]._id}") #{accounts[i].license}
                                     -}
                                 -}
+                        .text-input 
+                            i.fa.fa-pencil 
+                            label(for="accountNumber") شماره حساب:
+                            input(type="text" name="accountNumber" placeholder="شماره حساب" value="#{typeof(account.accountNumber) == 'undefined' ? '' : account.accountNumber}")
                 button.submit(type="submit")
                     i.fa.fa-save
             -if(account.linkedAccount != 'undefined')

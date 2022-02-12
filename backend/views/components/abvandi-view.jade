@@ -20,6 +20,11 @@
                                     -else
                                         option(value="#{users[i]._id}") #{users[i].fullname} (#{users[i].phone})
                                 -}
+                        .text-input 
+                            i.fa.fa-pencil 
+                            label(for="accountNumber") کد آب‌وندی:
+                            input(type="number" name="accountNumber" placeholder="کد آب‌وندی" value="#{typeof(account.accountNumber) == 'undefined' ? '' : account.accountNumber}")
+                        
                     .column
                         .text-input 
                             i.fa.fa-pencil 

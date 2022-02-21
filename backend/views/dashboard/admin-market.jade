@@ -13,7 +13,7 @@ block content
             table(id="myTable")
                 tr 
                     th نام و نام خانوادگی
-                    th وضعیت
+                    //- th وضعیت
                     th موجودی حساب ها
                     th فرم ها
                     th 
@@ -23,11 +23,11 @@ block content
                             h1= users[i].fullname
                             h2
                                 a(href="tel:#{users[i].phone}")= users[i].phone
-                        td.market-role 
-                            h1= users[i].marketRole
-                            .change-role 
-                                a(href="/dashboard/change-to-buyer?userID=#{users[i]._id}") تغییر به خریدار
-                                a(href="/dashboard/change-to-seller?userID=#{users[i]._id}") تغییر به فروشنده
+                        //- td.market-role 
+                        //-     h1= users[i].marketRole
+                        //-     .change-role 
+                        //-         a(href="/dashboard/change-to-buyer?userID=#{users[i]._id}") تغییر به خریدار
+                        //-         a(href="/dashboard/change-to-seller?userID=#{users[i]._id}") تغییر به فروشنده
                         td.accounts
                             -for(var j=0; j<users[i].accounts.length; j++){
                                 a(href="/dashboard/acount-view?acountID=#{users[i].accounts[j]._id}") #{users[i].accounts[j].accountNumber} (#{typeToString(users[i].accounts[j].type)}): 
@@ -60,23 +60,8 @@ block content
                     i.fa.fa-plus 
                     | افزودن حساب
             .control
-                form.transmission(action="/dashboard/transmit" method="POST") 
-                    h1.title
-                        i.fa.fa-arrows-h
-                        | انتقال شارژ
-                    h1.name حساب مبداء:
-                    .select-account#transmission-source
-                        .name#source-name انتخاب کنید
-                        .type#source-type 
-                    h1.name حساب مقصد:
-                    .select-account#transmission-target
-                        .name#target-name انتخاب کنید
-                        .type#target-type 
-                    h1.name مقدار شارژ:
-                    input.hidden(type="text" name="sourceID" value="" id="transmission-sourceID")
-                    input.hidden(type="text" name="targetID" value="" id="transmission-targetID")
-                    input.text(type="number" name="amount" step="0.01" placeholder="متر مکعب")
-                    button.submit(type="submit") انتقال
+                br
+                a.link(href="/dashboard/trade") معاملات
     include ../components/add-account-popup
     include ../components/select-account
     include ../components/form-download

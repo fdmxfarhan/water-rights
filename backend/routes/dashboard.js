@@ -848,7 +848,17 @@ router.get('/change-to-seller', ensureAuthenticated, (req, res, next) => {
         res.redirect('/dashboard/market');
     })
 });
-
+router.get('/trade', ensureAuthenticated, (req, res, next) => {
+    User.find({role: 'user'}, (err, users) => {
+        Acount.find({}, (err, accounts) => {
+            res.render('./dashboard/admin-trade', {
+                user: req.user,
+                accounts,
+                users,
+            });
+        });
+    });
+});
 
 
 module.exports = router;

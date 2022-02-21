@@ -14,9 +14,9 @@
                 th شارژ (متر مکعب)
             -for(var i=0; i<accounts.length; i++){
                 -if(accounts[i].type == "chah"){
-                    tr(id="option-source-#{i}")
+                    tr.hidden(id="option-source-#{i}")
                         td.role
-                            .red چاه
+                            .red(id="option-source-type-#{i}") چاه
                             .hidden= accounts[i].type
                             .hidden(id="option-source-content-#{i}")= accounts[i]._id
                             .hidden(id="option-source-name-#{i}")= accounts[i].accountNumber
@@ -24,7 +24,7 @@
                             h1= accounts[i].accountNumber
                         td.acounts 
                             -if(accounts[i].owner != 'undefined')
-                                h1= accounts[i].owner
+                                h1(id="option-source-owner-#{i}")= accounts[i].owner
                             -else
                                 .inline.red مشخص نشده
                         td.charge
@@ -34,7 +34,7 @@
                 -}else if(accounts[i].type == "abvandi"){
                     tr(id="option-source-#{i}")
                         td.role
-                            .green آب‌وندی
+                            .green(id="option-source-type-#{i}") آب‌وندی
                             .hidden= accounts[i].type
                             .hidden(id="option-source-content-#{i}")= accounts[i]._id
                             .hidden(id="option-source-name-#{i}")= accounts[i].accountNumber
@@ -42,7 +42,7 @@
                             h1= accounts[i].accountNumber
                         td.acounts 
                             -if(accounts[i].owner != 'undefined')
-                                h1= accounts[i].owner
+                                h1(id="option-source-owner-#{i}")= accounts[i].owner
                             -else
                                 .inline.red مشخص نشده
                         td.charge
@@ -52,7 +52,7 @@
                 -}else if(accounts[i].type == "chahvandi"){
                     tr(id="option-source-#{i}")
                         td.role
-                            .blue چاه‌وندی
+                            .blue(id="option-source-type-#{i}") چاه‌وندی
                             .hidden= accounts[i].type
                             .hidden(id="option-source-content-#{i}")= accounts[i]._id
                             .hidden(id="option-source-name-#{i}")= accounts[i].accountNumber
@@ -60,7 +60,7 @@
                             h1= accounts[i].accountNumber
                         td.acounts 
                             -if(accounts[i].owner != 'undefined')
-                                h1= accounts[i].owner
+                                h1(id="option-source-owner-#{i}")= accounts[i].owner
                             -else
                                 .inline.red مشخص نشده
                         td.charge
@@ -68,31 +68,31 @@
                                 i.fa.fa-lock.red-lock
                             | #{Math.floor(accounts[i].charge*10)/10}
                 -}else if(accounts[i].type == "mirab"){
-                    tr(id="option-source-#{i}")
+                    tr.hidden(id="option-source-#{i}")
                         td.role
-                            .purple میراب
+                            .purple(id="option-source-type-#{i}") میراب
                             .hidden= accounts[i].type
                             .hidden(id="option-source-content-#{i}")= accounts[i]._id
                             .hidden(id="option-source-name-#{i}") mirab
                         td.user 
                             h1 mirab
                         td.acounts 
-                            h1= accounts[i].owner
+                            h1(id="option-source-owner-#{i}")= accounts[i].owner
                         td.charge
                             -if(accounts[i].blocked)
                                 i.fa.fa-lock.red-lock
                             | #{Math.floor(accounts[i].charge*10)/10}
                 -}else if(accounts[i].type == "abkhan"){
-                    tr(id="option-source-#{i}")
+                    tr.hidden(id="option-source-#{i}")
                         td.role
-                            .purple آبخوان
+                            .purple(id="option-source-type-#{i}") آبخوان
                             .hidden= accounts[i].type
                             .hidden(id="option-source-content-#{i}")= accounts[i]._id
                             .hidden(id="option-source-name-#{i}") abkhan
                         td.user 
                             h1 abkhan
                         td.acounts 
-                            h1= accounts[i].owner
+                            h1(id="option-source-owner-#{i}")= accounts[i].owner
                         td.charge
                             -if(accounts[i].blocked)
                                 i.fa.fa-lock.red-lock
@@ -114,9 +114,9 @@
                 th شارژ (متر مکعب)
             -for(var i=0; i<accounts.length; i++){
                 -if(accounts[i].type == "chah"){
-                    tr(id="option-target-#{i}")
+                    tr.hidden(id="option-target-#{i}")
                         td.role
-                            .red چاه
+                            .red(id="option-target-type-#{i}") چاه
                             .hidden= accounts[i].type
                             .hidden(id="option-target-content-#{i}")= accounts[i]._id
                             .hidden(id="option-target-name-#{i}")= accounts[i].accountNumber
@@ -124,7 +124,7 @@
                             h1= accounts[i].accountNumber
                         td.acounts 
                             -if(accounts[i].owner != 'undefined')
-                                h1= accounts[i].owner
+                                h1(id="option-target-owner-#{i}")= accounts[i].owner
                             -else
                                 .inline.red مشخص نشده
                         td.charge
@@ -134,7 +134,7 @@
                 -}else if(accounts[i].type == "abvandi"){
                     tr(id="option-target-#{i}")
                         td.role
-                            .green آب‌وندی
+                            .green(id="option-target-type-#{i}") آب‌وندی
                             .hidden= accounts[i].type
                             .hidden(id="option-target-content-#{i}")= accounts[i]._id
                             .hidden(id="option-target-name-#{i}")= accounts[i].accountNumber
@@ -142,7 +142,7 @@
                             h1= accounts[i].accountNumber
                         td.acounts 
                             -if(accounts[i].owner != 'undefined')
-                                h1= accounts[i].owner
+                                h1(id="option-target-owner-#{i}")= accounts[i].owner
                             -else
                                 .inline.red مشخص نشده
                         td.charge
@@ -152,7 +152,7 @@
                 -}else if(accounts[i].type == "chahvandi"){
                     tr(id="option-target-#{i}")
                         td.role
-                            .blue چاه‌وندی
+                            .blue(id="option-target-type-#{i}") چاه‌وندی
                             .hidden= accounts[i].type
                             .hidden(id="option-target-content-#{i}")= accounts[i]._id
                             .hidden(id="option-target-name-#{i}")= accounts[i].accountNumber
@@ -160,7 +160,7 @@
                             h1= accounts[i].accountNumber
                         td.acounts 
                             -if(accounts[i].owner != 'undefined')
-                                h1= accounts[i].owner
+                                h1(id="option-target-owner-#{i}")= accounts[i].owner
                             -else
                                 .inline.red مشخص نشده
                         td.charge
@@ -168,31 +168,31 @@
                                 i.fa.fa-lock.red-lock
                             | #{Math.floor(accounts[i].charge*10)/10}
                 -}else if(accounts[i].type == "mirab"){
-                    tr(id="option-target-#{i}")
+                    tr.hidden(id="option-target-#{i}")
                         td.role
-                            .purple میراب
+                            .purple(id="option-target-type-#{i}") میراب
                             .hidden= accounts[i].type
                             .hidden(id="option-target-content-#{i}")= accounts[i]._id
                             .hidden(id="option-target-name-#{i}") mirab
                         td.user 
                             h1 mirab
                         td.acounts 
-                            h1= accounts[i].owner
+                            h1(id="option-target-owner-#{i}")= accounts[i].owner
                         td.charge
                             -if(accounts[i].blocked)
                                 i.fa.fa-lock.red-lock
                             | #{Math.floor(accounts[i].charge*10)/10}
                 -}else if(accounts[i].type == "abkhan"){
-                    tr(id="option-target-#{i}")
+                    tr.hidden(id="option-target-#{i}")
                         td.role
-                            .purple آبخوان
+                            .purple(id="option-target-type-#{i}") آبخوان
                             .hidden= accounts[i].type
                             .hidden(id="option-target-content-#{i}")= accounts[i]._id
                             .hidden(id="option-target-name-#{i}") abkhan
                         td.user 
                             h1 abkhan
                         td.acounts 
-                            h1= accounts[i].owner
+                            h1(id="option-target-owner-#{i}")= accounts[i].owner
                         td.charge
                             -if(accounts[i].blocked)
                                 i.fa.fa-lock.red-lock

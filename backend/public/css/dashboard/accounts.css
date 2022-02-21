@@ -132,30 +132,35 @@
         color: red;
         padding-left: 0.5vw;
     }
-    .control form.transmission h1.title{
+    form.transmission{
+        width: 90%;
+        margin: auto;
+        margin-bottom: 3vw;
+    }
+    form.transmission h1.title{
         font-family: 'iransans';
         font-size: 1.2vw;
         color: var(--blue);
         padding: 0.3vw 1vw;
     }
-    .control form.transmission h1.title i{
+    form.transmission h1.title i{
         padding-left: 0.5vw;
     }
-    .control form.transmission h1.name{
+    form.transmission h1.name{
         font-family: 'iransans';
         font-size: 1vw;
         color: var(--dark);
-        padding: 0.3vw 1vw;
+        padding: 0.3vw 0;
         font-weight: normal;
         margin: 0;
         padding: 0;
-        padding: 0 1vw;
     }
-    .control form.transmission .select-account{
+    form.transmission .select-account{
         width: 80%;
-        margin: auto;
+        /* margin: auto; */
         padding: 0.2vw 0.7vw;
         border: var(--lightgray) 0.1vw solid;
+        background-color: var(--lightergray2);
         border-radius: 0.5vw;
         font-family: 'iransans';
         font-size: 1vw;
@@ -163,56 +168,129 @@
         overflow: hidden;
         margin-bottom: 1vw;
         cursor: pointer;
+        position: relative;
     }
-    .control form.transmission .select-account:hover{
+    form.transmission .select-account:hover{
         border: var(--blue) 0.1vw solid;
         color: var(--blue);
     }
-    .control form.transmission .select-account.selected{
+    form.transmission .select-account.selected{
         border: var(--green) 0.1vw solid;
         color: var(--green);
     }
-    .control form.transmission .select-account .name{
+    form.transmission .select-account.red{
+        border: red 0.1vw solid;
+    }
+    form.transmission .select-account .name{
         font-family: 'iransans';
         font-size: 0.9vw;
         float: right;
+        margin-right: 1.5vw;
     }
-    .control form.transmission .select-account .type{
+    form.transmission .select-account .type{
         font-family: 'iransans';
         font-size: 0.8vw;
         float: left;
         padding-top: 0.1vw;
     }
-    .control form.transmission input.text{
-        display: block;
-        width: 80%;
+    form.transmission .text-input-view{
+        overflow: hidden;
+    }
+    form.transmission .text-input-view h1.name{
+        float: right;
+        width: 10%;
+    }
+    form.transmission input.text{
+        float: right;
+        width: 69%;
         font-family: 'iransans';
         font-size: 0.9vw;
         margin: auto;
         padding: 0.2vw 0.7vw;
         border: var(--lightgray) 0.1vw solid;
         border-radius: 0.5vw;
+        background-color: var(--lightergray2);
     }
-    .control form.transmission input.text:focus{
+    form.transmission input.text:focus{
         outline: none;
         border: var(--blue) 0.1vw solid;
     }
-    .control form.transmission button.submit{
+    form.transmission input.text.red{
+        border: red 0.1vw solid;
+    }
+    .control a.link{
         color: white;
         font-family: 'iransans';
-        font-size: 0.9vw;
+        font-size: 1vw;
         background-color: var(--blue);
-        padding: 0.3vw 0.7vw;
+        padding: 0.3vw 0;
         width: 90%;
         margin: auto;
         display: block;
-        margin-top: 1vw;
+        border: none;
+        border-radius: 0.3vw;
+        cursor: pointer;
+        text-decoration: none;
+        text-align: center;
+        margin-top: 0;
+    }
+    .control button.submit{
+        color: white;
+        font-family: 'iransans';
+        font-size: 1vw;
+        background-color: var(--blue);
+        padding: 0.3vw 2vw;
+        width: 90%;
+        margin: auto;
+        display: block;
+        margin-top: 2vw;
         border: none;
         border-radius: 0.3vw;
         cursor: pointer;
     }
-    .control form.transmission button.submit:hover{
+    .control button.submit i{
+        padding: 0 0.5vw;
+    }
+    .control button.submit:hover{
         background-color: var(--green);
+    }
+    form.transmission .account-info {
+        padding: 0;
+        margin: 0;
+        margin-bottom: 1vw;
+        overflow: hidden;
+    }
+    form.transmission .account-info .info{
+        float: right;
+        width: 30%;
+        margin-bottom: 0.5vw;
+        overflow: hidden;
+    }
+    form.transmission .account-info .info .name{
+        font-weight: bold;
+        color: var(--dark);
+        float: right;
+        width: 45%;
+        text-align: left;
+        margin-left: 5%;
+    }
+    form.transmission .account-info .info .value{
+        color: var(--green);
+        float: right;
+        width: 50%;
+    }
+    form.transmission .account-info-view{
+        border: var(--lightgray) 0.1vw solid;
+        border-radius: 0.7vw;
+        margin-bottom: 1vw;
+        padding: 0 1vw;
+    }
+    form.transmission .select-account i{
+        display: none;
+        position: absolute;
+        top: 0.4vw;
+        right: 0.5vw;
+        color: var(--green);
     }
     .select-list{
         max-height: 30vw;
@@ -286,5 +364,61 @@
     }
     .select-search-view button:hover{
         color: var(--hover);
+    }
+    .charge h1{
+        color: var(--text);
+        font-family: 'iransans';
+        font-size: 1.3vw;
+        text-align: center;
+        padding-top: 1vw;
+        border-bottom: var(--lightgray) 0.1vw solid;
+    }
+    .charge h2{
+        color: var(--green);
+        font-size: 2vw;
+        line-height: 1vw;
+        text-align: center;
+        font-family: 'iransans';
+    }
+    .charge h2 .cm{
+        display: inline;
+        color: var(--gray);
+        font-size: 0.8vw;
+        font-family: 'iransans';
+        /* font-weight: normal; */
+        padding-right: 0.5vw;
+    }
+    .charge .item{
+        overflow: hidden;
+        width: 85%;
+        margin: auto;
+    }
+    .charge .item .cm{
+        display: inline;
+        color: var(--gray);
+        font-size: 0.5vw;
+        font-family: 'iransans';
+        /* font-weight: normal; */
+        padding-right: 0.5vw;
+        font-weight: normal;
+    }
+    .charge .item .name{
+        float: right;
+        color: var(--text);
+        font-family: 'iransans';
+        font-size: 1vw;
+    }
+    .charge .item .value{
+        float: left;
+        color: var(--green);
+        font-family: 'iransans';
+        font-size: 1vw;
+        font-weight: bold;
+        margin-right: 0.4vw;
+        font-weight: bold;
+    }
+    .charge .item .value.gray{
+        color: var(--gray);
+        font-weight: normal;
     }
 }

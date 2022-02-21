@@ -1,0 +1,115 @@
+extends layout
+
+block styles
+    link(rel="stylesheet", href="/css/dashboard/users-view.css")
+    link(rel="stylesheet", href="/css/dashboard/accounts.css")
+
+block content
+    .title-view 
+        h1 معاملات
+        //- h2 #{accounts.length} حساب
+    .content-view 
+        .users-view 
+            form.transmission(action="/dashboard/transmit" method="POST") 
+                h1.title
+                    i.fa.fa-arrows-h
+                    | ثبت معامله جدید
+                .account-info-view
+                    h1.name حساب مبداء:
+                    .select-account#transmission-source
+                        .name#source-name انتخاب کنید
+                        .type#source-type 
+                        i.fa.fa-check#source-selected-icon
+                    .account-info 
+                        .info 
+                            .name مالک حساب: 
+                            .value#source-owner -
+                        .info 
+                            .name نوع حساب: 
+                            .value -
+                        .info 
+                            .name شارژ فعلی: 
+                            .value= 0
+                        .info 
+                            .name مصرف شده: 
+                            .value= 0
+                        .info 
+                            .name باقی مانده: 
+                            .value= 0
+                        .info 
+                            .name قابل فروش: 
+                            .value= 0
+                        
+                .account-info-view
+                    h1.name حساب مقصد:
+                    .select-account#transmission-target
+                        .name#target-name انتخاب کنید
+                        .type#target-type 
+                        i.fa.fa-check#target-selected-icon
+                    .account-info 
+                        .info 
+                            .name مالک حساب: 
+                            .value#target-owner -
+                        .info 
+                            .name شارژ سالیانه: 
+                            .value= 0
+                        .info 
+                            .name شارژ فعلی: 
+                            .value= 0
+                        .info 
+                            .name مصرف شده: 
+                            .value= 0
+                        .info 
+                            .name باقی مانده: 
+                            .value= 0
+                        .info 
+                            .name قابل فروش: 
+                            .value= 0
+                .text-input-view
+                    h1.name مقدار شارژ:
+                    input.text(type="number" name="amount" id="amount" step="0.01" placeholder="متر مکعب" onkeyup="updateAmount()")
+                input.hidden(type="text" name="sourceID" value="" id="transmission-sourceID")
+                input.hidden(type="text" name="targetID" value="" id="transmission-targetID")
+        .user-control 
+            .control
+                .charge 
+                    h1 کارمزد
+                    .item 
+                        .name سهم میراب: 
+                        .value= 0
+                            .cm متر مکعب
+                    .item 
+                        .name سهم آب‌خوان: 
+                        .value= 0
+                            .cm متر مکعب
+                    .item 
+                        .name قابل انتقال: 
+                        .value= 0
+                            .cm متر مکعب
+                button.submit#submit-form
+                    i.fa.fa-save
+                    | ثبت و صدور فرم 3
+                    
+    include ../components/add-account-popup
+    include ../components/select-account
+    //- include ../components/form-download
+    script(src="/js/accounts.js") 
+    script.
+        $('#link6').addClass('active');
+        function makeSure(e)
+        {
+            if(!confirm('Are you sure?')) {
+                e.preventDefault();
+            }
+        }
+    //- -if(makeForm1){
+    //-     script.
+    //-         $('#form1-download-popup').show();
+    //-         $('.black-modal').show();
+    //- -}else if(makeForm2){
+    //-     script.
+    //-         $('#form2-download-popup').show();
+    //-         $('.black-modal').show();
+    //- -}
+
+

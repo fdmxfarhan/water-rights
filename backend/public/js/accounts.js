@@ -125,7 +125,11 @@ function abvandiCheck()
     }
     else filterAccounts();
 }
-
+var amount = 0;
+var updateAmount = () => {
+    amount = parseInt(document.getElementById('amount').value);
+    document.getElementById('amount').classList.remove('red');
+}
 $(document).ready(function(){
     // $('#link3').addClass('active');
     $('#tab2').hide();
@@ -187,15 +191,21 @@ $(document).ready(function(){
     });
     var accountsLength = parseInt(document.getElementById('accounts-length').textContent);
     var selectAccounts = [];
+    var sourceSelected = false;
+    var targetSelected = false;
     for (let i = 0; i < accountsLength; i++) {
         selectAccounts.push({
             id: i,
             sourceOption: $(`#option-source-${i}`),
             sourceContent: $(`#option-source-content-${i}`).text(),
             sourceName: $(`#option-source-name-${i}`).text(),
+            sourceOwner: $(`#option-source-owner-${i}`).text(),
+            sourceType: $(`#option-source-type-${i}`).text(),
             targetOption: $(`#option-target-${i}`),
             targetContent: $(`#option-target-content-${i}`).text(),
             targetName: $(`#option-target-name-${i}`).text(),
+            targetOwner: $(`#option-target-owner-${i}`).text(),
+            targetType: $(`#option-target-type-${i}`).text(),
         });
     }
     selectAccounts.forEach(option => {
@@ -204,19 +214,47 @@ $(document).ready(function(){
             $('#select-source-popup').fadeOut(500);
             $('#select-target-popup').fadeOut(500);
             $('#transmission-sourceID').addClass('selected');
-            document.getElementById('source-name').textContent = option.sourceName;
+            document.getElementById('source-name').textContent = option.sourceName + ' (' + option.sourceOwner + ')';
+            document.getElementById('source-owner').textContent = option.sourceOwner;
+            document.getElementById('source-type').textContent = option.sourceType;
             document.getElementById('transmission-sourceID').value = option.sourceContent;
+            for (let i = 0; i < selectAccounts.length; i++) {
+                if(selectAccounts[i].targetType != 'آبخوان' && selectAccounts[i].targetType != 'چاه' && selectAccounts[i].targetType != 'میراب')
+                    selectAccounts[i].targetOption.removeClass('hidden');
+            }
+            $(`#source-selected-icon`).css('display', 'block');
+            $(`#target-selected-icon`).css('display', 'none');
+            option.targetOption.addClass('hidden');
+            document.getElementById('target-name').textContent = 'انتخاب کنید';
+            document.getElementById('target-type').textContent = '';
+            document.getElementById('transmission-targetID').value = '';
+            sourceSelected = true;
+            targetSelected = false;
+            $('#transmission-source').removeClass('red');
         });
         option.targetOption.click(() => {
             $('.black-modal').fadeOut(500);
             $('#select-source-popup').fadeOut(500);
             $('#select-target-popup').fadeOut(500);
             $('#transmission-targetID').addClass('selected');
-            document.getElementById('target-name').textContent = option.targetName;
+            document.getElementById('target-name').textContent = option.targetName + ' (' + option.targetOwner + ')';
+            document.getElementById('target-owner').textContent = option.targetOwner;
+            document.getElementById('target-type').textContent = option.targetType;
             document.getElementById('transmission-targetID').value = option.targetContent;
+            $(`#target-selected-icon`).css('display', 'block');
+            targetSelected = true;
+            $('#transmission-target').removeClass('red');
         });
     });
-
+    $('#submit-form').click(() => {
+        if(!sourceSelected){
+            $('#transmission-source').addClass('red');
+        }else if(!targetSelected){
+            $('#transmission-target').addClass('red');
+        }else if(isNaN(amount) || amount == 0){
+            $('#amount').addClass('red');
+        }
+    })
 
 
 });

@@ -778,7 +778,7 @@ router.get('/market', ensureAuthenticated, (req, res, next) => {
                                             fullname: user.fullname,
                                             accountNumber: user.username,
                                             maximum: chah.buyCap,
-                                            idNumber: sourceUser.idNumber,
+                                            idNumber: user.idNumber,
                                             date: convertDate(new Date()),
                                             formNumber: 1,
                                             amount: '.................................',

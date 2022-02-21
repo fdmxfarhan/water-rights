@@ -21,7 +21,6 @@ function search() {
         }
     }
 }
-
 function showAccount(accountType){
     table = document.getElementById("myTable");
     tr = table.getElementsByTagName("tr");
@@ -78,7 +77,6 @@ function showSpecialAccounts(){
         }       
     }
 }
-
 var filterAccounts = () =>{
     var chah = document.getElementById('check-chah').checked;
     var chahvandi = document.getElementById('check-chahvandi').checked;
@@ -93,7 +91,6 @@ var filterAccounts = () =>{
     hideSpecialAccounts();
     
 }
-
 function chahCheck()
 {
     if (!document.getElementById('check-chah').checked && !document.getElementById('check-chahvandi').checked && !document.getElementById('check-abvandi').checked) {
@@ -125,10 +122,20 @@ function abvandiCheck()
     }
     else filterAccounts();
 }
+
 var amount = 0;
+var sourceAmount = 0;
 var updateAmount = () => {
-    amount = parseInt(document.getElementById('amount').value);
+    amount = parseFloat(document.getElementById('amount').value);
     document.getElementById('amount').classList.remove('red');
+    internalMirabRight = parseFloat(document.getElementById('internal-mirab-right').textContent);
+    if(isNaN(amount)){
+        document.getElementById('mirab-right').textContent = 0;
+        document.getElementById('transmitable').textContent = 0;
+    }else{
+        document.getElementById('mirab-right').textContent = amount * internalMirabRight;
+        document.getElementById('transmitable').textContent = amount - amount * internalMirabRight;
+    }
 }
 $(document).ready(function(){
     // $('#link3').addClass('active');
@@ -201,11 +208,17 @@ $(document).ready(function(){
             sourceName: $(`#option-source-name-${i}`).text(),
             sourceOwner: $(`#option-source-owner-${i}`).text(),
             sourceType: $(`#option-source-type-${i}`).text(),
+            sourceStartDate: $(`#option-source-start-date-${i}`).text(),
+            sourceEndDate: $(`#option-source-start-date-${i}`).text(),
+            sourceCharge: $(`#option-source-charge-${i}`).text(),
             targetOption: $(`#option-target-${i}`),
             targetContent: $(`#option-target-content-${i}`).text(),
             targetName: $(`#option-target-name-${i}`).text(),
             targetOwner: $(`#option-target-owner-${i}`).text(),
             targetType: $(`#option-target-type-${i}`).text(),
+            targetStartDate: $(`#option-target-start-date-${i}`).text(),
+            targetEndDate: $(`#option-target-end-date-${i}`).text(),
+            targetCharge: $(`#option-target-charge-${i}`).text(),
         });
     }
     selectAccounts.forEach(option => {
@@ -216,6 +229,10 @@ $(document).ready(function(){
             $('#transmission-sourceID').addClass('selected');
             document.getElementById('source-name').textContent = option.sourceName + ' (' + option.sourceOwner + ')';
             document.getElementById('source-owner').textContent = option.sourceOwner;
+            document.getElementById('source-type2').textContent = option.sourceType;
+            document.getElementById('source-start-date').textContent = option.sourceStartDate;
+            document.getElementById('source-end-date').textContent = option.sourceEndDate;
+            document.getElementById('source-available').textContent = option.sourceCharge;
             document.getElementById('source-type').textContent = option.sourceType;
             document.getElementById('transmission-sourceID').value = option.sourceContent;
             for (let i = 0; i < selectAccounts.length; i++) {
@@ -231,6 +248,7 @@ $(document).ready(function(){
             sourceSelected = true;
             targetSelected = false;
             $('#transmission-source').removeClass('red');
+            sourceAmount = parseFloat(option.sourceCharge);
         });
         option.targetOption.click(() => {
             $('.black-modal').fadeOut(500);
@@ -239,6 +257,10 @@ $(document).ready(function(){
             $('#transmission-targetID').addClass('selected');
             document.getElementById('target-name').textContent = option.targetName + ' (' + option.targetOwner + ')';
             document.getElementById('target-owner').textContent = option.targetOwner;
+            document.getElementById('target-type2').textContent = option.targetType;
+            document.getElementById('target-start-date').textContent = option.targetStartDate;
+            document.getElementById('target-end-date').textContent = option.targetEndDate;
+            document.getElementById('target-available').textContent = option.targetCharge;
             document.getElementById('target-type').textContent = option.targetType;
             document.getElementById('transmission-targetID').value = option.targetContent;
             $(`#target-selected-icon`).css('display', 'block');
@@ -253,6 +275,11 @@ $(document).ready(function(){
             $('#transmission-target').addClass('red');
         }else if(isNaN(amount) || amount == 0){
             $('#amount').addClass('red');
+        }else if(amount > sourceAmount){
+            $('#amount').addClass('red');
+            alert('موجودی حساب مبداء کافی نیست')
+        }else{
+            document.getElementById('form-transmission').submit();
         }
     })
 

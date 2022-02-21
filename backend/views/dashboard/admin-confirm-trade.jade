@@ -17,62 +17,40 @@ block content
                     | ثبت معامله جدید
                 .account-info-view
                     h1.name حساب مبداء:
-                    .select-account#transmission-source
-                        .name#source-name انتخاب کنید
+                    .select-account
+                        .name#source-name= transmission.source.accountNumber
                         .type#source-type 
                         i.fa.fa-check#source-selected-icon
                     .account-info 
                         .info 
                             .name مالک حساب: 
-                            .value#source-owner -
-                        .info 
-                            .name نوع حساب: 
-                            .value#source-type2 -
+                            .value#source-owner= transmission.source.owner
                         .info 
                             .name تاریخ آغاز اعتبار: 
-                            .value#source-start-date 0
+                            .value#source-start-date #{transmission.source.startDate.year}/#{transmission.source.startDate.month}/#{transmission.source.startDate.day}
                         .info 
                             .name تاریخ پایان اعتبار: 
-                            .value#source-end-date= 0
-                        .info 
-                            .name موجودی حساب: 
-                            .value#source-available= 0
+                            .value#source-end-date  #{transmission.source.endDate.year}/#{transmission.source.endDate.month}/#{transmission.source.endDate.day}
                         
                 .account-info-view
                     h1.name حساب مقصد:
-                    .select-account#transmission-target
-                        .name#target-name انتخاب کنید
+                    .select-account
+                        .name#target-name= transmission.source.accountNumber
                         .type#target-type 
                         i.fa.fa-check#target-selected-icon
                     .account-info 
                         .info 
                             .name مالک حساب: 
-                            .value#target-owner -
-                        .info 
-                            .name نوع حساب: 
-                            .value#target-type2 -
+                            .value#target-owner= transmission.target.owner
                         .info 
                             .name تاریخ آغاز اعتبار: 
-                            .value#target-start-date 0
+                            .value#target-start-date #{transmission.target.startDate.year}/#{transmission.target.startDate.month}/#{transmission.target.startDate.day}
                         .info 
                             .name تاریخ پایان اعتبار: 
-                            .value#target-end-date= 0
-                        .info 
-                            .name موجودی حساب: 
-                            .value#target-available= 0
-                        
+                            .value#target-end-date  #{transmission.target.endDate.year}/#{transmission.target.endDate.month}/#{transmission.target.endDate.day}
                 .text-input-view
-                    h1.name مقدار شارژ:
-                    input.text(type="number" name="amount" id="amount" step="0.01" placeholder="متر مکعب" onkeyup="updateAmount()")
-                input.hidden(type="text" name="sourceID" value="" id="transmission-sourceID")
-                input.hidden(type="text" name="targetID" value="" id="transmission-targetID")
-            -if(transmissions.length > 0){
-                .transmissions-list 
-                    h1.title معاملات تایید نشده
-                    -for(var i=0; i<transmissions.length; i++){
-                        a(href="/dashboard/confirm-trade?transmissionID=#{transmissions[i]._id}") از #{transmissions[i].source.accountNumber} به #{transmissions[i].target.accountNumber}
-                    -}
-            -}
+                    h1 مقدار شارژ: #{transmission.amount} متر مکعب
+                a(href="/files/form3.pdf") دانلود فرم شماره 3
         .user-control 
             .control
                 .charge 
@@ -92,11 +70,10 @@ block content
                             .val#transmitable= 0
                             .cm متر مکعب
                 button.submit#submit-form
-                    i.fa.fa-save
-                    | ثبت و صدور فرم 3
+                    | آپلود فرم 3 و تایید معامله
                     
-    include ../components/add-account-popup
-    include ../components/select-account
+    //- include ../components/add-account-popup
+    //- include ../components/select-account
     //- include ../components/form-download
     script(src="/js/accounts.js") 
     script.

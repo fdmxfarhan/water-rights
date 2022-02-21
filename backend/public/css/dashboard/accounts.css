@@ -200,6 +200,15 @@
         float: right;
         width: 10%;
     }
+    form.transmission .text-input-view h1{
+        font-family: 'iransans';
+        font-size: 1vw;
+        color: var(--dark);
+        padding: 0.3vw 0;
+        font-weight: normal;
+        margin: 0;
+        padding: 0;
+    }
     form.transmission input.text{
         float: right;
         width: 69%;
@@ -420,5 +429,17 @@
     .charge .item .value.gray{
         color: var(--gray);
         font-weight: normal;
+    }
+    .control .charge .value .val{display: inline;}
+    .transmissions-list{
+        width: 90%;
+        margin: 1vw auto;
+        margin-top: 5vw;
+    }
+    .transmissions-list h1.title{
+        font-family: 'iransans';
+        font-size: 1.2vw;
+        color: var(--blue);
+        padding: 0.3vw 1vw;
     }
 }

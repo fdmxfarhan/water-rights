@@ -13,6 +13,9 @@
                 th مالک حساب
                 th شارژ (متر مکعب)
             -for(var i=0; i<accounts.length; i++){
+                -if(accounts[i].startDate)
+                    .hidden(id="option-source-start-date-#{i}") #{accounts[i].startDate.year}/#{accounts[i].startDate.month}/#{accounts[i].startDate.day}
+                    .hidden(id="option-source-end-date-#{i}") #{accounts[i].endDate.year}/#{accounts[i].endDate.month}/#{accounts[i].endDate.day}
                 -if(accounts[i].type == "chah"){
                     tr.hidden(id="option-source-#{i}")
                         td.role
@@ -27,7 +30,7 @@
                                 h1(id="option-source-owner-#{i}")= accounts[i].owner
                             -else
                                 .inline.red مشخص نشده
-                        td.charge
+                        td.charge(id="option-source-charge-#{i}")
                             -if(accounts[i].blocked)
                                 i.fa.fa-lock.red-lock
                             | #{Math.floor(accounts[i].charge*10)/10}
@@ -45,7 +48,7 @@
                                 h1(id="option-source-owner-#{i}")= accounts[i].owner
                             -else
                                 .inline.red مشخص نشده
-                        td.charge
+                        td.charge(id="option-source-charge-#{i}")
                             -if(accounts[i].blocked)
                                 i.fa.fa-lock.red-lock
                             | #{Math.floor(accounts[i].charge*10)/10}
@@ -63,7 +66,7 @@
                                 h1(id="option-source-owner-#{i}")= accounts[i].owner
                             -else
                                 .inline.red مشخص نشده
-                        td.charge
+                        td.charge(id="option-source-charge-#{i}")
                             -if(accounts[i].blocked)
                                 i.fa.fa-lock.red-lock
                             | #{Math.floor(accounts[i].charge*10)/10}
@@ -78,7 +81,7 @@
                             h1 mirab
                         td.acounts 
                             h1(id="option-source-owner-#{i}")= accounts[i].owner
-                        td.charge
+                        td.charge(id="option-source-charge-#{i}")
                             -if(accounts[i].blocked)
                                 i.fa.fa-lock.red-lock
                             | #{Math.floor(accounts[i].charge*10)/10}
@@ -93,7 +96,7 @@
                             h1 abkhan
                         td.acounts 
                             h1(id="option-source-owner-#{i}")= accounts[i].owner
-                        td.charge
+                        td.charge(id="option-source-charge-#{i}")
                             -if(accounts[i].blocked)
                                 i.fa.fa-lock.red-lock
                             | #{Math.floor(accounts[i].charge*10)/10}
@@ -113,6 +116,9 @@
                 th مالک حساب
                 th شارژ (متر مکعب)
             -for(var i=0; i<accounts.length; i++){
+                -if(accounts[i].startDate)
+                    .hidden(id="option-target-start-date-#{i}") #{accounts[i].startDate.year}/#{accounts[i].startDate.month}/#{accounts[i].startDate.day}
+                    .hidden(id="option-target-end-date-#{i}") #{accounts[i].endDate.year}/#{accounts[i].endDate.month}/#{accounts[i].endDate.day}
                 -if(accounts[i].type == "chah"){
                     tr.hidden(id="option-target-#{i}")
                         td.role
@@ -127,7 +133,7 @@
                                 h1(id="option-target-owner-#{i}")= accounts[i].owner
                             -else
                                 .inline.red مشخص نشده
-                        td.charge
+                        td.charge(id="option-target-charge-#{i}")
                             -if(accounts[i].blocked)
                                 i.fa.fa-lock.red-lock
                             | #{Math.floor(accounts[i].charge*10)/10}
@@ -145,7 +151,7 @@
                                 h1(id="option-target-owner-#{i}")= accounts[i].owner
                             -else
                                 .inline.red مشخص نشده
-                        td.charge
+                        td.charge(id="option-target-charge-#{i}")
                             -if(accounts[i].blocked)
                                 i.fa.fa-lock.red-lock
                             | #{Math.floor(accounts[i].charge*10)/10}
@@ -163,7 +169,7 @@
                                 h1(id="option-target-owner-#{i}")= accounts[i].owner
                             -else
                                 .inline.red مشخص نشده
-                        td.charge
+                        td.charge(id="option-target-charge-#{i}")
                             -if(accounts[i].blocked)
                                 i.fa.fa-lock.red-lock
                             | #{Math.floor(accounts[i].charge*10)/10}
@@ -178,7 +184,7 @@
                             h1 mirab
                         td.acounts 
                             h1(id="option-target-owner-#{i}")= accounts[i].owner
-                        td.charge
+                        td.charge(id="option-target-charge-#{i}")
                             -if(accounts[i].blocked)
                                 i.fa.fa-lock.red-lock
                             | #{Math.floor(accounts[i].charge*10)/10}
@@ -193,7 +199,7 @@
                             h1 abkhan
                         td.acounts 
                             h1(id="option-target-owner-#{i}")= accounts[i].owner
-                        td.charge
+                        td.charge(id="option-target-charge-#{i}")
                             -if(accounts[i].blocked)
                                 i.fa.fa-lock.red-lock
                             | #{Math.floor(accounts[i].charge*10)/10}

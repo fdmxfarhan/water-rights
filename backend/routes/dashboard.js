@@ -682,8 +682,7 @@ router.post('/transmit', (req, res, next) => {
                 sms('09336448037', 'انتقال جدید در اپلیکیشن میراب');
                 Acount.updateMany({_id: sourceID}, {$set: {charge: source.charge - amount}}, (err) => {
                     if(err) console.log(err);
-                    // res.redirect('/dashboard/accounts');
-                    res.redirect('/dashboard/market');
+                    res.redirect(`/dashboard/confirm-trade?transmissionID=${newTransmission._id}`);
                 });
             }).catch(err => console.log(err));
         })
@@ -851,15 +850,74 @@ router.get('/change-to-seller', ensureAuthenticated, (req, res, next) => {
 router.get('/trade', ensureAuthenticated, (req, res, next) => {
     User.find({role: 'user'}, (err, users) => {
         Acount.find({}, (err, accounts) => {
-            res.render('./dashboard/admin-trade', {
-                user: req.user,
-                accounts,
-                users,
+            Settings.findOne({}, (err, settings) => {
+                Transmission.find({done: false}, (err, transmissions) => {
+                    res.render('./dashboard/admin-trade', {
+                        user: req.user,
+                        accounts,
+                        users,
+                        settings,
+                        transmissions
+                    });
+                })
             });
         });
     });
 });
-
+router.get('/confirm-trade', ensureAuthenticated, (req, res, next) => {
+    var {transmissionID} = req.query;
+    Transmission.findById(transmissionID, (err, transmission) => {
+        User.findById(transmission.source.ownerID, (err, user) => {
+            var options = {
+                phantomPath: path.join(__dirname, '../node_modules/phantomjs/lib/phantom/bin/phantomjs'),
+                // phantomPath: '/usr/local/share/phantomjs-1.9.8-linux-x86_64/bin/phantomjs',
+                format: "A3",
+                orientation: "portrait",
+                border: "5mm",
+                header: {
+                    height: "0",
+                    contents: ''
+                },
+                footer: {
+                    height: "0mm",
+                    contents: {}
+                },
+            };
+            fs.readFile('./public/form3.html', 'utf8', (err, form3) => {
+                var document3 = {
+                    html: form3,
+                    data: {
+                        info: {
+                            fullname: transmission.source.owner,
+                            accountNumber: transmission.source.accountNumber,
+                            maximum: transmission.source.charge + transmission.amount,
+                            idNumber: user.idNumber,
+                            date: convertDate(new Date()),
+                            formNumber: 1,
+                            amount: transmission.amount,
+                            form1Number: 1,
+                            form1Date: convertDate(new Date()),
+                            form2Number: 1,
+                            form2Date: convertDate(new Date()),
+                            endDate: `${transmission.source.startDate.year}/${transmission.source.startDate.month}/${transmission.source.startDate.day}`,
+                            sourceAccountNum: transmission.source.accountNumber,
+                            targetOwner: transmission.target.owner,
+                            targetOwnerID: transmission.target.accountNumber,                        
+                        }
+                    },
+                    path: 'public/files/form3.pdf',
+                    type: "",
+                };
+                pdf.create(document3, options).then((r) => {
+                    res.render('./dashboard/admin-confirm-trade', {
+                        user: req.user,
+                        transmission,
+                    });
+                });
+            });
+        });
+    })
+})
 
 module.exports = router;
 

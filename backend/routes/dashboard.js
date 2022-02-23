@@ -682,7 +682,13 @@ router.post('/transmit', (req, res, next) => {
                 sms('09336448037', 'انتقال جدید در اپلیکیشن میراب');
                 Acount.updateMany({_id: sourceID}, {$set: {charge: source.charge - amount}}, (err) => {
                     if(err) console.log(err);
-                    res.redirect(`/dashboard/confirm-trade?transmissionID=${newTransmission._id}`);
+                    User.findById(source.ownerID, (err, sender) => {
+                        User.findById(target.ownerID, (err, reciever) => {
+                            sms2(sender.phone, `درخواست انتقال شارژ ${amount} متر مکعب، از حساب ${source.accountNumber} به حساب ${target.accountNumber} ثبت شد و پس از تکمیل فرم انتقال شارژ تایید می‌گردد. \n میراب`)
+                            sms2(reciever.phone, `درخواست انتقال شارژ ${amount} متر مکعب، از حساب ${source.accountNumber} به حساب ${target.accountNumber} ثبت شد و پس از تکمیل فرم انتقال شارژ تایید می‌گردد. \n میراب`)
+                            res.redirect(`/dashboard/confirm-trade?transmissionID=${newTransmission._id}`);
+                        });
+                    });
                 });
             }).catch(err => console.log(err));
         })
@@ -726,7 +732,6 @@ router.get('/market', ensureAuthenticated, (req, res, next) => {
                         contents: {}
                     },
                 };
-
                 if(makeForm1){
                     User.findById(userID, (err, user) => {
                         Acount.findOne({type: 'chah', ownerID: user._id}, (err, chah) => {
@@ -917,7 +922,20 @@ router.get('/confirm-trade', ensureAuthenticated, (req, res, next) => {
             });
         });
     })
-})
+});
+router.get('/delete-trade', ensureAuthenticated, (req, res, next) => {
+    var {transmissionID} = req.query;
+    Transmission.findById(transmissionID, (err, transmission) => {
+        Acount.findById(transmission.source._id, (err, source) => {
+            Acount.updateMany({_id: transmission.source._id}, {$set: {charge: source.charge + transmission.amount}}, (err) => {
+                Transmission.deleteMany({_id: transmissionID}, (err) => {
+                    res.redirect('/dashboard/trade');
+                });
+            });
+        });
+    });
+});
+
 
 module.exports = router;
 

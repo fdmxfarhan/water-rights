@@ -159,7 +159,10 @@ router.post('/register-user', ensureAuthenticated, (req, res, next) => {
                                 })
                                 newAccount.save().then(doc => {
                                     req.flash(`success_msg', 'کاربر با کد آب وندی ${newAccount.accountNumber} ثبت شد`);
-                                    res.redirect(`/kargozar?userIndex=${req.body.userIndex}`);
+                                    if(req.user.role == 'کارگزار')
+                                        res.redirect(`/kargozar?userIndex=${req.body.userIndex}`);
+                                    else if(req.user.role == 'تشکل آب بران')
+                                        res.redirect(`/tashakol/?userIndex=${req.body.userIndex}`);
                                 }).catch(err => console.log(err));
                             });
                         }).catch(err => console.log(err));
@@ -245,13 +248,53 @@ router.post('/commitment', ensureAuthenticated, upload.single('commitmentLetter'
     User.findById(userID, (err, user) => {
         AdminNotif.updateMany({userID: userID}, {$set: {seen: true}}, (err, doc) => {
             User.updateMany({_id: userID}, {$set: {comment4: comment, regStatusNum: user.regStatusNum+1, commitmentLetter, confirmed: true}}, (err) => {
-                sms2(user.phone, 'فرایند ورود به بازار آب تکمیل شد. \nمیراب')
-                req.flash('success_msg', 'حساب چاه با موفقیت ایجاد شد');
+                req.flash('success_msg', 'اطلاعات با موفقیت ثبت شد');
                 res.redirect(`/kargozar?userIndex=${userIndex}`);
             });
         });
     });
 });
+router.post('/confirm-charge', ensureAuthenticated, (req, res, next) => {
+    var {userID, owner, userIndex, chahID, comment, permitedUseInYear, usedCredit, leftCredit, confirm} = req.body;
+    console.log(req.body);
+    if(confirm == 'true'){
+        Acount.updateMany({_id: chahID}, {$set: {permitedUseInYear, usedCredit, leftCredit}}, (err, doc) => {
+            User.findById(userID, (err, user) => {
+                User.updateMany({_id: userID}, {$set: {comment1: comment, regStatusNum: user.regStatusNum+1}}, (err, doc) => {
+                    AdminNotif.updateMany({userID: userID}, {$set: {seen: true}}, (err, doc) => {
+                        sms2(user.phone, 'فرایند ورود به بازار آب تکمیل شد. \nمیراب')
+                        if(err) console.log(err);
+                        req.flash('success_msg', 'وضعیت شارژ تایید شد.');
+                        res.redirect(`/abmantaghei?userIndex=${userIndex}`);
+                    });
+                });
+            });
+        });
+    }
+    else{
+        Acount.updateMany({_id: chahID}, {$set: {permitedUseInYear, usedCredit, leftCredit}}, (err, doc) => {
+            User.findById(userID, (err, user) => {
+                User.updateMany({_id: userID}, {$set: {comment1: comment, failedCredit: true}}, (err, doc) => {
+                    AdminNotif.updateMany({$or: [{target: 'آب منطقه‌ای', type: 'state-0', userID: userID}, {target: 'کارگزار', type: 'state-1', userID: userID}]}, {$set: {seen: true}}, (err, doc) => {
+                        if(err) console.log(err);
+                        var newAdminNotif = new AdminNotif({
+                            target: 'کارگزار',
+                            type: 'state-1',
+                            text: `وضعیت شارژ و اعتبار بهره‌برداران حساب ${user.fullname} توسط کارشناس آب منطقه‌ای رد شد. نظر کارشناس: ${comment}\n`,
+                            date: new Date(),
+                            userID: userID,
+                        });
+                        newAdminNotif.save().then(doc => {
+                            req.flash('success_msg', 'به کارگزار اطلاع داده شد.');
+                            res.redirect(`/abmantaghei?userIndex=${userIndex}`);
+                        }).catch(err => console.log(err));
+                    });
+                });
+            });
+        });
+    }
+});
+
 
 
 module.exports = router;

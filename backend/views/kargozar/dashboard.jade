@@ -95,6 +95,10 @@ block content
                                     .state(class="#{users[i].regStatusNum > 4 ? 'active' : ''}")
                                         i.fa.fa-check 
                                         .text تعهد نامه نمایندگی در فروش
+                                    .line
+                                    .state(class="#{users[i].regStatusNum > 5 ? 'active' : ''}")
+                                        i.fa.fa-check 
+                                        .text بررسی وضعیت نهایی شارژ و صدور فرم‌ها
                                 td 
                                     //- -if(users[i].messages.length > 0)
                                     i.fa.fa-envelope.message(id="sms-btn2-#{i}")

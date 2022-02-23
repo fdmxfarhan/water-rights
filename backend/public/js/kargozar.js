@@ -81,12 +81,14 @@ $(document).ready(function(){
             state3select: $(`#state-3-select-${i}`),
             state4select: $(`#state-4-select-${i}`),
             state5select: $(`#state-5-select-${i}`),
+            state6select: $(`#state-6-select-${i}`),
             state1view: $(`#state-1-view-${i}`),
             state2view: $(`#state-2-view-${i}`),
             state3view: $(`#state-3-view-${i}`),
             state4view: $(`#state-4-view-${i}`),
             state5view: $(`#state-5-view-${i}`),
             state6view: $(`#state-6-view-${i}`),
+            state7view: $(`#state-7-view-${i}`),
         });
     }
     usersInfo.forEach(usr => {
@@ -121,12 +123,14 @@ $(document).ready(function(){
             usr.state3select.removeClass('selected');
             usr.state4select.removeClass('selected');
             usr.state5select.removeClass('selected');
+            usr.state6select.removeClass('selected');
             usr.state1view.show();
             usr.state2view.hide();
             usr.state3view.hide();
             usr.state4view.hide();
             usr.state5view.hide();
             usr.state6view.hide();
+            usr.state7view.hide();
         })
         usr.state2select.click(() => {
             usr.state2select.addClass('selected');
@@ -134,12 +138,14 @@ $(document).ready(function(){
             usr.state3select.removeClass('selected');
             usr.state4select.removeClass('selected');
             usr.state5select.removeClass('selected');
+            usr.state6select.removeClass('selected');
             usr.state2view.show();
             usr.state1view.hide();
             usr.state3view.hide();
             usr.state4view.hide();
             usr.state5view.hide();
             usr.state6view.hide();
+            usr.state7view.hide();
         })
         usr.state3select.click(() => {
             usr.state3select.addClass('selected');
@@ -147,12 +153,14 @@ $(document).ready(function(){
             usr.state1select.removeClass('selected');
             usr.state4select.removeClass('selected');
             usr.state5select.removeClass('selected');
+            usr.state6select.removeClass('selected');
             usr.state3view.show();
             usr.state2view.hide();
             usr.state1view.hide();
             usr.state4view.hide();
             usr.state5view.hide();
             usr.state6view.hide();
+            usr.state7view.hide();
         })
         usr.state4select.click(() => {
             usr.state4select.addClass('selected');
@@ -160,12 +168,14 @@ $(document).ready(function(){
             usr.state3select.removeClass('selected');
             usr.state1select.removeClass('selected');
             usr.state5select.removeClass('selected');
+            usr.state6select.removeClass('selected');
             usr.state4view.show();
             usr.state2view.hide();
             usr.state3view.hide();
             usr.state1view.hide();
             usr.state5view.hide();
             usr.state6view.hide();
+            usr.state7view.hide();
         })
         usr.state5select.click(() => {
             usr.state5select.addClass('selected');
@@ -173,14 +183,30 @@ $(document).ready(function(){
             usr.state3select.removeClass('selected');
             usr.state4select.removeClass('selected');
             usr.state1select.removeClass('selected');
+            usr.state6select.removeClass('selected');
             usr.state5view.show();
             usr.state2view.hide();
             usr.state3view.hide();
             usr.state4view.hide();
             usr.state1view.hide();
             usr.state6view.hide();
+            usr.state7view.hide();
         })
-        
+        usr.state6select.click(() => {
+            usr.state6select.addClass('selected');
+            usr.state2select.removeClass('selected');
+            usr.state3select.removeClass('selected');
+            usr.state4select.removeClass('selected');
+            usr.state1select.removeClass('selected');
+            usr.state5select.removeClass('selected');
+            usr.state6view.show();
+            usr.state2view.hide();
+            usr.state3view.hide();
+            usr.state4view.hide();
+            usr.state1view.hide();
+            usr.state5view.hide();
+            usr.state7view.hide();
+        })
     });
     $('.close-sms').click(() => {
         for(var i=0; i<usersLength; i++)

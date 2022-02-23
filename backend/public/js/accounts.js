@@ -196,7 +196,9 @@ $(document).ready(function(){
         $('#form1-download-popup').fadeOut(500);
         $('#form2-download-popup').fadeOut(500);
     });
-    var accountsLength = parseInt(document.getElementById('accounts-length').textContent);
+    var l = document.getElementById('accounts-length');
+    var accountsLength = 0;
+    if(l) accountsLength = parseInt(l.textContent);
     var selectAccounts = [];
     var sourceSelected = false;
     var targetSelected = false;
@@ -281,7 +283,13 @@ $(document).ready(function(){
         }else{
             document.getElementById('form-transmission').submit();
         }
-    })
-
+    });
+    $('#submit-upload-form').click(() => {
+        // console.log(document.getElementById('upload-form-3'))
+        if(document.getElementById('file-input').value == '')
+            alert('لطفا اسکن فرم 3 را انتخاب نمایید.')
+        else
+            document.getElementById('upload-form-3').submit();
+    });
 
 });

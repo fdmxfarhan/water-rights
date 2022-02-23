@@ -35,9 +35,9 @@ block content
                     input.search(type="text" id="search-text" placeholder="جستجو..." onkeyup="search()")
                     .search-button
                         i.fa.fa-search
-                //- .add-user-btn 
-                //-     i.fa.fa-plus 
-                //-     | ثبت درخواست
+                .add-user-btn 
+                    i.fa.fa-plus 
+                    | ثبت درخواست
             .users-list 
                 table#myTable
                     tr 
@@ -70,6 +70,11 @@ block content
                                     .state(class="#{users[i].regStatusNum > 4 ? 'active' : ''}")
                                         i.fa.fa-check 
                                         .text تعهد نامه نمایندگی در فروش
+                                    .line
+                                    .state(class="#{users[i].regStatusNum > 5 ? 'active' : ''}")
+                                        i.fa.fa-check 
+                                        .text بررسی وضعیت نهایی شارژ و صدور فرم‌ها
+                                    
                                 td 
                                     i.fa.fa-envelope.message(id="sms-btn2-#{i}")
                         -}
@@ -110,7 +115,7 @@ block content
                         -}
                     -}
                 .more-notif-btn مشاهده پیام های خوانده شده
-    //- include register
+    include ../kargozar/register
     include ../components/users-popups
     include ../components/sms
     script(src="/js/kargozar.js") 

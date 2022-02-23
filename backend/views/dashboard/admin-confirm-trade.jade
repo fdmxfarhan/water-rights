@@ -11,7 +11,7 @@ block content
     .content-view 
         .users-view 
             .hidden#internal-mirab-right= settings.internalMirabRight
-            form.transmission#form-transmission(action="/dashboard/transmit" method="POST") 
+            .transmission(action="/dashboard/transmit" method="POST") 
                 h1.title
                     i.fa.fa-arrows-h
                     | ثبت معامله جدید
@@ -49,8 +49,19 @@ block content
                             .name تاریخ پایان اعتبار: 
                             .value#target-end-date  #{transmission.target.endDate.year}/#{transmission.target.endDate.month}/#{transmission.target.endDate.day}
                 .text-input-view
-                    h1 مقدار شارژ: #{transmission.amount} متر مکعب
-                a(href="/files/form3.pdf") دانلود فرم شماره 3
+                    h1 مقدار شارژ: 
+                        .val #{transmission.amount} متر مکعب
+                a.link(href="/files/form3.pdf")
+                    i.fa.fa-cloud-download
+                    | دانلود فرم شماره 3
+                form(action="/upload/upload-form-and-confirm-transmission" enctype="multipart/form-data" method="POST" id="upload-form-3")
+                    input.hidden(type="text" name="transmissionID" value="#{transmission._id}")
+                    .file-input-view.small
+                        label.right(for="form3") اسکن فرم 3: 
+                        .file-input-overlay(id="file-input-overlay-#{i}")
+                            i.fa.fa-check.check(id="file-check-#{i}")
+                            .filename(id="file-name-#{i}") انتخاب فایل
+                            input.file-input#file-input(type="file" name="form3" class="file-input-#{i}" )
         .user-control 
             .control
                 .charge 
@@ -69,9 +80,13 @@ block content
                         .value
                             .val#transmitable= 0
                             .cm متر مکعب
-                button.submit#submit-form
+                button.submit#submit-upload-form
                     | آپلود فرم 3 و تایید معامله
-                    
+            .control
+                br
+                a.link(href="/dashboard/trade")
+                    i.fa.fa-arrow-left
+                    | بازگشت
     //- include ../components/add-account-popup
     //- include ../components/select-account
     //- include ../components/form-download

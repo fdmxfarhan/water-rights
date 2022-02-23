@@ -68,9 +68,17 @@ block content
                 input.hidden(type="text" name="targetID" value="" id="transmission-targetID")
             -if(transmissions.length > 0){
                 .transmissions-list 
-                    h1.title معاملات تایید نشده
+                    h1.title
+                        i.fa.fa-clock-o
+                        | معاملات تایید نشده
                     -for(var i=0; i<transmissions.length; i++){
-                        a(href="/dashboard/confirm-trade?transmissionID=#{transmissions[i]._id}") از #{transmissions[i].source.accountNumber} به #{transmissions[i].target.accountNumber}
+                        .row
+                            a.view(href="/dashboard/confirm-trade?transmissionID=#{transmissions[i]._id}")
+                                i.fa.fa-edit
+                                | از #{transmissions[i].source.accountNumber} به #{transmissions[i].target.accountNumber}
+                            a.delete(href="/dashboard/delete-trade?transmissionID=#{transmissions[i]._id}" onclick="makeSure(event)") 
+                                i.fa.fa-trash
+                                | حذف معامله
                     -}
             -}
         .user-control 
@@ -103,7 +111,7 @@ block content
         $('#link6').addClass('active');
         function makeSure(e)
         {
-            if(!confirm('Are you sure?')) {
+            if(!confirm('آیا مطمئن هستید؟')) {
                 e.preventDefault();
             }
         }

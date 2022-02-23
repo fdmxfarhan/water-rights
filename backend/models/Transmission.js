@@ -12,7 +12,8 @@ var TransmissionSchema = new mongoose.Schema({
   accepted: {
     type: Boolean,
     default: false,
-  }
+  },
+  form3: {type: String, default: ''},
 });
 
 var Transmission = mongoose.model('Transmission', TransmissionSchema);

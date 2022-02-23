@@ -10,6 +10,9 @@ const { ensureAuthenticated } = require('../config/auth');
 const User = require('../models/User');
 const Acount = require('../models/Acount');
 var Settings = require('../models/Settings');
+var Notification = require('../models/Notification');
+var UserNotif = require('../models/UserNotif');
+var Transmission = require('../models/Transmission');
 
 router.use(bodyparser.urlencoded({ extended: true }));
 
@@ -22,8 +25,33 @@ var storage = multer.diskStorage({
         cb(null, file.originalname)
     }
 });
-
 var upload = multer({ storage: storage });
+
+var getMirabRight = (source, target, amount, settings) => {
+    if(source.type == 'chah' && target.type == 'chahvandi')
+        return 0;
+    if(source.type == 'chahvandi' && target.type == 'chah')
+        return amount * settings.externalMirabRight;
+    return amount * settings.internalMirabRight;
+}
+var getAbkhanRight = (source, target, amount, settings) => {
+    if(source.type == 'chahvandi' && target.type == 'chah'){
+        if((amount - getMirabRight(source, target, amount)) * settings.abkhanRight - target.sandogh  < 0) return 0;
+        return (amount - getMirabRight(source, target, amount, settings)) * settings.abkhanRight - target.sandogh;
+    }
+    return 0;
+}
+var getSandoghRight = (source, target, amount, settings) => {
+    if(source.type == 'chah' && target.type == 'chahvandi'){
+        return amount * 0.1
+    }
+    else if(source.type == 'chahvandi' && target.type == 'chah'){
+        if((amount - getMirabRight(source, target, amount, settings)) * 0.1 - target.sandogh  < 0) 
+            return -(amount - getMirabRight(source, target, amount, settings)) * 0.1
+        return -target.sandogh; 
+    }
+    return 0;
+}
 
 router.post('/admin-register', ensureAuthenticated, upload.single('myFile'), (req, res, next) => {
     const file = req.file;
@@ -415,7 +443,58 @@ router.post('/add-account-abvandi', ensureAuthenticated, (req, res, next) => {
         });
     });
 });
-
+router.post('/upload-form-and-confirm-transmission', upload.single('form3'), (req, res, next) => {
+    var {transmissionID} = req.body;
+    var file = req.file;
+    var form3 = '';
+    if(file) form3 = file.destination.slice(6) + '/' + file.originalname;
+    Settings.findOne({}, (err, settings) => {
+        Transmission.findById(transmissionID, (err, transmission) => {
+            Acount.findById(transmission.source._id, (err, source) => {
+                Acount.findById(transmission.target._id, (err, target) => {
+                    var amount = transmission.amount;
+                    var mirab = getMirabRight(source, target, amount, settings);
+                    var abkhan = getAbkhanRight(source, target, amount, settings);
+                    var sandogh = getSandoghRight(source, target, amount, settings);
+                    console.log(target.endDate);
+                    // Acount.updateMany({_id: source._id}, {$set: {charge: source.charge - transmission.amount}}, (err) => {});
+                    Acount.updateMany({_id: target._id}, {$set: {
+                        charge: target.charge + (transmission.amount - mirab - abkhan),
+                        endDate: {year: target.endDate.year+1, month: target.endDate.month, day: target.endDate.day},
+                    }}, (err) => {});
+                    
+                    Acount.findOne({type: 'mirab'}, (err, mirabAccount) => {
+                        Acount.updateMany({type: 'mirab'}, {$set: {charge: mirabAccount.charge+mirab}}, (err, doc) => {
+                            if(err) console.log(err);
+                        });
+                    });
+                    Acount.findOne({type: 'abkhan'}, (err, abkhanAccount) => {
+                        Acount.updateMany({type: 'abkhan'}, {$set: {charge: abkhanAccount.charge+abkhan}}, (err, doc) => {
+                            if(err) console.log(err);
+                        });
+                    });
+                    if(source.type == 'chah') 
+                        Acount.updateMany({_id: source._id}, {$set: {sandogh: source.sandogh + sandogh}}, (err) => {});
+                    if(target.type == 'chah')
+                        Acount.updateMany({_id: target._id}, {$set: {sandogh: target.sandogh + sandogh}}, (err) => {});
+                    Transmission.updateMany({_id: transmissionID}, {$set: {done: true, accepted: true, form3}}, (err) => {
+                        var newUserNotif = new UserNotif({
+                            type: 'accept-transmission',
+                            text: `انتقال شارژ ${amount} متر مکعب از حساب ${source.type == 'chah' ? source.license : source.accountNumber} به حساب ${target.type == 'chah' ? target.license : target.accountNumber} توسط میراب تایید شد.`,
+                            userID: source.ownerID,
+                            userFullname: source.owner,
+                            date: new Date(),
+                        });
+                        newUserNotif.save().then(doc => {
+                            req.flash('success_msg', 'معامله با موفقیت تایید شد.');
+                            res.redirect('/dashboard/trade');
+                        }).catch(err => console.log(err));
+                    });
+                });
+            });
+        });
+    });
+});
 
 
 module.exports = router;

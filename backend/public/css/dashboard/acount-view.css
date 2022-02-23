@@ -442,4 +442,33 @@
     .users-view .file-input-view .file-input-overlay input::-webkit-file-upload-button{
         cursor: pointer;
     }
+    form.transmit{
+        display: block;
+    }
+    form.transmit .target{
+        font-family: 'iransans';
+        font-size: 1vw;
+        padding: 0 1vw;
+        color: var(--gray);
+    }
+    form.transmit label{
+        display: block;
+        font-family: 'iransans';
+        font-size: 1vw;
+        padding: 0 1vw;
+    }
+    form.transmit input.text{
+        border: none;
+        background-color: var(--lightergray2);
+        border-radius: 0.5vw;
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        padding: 0.3vw 1vw;
+        display: block;
+        margin: 0 1vw;
+        width: 70%;
+    }
+    form.transmit input.text:focus{
+        outline: none;
+    }
 }

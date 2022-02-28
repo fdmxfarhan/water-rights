@@ -179,7 +179,10 @@ router.post('/add-chah-account', ensureAuthenticated, upload.single('licensePic'
         Acount.findOne({$or: [{license: license}, {accountNumber: accountNumber}]}, (err, acount) => {
             if(acount){
                 req.flash('error_msg', 'شماره پروانه یا کد اشتراک قبلا ثبت شده');
-                res.redirect(`/kargozar?userIndex=${userIndex}`);
+                if(req.user.role == 'کارگزار')
+                    res.redirect(`/kargozar?userIndex=${userIndex}`);
+                if(req.user.role == 'تشکل آب بران')
+                    res.redirect(`/tashakol?userIndex=${userIndex}`);
             }else{
                 User.findById(userID, (err, user) => {
                     var licensePic = file.destination.slice(6) + '/' + file.originalname;
@@ -229,7 +232,10 @@ router.post('/add-chah-account', ensureAuthenticated, upload.single('licensePic'
                                     });
                                     newAdminNotif.save().then(doc => {
                                         req.flash('success_msg', 'حساب چاه با موفقیت ایجاد شد');
-                                        res.redirect(`/kargozar?userIndex=${userIndex}`);
+                                        if(req.user.role == 'کارگزار')
+                                            res.redirect(`/kargozar?userIndex=${userIndex}`);
+                                        if(req.user.role == 'تشکل آب بران')
+                                            res.redirect(`/tashakol?userIndex=${userIndex}`);
                                     }).catch(err => console.log(err));
                                 })
                             });

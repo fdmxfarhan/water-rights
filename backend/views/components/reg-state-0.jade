@@ -65,7 +65,7 @@
                         .download 
                             i.fa.fa-cloud-download
     -}
--}else if(user.role == 'کارگزار'){
+-}else if(user.role == 'کارگزار' || user.role == 'تشکل آب بران'){
     form(action="/kargozar/add-chah-account" enctype="multipart/form-data" method="POST")
         input.hidden(type="text" name="userID" value="#{users[i]._id}")
         input.hidden(type="text" name="owner" value="#{users[i].fullname}")

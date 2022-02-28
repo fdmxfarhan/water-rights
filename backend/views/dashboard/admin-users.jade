@@ -12,7 +12,7 @@ block content
             table(id="myTable")
                 tr 
                     th کاربر
-                    th نقش
+                    //- th نقش
                     th حساب ها
                     th 
                     th 
@@ -23,17 +23,17 @@ block content
                                 h1= users[i].fullname
                                 h2
                                     a(href="tel:#{users[i].phone}")= users[i].phone
-                            td.role 
-                                -if(users[i].role == 'user'){
-                                    -if(users[i].chahvand)
-                                        a.role-chah(href="#{user.role == 'admin' ? `/dashboard/make-admin?userID=${users[i]._id}` : '#'}") چاه‌وند
-                                    -else
-                                        a.role-user(href="#{user.role == 'admin' ? `/dashboard/make-admin?userID=${users[i]._id}` : '#'}") آب‌وند
-                                -}else if(users[i].role == 'admin'){
-                                    a.role-admin(href="/dashboard/make-user?userID=#{users[i]._id}") میراب 
-                                -}else{
-                                    .other-role= users[i].role
-                                -}
+                            //- td.role 
+                            //-     -if(users[i].role == 'user'){
+                            //-         -if(users[i].chahvand)
+                            //-             a.role-chah(href="#{user.role == 'admin' ? `/dashboard/make-admin?userID=${users[i]._id}` : '#'}") چاه‌وند
+                            //-         -else
+                            //-             a.role-user(href="#{user.role == 'admin' ? `/dashboard/make-admin?userID=${users[i]._id}` : '#'}") آب‌وند
+                            //-     -}else if(users[i].role == 'admin'){
+                            //-         a.role-admin(href="/dashboard/make-user?userID=#{users[i]._id}") میراب 
+                            //-     -}else{
+                            //-         .other-role= users[i].role
+                            //-     -}
                                 
                             td.acounts 
                                 -if(users[i].role == 'user'){

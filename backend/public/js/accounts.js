@@ -1,15 +1,12 @@
 function search() {
-    // alert('hello');
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById("searchInput");
     filter = input.value;
     table = document.getElementById("myTable");
     tr = table.getElementsByTagName("tr");
-    // console.log(tr);
     for (i = 1; i < tr.length; i++) {
         td = tr[i].getElementsByTagName("td")[1].getElementsByTagName("h1")[0];
         td2 = tr[i].getElementsByTagName("td")[2].getElementsByTagName("h1")[0];
-        // console.log(td);
         if (td) {
             txtValue = td.textContent || td.innerText;
             txtValue2 = td2.textContent || td2.innerText;
@@ -89,14 +86,13 @@ var filterAccounts = () =>{
     if(abvandi) showAccount('abvandi');
     else     hideAccount('abvandi');
     hideSpecialAccounts();
-    
 }
 function chahCheck()
 {
     if (!document.getElementById('check-chah').checked && !document.getElementById('check-chahvandi').checked && !document.getElementById('check-abvandi').checked) {
         showAccount('chah');
-        showAccount('chahvandi');
-        showAccount('abvandi');
+        hideAccount('chahvandi');
+        hideAccount('abvandi');
         showSpecialAccounts();
     }
     else filterAccounts();
@@ -106,8 +102,8 @@ function chahvandiCheck()
 {
     if (!document.getElementById('check-chah').checked && !document.getElementById('check-chahvandi').checked && !document.getElementById('check-abvandi').checked) {
         showAccount('chah');
-        showAccount('chahvandi');
-        showAccount('abvandi');
+        hideAccount('chahvandi');
+        hideAccount('abvandi');
         showSpecialAccounts();
     }
     else filterAccounts();
@@ -116,13 +112,12 @@ function abvandiCheck()
 {
     if (!document.getElementById('check-chah').checked && !document.getElementById('check-chahvandi').checked && !document.getElementById('check-abvandi').checked) {
         showAccount('chah');
-        showAccount('chahvandi');
-        showAccount('abvandi');
+        hideAccount('chahvandi');
+        hideAccount('abvandi');
         showSpecialAccounts();
     }
     else filterAccounts();
 }
-
 var amount = 0;
 var sourceAmount = 0;
 var updateAmount = () => {

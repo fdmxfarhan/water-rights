@@ -15,7 +15,7 @@ block content
                     th نام و نام خانوادگی
                     //- th وضعیت
                     th موجودی حساب ها
-                    th فرم ها
+                    //- th فرم ها
                     th 
                 -for(var i=0; i<users.length; i++){
                     tr
@@ -34,9 +34,9 @@ block content
                                     .charge= Math.floor(users[i].accounts[j].charge*10)/10
                                         .cm متر مکعب
                             -}
-                        td.forms
-                            a(href="/dashboard/market?makeForm1=true&userID=#{users[i]._id}") فرم 1
-                            a(href="/dashboard/market?makeForm2=true&userID=#{users[i]._id}") فرم 2
+                        //- td.forms
+                        //-     a(href="/dashboard/market?makeForm1=true&userID=#{users[i]._id}") فرم 1
+                        //-     a(href="/dashboard/market?makeForm2=true&userID=#{users[i]._id}") فرم 2
                         td 
 
                 -}
@@ -56,9 +56,9 @@ block content
                     input.check(type="checkbox" id="check-chah" onchange="chahCheck()")
                     label(for="check-chah") حساب های چاه
                     
-                a.add-user#add-account-btn
-                    i.fa.fa-plus 
-                    | افزودن حساب
+                //- a.add-user#add-account-btn
+                //-     i.fa.fa-plus 
+                //-     | افزودن حساب
             .control
                 br
                 a.link(href="/dashboard/trade") معاملات

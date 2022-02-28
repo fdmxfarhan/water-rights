@@ -15,12 +15,13 @@ block content
                     th نوع حساب
                     th شماره حساب
                     th مالک حساب
+                    th فرم‌ها
                     th شارژ (متر مکعب)
                     th 
                     th 
                 -for(var i=0; i<accounts.length; i++){
                     -if(accounts[i].type == "chah"){
-                        tr(id="chah#{accounts[i].license}" class="#{i>1 && accounts[i-1].ownerID == accounts[i].ownerID ? 'no-border': ''}")
+                        tr(id="chah#{accounts[i].license}" class="#{i>1 && accounts[i-1].ownerID == accounts[i].ownerID ? '': ''}")
                             td.role
                                 .red چاه
                                 .hidden= accounts[i].type
@@ -35,6 +36,8 @@ block content
                                 -else
                                     .inline.red مشخص نشده
                                 h2
+                            td.form 
+                                a(href="/dashboard/admin-forms?userID=#{accounts[i].ownerID}") صدور/آپلود فرم
                             td.charge
                                 -if(accounts[i].blocked)
                                     i.fa.fa-lock.red-lock
@@ -47,7 +50,7 @@ block content
                                 a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts" onclick="makeSure(event)") 
                                     i.fa.fa-trash 
                     -}else if(accounts[i].type == "abvandi"){
-                        tr(class="#{i>1 && accounts[i-1].ownerID == accounts[i].ownerID ? 'no-border': ''}")
+                        tr(class="#{i>1 && accounts[i-1].ownerID == accounts[i].ownerID ? '': ''}" style="display: none;")
                             td.role
                                 .green آب‌وندی
                                 .hidden= accounts[i].type
@@ -62,6 +65,7 @@ block content
                                 -else
                                     .inline.red مشخص نشده
                                 h2
+                            td.form 
                             td.charge
                                 -if(accounts[i].blocked)
                                     i.fa.fa-lock.red-lock
@@ -74,7 +78,7 @@ block content
                                 a.trash(href="/dashboard/delete-acount?acountID=#{accounts[i]._id}&redirect=/dashboard/accounts" onclick="makeSure(event)") 
                                     i.fa.fa-trash 
                     -}else if(accounts[i].type == "chahvandi"){
-                        tr(class="#{i>1 && accounts[i-1].ownerID == accounts[i].ownerID ? 'no-border': ''}")
+                        tr(class="#{i>1 && accounts[i-1].ownerID == accounts[i].ownerID ? '': ''}" style="display: none;")
                             td.role
                                 .blue چاه‌وندی
                                 .hidden= accounts[i].type
@@ -104,6 +108,7 @@ block content
                                 //-         -}
                                 //-     -}else  
                                 //-         .inline.red بدون حساب چاه
+                            td.form 
                             td.charge
                                 -if(accounts[i].blocked)
                                     i.fa.fa-lock.red-lock
@@ -126,6 +131,7 @@ block content
                             td.acounts 
                                 h1= accounts[i].owner
                                 h2
+                            td.form 
                             td.charge
                                 -if(accounts[i].blocked)
                                     i.fa.fa-lock.red-lock
@@ -148,6 +154,7 @@ block content
                             td.acounts 
                                 h1= accounts[i].owner
                                 h2
+                            td.form 
                             td.charge
                                 -if(accounts[i].blocked)
                                     i.fa.fa-lock.red-lock
@@ -177,9 +184,9 @@ block content
                     input.check(type="checkbox" id="check-chah" onchange="chahCheck()")
                     label(for="check-chah") حساب های چاه
                     
-                a.add-user#add-account-btn
-                    i.fa.fa-plus 
-                    | افزودن حساب
+                //- a.add-user#add-account-btn
+                //-     i.fa.fa-plus 
+                //-     | افزودن حساب
             //- .control
             //-     form.transmission(action="/dashboard/transmit" method="POST") 
             //-         h1.title

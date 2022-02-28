@@ -582,4 +582,11 @@
         width: 50%;
         margin-top: 2vw;
     }
+    .users-view td.form a{
+        text-decoration: none;
+        color: blue;
+    }
+    .users-view td.form a:hover{
+        color: var(--hover);
+    }
 }

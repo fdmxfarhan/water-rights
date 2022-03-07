@@ -44,21 +44,21 @@ block content
                                         .type.red چاه
                                         a.accountNumber(href="/dashboard/acount-view?acountID=#{chah._id}")= chah.accountNumber
                                         .charge
-                                            .value= chah.charge 
+                                            .value= Math.floor(chah.charge*10)/10
                                             .cm متر مکعب
                                 -}if(chahvandi){
                                     .account-view 
                                         .type.blue چاه‌وندی
                                         a.accountNumber(href="/dashboard/acount-view?acountID=#{chahvandi._id}")= chahvandi.accountNumber
                                         .charge
-                                            .value= chahvandi.charge 
+                                            .value= Math.floor(chahvandi.charge*10)/10
                                             .cm متر مکعب
                                 -}if(abvandi){
                                     .account-view 
                                         .type.green آب‌وند
                                         a.accountNumber(href="/dashboard/acount-view?acountID=#{abvandi._id}")= abvandi.accountNumber
                                         .charge
-                                            .value= abvandi.charge 
+                                            .value= Math.floor(abvandi.charge*10)/10
                                             .cm متر مکعب
                                 -}
                                 //- -if(users[i].role == 'user'){

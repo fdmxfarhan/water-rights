@@ -82,3 +82,18 @@
                         a.block(href="/dashboard/block-account?accountID=#{account._id}") 
                             i.fa.fa-lock 
                             | مسدود کردن حساب
+            .control 
+                .charge 
+                    h1 انتقال به حساب چاه
+                    form.transmit(action="/dashboard/transmit-chahvandi-to-chah" method="POST") 
+                        input.hidden(type="text" name="chahvandiID" value="#{account._id}")
+                        -var linkedAccount = accounts.find(e => e._id.toString() == account.linkedAccount);
+                        -if(linkedAccount){
+                            .target انتقال به حساب #{linkedAccount.accountNumber}
+                            input.hidden(type="text" name="chahID" value="#{linkedAccount._id}")
+                            label(for="amount") مقدار شارژ:
+                            input.text(type="number" name="amount" value="" placeholder="متر مکعب" step="0.01")
+                            button.submit.full(type="submit")
+                                i.fa.fa-arrow-left 
+                                | انتقال
+                        -}

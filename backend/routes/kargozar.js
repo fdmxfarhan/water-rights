@@ -247,13 +247,24 @@ router.post('/add-chah-account', ensureAuthenticated, upload.single('licensePic'
     })
 });
 router.post('/commitment', ensureAuthenticated, upload.single('commitmentLetter'), (req, res, next) => {
-    var {userID, owner, userIndex, comment} = req.body;
+    var {userID, owner, userIndex, comment, beneficiaryName, beneficiaryIdNumber, beneficiaryPhone, beneficiaryAgree} = req.body;
     var file = req.file;
     var commitmentLetter = '';
     if(file) commitmentLetter = file.destination.slice(6) + '/' + file.originalname;
+    var beneficiaries = [];
+    if(typeof(beneficiaryName) == 'object'){
+        for(var i=1; i<beneficiaryName.length; i++){
+            beneficiaries.push({
+                name: beneficiaryName[i],
+                idNumber: beneficiaryIdNumber[i],
+                phone: beneficiaryPhone[i],
+                agree: typeof(beneficiaryAgree[i]) == 'undefined'? false: true,
+            });
+        }
+    }
     User.findById(userID, (err, user) => {
         AdminNotif.updateMany({userID: userID}, {$set: {seen: true}}, (err, doc) => {
-            User.updateMany({_id: userID}, {$set: {comment4: comment, regStatusNum: user.regStatusNum+1, commitmentLetter, confirmed: true}}, (err) => {
+            User.updateMany({_id: userID}, {$set: {comment4: comment, regStatusNum: user.regStatusNum+1, commitmentLetter, confirmed: true, beneficiaries}}, (err) => {
                 req.flash('success_msg', 'اطلاعات با موفقیت ثبت شد');
                 res.redirect(`/kargozar?userIndex=${userIndex}`);
             });

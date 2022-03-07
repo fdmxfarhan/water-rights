@@ -94,6 +94,10 @@ var UserSchema = new mongoose.Schema({
   counterNotCalibrated: {type: Boolean, default: false},
   commitmentLetter: String,
   marketRole: {type: String, default: ''},
+  form1: {type: String, default: ''},
+  form2: {type: String, default: ''},
+  form3: {type: String, default: ''},
+  beneficiaries: {type: Array, default: []},
 });
 
 var User = mongoose.model('User', UserSchema);

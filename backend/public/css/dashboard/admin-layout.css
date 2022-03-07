@@ -802,7 +802,48 @@
     .check-input-view a.link:hover{
         color: var(--hover);
     }
-
+    .other-beneficiaries{
+        height: 25vh;
+        overflow-y: scroll;
+    }
+    .other-beneficiaries .sample-beneficiary,
+    .other-beneficiaries .beneficiary{
+        overflow: hidden;
+        margin-bottom: 1vw;
+    }
+    .other-beneficiaries .text-input{
+        float: right;
+        width: 30%;
+    }
+    .other-beneficiaries .text-input label,
+    .other-beneficiaries .check-input label{
+        font-family: 'iransans';
+        font-size: 0.8vw;
+        color: var(--text);
+        display: block;
+        text-align: right;
+    }
+    .other-beneficiaries .text-input input{
+        display: block;
+        font-family: 'iransans';
+        font-size: 0.8vw;
+        width: 90%;
+    }
+    .other-beneficiaries .check-input {
+        float: right;
+    }
+    .other-beneficiaries .add-beneficiary {
+        font-family: 'iransans';
+        font-size: 1vw;
+        color: var(--blue);
+        cursor: pointer;
+    }
+    .other-beneficiaries .add-beneficiary i{
+        padding-left: 0.5vw;
+    }
+    .other-beneficiaries .add-beneficiary:hover{
+        color: var(--hover);
+    }
 }
 
 @media only screen and (max-width: 800px) {

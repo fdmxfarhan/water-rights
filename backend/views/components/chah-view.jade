@@ -163,6 +163,20 @@
                         button.submit(type="submit")
                             i.fa.fa-save
                             | ذخیره
+            .beneficiaries-view 
+                h1 بهره‌برداران
+                -var beneficiaries = users.find(e => e._id.toString() == account.ownerID).beneficiaries
+                .beneficiary.title 
+                    .name نام بهره‌بردار
+                    .name کد ملی
+                    .name تلفن
+                -for(var j=0; j<beneficiaries.length; j++){
+                    .beneficiary 
+                        .name= beneficiaries[j].name
+                        .name= beneficiaries[j].idNumber
+                        .name= beneficiaries[j].phone
+                -}
+
         .user-control 
             .control 
                 .charge 

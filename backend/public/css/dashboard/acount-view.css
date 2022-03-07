@@ -471,4 +471,27 @@
     form.transmit input.text:focus{
         outline: none;
     }
+    .beneficiaries-view {
+        width: 90%;
+        margin: auto;
+        margin-bottom: 2vw;
+    }
+    .beneficiaries-view h1{
+        font-family: 'iransans';
+        font-size: 1vw;
+        color: var(--blue);
+    }
+    .beneficiaries-view .beneficiary{
+        overflow: hidden;
+        margin-bottom: 0.1vw;
+        border-bottom: var(--lightergray2) 0.1vw solid;
+    }
+    .beneficiaries-view .beneficiary .name{
+        float: right;
+        margin-left: 1vw;
+        width: 20%;
+    }
+    .beneficiaries-view .beneficiary.title .name{
+        font-weight: bold;
+    }
 }

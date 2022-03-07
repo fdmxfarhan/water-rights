@@ -1,0 +1,138 @@
+extends layout
+
+block styles
+    link(rel="stylesheet", href="/css/dashboard/users-view.css")
+    link(rel="stylesheet", href="/css/dashboard/forms.css")
+
+block content
+    .title-view 
+        h1 صدور/آپلود فرم های 1 و 2
+        h2 
+    .content-view 
+        .users-view 
+            .forms 
+                .coumn50
+                    h1.form-title فرم 1 (گواهی واگذاری شارژ)
+                    .form 
+                        -if(viewingUser.form1 && viewingUser.form1 != '')
+                            -if(viewingUser.form1.slice(-3) != 'pdf')
+                                a.form-img(href="#{viewingUser.form1}" download)
+                                    img(src="#{viewingUser.form1}")
+                                    .overlay
+                                        i.fa.fa-cloud-download
+                            -else
+                                a.form-img(href="#{viewingUser.form1}" download)
+                                    img(src="/img/pdf.jpg")
+                                    .overlay
+                                        i.fa.fa-cloud-download
+                        -else
+                            .no-img
+                                .text سندی آپلود نشده
+                        a.download(href="/files/form1.pdf" target="_blank") 
+                            i.fa.fa-cloud-download 
+                            | دانلود فرم 1
+                        form(action="/upload/form1" enctype="multipart/form-data" method="POST")
+                            input.hidden(type="text" name="userID" value="#{viewingUser._id}")
+                            .file-input-view
+                                label.right(for="form1") اسکن فرم 1: 
+                                .file-input-overlay(id="file-input-overlay-#{i}")
+                                    i.fa.fa-check.check(id="file-check-#{i}")
+                                    .filename(id="file-name-#{i}") انتخاب فایل
+                                    input.file-input(type="file" name="form1" class="file-input-#{i}" )
+                            .text-input-view
+                                label(for="sellCap") اجازه فروش سالیانه:
+                                input(type="number" name="sellCap" placeholder="اجازه فروش سالیانه" value="#{chah.sellCap}")
+                            button.submit.left(type="submit" name="confirm" value="true")
+                                i.fa.fa-save
+                                | ثبت
+                .coumn50
+                    h1.form-title فرم 2 (گواهی خرید شارژ)
+                    .form 
+                        -if(viewingUser.form2 && viewingUser.form2 != '')
+                            -if(viewingUser.form2.slice(-3) != 'pdf')
+                                a.form-img(href="#{viewingUser.form2}" download)
+                                    img(src="#{viewingUser.form2}")
+                                    .overlay
+                                        i.fa.fa-cloud-download
+                            -else
+                                a.form-img(href="#{viewingUser.form2}" download)
+                                    img(src="/img/pdf.jpg")
+                                    .overlay
+                                        i.fa.fa-cloud-download
+                        -else
+                            .no-img
+                                .text سندی آپلود نشده
+                        a.download(href="/files/form2.pdf" target="_blank") 
+                            i.fa.fa-cloud-download 
+                            | دانلود فرم 2
+                        form(action="/upload/form2" enctype="multipart/form-data" method="POST")
+                            input.hidden(type="text" name="userID" value="#{viewingUser._id}")
+                            .file-input-view
+                                label.right(for="form2") اسکن فرم 2: 
+                                .file-input-overlay(id="file-input-overlay-#{i}")
+                                    i.fa.fa-check.check(id="file-check-#{i}")
+                                    .filename(id="file-name-#{i}") انتخاب فایل
+                                    input.file-input(type="file" name="form2" class="file-input-#{i}" )
+                            .text-input-view
+                                label(for="buyCap") اجازه خرید سالیانه:
+                                input(type="number" name="buyCap" placeholder="اجازه خرید سالیانه" value="#{chah.buyCap}")
+                            button.submit(type="submit" name="confirm" value="true")
+                                i.fa.fa-save
+                                | ثبت
+        .user-control 
+            .control 
+                .user-info-view 
+                    h1 مشخصات
+                    .item 
+                        .name نام مالک: 
+                        .value.text= viewingUser.fullname
+                    .item 
+                        .name شماره تماس: 
+                        .value.text= viewingUser.phone
+                    .item 
+                        .name کد آبوندی: 
+                        .value.text= viewingUser.username
+                    .item 
+                        .name شماره حساب چاه: 
+                        .value.text= chah.accountNumber
+                    br
+                    .item 
+                        .name شارژ سالیانه: 
+                        .value= Math.floor(chah.permitedUseInYear*10)/10
+                            .cm متر مکعب
+                    .item 
+                        .name حجم مصرف شده: 
+                        .value= Math.floor(chah.usedCredit*10)/10
+                            .cm متر مکعب
+                    .item 
+                        .name حجم باقی مانده: 
+                        .value= Math.floor(chah.leftCredit*10)/10
+                            .cm متر مکعب
+                    .item 
+                        .name حجم فروخته شده: 
+                        .value= Math.floor(chah.soldCredit*10)/10
+                            .cm متر مکعب
+                    .item 
+                        .name اجازه فروش سالیانه: 
+                        .value= Math.floor(chah.sellCap*10)/10
+                            .cm متر مکعب
+                    .item 
+                        .name اجازه خرید سالیانه: 
+                        .value= Math.floor(chah.buyCap*10)/10
+                            .cm متر مکعب
+                    .item 
+                        .name تاریخ آغاز اعتبار: 
+                        .value.gray #{chah.startDate.year}/#{chah.startDate.month}/#{chah.startDate.day}
+                    .item 
+                        .name تاریخ پایان اعتبار: 
+                        .value.gray #{chah.endDate.year}/#{chah.endDate.month}/#{chah.endDate.day}
+                    
+    script(src="/js/forms.js") 
+    script.
+        $('#link3').addClass('active');
+        function makeSure(e)
+        {
+            if(!confirm('Are you sure?')) {
+                e.preventDefault();
+            }
+        }

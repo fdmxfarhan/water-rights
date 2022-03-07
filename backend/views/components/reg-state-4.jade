@@ -40,6 +40,24 @@
                             i.fa.fa-check.check(id="file-check-#{i}")
                             .filename(id="file-name-#{i}") انتخاب فایل
                             input.file-input(type="file" name="commitmentLetter" class="file-input-#{i}" )
+                    #users-length2.hidden= users.length
+                    .other-beneficiaries(id='beneficiaries#{i}')
+                        .sample-beneficiary.hidden(id='sample-beneficiary#{i}')
+                            .text-input 
+                                label(for="beneficiaryName") نام و نام خانوادگی
+                                input(type="text" name="beneficiaryName" placeholder="نام و نام خانوادگی")
+                            .text-input 
+                                label(for="beneficiaryIdNumber") کد ملی
+                                input(type="text" name="beneficiaryIdNumber" placeholder="کد ملی")
+                            .text-input 
+                                label(for="beneficiaryPhone") تلفن
+                                input(type="text" name="beneficiaryPhone" placeholder="تلفن")
+                            .check-input 
+                                label(for="beneficiaryAgree") موافق
+                                input(type="checkbox" name="beneficiaryAgree" id="beneficiaryAgree" value="true" checked)
+                        .add-beneficiary(id="add-beneficiary#{i}")
+                            i.fa.fa-plus 
+                            | افزودن بهره‌بردار
                     .buttons 
                         button.check.left-absolute(type="submit" name="confirm" value="true")
                             i.fa.fa-check

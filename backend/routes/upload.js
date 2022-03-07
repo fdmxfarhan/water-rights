@@ -13,7 +13,8 @@ var Settings = require('../models/Settings');
 var Notification = require('../models/Notification');
 var UserNotif = require('../models/UserNotif');
 var Transmission = require('../models/Transmission');
-
+const sms = require('../config/sms');
+const sms2 = require('../config/sms2');
 router.use(bodyparser.urlencoded({ extended: true }));
 
 var storage = multer.diskStorage({
@@ -486,6 +487,12 @@ router.post('/upload-form-and-confirm-transmission', upload.single('form3'), (re
                             date: new Date(),
                         });
                         newUserNotif.save().then(doc => {
+                            User.findById(source.ownerID, (err, user) => {
+                                console.log(user.beneficiaries);
+                                for(var i=0; i<user.beneficiaries.length; i++){
+                                    sms2(user.beneficiaries[i].phone, `بهره بردار محترم\n${user.beneficiaries[i].name}\nمیزان ${amount} متر مکعب حجم به درخواست نماینده از حساب ${source.accountNumber} به حساب ${target.accountNumber} منتقل شد`);
+                                }
+                            })
                             req.flash('success_msg', 'معامله با موفقیت تایید شد.');
                             res.redirect('/dashboard/trade');
                         }).catch(err => console.log(err));
@@ -495,6 +502,37 @@ router.post('/upload-form-and-confirm-transmission', upload.single('form3'), (re
         });
     });
 });
-
+router.post('/form1', upload.single('form1'), (req, res, next) => {
+    var {userID, sellCap} = req.body;
+    var file = req.file;
+    var form1 = '';
+    if(file) form1 = file.destination.slice(6) + '/' + file.originalname;
+    User.findById(userID, (err, user) => {
+        Acount.updateMany({type: 'chah', owner: userID}, {$set: {sellCap}}, (err) => {
+            if(err) console.log(err);
+            User.updateMany({_id: userID}, {$set: {form1}}, (err) => {
+                if(err) console.log(err);
+                req.flash('success_msg', 'فرم 1 با موفقیت آپلود شد.')
+                res.redirect(`/dashboard/forms?userID=${userID}`);
+            })
+        })
+    })
+});
+router.post('/form2', upload.single('form2'), (req, res, next) => {
+    var {userID, buyCap} = req.body;
+    var file = req.file;
+    var form2 = '';
+    if(file) form2 = file.destination.slice(6) + '/' + file.originalname;
+    User.findById(userID, (err, user) => {
+        Acount.updateMany({type: 'chah', owner: userID}, {$set: {buyCap}}, (err) => {
+            if(err) console.log(err);
+            User.updateMany({_id: userID}, {$set: {form2}}, (err) => {
+                if(err) console.log(err);
+                req.flash('success_msg', 'فرم 1 با موفقیت آپلود شد.')
+                res.redirect(`/dashboard/forms?userID=${userID}`);
+            })
+        })
+    })
+});
 
 module.exports = router;

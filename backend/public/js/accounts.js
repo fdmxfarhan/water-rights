@@ -91,8 +91,8 @@ function chahCheck()
 {
     if (!document.getElementById('check-chah').checked && !document.getElementById('check-chahvandi').checked && !document.getElementById('check-abvandi').checked) {
         showAccount('chah');
-        hideAccount('chahvandi');
-        hideAccount('abvandi');
+        showAccount('chahvandi');
+        showAccount('abvandi');
         showSpecialAccounts();
     }
     else filterAccounts();
@@ -102,8 +102,8 @@ function chahvandiCheck()
 {
     if (!document.getElementById('check-chah').checked && !document.getElementById('check-chahvandi').checked && !document.getElementById('check-abvandi').checked) {
         showAccount('chah');
-        hideAccount('chahvandi');
-        hideAccount('abvandi');
+        showAccount('chahvandi');
+        showAccount('abvandi');
         showSpecialAccounts();
     }
     else filterAccounts();
@@ -112,8 +112,8 @@ function abvandiCheck()
 {
     if (!document.getElementById('check-chah').checked && !document.getElementById('check-chahvandi').checked && !document.getElementById('check-abvandi').checked) {
         showAccount('chah');
-        hideAccount('chahvandi');
-        hideAccount('abvandi');
+        showAccount('chahvandi');
+        showAccount('abvandi');
         showSpecialAccounts();
     }
     else filterAccounts();

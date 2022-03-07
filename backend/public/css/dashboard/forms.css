@@ -1,0 +1,322 @@
+.users-view .file-input-view{
+    overflow: hidden;
+    margin-bottom: 0.8vw;
+    width: 90%;
+    margin: 0.5vw auto;
+    display: flex;
+    align-items: center;
+}
+.users-view .file-input-view label{
+    display: block;
+    float: right;
+    width: 40%;
+    font-family: 'iransans';
+    font-size: 0.9vw;
+    text-align: right;
+    margin-left: 0.5vw;
+    color: var(--text);
+}
+.users-view .file-input-view label i{
+    color: var(--blue);
+    padding-right: 0.5vw;
+}
+.users-view .file-input-view .file-input-overlay{
+    display: block;
+    float: right;
+    width: 50%;
+    border: none;
+    background-color: var(--lightergray2);
+    border-radius: 0.5vw;
+    font-family: 'iransans';
+    font-size: 0.9vw;
+    padding: 0.3vw 1vw;
+    overflow: hidden;
+}
+.users-view .file-input-view .file-input-overlay{
+    position: relative;
+    text-align: right;
+    color: var(--gray);
+    cursor: pointer;
+    overflow: hidden;
+    padding: 0 1vw;
+}
+.users-view .file-input-view .file-input-overlay i.check{
+    float: right;
+    width: 10%;
+    padding: 0.5vw 0;
+    text-align: center;
+    color: var(--green);
+    display: none;
+}
+.users-view .file-input-view .file-input-overlay .filename{
+    /* display: inline; */
+    float: right;
+    font-family: 'iransans';
+    font-size: 0.9vw;
+    color: var(--gray);
+    padding: 0.3vw 1vw;
+    /* background-color: darkblue; */
+    overflow: hidden;
+    width: 70%;
+    margin: 0;
+    white-space: nowrap ;
+}
+.users-view .file-input-view .file-input-overlay:hover .filename{
+    color: var(--darkblue);
+}
+.users-view .file-input-view .file-input-overlay input{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0.2vw 1vw;
+    opacity: 0;
+    cursor: pointer;
+}
+.users-view .file-input-view .file-input-overlay:hover{
+    color: var(--darkblue);
+}
+.users-view .file-input-view .file-input-overlay input::-webkit-file-upload-button{
+    cursor: pointer;
+}
+.users-view .file-input-view.small{
+    width: 40%;
+    margin-top: 2vw;
+}
+.users-view .normal-text-input label{
+    font-family: 'iransans';
+    font-size: 0.9vw;
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+.users-view .normal-text-input input:focus{
+    outline: none;
+    border: var(--blue) 0.1vw solid;
+}
+.users-view .normal-text-input{
+    text-align: right;
+}
+.users-view .normal-text-input input{
+    font-family: 'iransans';
+    display: block;
+    width: 90%;
+    padding: 0.3vw 0.5vw;
+    border-radius: 0.4vw;
+    border: var(--lightgray) 0.1vw solid;
+    margin: 0;
+}
+.users-view .triple-text-input {
+    overflow: hidden;
+}
+.users-view .triple-text-input .normal-text-input{
+    float: right;
+    width: 27.5%;
+    margin-left: 5%;
+    text-align: center;
+}
+.users-view .text-input-view{
+    overflow: hidden;
+    margin-bottom: 0.8vw;
+    width: 90%;
+    margin: 0.5vw auto;
+    display: flex;
+    align-items: center;
+}
+.users-view .text-input-view label{
+    display: block;
+    float: right;
+    width: 40%;
+    font-family: 'iransans';
+    font-size: 0.9vw;
+    text-align: right;
+    margin-left: 0.5vw;
+    color: var(--text);
+}
+.users-view .text-input-view label i{
+    color: var(--blue);
+    padding-right: 0.5vw;
+}
+.users-view .text-input-view input{
+    display: block;
+    float: right;
+    width: 50%;
+    border: none;
+    background-color: var(--lightergray2);
+    border-radius: 0.5vw;
+    font-family: 'iransans';
+    font-size: 0.9vw;
+    padding: 0.3vw 1vw;
+    overflow: hidden;
+}
+.users-view .text-input-view input:focus{
+    outline: none;
+}
+.forms{
+    overflow: hidden;
+} 
+.forms .coumn50{
+    float: right;
+    width: 50%;
+    padding: 1vw 0;
+}
+.forms .coumn50 h1.form-title{
+    font-family: 'iransans';
+    font-size: 1vw;
+    color: var(--text);
+    text-align: center;
+}
+.forms .coumn50 .form{
+    width: 80%;
+    margin: 1vw auto;
+    border-radius: 1vw;
+    border: var(--lightblue) 0.2vw dashed;
+}
+.forms .coumn50 .form .no-img{
+    width: 100%;
+    height: 30vh;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+.forms .coumn50 .form .no-img .text{
+    color: var(--red);
+    font-family: 'iransans';
+    font-size: 1vw;
+    text-align: center;
+    margin: auto;
+}
+.forms .coumn50 .form a.download{
+    text-decoration: none;
+    font-family: 'iransans';
+    font-size: 1vw;
+    color: var(--blue);
+    display: block;
+    width: 90%;
+    margin: auto;
+}
+.forms .coumn50 .form a.download:hover{
+    color: var(--hover);
+}
+.forms .coumn50 .form a.download i{
+    padding-left: 0.5vw;
+}
+.forms .coumn50 .form button.submit{
+    display: block;
+    margin-top: 1vw;
+    color: white;
+    background-color: var(--blue);
+    text-align: center;
+    text-decoration: none;
+    font-family: 'iransans';
+    font-size: 1vw;
+    border: none;
+    border-radius: 0.5vw;
+    width: 90%;
+    margin: 1vw auto;
+    padding: 0.4vw 0;
+    cursor: pointer;
+}
+.forms .coumn50 .form button.submit:hover{
+    background-color: var(--hover);
+}
+.forms .coumn50 .form button.submit i{
+    padding-left: 0.5vw;
+}
+.user-info-view h1{
+    color: var(--text);
+    font-family: 'iransans';
+    font-size: 1.3vw;
+    text-align: center;
+    padding-top: 1vw;
+    border-bottom: var(--lightgray) 0.1vw solid;
+}
+.user-info-view h2{
+    color: var(--green);
+    font-size: 2vw;
+    line-height: 1vw;
+    text-align: center;
+    font-family: 'iransans';
+}
+.user-info-view h2 .cm{
+    display: inline;
+    color: var(--gray);
+    font-size: 0.8vw;
+    font-family: 'iransans';
+    /* font-weight: normal; */
+    padding-right: 0.5vw;
+}
+.user-info-view .item{
+    overflow: hidden;
+    width: 85%;
+    margin: auto;
+}
+.user-info-view .item .cm{
+    display: inline;
+    color: var(--gray);
+    font-size: 0.5vw;
+    font-family: 'iransans';
+    /* font-weight: normal; */
+    padding-right: 0.5vw;
+    font-weight: normal;
+}
+.user-info-view .item .name{
+    float: right;
+    color: var(--text);
+    font-family: 'iransans';
+    font-size: 1vw;
+}
+.user-info-view .item .value{
+    float: left;
+    color: var(--green);
+    font-family: 'iransans';
+    font-size: 1vw;
+    font-weight: bold;
+    margin-right: 0.4vw;
+    font-weight: bold;
+}
+.user-info-view .item .value.text{
+    color: var(--text);
+    font-weight: normal;
+}
+.user-info-view .item .value.gray{
+    color: var(--gray);
+    font-weight: normal;
+}
+.forms .coumn50 .form .form-img{
+    height: 28vh;
+    width: 90%;
+    overflow: hidden;
+    text-decoration: none;
+    display: block;
+    margin: auto;
+    position: relative;
+}
+.forms .coumn50 .form .form-img .overlay{
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.458);
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    align-content: center;
+    transition-duration: 500ms;
+    display: none;
+}
+.forms .coumn50 .form .form-img:hover .overlay{
+    display: flex;
+}
+.forms .coumn50 .form .form-img .overlay i{
+    margin: auto;
+    font-size: 2vw;
+    color: white;
+}
+.forms .coumn50 .form .form-img img,
+.forms .coumn50 .form .form-img iframe{
+    display: block;
+    height: 28vh;
+    margin: 0.5vw auto;
+}

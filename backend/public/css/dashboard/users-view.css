@@ -327,7 +327,7 @@
     }
     .popup .tabs-view .tab-btn{
         float: right;
-        width: 25%;
+        width: 33%;
         background-color: var(--lightergray);
         border-bottom: var(--lightgray) 0.2vw solid;
         text-align: center;
@@ -352,6 +352,58 @@
         width: fit-content;
         text-decoration: none;
         display: block;
+    }
+    
+    .content-view .users-view table td.acounts .account-view{
+        overflow: hidden;
+        margin-bottom: 0.2vw;
+    }
+    .content-view .users-view table td.acounts .account-view .type{
+        font-family: 'iransans';
+        font-size: 0.8vw;
+        color: white;
+        border-radius: 0.4vw;
+        padding: 0.1vw 0.8vw;
+        float: right;
+        width: 3vw;
+        text-align: center;
+    }
+    .content-view .users-view table td.acounts .account-view .type.red{background-color: var(--red);}
+    .content-view .users-view table td.acounts .account-view .type.blue{background-color: var(--blue);}
+    .content-view .users-view table td.acounts .account-view .type.green{background-color: var(--green);}
+    .content-view .users-view table td.acounts .account-view a.accountNumber{
+        text-decoration: none;
+        color: var(--text);
+        float: right;
+        font-family: 'iransans';
+        font-size: 1vw;
+        margin-right: 0.5vw;
+        width: 20%;
+    }
+    .content-view .users-view table td.acounts .account-view a.accountNumber:hover{
+        color: var(--blue);
+    }
+    .content-view .users-view table td.acounts .account-view .charge{
+        text-decoration: none;
+        color: var(--text);
+        float: right;
+        font-family: 'iransans';
+        font-size: 1vw;
+        margin-right: 0.5vw;
+        overflow: hidden;
+    }
+    .content-view .users-view table td.acounts .account-view .charge .value{
+        color: var(--green);
+        font-weight: bold;
+        font-size: 0.9vw;
+        display: inline;
+        padding-left: 0.5vw;
+    }
+    .content-view .users-view table td.acounts .account-view .charge .cm{
+        font-family: 'iransans';
+        font-size: 0.5vw;
+        color: var(--text);
+        display: inline;
     }
 }
 @media only screen and (max-width: 800px) {

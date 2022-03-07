@@ -36,11 +36,36 @@ block content
                             //-     -}
                                 
                             td.acounts 
-                                -if(users[i].role == 'user'){
-                                    h1 #{users[i].numberOfAbvandi + users[i].numberOfChahvandi + users[i].numberOfChah} حساب
-                                    h2 #{users[i].numberOfAbvandi} حساب آب‌وندی، #{users[i].numberOfChahvandi} حساب چاه‌وندی و #{users[i].numberOfChah} حساب چاه
-                                -}else
-                                    h1= users[i].idNumber
+                                -var chah = accounts.find(e => e.ownerID == users[i]._id && e.type == 'chah')
+                                -var chahvandi = accounts.find(e => e.ownerID == users[i]._id && e.type == 'chahvandi')
+                                -var abvandi = accounts.find(e => e.ownerID == users[i]._id && e.type == 'abvandi')
+                                -if(chah){
+                                    .account-view 
+                                        .type.red چاه
+                                        a.accountNumber(href="/dashboard/acount-view?acountID=#{chah._id}")= chah.accountNumber
+                                        .charge
+                                            .value= chah.charge 
+                                            .cm متر مکعب
+                                -}if(chahvandi){
+                                    .account-view 
+                                        .type.blue چاه‌وندی
+                                        a.accountNumber(href="/dashboard/acount-view?acountID=#{chahvandi._id}")= chahvandi.accountNumber
+                                        .charge
+                                            .value= chahvandi.charge 
+                                            .cm متر مکعب
+                                -}if(abvandi){
+                                    .account-view 
+                                        .type.green آب‌وند
+                                        a.accountNumber(href="/dashboard/acount-view?acountID=#{abvandi._id}")= abvandi.accountNumber
+                                        .charge
+                                            .value= abvandi.charge 
+                                            .cm متر مکعب
+                                -}
+                                //- -if(users[i].role == 'user'){
+                                //-     h1 #{users[i].numberOfAbvandi + users[i].numberOfChahvandi + users[i].numberOfChah} حساب
+                                //-     h2 #{users[i].numberOfAbvandi} حساب آب‌وندی، #{users[i].numberOfChahvandi} حساب چاه‌وندی و #{users[i].numberOfChah} حساب چاه
+                                //- -}else
+                                //-     h1= users[i].idNumber
                             td
                                 a.edit(href="/dashboard/user-view?userID=#{users[i]._id}") 
                                     i.fa.fa-eye 

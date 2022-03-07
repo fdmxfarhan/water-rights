@@ -194,6 +194,13 @@ router.get('/users', ensureAuthenticated, (req, res, next) => {
                 res.render('./dashboard/admin-users', {
                     user: req.user,
                     users,
+                    accounts,
+                    typeToString: (type) =>{
+                        if(type == 'chah') return 'چاه'
+                        if(type == 'chahvandi') return 'چاه‌وندی'
+                        if(type == 'abvandi') return 'آب‌وندی'
+                    },
+                    
                 });
             })
         })
@@ -405,7 +412,7 @@ var getMirabRight = (source, target, amount, settings) => {
 }
 var getAbkhanRight = (source, target, amount, settings) => {
     if(source.type == 'chahvandi' && target.type == 'chah'){
-        if((amount - getMirabRight(source, target, amount)) * settings.abkhanRight - target.sandogh  < 0) return 0;
+        if((amount - getMirabRight(source, target, amount, settings)) * settings.abkhanRight - target.sandogh  < 0) return 0;
         return (amount - getMirabRight(source, target, amount, settings)) * settings.abkhanRight - target.sandogh;
     }
     return 0;
@@ -935,7 +942,186 @@ router.get('/delete-trade', ensureAuthenticated, (req, res, next) => {
         });
     });
 });
-
+router.get('/forms', ensureAuthenticated, (req, res, next) => {
+    var {userID} = req.query;
+    User.findById(userID, (err, user) => {
+        Acount.findOne({type: 'chah', ownerID: user._id}, (err, chah) => {
+            ///  an error must be accured when ther is no chah account
+            ///  attention !!!
+            var options = {
+                phantomPath: path.join(__dirname, '../node_modules/phantomjs/lib/phantom/bin/phantomjs'),
+                // phantomPath: '/usr/local/share/phantomjs-1.9.8-linux-x86_64/bin/phantomjs',
+                format: "A3",
+                orientation: "portrait",
+                border: "5mm",
+                header: {
+                    height: "0",
+                    contents: ''
+                },
+                footer: {
+                    height: "0mm",
+                    contents: {}
+                },
+            };
+            fs.readFile('./public/form1.html', 'utf8', (err, form1) => {
+                fs.readFile('./public/form2.html', 'utf8', (err, form2) => {
+                    var document1 = {
+                        html: form1,
+                        data: {
+                            info: {
+                                fullname: user.fullname,
+                                accountNumber: user.username,
+                                maximum: chah.sellCap,
+                                idNumber: user.idNumber,
+                                date: convertDate(new Date()),
+                                formNumber: 1,
+                                amount: '.................................',
+                            }
+                        },
+                        path: 'public/files/form1.pdf',
+                        type: "",
+                    };
+                    var document2 = {
+                        html: form2,
+                        data: {
+                            info: {
+                                fullname: user.fullname,
+                                accountNumber: user.username,
+                                maximum: chah.buyCap,
+                                idNumber: user.idNumber,
+                                date: convertDate(new Date()),
+                                formNumber: 1,
+                                amount: '.................................',
+                            }
+                        },
+                        path: 'public/files/form2.pdf',
+                        type: "",
+                    };
+                    pdf.create(document1, options).then((r) => {
+                        pdf.create(document2, options).then((r) => {
+                            res.render('./dashboard/admin-forms', {
+                                user: req.user,
+                                viewingUser: user,
+                                chah: chah,
+                            });
+                        }).catch((error) => {console.error(error)});
+                    }).catch((error) => {console.error(error)});
+                });
+            });
+        });
+    });
+});
+router.post('/transmit-chah-to-chahvandi', ensureAuthenticated, (req, res, next) => {
+    var {chahID, chahvandiID, amount} = req.body;
+    Settings.findOne({}, (err, settings) => {
+        Acount.findById(chahID, (err, source) => {
+            Acount.findById(chahvandiID, (err, target) => {
+                var transmission = new Transmission({
+                    source,
+                    target,
+                    amount,
+                    date: new Date,
+                });
+                transmission.save().then(doc =>{
+                    sms('09336448037', 'انتقال جدید در اپلیکیشن میراب');
+                    Acount.updateMany({_id: source._id}, {$set: {charge: source.charge - amount}}, (err) => {
+                        if(err) console.log(err);
+                        var mirab = getMirabRight(source, target, amount, settings);
+                        var abkhan = getAbkhanRight(source, target, amount, settings);
+                        var sandogh = getSandoghRight(source, target, amount, settings);
+                        Acount.updateMany({_id: target._id}, {$set: {
+                            charge: target.charge + (transmission.amount - mirab - abkhan),
+                            endDate: {year: target.endDate.year+1, month: target.endDate.month, day: target.endDate.day},
+                        }}, (err) => {});
+                        Acount.findOne({type: 'mirab'}, (err, mirabAccount) => {
+                            Acount.updateMany({type: 'mirab'}, {$set: {charge: mirabAccount.charge+mirab}}, (err, doc) => {
+                                if(err) console.log(err);
+                            });
+                        });
+                        Acount.findOne({type: 'abkhan'}, (err, abkhanAccount) => {
+                            Acount.updateMany({type: 'abkhan'}, {$set: {charge: abkhanAccount.charge+abkhan}}, (err, doc) => {
+                                if(err) console.log(err);
+                            });
+                        });
+                        if(source.type == 'chah') 
+                            Acount.updateMany({_id: source._id}, {$set: {sandogh: source.sandogh + sandogh}}, (err) => {});
+                        if(target.type == 'chah')
+                            Acount.updateMany({_id: target._id}, {$set: {sandogh: target.sandogh + sandogh}}, (err) => {});
+                        Transmission.updateMany({_id: transmission._id}, {$set: {done: true, accepted: true}}, (err) => {
+                            var newUserNotif = new UserNotif({
+                                type: 'accept-transmission',
+                                text: `انتقال شارژ ${amount} متر مکعب از حساب ${source.type == 'chah' ? source.license : source.accountNumber} به حساب ${target.type == 'chah' ? target.license : target.accountNumber} توسط میراب تایید شد.`,
+                                userID: source.ownerID,
+                                userFullname: source.owner,
+                                date: new Date(),
+                            });
+                            newUserNotif.save().then(doc => {
+                                req.flash('success_msg', 'انتقال با موفقیت انجام شد');
+                                res.redirect(`/dashboard/acount-view?acountID=${chahID}`);
+                            }).catch(err => console.log(err));
+                        });
+                    });
+                }).catch(err => console.log(err));
+            });
+        });
+    });
+});
+router.post('/transmit-chahvandi-to-chah', ensureAuthenticated, (req, res, next) => {
+    var {chahID, chahvandiID, amount} = req.body;
+    Settings.findOne({}, (err, settings) => {
+        Acount.findById(chahvandiID, (err, source) => {
+            Acount.findById(chahID, (err, target) => {
+                var transmission = new Transmission({
+                    source,
+                    target,
+                    amount,
+                    date: new Date,
+                });
+                transmission.save().then(doc =>{
+                    sms('09336448037', 'انتقال جدید در اپلیکیشن میراب');
+                    Acount.updateMany({_id: source._id}, {$set: {charge: source.charge - amount}}, (err) => {
+                        if(err) console.log(err);
+                        console.log(settings.externalMirabRight);
+                        var mirab = getMirabRight(source, target, amount, settings);
+                        var abkhan = getAbkhanRight(source, target, amount, settings);
+                        var sandogh = getSandoghRight(source, target, amount, settings);
+                        Acount.updateMany({_id: target._id}, {$set: {
+                            charge: target.charge + (transmission.amount - mirab - abkhan),
+                            endDate: {year: target.endDate.year+1, month: target.endDate.month, day: target.endDate.day},
+                        }}, (err) => {});
+                        Acount.findOne({type: 'mirab'}, (err, mirabAccount) => {
+                            Acount.updateMany({type: 'mirab'}, {$set: {charge: mirabAccount.charge+mirab}}, (err, doc) => {
+                                if(err) console.log(err);
+                            });
+                        });
+                        Acount.findOne({type: 'abkhan'}, (err, abkhanAccount) => {
+                            Acount.updateMany({type: 'abkhan'}, {$set: {charge: abkhanAccount.charge+abkhan}}, (err, doc) => {
+                                if(err) console.log(err);
+                            });
+                        });
+                        if(source.type == 'chah') 
+                            Acount.updateMany({_id: source._id}, {$set: {sandogh: source.sandogh + sandogh}}, (err) => {});
+                        if(target.type == 'chah')
+                            Acount.updateMany({_id: target._id}, {$set: {sandogh: target.sandogh + sandogh}}, (err) => {});
+                        Transmission.updateMany({_id: transmission._id}, {$set: {done: true, accepted: true}}, (err) => {
+                            var newUserNotif = new UserNotif({
+                                type: 'accept-transmission',
+                                text: `انتقال شارژ ${amount} متر مکعب از حساب ${source.type == 'chah' ? source.license : source.accountNumber} به حساب ${target.type == 'chah' ? target.license : target.accountNumber} توسط میراب تایید شد.`,
+                                userID: source.ownerID,
+                                userFullname: source.owner,
+                                date: new Date(),
+                            });
+                            newUserNotif.save().then(doc => {
+                                req.flash('success_msg', 'انتقال با موفقیت انجام شد');
+                                res.redirect(`/dashboard/acount-view?acountID=${chahvandiID}`);
+                            }).catch(err => console.log(err));
+                        });
+                    });
+                }).catch(err => console.log(err));
+            });
+        });
+    });
+});
 
 module.exports = router;
 

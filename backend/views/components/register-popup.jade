@@ -2,11 +2,11 @@
     i.fa.fa-times.close-popup
     h1.popup-title افزودن کاربر جدید
     .tabs-view
-        .tab-btn.active#usertab1-btn کاربر عادی
-        .tab-btn#usertab2-btn کارگزار
+        //- .tab-btn.active#usertab1-btn کاربر عادی
+        .tab-btn.active#usertab2-btn کارگزار
         .tab-btn#usertab3-btn تشکل آب‌بران
         .tab-btn#usertab4-btn آب منطقه‌ای
-    .tab-content#usertab1
+    //- .tab-content#usertab1
         form(action="/dashboard/admin-register" method="POST")
             .two-side-form
                 .part
@@ -57,7 +57,7 @@
                     //- input.file(type="file" name="myFile" required)
                     .text-input-area
                         button.submit(type="submit") ثبت نام
-    .tab-content#usertab2.hidden
+    .tab-content#usertab2
         form(action="/dashboard/special-admin-register" method="POST")
             input.hidden(type="text" name="role" value="کارگزار")
             .two-side-form

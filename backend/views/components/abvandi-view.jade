@@ -29,15 +29,15 @@
                         .text-input 
                             i.fa.fa-pencil 
                             label(for="charge") شارژ فعلی:
-                            input(type="number" name="charge" placeholder="00 متر مکعب" value="#{typeof(account.charge) == 'undefined' ? '' : account.charge}" step="0.01")
+                            input(type="number" name="charge" placeholder="00 متر مکعب" value="#{typeof(account.charge) == 'undefined' ? '' : account.charge}" step="any")
                         .text-input 
                             i.fa.fa-pencil 
                             label(for="usedCredit") شارژ مصرف شده:
-                            input(type="number" name="usedCredit" placeholder="00 متر مکعب" value="#{typeof(account.usedCredit) == 'undefined' ? '' : account.usedCredit}" step="0.01")
+                            input(type="number" name="usedCredit" placeholder="00 متر مکعب" value="#{typeof(account.usedCredit) == 'undefined' ? '' : account.usedCredit}" step="any")
                         .text-input 
                             i.fa.fa-pencil 
                             label(for="leftCredit") شارژ باقی مانده:
-                            input(type="number" name="leftCredit" placeholder="00 متر مکعب" value="#{typeof(account.leftCredit) == 'undefined' ? '' : account.leftCredit}" step="0.01")
+                            input(type="number" name="leftCredit" placeholder="00 متر مکعب" value="#{typeof(account.leftCredit) == 'undefined' ? '' : account.leftCredit}" step="any")
                         
                 button.submit(type="submit")
                     i.fa.fa-save

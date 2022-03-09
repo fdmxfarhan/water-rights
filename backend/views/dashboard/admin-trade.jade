@@ -63,7 +63,7 @@ block content
                         
                 .text-input-view
                     h1.name مقدار شارژ:
-                    input.text(type="number" name="amount" id="amount" step="0.01" placeholder="متر مکعب" onkeyup="updateAmount()")
+                    input.text(type="number" name="amount" id="amount" step="any" placeholder="متر مکعب" onkeyup="updateAmount()")
                 input.hidden(type="text" name="sourceID" value="" id="transmission-sourceID")
                 input.hidden(type="text" name="targetID" value="" id="transmission-targetID")
             -if(transmissions.length > 0){

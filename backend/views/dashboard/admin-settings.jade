@@ -43,7 +43,309 @@ block content
                         label(for="externalMirabRight") سهم میراب بین بانک و بازار (درصد): 
                         input(type="number" name="externalMirabRight" value="#{settings.externalMirabRight*100}")
                     input.submit(type="submit" value="ثبت")
+            .settings-view.serverlogs
+                h1.title رویداد ها
+                #serverlogs-length.hidden= serverLogs.length
+                -for(var i=0; i<serverLogs.length; i++){
+                    .log-button(id="log-button-#{i}")
+                        .name= serverLogs[i].title
+                        .user= 'توسط ' + serverLogs[i].fullname 
+                        .date #{convertDate(serverLogs[i].date)}
+                    .log-detail(id="log-detail-#{i}")
+                        -if(serverLogs[i].type == 'user-register'){
+                            .two-part-info 
+                                .part 
+                                    .item 
+                                        .title نام : 
+                                        .value= serverLogs[i].after.firstName
+                                    .item 
+                                        .title نام خانوادگی: 
+                                        .value= serverLogs[i].after.lastName
+                                    .item 
+                                        .title کد ملی: 
+                                        .value= serverLogs[i].after.idNumber
+                                    .item 
+                                        .title شماره شناسنامه: 
+                                        .value= serverLogs[i].after.cardNumber
+                                    .item 
+                                        .title تاریخ تولد: 
+                                        .value #{serverLogs[i].after.birthDate.year}/#{serverLogs[i].after.birthDate.month}/#{serverLogs[i].after.birthDate.day}
+                                .part 
+                                    .item
+                                        .title جنسیت: 
+                                        .value= serverLogs[i].after.sex == 'آقای'? 'آقا' : 'خانم'
+                                    .item 
+                                        .title نام پدر: 
+                                        .value= serverLogs[i].after.fatherName
+                                    .item 
+                                        .title نشانی: 
+                                        .value= serverLogs[i].after.address
+                                    .item 
+                                        .title کد پستی: 
+                                        .value= serverLogs[i].after.postCode
+                                    .item 
+                                        .title شماره تماس: 
+                                        .value= serverLogs[i].after.phone
+                        -}else if(serverLogs[i].type == 'user-delete'){
+                            .two-part-info 
+                                .part 
+                                    .item 
+                                        .title نام : 
+                                        .value= serverLogs[i].before.firstName
+                                    .item 
+                                        .title نام خانوادگی: 
+                                        .value= serverLogs[i].before.lastName
+                                    .item 
+                                        .title کد ملی: 
+                                        .value= serverLogs[i].before.idNumber
+                                    .item 
+                                        .title شماره شناسنامه: 
+                                        .value= serverLogs[i].before.cardNumber
+                                    .item 
+                                        .title تاریخ تولد: 
+                                        .value #{serverLogs[i].before.birthDate.year}/#{serverLogs[i].before.birthDate.month}/#{serverLogs[i].before.birthDate.day}
+                                .part 
+                                    .item
+                                        .title جنسیت: 
+                                        .value= serverLogs[i].before.sex == 'آقای'? 'آقا' : 'خانم'
+                                    .item 
+                                        .title نام پدر: 
+                                        .value= serverLogs[i].before.fatherName
+                                    .item 
+                                        .title نشانی: 
+                                        .value= serverLogs[i].before.address
+                                    .item 
+                                        .title کد پستی: 
+                                        .value= serverLogs[i].before.postCode
+                                    .item 
+                                        .title شماره تماس: 
+                                        .value= serverLogs[i].before.phone
+                        -}else if(serverLogs[i].type == 'account-delete'){
+                            .two-part-info 
+                                .part 
+                                    .item 
+                                        .title نوع حساب: 
+                                        .value= typeToString(serverLogs[i].before.type)
+                                    .item 
+                                        .title شماره حساب: 
+                                        .value= serverLogs[i].before.accountNumber
+                                    .item 
+                                        .title شارژ: 
+                                        .value= serverLogs[i].before.charge
+                                    .item 
+                                        .title شارژ مصرف شده: 
+                                        .value= serverLogs[i].before.usedCredit
+                                    .item 
+                                        .title شارژ باقی مانده: 
+                                        .value= serverLogs[i].before.leftCredit
+                                .part 
+                                    .item
+                                        .title تاریخ آغاز اعتبار: 
+                                        .value #{serverLogs[i].before.startDate.year}/#{serverLogs[i].before.startDate.month}/#{serverLogs[i].before.startDate.day}
+                                    .item
+                                        .title تاریخ پایان اعتبار: 
+                                        .value #{serverLogs[i].before.endDate.year}/#{serverLogs[i].before.endDate.month}/#{serverLogs[i].before.endDate.day}
+                                    
+                                //-     .item 
+                                //-         .title نام پدر: 
+                                //-         .value= serverLogs[i].before.fatherName
+                                //-     .item 
+                                //-         .title نشانی: 
+                                //-         .value= serverLogs[i].before.address
+                                //-     .item 
+                                //-         .title کد پستی: 
+                                //-         .value= serverLogs[i].before.postCode
+                                //-     .item 
+                                //-         .title شماره تماس: 
+                                //-         .value= serverLogs[i].before.phone
+                        -}else if(serverLogs[i].type == 'edit-abvandi'){
+                            .two-part-info 
+                                .part 
+                                    .item 
+                                        .title نوع حساب: 
+                                        .value= typeToString(serverLogs[i].before.type)
+                                    .item 
+                                        .title شماره حساب: 
+                                        .value(class="#{serverLogs[i].before.accountNumber != serverLogs[i].after.accountNumber? 'changed' : ''}")= serverLogs[i].before.accountNumber
+                                        -if(serverLogs[i].before.accountNumber != serverLogs[i].after.accountNumber)
+                                            .changed-value= serverLogs[i].after.accountNumber
+                                    .item 
+                                        .title شارژ: 
+                                        .value(class="#{serverLogs[i].before.charge != serverLogs[i].after.charge? 'changed' : ''}")= serverLogs[i].before.charge
+                                        -if(serverLogs[i].before.charge != serverLogs[i].after.charge)
+                                            .changed-value= serverLogs[i].after.charge
+                                    .item 
+                                        .title شارژ مصرف شده: 
+                                        .value(class="#{serverLogs[i].before.usedCredit != serverLogs[i].after.usedCredit? 'changed' : ''}")= serverLogs[i].before.usedCredit
+                                        -if(serverLogs[i].before.usedCredit != serverLogs[i].after.usedCredit)
+                                            .changed-value= serverLogs[i].after.usedCredit
+                                    .item 
+                                        .title شارژ باقی مانده: 
+                                        .value(class="#{serverLogs[i].before.leftCredit != serverLogs[i].after.leftCredit? 'changed' : ''}")= serverLogs[i].before.leftCredit
+                                        -if(serverLogs[i].before.leftCredit != serverLogs[i].after.leftCredit)
+                                            .changed-value= serverLogs[i].after.leftCredit
+                                .part 
+                                    .item
+                                        .title تاریخ آغاز اعتبار: 
+                                        .value(class="#{}") #{serverLogs[i].before.startDate.year}/#{serverLogs[i].before.startDate.month}/#{serverLogs[i].before.startDate.day}
+                                    .item
+                                        .title تاریخ پایان اعتبار: 
+                                        .value(class="#{}") #{serverLogs[i].before.endDate.year}/#{serverLogs[i].before.endDate.month}/#{serverLogs[i].before.endDate.day}
+                                    .item 
+                                        .title مالک حساب: 
+                                        .value(class="#{serverLogs[i].before.owner != serverLogs[i].after.owner? 'changed' : ''}")= serverLogs[i].before.owner
+                                        -if(serverLogs[i].before.owner != serverLogs[i].after.owner)
+                                            .changed-value= serverLogs[i].after.owner
+                        -}else if(serverLogs[i].type == 'edit-chahvandi'){
+                            .two-part-info 
+                                .part 
+                                    .item 
+                                        .title نوع حساب: 
+                                        .value= typeToString(serverLogs[i].before.type)
+                                    .item 
+                                        .title شماره حساب: 
+                                        .value(class="#{serverLogs[i].before.accountNumber != serverLogs[i].after.accountNumber? 'changed' : ''}")= serverLogs[i].before.accountNumber
+                                        -if(serverLogs[i].before.accountNumber != serverLogs[i].after.accountNumber)
+                                            .changed-value= serverLogs[i].after.accountNumber
+                                    .item 
+                                        .title شارژ: 
+                                        .value(class="#{serverLogs[i].before.charge != serverLogs[i].after.charge? 'changed' : ''}")= serverLogs[i].before.charge
+                                        -if(serverLogs[i].before.charge != serverLogs[i].after.charge)
+                                            .changed-value= serverLogs[i].after.charge
+                                    .item 
+                                        .title شارژ مصرف شده: 
+                                        .value(class="#{serverLogs[i].before.usedCredit != serverLogs[i].after.usedCredit? 'changed' : ''}")= serverLogs[i].before.usedCredit
+                                        -if(serverLogs[i].before.usedCredit != serverLogs[i].after.usedCredit)
+                                            .changed-value= serverLogs[i].after.usedCredit
+                                    .item 
+                                        .title شارژ باقی مانده: 
+                                        .value(class="#{serverLogs[i].before.leftCredit != serverLogs[i].after.leftCredit? 'changed' : ''}")= serverLogs[i].before.leftCredit
+                                        -if(serverLogs[i].before.leftCredit != serverLogs[i].after.leftCredit)
+                                            .changed-value= serverLogs[i].after.leftCredit
+                                .part 
+                                    .item
+                                        .title تاریخ آغاز اعتبار: 
+                                        .value(class="#{}") #{serverLogs[i].before.startDate.year}/#{serverLogs[i].before.startDate.month}/#{serverLogs[i].before.startDate.day}
+                                    .item
+                                        .title تاریخ پایان اعتبار: 
+                                        .value(class="#{}") #{serverLogs[i].before.endDate.year}/#{serverLogs[i].before.endDate.month}/#{serverLogs[i].before.endDate.day}
+                                    .item 
+                                        .title مالک حساب: 
+                                        .value(class="#{serverLogs[i].before.owner != serverLogs[i].after.owner? 'changed' : ''}")= serverLogs[i].before.owner
+                                        -if(serverLogs[i].before.owner != serverLogs[i].after.owner)
+                                            .changed-value= serverLogs[i].after.owner
+                        -}else if(serverLogs[i].type == 'edit-chah'){
+                            .two-part-info 
+                                .part 
+                                    .item 
+                                        .title نوع حساب: 
+                                        .value= typeToString(serverLogs[i].before.type)
+                                    .item 
+                                        .title شماره حساب: 
+                                        .value(class="#{serverLogs[i].before.accountNumber != serverLogs[i].after.accountNumber? 'changed' : ''}")= serverLogs[i].before.accountNumber
+                                        -if(serverLogs[i].before.accountNumber != serverLogs[i].after.accountNumber)
+                                            .changed-value= serverLogs[i].after.accountNumber
+                                    .item 
+                                        .title شارژ: 
+                                        .value(class="#{serverLogs[i].before.charge != serverLogs[i].after.charge? 'changed' : ''}")= serverLogs[i].before.charge
+                                        -if(serverLogs[i].before.charge != serverLogs[i].after.charge)
+                                            .changed-value= serverLogs[i].after.charge
+                                    .item 
+                                        .title شارژ مصرف شده: 
+                                        .value(class="#{serverLogs[i].before.usedCredit != serverLogs[i].after.usedCredit? 'changed' : ''}")= serverLogs[i].before.usedCredit
+                                        -if(serverLogs[i].before.usedCredit != serverLogs[i].after.usedCredit)
+                                            .changed-value= serverLogs[i].after.usedCredit
+                                    .item 
+                                        .title شارژ باقی مانده: 
+                                        .value(class="#{serverLogs[i].before.leftCredit != serverLogs[i].after.leftCredit? 'changed' : ''}")= serverLogs[i].before.leftCredit
+                                        -if(serverLogs[i].before.leftCredit != serverLogs[i].after.leftCredit)
+                                            .changed-value= serverLogs[i].after.leftCredit
+                                    .item 
+                                        .title مساحت زمین: 
+                                        .value(class="#{serverLogs[i].before.area != serverLogs[i].after.area? 'changed' : ''}")= serverLogs[i].before.area
+                                        -if(serverLogs[i].before.area != serverLogs[i].after.area)
+                                            .changed-value= serverLogs[i].after.area
+                                    .item 
+                                        .title نوع کشت: 
+                                        .value(class="#{serverLogs[i].before.farmingType != serverLogs[i].after.farmingType? 'changed' : ''}")= serverLogs[i].before.farmingType
+                                        -if(serverLogs[i].before.farmingType != serverLogs[i].after.farmingType)
+                                            .changed-value= serverLogs[i].after.farmingType
+                                    .item 
+                                        .title نوع پمپ: 
+                                        .value(class="#{serverLogs[i].before.pomp != serverLogs[i].after.pomp? 'changed' : ''}")= serverLogs[i].before.pomp
+                                        -if(serverLogs[i].before.pomp != serverLogs[i].after.pomp)
+                                            .changed-value= serverLogs[i].after.pomp
+                                    .item 
+                                        .title آبدهی چاه: 
+                                        .value(class="#{serverLogs[i].before.power != serverLogs[i].after.power? 'changed' : ''}")= serverLogs[i].before.power
+                                        -if(serverLogs[i].before.power != serverLogs[i].after.power)
+                                            .changed-value= serverLogs[i].after.power
+                                    .item 
+                                        .title توان چاه: 
+                                        .value(class="#{serverLogs[i].before.abdehi != serverLogs[i].after.abdehi? 'changed' : ''}")= serverLogs[i].before.abdehi
+                                        -if(serverLogs[i].before.abdehi != serverLogs[i].after.abdehi)
+                                            .changed-value= serverLogs[i].after.abdehi
+                                    .item 
+                                        .title عمق چاه: 
+                                        .value(class="#{serverLogs[i].before.depth != serverLogs[i].after.depth? 'changed' : ''}")= serverLogs[i].before.depth
+                                        -if(serverLogs[i].before.depth != serverLogs[i].after.depth)
+                                            .changed-value= serverLogs[i].after.depth
+                                .part 
+                                    .item 
+                                        .title buyCap: 
+                                        .value(class="#{serverLogs[i].before.buyCap != serverLogs[i].after.buyCap? 'changed' : ''}")= serverLogs[i].before.buyCap
+                                        -if(serverLogs[i].before.buyCap != serverLogs[i].after.buyCap)
+                                            .changed-value= serverLogs[i].after.buyCap
+                                    .item 
+                                        .title sellCap: 
+                                        .value(class="#{serverLogs[i].before.sellCap != serverLogs[i].after.sellCap? 'changed' : ''}")= serverLogs[i].before.sellCap
+                                        -if(serverLogs[i].before.sellCap != serverLogs[i].after.sellCap)
+                                            .changed-value= serverLogs[i].after.sellCap
+                                    .item 
+                                        .title wellCap: 
+                                        .value(class="#{serverLogs[i].before.wellCap != serverLogs[i].after.wellCap? 'changed' : ''}")= serverLogs[i].before.wellCap
+                                        -if(serverLogs[i].before.wellCap != serverLogs[i].after.wellCap)
+                                            .changed-value= serverLogs[i].after.wellCap
+                                    .item 
+                                        .title نوع بهره‌برداری: 
+                                        .value(class="#{serverLogs[i].before.useType != serverLogs[i].after.useType? 'changed' : ''}")= serverLogs[i].before.useType
+                                        -if(serverLogs[i].before.useType != serverLogs[i].after.useType)
+                                            .changed-value= serverLogs[i].after.useType
+                                    .item 
+                                        .title UTM: 
+                                        .value(class="#{serverLogs[i].before.UTM != serverLogs[i].after.UTM? 'changed' : ''}")= serverLogs[i].before.UTM
+                                        -if(serverLogs[i].before.UTM != serverLogs[i].after.UTM)
+                                            .changed-value= serverLogs[i].after.UTM
+                                    .item 
+                                        .title ساعت کارکرد مجاز: 
+                                        .value(class="#{serverLogs[i].before.permitedWorkTime != serverLogs[i].after.permitedWorkTime? 'changed' : ''}")= serverLogs[i].before.permitedWorkTime
+                                        -if(serverLogs[i].before.permitedWorkTime != serverLogs[i].after.permitedWorkTime)
+                                            .changed-value= serverLogs[i].after.permitedWorkTime
+                                    .item 
+                                        .title آبدهی مجاز: 
+                                        .value(class="#{serverLogs[i].before.permitedAbdehi != serverLogs[i].after.permitedAbdehi? 'changed' : ''}")= serverLogs[i].before.permitedAbdehi
+                                        -if(serverLogs[i].before.permitedAbdehi != serverLogs[i].after.permitedAbdehi)
+                                            .changed-value= serverLogs[i].after.permitedAbdehi
+                                    .item 
+                                        .title اجازه برداشت سالیانه: 
+                                        .value(class="#{serverLogs[i].before.permitedUseInYear != serverLogs[i].after.permitedUseInYear? 'changed' : ''}")= serverLogs[i].before.permitedUseInYear
+                                        -if(serverLogs[i].before.permitedUseInYear != serverLogs[i].after.permitedUseInYear)
+                                            .changed-value= serverLogs[i].after.permitedUseInYear                                    
+                                    .item
+                                        .title تاریخ آغاز اعتبار: 
+                                        .value(class="#{}") #{serverLogs[i].before.startDate.year}/#{serverLogs[i].before.startDate.month}/#{serverLogs[i].before.startDate.day}
+                                    .item
+                                        .title تاریخ پایان اعتبار: 
+                                        .value(class="#{}") #{serverLogs[i].before.endDate.year}/#{serverLogs[i].before.endDate.month}/#{serverLogs[i].before.endDate.day}
+                                    .item 
+                                        .title مالک حساب: 
+                                        .value(class="#{serverLogs[i].before.owner != serverLogs[i].after.owner? 'changed' : ''}")= serverLogs[i].before.owner
+                                        -if(serverLogs[i].before.owner != serverLogs[i].after.owner)
+                                            .changed-value= serverLogs[i].after.owner
+                        -}
+                -}
         .user-control 
             .control 
     script.
         $('#link5').addClass('active');
+    script(src="/js/serverlogs.js")

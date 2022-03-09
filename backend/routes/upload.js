@@ -13,6 +13,7 @@ var Settings = require('../models/Settings');
 var Notification = require('../models/Notification');
 var UserNotif = require('../models/UserNotif');
 var Transmission = require('../models/Transmission');
+var ServerLog = require('../models/ServerLog');
 const sms = require('../config/sms');
 const sms2 = require('../config/sms2');
 router.use(bodyparser.urlencoded({ extended: true }));
@@ -251,6 +252,7 @@ router.post('/save-chah', ensureAuthenticated, upload.single('licensePic'), (req
     var file = req.file;
     User.findById(userID, (err, user) => {
         Acount.findById(accountID, (err, account) => {
+            var before = account;
             var owner = account.owner;
             var licensePic = account.licensePic;
             if(user) owner = user.fullname;
@@ -280,6 +282,39 @@ router.post('/save-chah', ensureAuthenticated, upload.single('licensePic'), (req
                 leftCredit,
                 accountNumber,
             }}, (err) => {
+                newLog = new ServerLog({
+                    type: 'edit-chah',
+                    date: new Date(),
+                    fullname: req.user.fullname,
+                    userID: req.user._id,
+                    before,
+                    after: {
+                        licensePic,
+                        owner: owner,
+                        ownerID: userID,
+                        permitedUseInYear,
+                        permitedAbdehi,
+                        permitedWorkTime,
+                        UTM,
+                        useType,
+                        wellCap,
+                        sellCap,
+                        buyCap,
+                        depth,
+                        power,
+                        abdehi,
+                        pomp,
+                        linkedAccount,
+                        farmingType, 
+                        area,
+                        charge, 
+                        usedCredit, 
+                        leftCredit,
+                        accountNumber,
+                    },
+                    title: `ویرایش حساب چاه ${account.accountNumber}`,
+                });
+                newLog.save().then(doc => {}).catch(err => console.log(err));
                 if(err) console.log(err);
                 if(owner != 'undefined'){
                     Acount.findOne({linkedAccount: accountID}, (err, chahvandiAccount) => {
@@ -348,6 +383,7 @@ router.post('/save-chahvandi', ensureAuthenticated, upload.single('licensePic'),
     var file = req.file;
     User.findById(userID, (err, user) => {
         Acount.findById(accountID, (err, account) => {
+            var before = account;
             var owner = account.owner;
             if(user) owner = user.fullname;
             Acount.updateMany({_id: accountID}, {$set: {
@@ -357,6 +393,25 @@ router.post('/save-chahvandi', ensureAuthenticated, upload.single('licensePic'),
                 linkedAccount,
                 charge, usedCredit, leftCredit, 
             }}, (err) => {
+                newLog = new ServerLog({
+                    type: 'edit-chahvandi',
+                    date: new Date(),
+                    fullname: req.user.fullname,
+                    userID: req.user._id,
+                    before,
+                    after: {
+                        owner: owner,
+                        ownerID: userID,
+                        type: 'chahvandi',
+                        linkedAccount,
+                        charge, 
+                        usedCredit, 
+                        leftCredit, 
+                        accountNumber: account.accountNumber,
+                    },
+                    title: `ویرایش حساب چاه‌وندی ${account.accountNumber}`,
+                });
+                newLog.save().then(doc => {}).catch(err => console.log(err));
                 req.flash('success_msg', 'اطلاعات با موفقیت ذخیره شد');
                 res.redirect(`/dashboard/acount-view?acountID=${accountID}`)
             });
@@ -368,6 +423,7 @@ router.post('/save-abvandi', ensureAuthenticated, (req, res, next) => {
     console.log(accountID)
     User.findById(userID, (err, user) => {
         Acount.findById(accountID, (err, account) => {
+            var before = account;
             var owner = account.owner;
             if(user) owner = user.fullname;
             Acount.updateMany({_id: accountID}, {$set: {
@@ -379,6 +435,24 @@ router.post('/save-abvandi', ensureAuthenticated, (req, res, next) => {
                 leftCredit, 
                 accountNumber,
             }}, (err) => {
+                newLog = new ServerLog({
+                    type: 'edit-abvandi',
+                    date: new Date(),
+                    fullname: req.user.fullname,
+                    userID: req.user._id,
+                    before,
+                    after: {
+                        owner: owner,
+                        ownerID: userID,
+                        type: 'abvandi',
+                        charge, 
+                        usedCredit, 
+                        leftCredit, 
+                        accountNumber,
+                    },
+                    title: `ویرایش حساب آب‌وندی ${account.accountNumber}`,
+                });
+                newLog.save().then(doc => {}).catch(err => console.log(err));
                 User.updateMany({_id: userID}, {$set: {username: accountNumber}}, (err) => {
                     req.flash('success_msg', 'اطلاعات با موفقیت ذخیره شد');
                     res.redirect(`/dashboard/acount-view?acountID=${accountID}`)

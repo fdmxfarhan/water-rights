@@ -495,7 +495,53 @@
         margin-top: 2vw;
         cursor: pointer;
     }
-    
+    .control .files-list-view {
+        font-family: 'iransans';
+    }
+    .control .files-list-view h1{
+        font-family: 'iransans';
+        font-size: 1vw;
+        color: var(--blue);
+        padding: 0.4vw 1vw;
+        border-bottom: var(--gray) 0.1vw solid;
+    }
+    .control .files-list-view table{
+        width: 90%;
+        /* border-collapse: collapse; */
+        margin: auto;
+    }
+    .control .files-list-view table td a{
+        display: block;
+        height: 3vw;
+        overflow: hidden;
+        text-decoration: none;
+    }
+    .control .files-list-view table td img{
+        max-height: 4vw;
+        display: block;
+        margin: auto;
+        max-width: 4vw;
+        resize: horizontal;
+    }
+    .control .files-list-view table td{
+        font-family: 'iransans';
+        font-size: 0.85vw;
+    }
+    .control .files-list-view .add-file{
+        text-align: center;
+        color: var(--blue);
+        cursor: pointer;
+        font-family: 'iransans';
+        font-size: 1vw;
+        margin-top: 0.6vw;
+        border-top: var(--lightgray) 0.1vw solid;
+    }
+    .control .files-list-view .add-file i{
+        padding-left: 0.5vw;
+    }   
+    .control .files-list-view .add-file:hover{
+        color: var(--hover);
+    }
 }
 
 @media only screen and (max-width: 800px) {

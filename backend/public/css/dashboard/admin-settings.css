@@ -44,4 +44,85 @@
     .settings-view form .date-input input.submit:hover{
         background-color: var(--orange);
     }
+    .settings-view.serverlogs{
+        width: 90%;
+        margin: auto;
+        margin-bottom: 2vw;
+    }
+    .settings-view.serverlogs h1{
+        width: 100%;
+    }
+    .settings-view .log-button{
+        overflow: hidden;
+        border-radius: 0.5vw;
+        background-color: var(--blue);
+        color: white;
+        cursor: pointer;
+        margin-top: 0.5vw;
+    }
+    .settings-view .log-button:hover{
+        background-color: var(--hover);
+    }
+    .settings-view .log-button .name{
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        color: white;
+        float: right;
+        margin-right: 1vw;
+        padding: 0.5vw 1vw;
+        min-width: 40%;
+    }
+    .settings-view .log-button .user{
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        color: white;
+        float: right;
+        margin-right: 1vw;
+        padding: 0.5vw 1vw;
+    }
+    .settings-view .log-button .date{
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        color: white;
+        float: left;
+        margin-left: 1vw;
+        padding: 0.5vw 1vw;
+    }
+    .settings-view .log-detail{
+        border: var(--lightgray) 0.1vw solid;
+        border-radius: 0.5vw;
+        margin: 0.5vw auto;
+        display: none;
+    }
+    .settings-view .log-detail .two-part-info {
+        overflow: hidden;
+        width: 90%;
+        margin: 0.5vw auto;
+    }
+    .settings-view .log-detail .two-part-info .part{
+        float: right;
+        width: 50%;
+    }
+    .settings-view .log-detail .two-part-info .item{
+        direction: rtl;
+        text-align: right;
+        overflow: hidden;
+    }
+    .settings-view .log-detail .two-part-info .item .title{
+        float: right;
+        padding-left: 0.5vw;
+    }
+    .settings-view .log-detail .two-part-info .item .value{
+        float: right;
+    }
+    .settings-view .log-detail .two-part-info .item .changed-value{
+        float: right;
+        padding: 0 0.5vw;
+        color: var(--green);
+        font-weight: bold;
+    }
+    .settings-view .log-detail .two-part-info .item .value.changed{
+        color: var(--red);
+        text-decoration: line-through;
+    }
 }

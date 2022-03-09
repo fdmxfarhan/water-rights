@@ -55,7 +55,7 @@ block content
                             label(for="cardNumber") تایید کلمه عبور: 
                             input.text(type="password" name="password2" placeholder="تایید کلمه عبور")
                     input.submit(type="submit" value="ثبت تغییرات")
-            .files-area 
+            //- .files-area 
                 -if(viewingUser.file0.link != ''){
                     a.file(href="#{viewingUser.file0.link}" target="_blank")
                         -if(viewingUser.file0.link.slice(viewingUser.file0.link.length-3, viewingUser.file0.link.length) != 'pdf')
@@ -183,7 +183,135 @@ block content
                     //-     | افزودن حساب چاه
         .user-control 
             .control 
-                
+                .files-list-view 
+                    h1 مدارک عمومی
+                    table 
+                        -var i=0;
+                        -for(i=0; i<viewingUser.file.length; i++){
+                            tr 
+                                td= i+1 + '.' + viewingUser.file[i].title 
+                                td 
+                                    -if(viewingUser.file[i].link.slice(-3) != 'pdf')
+                                        a(href="#{viewingUser.file[i].link}" target="_blank") 
+                                            img(src="#{viewingUser.file[i].link}")
+                                    -else
+                                        a(href="#{viewingUser.file[i].link}" target="_blank") 
+                                            img(src="/img/pdf.jpg")
+                        -}
+                    .add-file
+                        i.fa.fa-plus
+                        | افزودن فایل
+            .control 
+                .files-list-view 
+                    h1 مدارک اختصاصی
+                    table 
+                        -var i=0;
+                        -var chah = acounts.find(e => e.type == 'chah' && e.ownerID == viewingUser._id.toString());
+                        -if(chah.licensePic != ''){
+                            tr 
+                                td= i+1 + '.' + 'اسکن پروانه بهره برداری'
+                                td 
+                                    -if(chah.licensePic.slice(-3) != 'pdf')
+                                        a(href="#{chah.licensePic}" target="_blank") 
+                                            img(src="#{chah.licensePic}")
+                                    -else
+                                        a(href="#{chah.licensePic}" target="_blank") 
+                                            img(src="/img/pdf.jpg")
+                        -} i++;
+                        -if(viewingUser.file1.link != ''){
+                            tr 
+                                td= i+1 + '.' + ''
+                                td 
+                                    -if(viewingUser.file1.link.slice(-3) != 'pdf')
+                                        a(href="#{viewingUser.file1.link}" target="_blank") 
+                                            img(src="#{viewingUser.file1.link}")
+                                    -else
+                                        a(href="#{viewingUser.file1.link}" target="_blank") 
+                                            img(src="/img/pdf.jpg")
+                        -} i++;
+                        -if(viewingUser.file2.link != ''){
+                            tr 
+                                td= i+1 + '.' + 'اصلاح نام پرونده'
+                                td 
+                                    -if(viewingUser.file2.link.slice(-3) != 'pdf')
+                                        a(href="#{viewingUser.file2.link}" target="_blank") 
+                                            img(src="#{viewingUser.file2.link}")
+                                    -else
+                                        a(href="#{viewingUser.file2.link}" target="_blank") 
+                                            img(src="/img/pdf.jpg")
+                        -} i++;
+                        -if(viewingUser.file3.link != ''){
+                            tr 
+                                td= i+1 + '.' + 'اصلاح نام پروانه'
+                                td 
+                                    -if(viewingUser.file3.link.slice(-3) != 'pdf')
+                                        a(href="#{viewingUser.file3.link}" target="_blank") 
+                                            img(src="#{viewingUser.file3.link}")
+                                    -else
+                                        a(href="#{viewingUser.file3.link}" target="_blank") 
+                                            img(src="/img/pdf.jpg")
+                        -} i++;
+                        -if(viewingUser.file4.link != ''){
+                            tr 
+                                td= i+1 + '.' + ''
+                                td 
+                                    -if(viewingUser.file4.link.slice(-3) != 'pdf')
+                                        a(href="#{viewingUser.file4.link}" target="_blank") 
+                                            img(src="#{viewingUser.file4.link}")
+                                    -else
+                                        a(href="#{viewingUser.file4.link}" target="_blank") 
+                                            img(src="/img/pdf.jpg")
+                        -} i++;
+                        -if(viewingUser.commitmentLetter != ''){
+                            tr 
+                                td= i+1 + '.' + 'تعهدنامه نمایندگی در فروش'
+                                td 
+                                    -if(viewingUser.commitmentLetter.slice(-3) != 'pdf')
+                                        a(href="#{viewingUser.commitmentLetter}" target="_blank") 
+                                            img(src="#{viewingUser.commitmentLetter}")
+                                    -else
+                                        a(href="#{viewingUser.commitmentLetter}" target="_blank") 
+                                            img(src="/img/pdf.jpg")
+                        -} i++;
+                        -if(chah.calibrateLicense.link != ''){
+                            tr 
+                                td= i+1 + '.' + ''
+                                td 
+                                    -if(chah.calibrateLicense.link.slice(-3) != 'pdf')
+                                        a(href="#{chah.calibrateLicense.link}" target="_blank") 
+                                            img(src="#{chah.calibrateLicense.link}")
+                                    -else
+                                        a(href="#{chah.calibrateLicense.link}" target="_blank") 
+                                            img(src="/img/pdf.jpg")
+                        -} i++;
+            .control 
+                .files-list-view 
+                    h1 فرم ها
+                    table 
+                        -if(viewingUser.form1 != ''){
+                            tr 
+                                td= '1.' + 'فرم درخواست فروش'
+                                td 
+                                    -if(viewingUser.form1.slice(-3) != 'pdf')
+                                        a(href="#{viewingUser.form1}" target="_blank") 
+                                            img(src="#{viewingUser.form1}")
+                                    -else
+                                        a(href="#{viewingUser.form1}" target="_blank") 
+                                            img(src="/img/pdf.jpg")
+                        -}
+                        -if(viewingUser.form2 != ''){
+                            tr 
+                                td= '2.' + 'فرم درخواست خرید'
+                                td 
+                                    -if(viewingUser.form2.slice(-3) != 'pdf')
+                                        a(href="#{viewingUser.form2}" target="_blank") 
+                                            img(src="#{viewingUser.form2}")
+                                    -else
+                                        a(href="#{viewingUser.form2}" target="_blank") 
+                                            img(src="/img/pdf.jpg")
+                        -}
+                        
+                        
     //- .avatar-info
     //-     .avatar 
     //-         i.fa.fa-user 

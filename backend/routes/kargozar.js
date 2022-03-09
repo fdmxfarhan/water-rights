@@ -11,6 +11,7 @@ var UserNotif = require('../models/UserNotif');
 var Transmission = require('../models/Transmission');
 var Settings = require('../models/Settings');
 var AdminNotif = require('../models/AdminNotif');
+var ServerLog = require('../models/ServerLog');
 const sms = require('../config/sms');
 const sms2 = require('../config/sms2');
 const mail = require('../config/mail');
@@ -158,11 +159,21 @@ router.post('/register-user', ensureAuthenticated, (req, res, next) => {
                                     startDate: settings.startYearDateJ,
                                 })
                                 newAccount.save().then(doc => {
-                                    req.flash(`success_msg', 'کاربر با کد آب وندی ${newAccount.accountNumber} ثبت شد`);
-                                    if(req.user.role == 'کارگزار')
-                                        res.redirect(`/kargozar?userIndex=${req.body.userIndex}`);
-                                    else if(req.user.role == 'تشکل آب بران')
-                                        res.redirect(`/tashakol/?userIndex=${req.body.userIndex}`);
+                                    var newLog = new ServerLog({
+                                        type: 'user-register',
+                                        date: new Date(),
+                                        fullname: req.user.fullname,
+                                        userID: req.user._id,
+                                        after: newUser,
+                                        title: 'ثبت درخواست ورود به بازار آب',
+                                    })
+                                    newLog.save().then(doc => {
+                                        req.flash(`success_msg', 'کاربر با کد آب وندی ${newAccount.accountNumber} ثبت شد`);
+                                        if(req.user.role == 'کارگزار')
+                                            res.redirect(`/kargozar?userIndex=${req.body.userIndex}`);
+                                        else if(req.user.role == 'تشکل آب بران')
+                                            res.redirect(`/tashakol/?userIndex=${req.body.userIndex}`);
+                                    }).catch(err => console.log(err));
                                 }).catch(err => console.log(err));
                             });
                         }).catch(err => console.log(err));

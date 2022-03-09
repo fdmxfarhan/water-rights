@@ -95,15 +95,15 @@
                         .text-input-view 
                             //- i.fa.fa-pencil 
                             label(for="charge") شارژ فعلی:
-                            input(type="number" name="charge" placeholder="00 متر مکعب" value="#{typeof(account.charge) == 'undefined' ? '' : account.charge}" step="0.01")
+                            input(type="number" name="charge" placeholder="00 متر مکعب" value="#{typeof(account.charge) == 'undefined' ? '' : account.charge}" step="any")
                         .text-input-view 
                             //- i.fa.fa-pencil 
                             label(for="usedCredit") شارژ مصرف شده:
-                            input(type="number" name="usedCredit" placeholder="00 متر مکعب" value="#{typeof(account.usedCredit) == 'undefined' ? '' : account.usedCredit}" step="0.01")
+                            input(type="number" name="usedCredit" placeholder="00 متر مکعب" value="#{typeof(account.usedCredit) == 'undefined' ? '' : account.usedCredit}" step="any")
                         .text-input-view 
                             //- i.fa.fa-pencil 
                             label(for="leftCredit") شارژ باقی مانده:
-                            input(type="number" name="leftCredit" placeholder="00 متر مکعب" value="#{typeof(account.leftCredit) == 'undefined' ? '' : account.leftCredit}" step="0.01")
+                            input(type="number" name="leftCredit" placeholder="00 متر مکعب" value="#{typeof(account.leftCredit) == 'undefined' ? '' : account.leftCredit}" step="any")
                         
                         //- -if(account.licensePic)
                         //-     img.license(src="#{account.licensePic}")
@@ -176,7 +176,6 @@
                         .name= beneficiaries[j].idNumber
                         .name= beneficiaries[j].phone
                 -}
-
         .user-control 
             .control 
                 .charge 
@@ -228,7 +227,7 @@
                             .target انتقال به حساب #{linkedAccount.accountNumber}
                             input.hidden(type="text" name="chahvandiID" value="#{linkedAccount._id}")
                             label(for="amount") مقدار شارژ:
-                            input.text(type="number" name="amount" value="" placeholder="متر مکعب" step="0.01")
+                            input.text(type="number" name="amount" value="" placeholder="متر مکعب" step="any")
                             button.submit.full(type="submit")
                                 i.fa.fa-arrow-left 
                                 | انتقال

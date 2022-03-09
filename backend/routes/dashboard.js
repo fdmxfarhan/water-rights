@@ -10,6 +10,7 @@ var Notification = require('../models/Notification');
 var UserNotif = require('../models/UserNotif');
 var Transmission = require('../models/Transmission');
 var Settings = require('../models/Settings');
+var ServerLog = require('../models/ServerLog');
 const mail = require('../config/mail');
 const dateConvert = require('../config/dateConvert');
 const {convertDate} = require('../config/dateConvert');
@@ -209,10 +210,36 @@ router.get('/users', ensureAuthenticated, (req, res, next) => {
 });
 router.get('/delete-user', ensureAuthenticated, (req, res, next) => {
     if(req.user.role != 'user'){
-        User.deleteOne({_id: req.query.userID}, (err) => {
-            Acount.deleteMany({ownerID: req.query.userID}, (err) => {
-                req.flash('success_msg', 'کاربر با موفقیت حذف شد');
-                res.redirect('/dashboard/users');
+        User.findById(req.query.userID, (err, user) => {
+            Acount.find({ownerID: req.query.userID}, (err, accounts) => {
+                User.deleteOne({_id: req.query.userID}, (err) => {
+                    Acount.deleteMany({ownerID: req.query.userID}, (err) => {
+                        var newLog = new ServerLog({
+                            type: 'user-delete',
+                            date: new Date(),
+                            fullname: req.user.fullname,
+                            userID: req.user._id,
+                            before: user,
+                            // after: newUser,
+                            title: `حذف کاربر ${user.fullname}`,
+                        });
+                        newLog.save().then(doc => {}).catch(err => console.log(err));
+                        accounts.forEach(account => {
+                            newLog = new ServerLog({
+                                type: 'account-delete',
+                                date: new Date(),
+                                fullname: req.user.fullname,
+                                userID: req.user._id,
+                                before: account,
+                                // after: newUser,
+                                title: `حذف حساب ${account.accountNumber}`,
+                            });
+                            newLog.save().then(doc => {}).catch(err => console.log(err));
+                        });
+                        req.flash('success_msg', 'کاربر با موفقیت حذف شد');
+                        res.redirect('/dashboard/users');
+                    });
+                });
             });
         });
     }
@@ -220,12 +247,24 @@ router.get('/delete-user', ensureAuthenticated, (req, res, next) => {
 router.get('/delete-acount', ensureAuthenticated, (req, res, next) => {
     var { redirect } = req.query;
     if(req.user.role != 'user'){
-        Acount.deleteOne({_id: req.query.acountID}, (err) => {
-            req.flash('success_msg', 'حساب با موفقیت حذف شد');
-            if(redirect)
-                res.redirect(redirect);
-            else
-                res.redirect(`/dashboard/user-view?userID=${req.query.userID}`);
+        Acount.findById(req.query.acountID, (err, account) => {
+            Acount.deleteOne({_id: req.query.acountID}, (err) => {
+                newLog = new ServerLog({
+                    type: 'account-delete',
+                    date: new Date(),
+                    fullname: req.user.fullname,
+                    userID: req.user._id,
+                    before: account,
+                    // after: newUser,
+                    title: `حذف حساب ${account.accountNumber}`,
+                });
+                newLog.save().then(doc => {}).catch(err => console.log(err));
+                req.flash('success_msg', 'حساب با موفقیت حذف شد');
+                if(redirect)
+                    res.redirect(redirect);
+                else
+                    res.redirect(`/dashboard/user-view?userID=${req.query.userID}`);
+            });
         });
     }
 });
@@ -541,9 +580,18 @@ router.get('/unblock-account', ensureAuthenticated, (req, res, next) => {
 router.get('/settings', ensureAuthenticated, (req, res, next) => {
     if(req.user.role != 'user'){
         Settings.findOne({}, (err, settings) => {
-            res.render('./dashboard/admin-settings', {
-                user: req.user,
-                settings,
+            ServerLog.find({}, (err, serverLogs) => {
+                res.render('./dashboard/admin-settings', {
+                    user: req.user,
+                    settings,
+                    serverLogs,
+                    convertDate,
+                    typeToString: (type) =>{
+                        if(type == 'chah') return 'چاه'
+                        if(type == 'chahvandi') return 'چاه‌وندی'
+                        if(type == 'abvandi') return 'آب‌وندی'
+                    },
+                });
             });
         })
     }
@@ -1122,6 +1170,11 @@ router.post('/transmit-chahvandi-to-chah', ensureAuthenticated, (req, res, next)
         });
     });
 });
-
+router.get('/clearlogs', ensureAuthenticated, (req, res, next) => {
+    ServerLog.deleteMany({}, (err) => {
+        if(err) res.send(err);
+        else res.send('done');
+    })
+})
 module.exports = router;
 

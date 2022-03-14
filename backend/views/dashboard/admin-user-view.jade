@@ -165,18 +165,20 @@ block content
                             th باقی مانده
                             th 
                         -var chah = acounts.filter(e => e.type == 'chah');
-                        -for(var i=0; i<chah.length; i++){
-                            tr 
-                                td= i+1
-                                td= chah[i].license
-                                td= chah[i].permitedUseInYear
-                                td= chah[i].usedCredit
-                                td= chah[i].leftCredit
-                                td 
-                                    a.green(href="/dashboard/acount-view?acountID=#{chah[i]._id}") 
-                                        i.fa.fa-edit
-                                    //- a.red(href="/dashboard/delete-acount?acountID=#{chah[i]._id}&userID=#{viewingUser._id}") 
-                                    //-     i.fa.fa-trash
+                        -if(chah){
+                            -for(var i=0; i<chah.length; i++){
+                                tr 
+                                    td= i+1
+                                    td= chah[i].license
+                                    td= chah[i].permitedUseInYear
+                                    td= chah[i].usedCredit
+                                    td= chah[i].leftCredit
+                                    td 
+                                        a.green(href="/dashboard/acount-view?acountID=#{chah[i]._id}") 
+                                            i.fa.fa-edit
+                                        //- a.red(href="/dashboard/delete-acount?acountID=#{chah[i]._id}&userID=#{viewingUser._id}") 
+                                        //-     i.fa.fa-trash
+                            -}
                         -}
                     //- a.add-acount#add-chah-btn
                     //-     i.fa.fa-plus 
@@ -207,7 +209,7 @@ block content
                     table 
                         -var i=0;
                         -var chah = acounts.find(e => e.type == 'chah' && e.ownerID == viewingUser._id.toString());
-                        -if(chah.licensePic != ''){
+                        -if(chah && chah.licensePic != ''){
                             tr 
                                 td= i+1 + '.' + 'اسکن پروانه بهره برداری'
                                 td 
@@ -273,7 +275,7 @@ block content
                                         a(href="#{viewingUser.commitmentLetter}" target="_blank") 
                                             img(src="/img/pdf.jpg")
                         -} i++;
-                        -if(chah.calibrateLicense.link != ''){
+                        -if(chah && chah.calibrateLicense.link != ''){
                             tr 
                                 td= i+1 + '.' + ''
                                 td 

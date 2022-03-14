@@ -264,7 +264,7 @@ block content
                                         a(href="#{viewingUser.file4.link}" target="_blank") 
                                             img(src="/img/pdf.jpg")
                         -} i++;
-                        -if(viewingUser.commitmentLetter != ''){
+                        -if(viewingUser.commitmentLetter && viewingUser.commitmentLetter != ''){
                             tr 
                                 td= i+1 + '.' + 'تعهدنامه نمایندگی در فروش'
                                 td 

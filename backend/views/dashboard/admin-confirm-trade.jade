@@ -18,7 +18,7 @@ block content
                 .account-info-view
                     h1.name حساب مبداء:
                     .select-account
-                        .name#source-name= transmission.source.accountNumber
+                        .name#source-name= transmission.source.type == 'mirab' || transmission.source.type == 'abkhan'? transmission.source.type : transmission.source.accountNumber
                         .type#source-type 
                         i.fa.fa-check#source-selected-icon
                     .account-info 
@@ -27,15 +27,17 @@ block content
                             .value#source-owner= transmission.source.owner
                         .info 
                             .name تاریخ آغاز اعتبار: 
-                            .value#source-start-date #{transmission.source.startDate.year}/#{transmission.source.startDate.month}/#{transmission.source.startDate.day}
+                            -if(transmission.source.startDate)
+                                .value#source-start-date #{transmission.source.startDate.year}/#{transmission.source.startDate.month}/#{transmission.source.startDate.day}
                         .info 
                             .name تاریخ پایان اعتبار: 
-                            .value#source-end-date  #{transmission.source.endDate.year}/#{transmission.source.endDate.month}/#{transmission.source.endDate.day}
+                            -if(transmission.source.endDate)
+                                .value#source-end-date  #{transmission.source.endDate.year}/#{transmission.source.endDate.month}/#{transmission.source.endDate.day}
                         
                 .account-info-view
                     h1.name حساب مقصد:
                     .select-account
-                        .name#target-name= transmission.source.accountNumber
+                        .name#target-name= transmission.target.type == 'mirab' || transmission.target.type == 'abkhan'? transmission.target.type : transmission.target.accountNumber
                         .type#target-type 
                         i.fa.fa-check#target-selected-icon
                     .account-info 
@@ -44,10 +46,12 @@ block content
                             .value#target-owner= transmission.target.owner
                         .info 
                             .name تاریخ آغاز اعتبار: 
-                            .value#target-start-date #{transmission.target.startDate.year}/#{transmission.target.startDate.month}/#{transmission.target.startDate.day}
+                            -if(transmission.target.startDate)
+                                .value#target-start-date #{transmission.target.startDate.year}/#{transmission.target.startDate.month}/#{transmission.target.startDate.day}
                         .info 
                             .name تاریخ پایان اعتبار: 
-                            .value#target-end-date  #{transmission.target.endDate.year}/#{transmission.target.endDate.month}/#{transmission.target.endDate.day}
+                            -if(transmission.target.endDate)
+                                .value#target-end-date  #{transmission.target.endDate.year}/#{transmission.target.endDate.month}/#{transmission.target.endDate.day}
                 .text-input-view
                     h1 مقدار شارژ: 
                         .val #{transmission.amount} متر مکعب

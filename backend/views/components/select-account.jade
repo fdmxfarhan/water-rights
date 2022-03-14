@@ -71,7 +71,7 @@
                                 i.fa.fa-lock.red-lock
                             | #{Math.floor(accounts[i].charge*10)/10}
                 -}else if(accounts[i].type == "mirab"){
-                    tr.hidden(id="option-source-#{i}")
+                    tr(id="option-source-#{i}")
                         td.role
                             .purple(id="option-source-type-#{i}") میراب
                             .hidden= accounts[i].type
@@ -86,7 +86,7 @@
                                 i.fa.fa-lock.red-lock
                             | #{Math.floor(accounts[i].charge*10)/10}
                 -}else if(accounts[i].type == "abkhan"){
-                    tr.hidden(id="option-source-#{i}")
+                    tr(id="option-source-#{i}")
                         td.role
                             .purple(id="option-source-type-#{i}") آبخوان
                             .hidden= accounts[i].type
@@ -174,7 +174,7 @@
                                 i.fa.fa-lock.red-lock
                             | #{Math.floor(accounts[i].charge*10)/10}
                 -}else if(accounts[i].type == "mirab"){
-                    tr.hidden(id="option-target-#{i}")
+                    tr(id="option-target-#{i}")
                         td.role
                             .purple(id="option-target-type-#{i}") میراب
                             .hidden= accounts[i].type
@@ -189,7 +189,7 @@
                                 i.fa.fa-lock.red-lock
                             | #{Math.floor(accounts[i].charge*10)/10}
                 -}else if(accounts[i].type == "abkhan"){
-                    tr.hidden(id="option-target-#{i}")
+                    tr(id="option-target-#{i}")
                         td.role
                             .purple(id="option-target-type-#{i}") آبخوان
                             .hidden= accounts[i].type

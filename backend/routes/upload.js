@@ -531,11 +531,17 @@ router.post('/upload-form-and-confirm-transmission', upload.single('form3'), (re
                     var mirab = getMirabRight(source, target, amount, settings);
                     var abkhan = getAbkhanRight(source, target, amount, settings);
                     var sandogh = getSandoghRight(source, target, amount, settings);
+                    if(source.type == 'mirab' || source.type == 'abkhan' || target.type == 'mirab' || target.type == 'abkhan'){
+                        mirab = 0;
+                        abkhan = 0;
+                        sandogh = 0;
+                    }
+
                     console.log(target.endDate);
                     // Acount.updateMany({_id: source._id}, {$set: {charge: source.charge - transmission.amount}}, (err) => {});
                     Acount.updateMany({_id: target._id}, {$set: {
                         charge: target.charge + (transmission.amount - mirab - abkhan),
-                        endDate: {year: target.endDate.year+1, month: target.endDate.month, day: target.endDate.day},
+                        endDate: typeof(target.endDate) == 'undefined' ? {} : {year: target.endDate.year+1, month: target.endDate.month, day: target.endDate.day},
                     }}, (err) => {});
                     
                     Acount.findOne({type: 'mirab'}, (err, mirabAccount) => {
@@ -562,9 +568,11 @@ router.post('/upload-form-and-confirm-transmission', upload.single('form3'), (re
                         });
                         newUserNotif.save().then(doc => {
                             User.findById(source.ownerID, (err, user) => {
-                                console.log(user.beneficiaries);
-                                for(var i=0; i<user.beneficiaries.length; i++){
-                                    sms2(user.beneficiaries[i].phone, `بهره بردار محترم\n${user.beneficiaries[i].name}\nمیزان ${amount} متر مکعب حجم به درخواست نماینده از حساب ${source.accountNumber} به حساب ${target.accountNumber} منتقل شد`);
+                                if(user){
+                                    console.log(user.beneficiaries);
+                                    for(var i=0; i<user.beneficiaries.length; i++){
+                                        sms2(user.beneficiaries[i].phone, `بهره بردار محترم\n${user.beneficiaries[i].name}\nمیزان ${amount} متر مکعب حجم به درخواست نماینده از حساب ${source.accountNumber} به حساب ${target.accountNumber} منتقل شد`);
+                                    }
                                 }
                             })
                             req.flash('success_msg', 'معامله با موفقیت تایید شد.');

@@ -128,8 +128,15 @@ var updateAmount = () => {
         document.getElementById('mirab-right').textContent = 0;
         document.getElementById('transmitable').textContent = 0;
     }else{
-        document.getElementById('mirab-right').textContent = amount * internalMirabRight;
-        document.getElementById('transmitable').textContent = amount - amount * internalMirabRight;
+        sourceType = document.getElementById('source-type2').textContent;
+        targetType = document.getElementById('target-type2').textContent;
+        if(sourceType == 'میراب' || sourceType == 'آبخوان' || targetType == 'میراب' || targetType == 'آبخوان'){
+            document.getElementById('mirab-right').textContent = 0;
+            document.getElementById('transmitable').textContent = 0;
+        }else{
+            document.getElementById('mirab-right').textContent = amount * internalMirabRight;
+            document.getElementById('transmitable').textContent = amount - amount * internalMirabRight;
+        }
     }
 }
 $(document).ready(function(){

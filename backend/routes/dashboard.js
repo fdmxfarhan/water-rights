@@ -723,7 +723,7 @@ router.post('/special-admin-register', ensureAuthenticated, (req, res, next) => 
         });
     }
 });
-router.post('/transmit', (req, res, next) => {
+router.post('/transmit', ensureAuthenticated, (req, res, next) => {
     var {sourceID, targetID, amount} = req.body;
     Acount.findById(sourceID, (err, source) => {
         Acount.findById(targetID, (err, target) => {
@@ -739,8 +739,8 @@ router.post('/transmit', (req, res, next) => {
                     if(err) console.log(err);
                     User.findById(source.ownerID, (err, sender) => {
                         User.findById(target.ownerID, (err, reciever) => {
-                            sms2(sender.phone, `درخواست انتقال شارژ ${amount} متر مکعب، از حساب ${source.accountNumber} به حساب ${target.accountNumber} ثبت شد و پس از تکمیل فرم انتقال شارژ تایید می‌گردد. \n میراب`)
-                            sms2(reciever.phone, `درخواست انتقال شارژ ${amount} متر مکعب، از حساب ${source.accountNumber} به حساب ${target.accountNumber} ثبت شد و پس از تکمیل فرم انتقال شارژ تایید می‌گردد. \n میراب`)
+                            if(sender) sms2(sender.phone, `درخواست انتقال شارژ ${amount} متر مکعب، از حساب ${source.accountNumber} به حساب ${target.accountNumber} ثبت شد و پس از تکمیل فرم انتقال شارژ تایید می‌گردد. \n میراب`)
+                            if(reciever) sms2(reciever.phone, `درخواست انتقال شارژ ${amount} متر مکعب، از حساب ${source.accountNumber} به حساب ${target.accountNumber} ثبت شد و پس از تکمیل فرم انتقال شارژ تایید می‌گردد. \n میراب`)
                             res.redirect(`/dashboard/confirm-trade?transmissionID=${newTransmission._id}`);
                         });
                     });
@@ -951,7 +951,7 @@ router.get('/confirm-trade', ensureAuthenticated, (req, res, next) => {
                             fullname: transmission.source.owner,
                             accountNumber: transmission.source.accountNumber,
                             maximum: transmission.source.charge + transmission.amount,
-                            idNumber: user.idNumber,
+                            idNumber: typeof(user) == 'undefined' ? '.................' : user.idNumber,
                             date: convertDate(new Date()),
                             formNumber: 1,
                             amount: transmission.amount,
@@ -959,7 +959,7 @@ router.get('/confirm-trade', ensureAuthenticated, (req, res, next) => {
                             form1Date: convertDate(new Date()),
                             form2Number: 1,
                             form2Date: convertDate(new Date()),
-                            endDate: `${transmission.source.startDate.year}/${transmission.source.startDate.month}/${transmission.source.startDate.day}`,
+                            endDate: typeof(transmission.source.startDate) == 'undefined'? '........................' : `${transmission.source.startDate.year}/${transmission.source.startDate.month}/${transmission.source.startDate.day}`,
                             sourceAccountNum: transmission.source.accountNumber,
                             targetOwner: transmission.target.owner,
                             targetOwnerID: transmission.target.accountNumber,                        

@@ -211,7 +211,7 @@ block content
                     table 
                         -var i=0;
                         -var chah = acounts.find(e => e.type == 'chah' && e.ownerID == viewingUser._id.toString());
-                        -if(chah && chah.licensePic != ''){
+                        -if(chah && chah.licensePic && chah.licensePic != ''){
                             tr 
                                 td= i+1 + '.' + 'اسکن پروانه بهره برداری'
                                 td 

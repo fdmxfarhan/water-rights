@@ -141,11 +141,13 @@ block content
                             th 
                         -for(var i=0; i<acounts.length; i++){
                             -if(acounts[i].type == 'chahvandi')
+                                -var l = acounts.find(e => e._id.toString() == acounts[i].linkedAccount)
                                 tr 
                                     td= i+1
                                     td= acounts[i].accountNumber
                                     td= acounts[i].charge
-                                    td= acounts.find(e => e._id.toString() == acounts[i].linkedAccount).license
+                                    td 
+                                        -if(l) l.license
                                     td 
                                         a.green(href="/dashboard/acount-view?acountID=#{acounts[i]._id}") 
                                             i.fa.fa-edit

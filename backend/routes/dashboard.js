@@ -273,10 +273,13 @@ router.get('/user-view', ensureAuthenticated, (req, res, next) => {
     if(req.user.role != 'user'){
         User.findById(userID, (err, viewingUser) => {
             Acount.find({ownerID: userID}, (err, acounts) => {
-                res.render('./dashboard/admin-user-view', {
-                    user: req.user,
-                    viewingUser,
-                    acounts,
+                Transmission.find({}, (err, transmissions) => {
+                    res.render('./dashboard/admin-user-view', {
+                        user: req.user,
+                        viewingUser,
+                        acounts,
+                        transmissions,
+                    });
                 });
             });
         });

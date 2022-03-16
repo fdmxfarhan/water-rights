@@ -55,7 +55,7 @@ block content
                             label(for="cardNumber") تایید کلمه عبور: 
                             input.text(type="password" name="password2" placeholder="تایید کلمه عبور")
                     input.submit(type="submit" value="ثبت تغییرات")
-            //- .files-area 
+            //- .files-area
                 -if(viewingUser.file0.link != ''){
                     a.file(href="#{viewingUser.file0.link}" target="_blank")
                         -if(viewingUser.file0.link.slice(viewingUser.file0.link.length-3, viewingUser.file0.link.length) != 'pdf')
@@ -314,16 +314,21 @@ block content
                                         a(href="#{viewingUser.form2}" target="_blank") 
                                             img(src="/img/pdf.jpg")
                         -}
-                        
-                        
-    //- .avatar-info
-    //-     .avatar 
-    //-         i.fa.fa-user 
-    //-     .info 
-    //-         h1= viewingUser.sex + ' ' + viewingUser.fullname 
-    //-         h2
-    //-             a(href="tel:#{viewingUser.phone}")= viewingUser.phone
-    
+                        -for(var j=0; j<transmissions.length; j++){
+                            -if(transmissions[j].source.ownerID == viewingUser._id.toString() || transmissions[j].target.ownerID == viewingUser._id.toString()){
+                                -if(transmissions[j].form3 != ''){
+                                    tr 
+                                        td= 'فرم شماره 3'
+                                        td 
+                                            -if(transmissions[j].form3.slice(-3) != 'pdf')
+                                                a(href="#{transmissions[j].form3}" target="_blank") 
+                                                    img(src="#{transmissions[j].form3}")
+                                            -else
+                                                a(href="#{transmissions[j].form3}" target="_blank") 
+                                                    img(src="/img/pdf.jpg")
+                                -}
+                            -}
+                        -}
 
     include ../components/add-file
     include ../components/add-acount

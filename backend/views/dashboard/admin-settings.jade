@@ -10,39 +10,41 @@ block content
         h2
     .content-view 
         .users-view 
-            .settings-view
-                h1.title تنظیمات سال آبی
-                form(action="/dashboard/set-start-year" method="POST") 
-                    .date-input
-                        label(for="day") تاریخ آغاز سال آبی: 
-                        input.text(type="number" name="day" placeholder="روز" value="#{settings.startYearDateJ.day}")
-                        | /
-                        input.text(type="number" name="month" placeholder="ماه" value="#{settings.startYearDateJ.month}")
-                        | /
-                        input.text(type="number" name="year" placeholder="سال" value="#{settings.startYearDateJ.year}")
+            -if(user.role == 'admin'){
+                .settings-view
+                    h1.title تنظیمات سال آبی
+                    form(action="/dashboard/set-start-year" method="POST") 
+                        .date-input
+                            label(for="day") تاریخ آغاز سال آبی: 
+                            input.text(type="number" name="day" placeholder="روز" value="#{settings.startYearDateJ.day}")
+                            | /
+                            input.text(type="number" name="month" placeholder="ماه" value="#{settings.startYearDateJ.month}")
+                            | /
+                            input.text(type="number" name="year" placeholder="سال" value="#{settings.startYearDateJ.year}")
+                            input.submit(type="submit" value="ثبت")
+                    form(action="/dashboard/set-end-year" method="POST") 
+                        .date-input
+                            label(for="day") تاریخ پایان سال آبی: 
+                            input.text(type="number" name="day" placeholder="روز" value="#{settings.endYearDateJ.day}")
+                            | /
+                            input.text(type="number" name="month" placeholder="ماه" value="#{settings.endYearDateJ.month}")
+                            | /
+                            input.text(type="number" name="year" placeholder="سال" value="#{settings.endYearDateJ.year}")
+                            input.submit(type="submit" value="ثبت")
+                .settings-view
+                    h1.title سهم میراب و آبخوان
+                    form(action="/dashboard/set-rights" method="POST") 
+                        .text-input-view
+                            label(for="abkhanRight") سهم آبخوان (درصد): 
+                            input(type="number" name="abkhanRight" value="#{settings.abkhanRight*100}")
+                        .text-input-view
+                            label(for="internalMirabRight") سهم میراب داخل بازار (درصد): 
+                            input(type="number" name="internalMirabRight" value="#{settings.internalMirabRight*100}")
+                        .text-input-view
+                            label(for="externalMirabRight") سهم میراب بین بانک و بازار (درصد): 
+                            input(type="number" name="externalMirabRight" value="#{settings.externalMirabRight*100}")
                         input.submit(type="submit" value="ثبت")
-                form(action="/dashboard/set-end-year" method="POST") 
-                    .date-input
-                        label(for="day") تاریخ پایان سال آبی: 
-                        input.text(type="number" name="day" placeholder="روز" value="#{settings.endYearDateJ.day}")
-                        | /
-                        input.text(type="number" name="month" placeholder="ماه" value="#{settings.endYearDateJ.month}")
-                        | /
-                        input.text(type="number" name="year" placeholder="سال" value="#{settings.endYearDateJ.year}")
-                        input.submit(type="submit" value="ثبت")
-            .settings-view
-                h1.title سهم میراب و آبخوان
-                form(action="/dashboard/set-rights" method="POST") 
-                    .text-input-view
-                        label(for="abkhanRight") سهم آبخوان (درصد): 
-                        input(type="number" name="abkhanRight" value="#{settings.abkhanRight*100}")
-                    .text-input-view
-                        label(for="internalMirabRight") سهم میراب داخل بازار (درصد): 
-                        input(type="number" name="internalMirabRight" value="#{settings.internalMirabRight*100}")
-                    .text-input-view
-                        label(for="externalMirabRight") سهم میراب بین بانک و بازار (درصد): 
-                        input(type="number" name="externalMirabRight" value="#{settings.externalMirabRight*100}")
-                    input.submit(type="submit" value="ثبت")
+            -}
             .settings-view.serverlogs
                 h1.title رویداد ها
                 #serverlogs-length.hidden= serverLogs.length

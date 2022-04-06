@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            padding: 5%;
+            direction: rtl;
+            text-align: right;
+            font-family: 'bnazanin';
+        }
+        @font-face{
+            font-family: 'bnazanin';
+            src: url('https://meeraab.com/bnazanin.ttf');
+        }
+        .header{
+            overflow: hidden;
+            width: 70%;
+            margin: auto;
+            /* margin-top: 30px; */
+        }
+        .header img{
+            width: 80px;
+            float: right;
+        }
+        .header .info{
+            float: left;
+        }
+        .header .info h1{
+            font-family: 'bnazanin';
+            font-size: 15px;
+            font-weight: normal;
+        }
+        h1.in-the-name-of{
+            font-weight: bold;
+            font-family: 'bnazanin';
+            font-size: 17px;
+            text-align: center;
+        }
+        h1.title{
+            font-weight: bold;
+            font-family: 'bnazanin';
+            font-size: 17px;
+            text-align: center;
+        }
+        p.text{
+            font-family: 'bnazanin';
+            font-size: 15px;
+            text-align: justify;
+            width: 90%;
+            margin: auto;
+            margin-top: 20px;
+        }
+        .signs{
+            overflow: hidden;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .signs .part{
+            width: 50%;
+            float: right;
+            text-align: center;
+        }
+        .signs h1 {
+            font-weight: bold;
+            font-family: 'bnazanin';
+            font-size: 17px;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .signs h2 {
+            font-weight: normal;
+            font-family: 'bnazanin';
+            font-size: 16px;
+            margin-top: 0;
+            padding-top: 0;
+        }
+        ul{
+            width: 80%;
+            margin: auto;
+            margin-top: 20px;
+        }
+        ul li{
+            font-family: 'bnazanin';
+            font-size: 16px;
+            text-align: justify;
+        }
+        ul li span{
+            position: relative;
+            left: -20px;
+        }
+        b{
+            font-weight: bold;
+            font-size: 20px;
+        }
+        h1.right-title{
+            font-family: 'bnazanin';
+            font-size: 17px;
+            text-align: right;
+            width: 90%;
+            margin: 17px auto;
+            margin-bottom: 5px;
+        }
+        h1.footer{
+            color: gray;
+            font-family: 'bnazanin';
+            font-size: 15px;
+            text-align: center;
+        }
+        .num-title{
+            font-family: 'bnazanin';
+            font-weight: bold;
+        }
+        table.sign{
+            width: 100%;
+            margin: 20px auto;
+            text-align: center;
+            border-collapse: collapse;
+        }
+        table.sign tr th, td{
+            border: gray 2px solid;
+            font-family: 'bnazanin';
+            font-size: 17px;
+            padding: 5px 0;
+            margin: 0;
+            width: 16.666667%;
+        }
+        table.sign tr td.blank{
+            height: 90px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <!-- <img src="https://meeraab.com/abmantagheei.png" alt="logo"> -->
+        <!-- <div class="info">
+            <h1>تاریخ صدور: {{info.date}}</h1>
+            <h1>شماره فرم: {{info.formNumber}}</h1>
+        </div> -->
+    </div>
+    <h1 class="in-the-name-of">بسمه تعالی</h1>
+    <h1 class="title">تعهدنامه نمایندگان و بهره برداران در واگذاری سهم قابل فروش از حجم آب سالانه</h1>
+    <p class="text">
+        <div class="num-title">
+            1.1. مالکین موافق با فروش سهم قابل واگذاری از حجم آب سالانه (لیست ایشان در صفحات پیوست ارائه شده است)
+        </div>
+        <!-- <br> -->
+        اینجانب به عنوان بهره‌بردار چاه به کلاسه پرونده ........ و کد اشتراک {{info.accountNumber}} آقا/خانم {{info.fullname}} با شماره ملی {{info.idNumber}} در تاریخ {{info.date}} را به عنوان وکیل در فرایند فروش 
+        سهم قابل واگذاری از حجم آب سالانه، به کارگزار بانک حقوق آب معرفی می‌کنم. همچنین رضایت خود با واگذاری بخش قابل فروش از حجم آب سالانه (و کاهش ساعت کارکرد متناظر با آن) 
+        را اعلام می‌دارم.
+    </p>
+    <p class="text">
+        <div class="num-title">
+            1.2. مالکین مخالف با فروش سهم قابل واگذاری از حجم آب سالانه (لیست ایشان در صفحات پیوست ارائه شده است)
+        </div>
+        <!-- <br> -->
+        اینجانب مخالفت خود با فروش سهم قابل واگذاری از حجم آب سالانه را اعلام نموده و تمایلی به واگذاری سهم خود ندارم. لذا تغییری نیز در ساعت کارکرد اینجانب حاصل نخواهد شد.
+    </p>
+    <p class="text">
+        <div class="num-title">
+            1.3. نماینده چاه
+        </div>
+        <!-- <br> -->
+        اینجانب {{info.fullname}} با شماره ملی {{info.idNumber}} به عنوان نماینده چاه، تعهد می‌نمایم سهمی از حجم آب سالانه چاه که قابل فروش است را در بازار به فروش رسانده و معادل مالی آن را به بهره‌بردارانی که سهم قابل واگذاری خود را به فروش رسانده‌اند را به تناسب آن کاهش خواهم داد. 
+        همچنین هیچ گونه تغییری در ساعت کارکرد بهره‌برداران مخالف حاصل نخواهد شد. لذا هیچ گونه مسئولیتی بر عهده کارگزار نخواهد بود.
+    </p>
+    <table class="sign">
+        <tr>
+            <th>نام و نام خانوادگی</th>
+            <th>شماره ملی</th>
+            <th>امضای نماینده</th>
+            <th>اثر انگشت نماینده</th>
+        </tr>
+        <tr>
+            <td class="blank col4"></td>
+            <td class="blank col4"></td>
+            <td class="blank col4"></td>
+            <td class="blank col4"></td>
+        </tr>
+    </table>
+    
+    <div style="page-break-before:always">&nbsp;</div> 
+
+    <p class="text">
+        <div class="num-title">
+            1.1. مالکین موافق با فروش سهم قابل واگذاری از حجم آب سالانه (لیست ایشان در صفحات پیوست ارائه شده است)
+        </div>
+    </p>
+    <table class="sign">
+        <tr>
+            <th>نام و نام خانوادگی</th>
+            <th>شماره ملی</th>
+            <th>نماینده</th>
+            <th>اثر انگشت</th>
+            <th>ساعت کارکرد بهره‌بردار بر مدار آبیاری</th>
+            <th>حجم آب سالانه معادل با ساعت کارکرد</th>
+        </tr>
+        <tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+    </table>
+
+    <div style="page-break-before:always">&nbsp;</div> 
+
+    <p class="text">
+        <div class="num-title">
+            1.2. مالکین مخالف با فروش سهم قابل واگذاری از حجم آب سالانه (لیست ایشان در صفحات پیوست ارائه شده است)
+        </div>
+    </p>
+    <table class="sign">
+        <tr>
+            <th>نام و نام خانوادگی</th>
+            <th>شماره ملی</th>
+            <th>نماینده</th>
+            <th>اثر انگشت</th>
+            <th>ساعت کارکرد بهره‌بردار</th>
+            <th></th>
+        </tr>
+        <tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+    </table>
+
+
+    <script>
+        theDoc.HtmlOptions.Engine = EngineType.Gecko; 
+    </script>    
+    
+</body>
+</html>

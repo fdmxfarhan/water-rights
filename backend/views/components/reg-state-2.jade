@@ -173,13 +173,13 @@
                         //-     input(type="number" name="charge" placeholder="شارژ فعلی حساب چاه")
                         .check-input-view 
                             -if(chah.licenseConfirmed)
-                                input(type="checkbox" id="licenseConfirmed" name="licenseConfirmed" value="true")
+                                input(type="checkbox" id="licenseConfirmed" name="licenseConfirmed" value="true" checked)
                             -else
-                                input(type="checkbox" id="licenseConfirmed" name="licenseConfirmed" value="true")
+                                input(type="checkbox" id="licenseConfirmed" name="licenseConfirmed" value="true" checked)
                             label(for="licenseConfirmed") پروانه بهره‌برداری معتبر می‌باشد
                         .check-input-view 
                             -if(chah.counterConfirmed)
-                                input(type="checkbox" id="counterConfirmed" name="counterConfirmed" value="true")
+                                input(type="checkbox" id="counterConfirmed" name="counterConfirmed" value="true" checked)
                             -else
                                 input(type="checkbox" id="counterConfirmed" name="counterConfirmed" value="true")
                             label(for="counterConfirmed") کنتور کالیبره است

@@ -1179,5 +1179,51 @@ router.get('/clearlogs', ensureAuthenticated, (req, res, next) => {
         else res.send('done');
     })
 })
+router.get('/commitment-letter-form', ensureAuthenticated, (req, res, next) => {
+    var {userID} = req.query;
+    User.findById(userID, (err, user) => {
+        Acount.findOne({type: 'chah', ownerID: user._id}, (err, chah) => {
+            var options = {
+                phantomPath: path.join(__dirname, '../node_modules/phantomjs/lib/phantom/bin/phantomjs'),
+                // phantomPath: '/usr/local/share/phantomjs-1.9.8-linux-x86_64/bin/phantomjs',
+                format: "A3",
+                orientation: "portrait",
+                border: "5mm",
+                header: {
+                    height: "0",
+                    contents: ''
+                },
+                footer: {
+                    height: "0mm",
+                    contents: {}
+                },
+            };
+            fs.readFile('./public/commitmentLetter.html', 'utf8', (err, commitmentLetter) => {
+                var document1 = {
+                    html: commitmentLetter,
+                    data: {
+                        info: {
+                            fullname: user.fullname,
+                            accountNumber: user.username,
+                            maximum: chah.sellCap,
+                            idNumber: user.idNumber,
+                            date: convertDate(new Date()),
+                            formNumber: 1,
+                            amount: '.................................',
+                        }
+                    },
+                    path: 'public/files/commitmentLetter.pdf',
+                    type: "",
+                };
+                pdf.create(document1, options).then((r) => {
+                    console.log(path.join(__dirname, '../public/files/commitmentLetter.pdf'))
+                    res.sendFile(path.join(__dirname, '../public/files/commitmentLetter.pdf'));
+                }).catch((error) => {console.error(error)});
+            });
+        })
+    })
+})
+
+
 module.exports = router;
 

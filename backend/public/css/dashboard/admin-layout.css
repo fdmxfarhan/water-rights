@@ -844,6 +844,24 @@
     .other-beneficiaries .add-beneficiary:hover{
         color: var(--hover);
     }
+    .beneficiaries-title{
+        margin-top: 1vw;
+        font-size: 1vw;
+        width: 50%;
+        text-align: center;
+    }
+    .chah-beneficiaries{
+        width: 50%;
+        height: 15vw;
+        overflow-y: scroll;
+    }
+    .chah-beneficiaries table{
+        width: 100%;
+        text-align: center;
+    }
+    .chah-beneficiaries table th{
+        border-bottom: var(--gray) 0.1vw solid;
+    }
 }
 
 @media only screen and (max-width: 800px) {

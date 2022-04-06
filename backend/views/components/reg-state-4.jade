@@ -15,11 +15,25 @@
                     a.download(href="#{users[i].commitmentLetter}") 
                         i.fa.fa-cloud-download 
                         | دانلود تعهدنامه نمایندگی در فروش
+            .beneficiaries-title بهره برداران
+            .chah-beneficiaries
+                table 
+                    tr
+                        th نام 
+                        th کد ملی
+                        th شماره تماس
+                    -for(var j=0; j<users[i].beneficiaries.length; j++){
+                        tr 
+                            td= users[i].beneficiaries[j].name
+                            td= users[i].beneficiaries[j].idNumber
+                            td= users[i].beneficiaries[j].phone
+                    -}
+
     -}
 -}else if(user.role == 'کارگزار'){
     h1.chah-title تعهدنامه نمایندگی در فروش
     p کارشناس محترم، لطفا فرم تعهد نامه نمایندگی در فروش را از لینک زیر دانلود کرده و پس از تکمیل آن توسط نماینده، اسکن آن را در قسمت مربوطه آپلود نمایید.
-    a.download(href="" download) 
+    a.download(href="/dashboard/commitment-letter-form?userID=#{users[i]._id}") 
         i.fa.fa-cloud-download 
         | دانلود فرم تعهدنامه نمایندگی در فروش
     br

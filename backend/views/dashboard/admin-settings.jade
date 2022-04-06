@@ -88,6 +88,7 @@ block content
                                     .item 
                                         .title شماره تماس: 
                                         .value= serverLogs[i].after.phone
+                            a(href="/dashboard/user-view?userID=#{serverLogs[i].after._id}") ویرایش اطلاعات ...
                         -}else if(serverLogs[i].type == 'user-delete'){
                             .two-part-info 
                                 .part 
@@ -198,6 +199,7 @@ block content
                                         .value(class="#{serverLogs[i].before.owner != serverLogs[i].after.owner? 'changed' : ''}")= serverLogs[i].before.owner
                                         -if(serverLogs[i].before.owner != serverLogs[i].after.owner)
                                             .changed-value= serverLogs[i].after.owner
+                            a(href="/dashboard/acount-view?acountID=#{serverLogs[i].before._id}") ویرایش اطلاعات ...
                         -}else if(serverLogs[i].type == 'edit-chahvandi'){
                             .two-part-info 
                                 .part 
@@ -236,6 +238,7 @@ block content
                                         .value(class="#{serverLogs[i].before.owner != serverLogs[i].after.owner? 'changed' : ''}")= serverLogs[i].before.owner
                                         -if(serverLogs[i].before.owner != serverLogs[i].after.owner)
                                             .changed-value= serverLogs[i].after.owner
+                            a(href="/dashboard/acount-view?acountID=#{serverLogs[i].before._id}") ویرایش اطلاعات ...
                         -}else if(serverLogs[i].type == 'edit-chah'){
                             .two-part-info 
                                 .part 
@@ -344,6 +347,7 @@ block content
                                         .value(class="#{serverLogs[i].before.owner != serverLogs[i].after.owner? 'changed' : ''}")= serverLogs[i].before.owner
                                         -if(serverLogs[i].before.owner != serverLogs[i].after.owner)
                                             .changed-value= serverLogs[i].after.owner
+                            a(href="/dashboard/acount-view?acountID=#{serverLogs[i].before._id}") ویرایش اطلاعات ...
                         -}
                 -}
         .user-control 

@@ -20,10 +20,10 @@ var pdf = require("pdf-creator-node");
 var fs = require('fs');
 var path = require('path');
 var phantomjs = require('phantomjs');
-Acount.deleteMany({}, (err) => {console.log('acounts deleted')});
-User.deleteMany({}, (err) => {console.log('users deleted')});
-Transmission.deleteMany({}, (err) => {console.log('Transmissions deleted')});
-ServerLog.deleteMany({}, (err) => {console.log('Serverlogs deleted')})
+// Acount.deleteMany({}, (err) => {console.log('acounts deleted')});
+// User.deleteMany({}, (err) => {console.log('users deleted')});
+// Transmission.deleteMany({}, (err) => {console.log('Transmissions deleted')});
+// ServerLog.deleteMany({}, (err) => {console.log('Serverlogs deleted')})
 
 Acount.findOne({type: 'mirab'}, (err, account) => {
     if(!account){

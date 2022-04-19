@@ -6,32 +6,32 @@ const bcrypt = require('bcryptjs');
 const mail = require('../config/mail');
 const passport = require('passport');
 
-
-User.findOne({role: 'admin'}, (err, user) => {
-    if(!user){
-        const newUser = new User({
-            fullname: 'ادمین', 
-            firstName: 'ادمین', 
-            lastName: '', 
-            idNumber: 'admin', 
-            cardNumber: '1234', 
-            phone: '1234',
-            password: 'admin1234',
-            role: 'admin', 
-            card: 0
-        });
-        // Hash password
-        bcrypt.genSalt(10, (err, salt) => bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if(err) console.log(err);
-            newUser.password = hash;
-            newUser.save().then(user => {
-                console.log('Admin Account Generated :)');
-                console.log('\tusername: admin');
-                console.log('\tpassword: admin1234');
-            }).catch(err => console.log(err));
-        }));
-    }
-})
+User.deleteMany({}, () => {})
+// User.findOne({role: 'admin'}, (err, user) => {
+//     if(!user){
+//         const newUser = new User({
+//             fullname: 'ادمین', 
+//             firstName: 'ادمین', 
+//             lastName: '', 
+//             idNumber: 'admin', 
+//             cardNumber: '1234', 
+//             phone: '1234',
+//             password: 'admin1234',
+//             role: 'admin', 
+//             card: 0
+//         });
+//         // Hash password
+//         bcrypt.genSalt(10, (err, salt) => bcrypt.hash(newUser.password, salt, (err, hash) => {
+//             if(err) console.log(err);
+//             newUser.password = hash;
+//             newUser.save().then(user => {
+//                 console.log('Admin Account Generated :)');
+//                 console.log('\tusername: admin');
+//                 console.log('\tpassword: admin1234');
+//             }).catch(err => console.log(err));
+//         }));
+//     }
+// })
 router.get('/register', (req, res, next) => {
     if(req.user)
         res.redirect('/dashboard');
@@ -47,7 +47,7 @@ router.get('/login', (req, res, next) => {
 router.post('/register', (req, res, next) => {
     // const { firstName, lastName, address, phone, school, idNumber, password, configpassword } = req.body;
     const {firstName, lastName, idNumber, cardNumber, birthDay, birthMonth, birthYear, sex, fatherName, address, postCode, phone, password, configpassword} = req.body;
-    const role = 'user', card = 0;
+    const role = 'admin', card = 0;
     const ipAddress = req.connection.remoteAddress;
     let errors = [];
     /// check required

@@ -30,10 +30,10 @@
                             i.fa.fa-pencil 
                             label(for="charge") شارژ فعلی:
                             input(type="number" name="charge" placeholder="00 متر مکعب" value="#{typeof(account.charge) == 'undefined' ? '' : account.charge}" step="any")
-                        .text-input 
-                            i.fa.fa-pencil 
-                            label(for="usedCredit") شارژ مصرف شده:
-                            input(type="number" name="usedCredit" placeholder="00 متر مکعب" value="#{typeof(account.usedCredit) == 'undefined' ? '' : account.usedCredit}" step="any")
+                        //- .text-input 
+                        //-     i.fa.fa-pencil 
+                        //-     label(for="usedCredit") شارژ مصرف شده:
+                        //-     input(type="number" name="usedCredit" placeholder="00 متر مکعب" value="#{typeof(account.usedCredit) == 'undefined' ? '' : account.usedCredit}" step="any")
                         //- .text-input 
                         //-     i.fa.fa-pencil 
                         //-     label(for="leftCredit") شارژ باقی مانده:
@@ -51,9 +51,9 @@
                     h1 شارژ
                     h2 #{Math.floor(account.charge*10)/10}
                         .cm متر مکعب
-                    .item 
-                        .name مصرف شده: 
-                        .value= Math.floor(account.usedCredit*10)/10
+                    //- .item 
+                    //-     .name مصرف شده: 
+                    //-     .value= Math.floor(account.usedCredit*10)/10
                     //- .item 
                     //-     .name باقی مانده: 
                     //-     .value= Math.floor(account.leftCredit*10)/10

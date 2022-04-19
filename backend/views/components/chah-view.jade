@@ -184,7 +184,11 @@
                     //-     .cm متر مکعب
                     .item 
                         .name شارژ سالیانه: 
-                        .value= Math.floor(account.permitedUseInYear*10)/10
+                        .value= Math.floor(account.charge*10)/10
+                            .cm متر مکعب
+                    .item 
+                        .name شارژ خریداری شده: 
+                        .value= Math.floor(account.boughtCredit*10)/10
                             .cm متر مکعب
                     .item 
                         .name حجم مصرف شده: 

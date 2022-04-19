@@ -1067,52 +1067,57 @@ router.post('/transmit-chah-to-chahvandi', ensureAuthenticated, (req, res, next)
     Settings.findOne({}, (err, settings) => {
         Acount.findById(chahID, (err, source) => {
             Acount.findById(chahvandiID, (err, target) => {
-                var transmission = new Transmission({
-                    source,
-                    target,
-                    amount,
-                    date: new Date,
-                });
-                transmission.save().then(doc =>{
-                    sms('09336448037', 'انتقال جدید در اپلیکیشن میراب');
-                    Acount.updateMany({_id: source._id}, {$set: {charge: source.charge - amount}}, (err) => {
-                        if(err) console.log(err);
-                        var mirab = getMirabRight(source, target, amount, settings);
-                        var abkhan = getAbkhanRight(source, target, amount, settings);
-                        var sandogh = getSandoghRight(source, target, amount, settings);
-                        Acount.updateMany({_id: target._id}, {$set: {
-                            charge: target.charge + (transmission.amount - mirab - abkhan),
-                            endDate: {year: target.endDate.year+1, month: target.endDate.month, day: target.endDate.day},
-                        }}, (err) => {});
-                        Acount.findOne({type: 'mirab'}, (err, mirabAccount) => {
-                            Acount.updateMany({type: 'mirab'}, {$set: {charge: mirabAccount.charge+mirab}}, (err, doc) => {
-                                if(err) console.log(err);
-                            });
-                        });
-                        Acount.findOne({type: 'abkhan'}, (err, abkhanAccount) => {
-                            Acount.updateMany({type: 'abkhan'}, {$set: {charge: abkhanAccount.charge+abkhan}}, (err, doc) => {
-                                if(err) console.log(err);
-                            });
-                        });
-                        if(source.type == 'chah') 
-                            Acount.updateMany({_id: source._id}, {$set: {sandogh: source.sandogh + sandogh}}, (err) => {});
-                        if(target.type == 'chah')
-                            Acount.updateMany({_id: target._id}, {$set: {sandogh: target.sandogh + sandogh}}, (err) => {});
-                        Transmission.updateMany({_id: transmission._id}, {$set: {done: true, accepted: true}}, (err) => {
-                            var newUserNotif = new UserNotif({
-                                type: 'accept-transmission',
-                                text: `انتقال شارژ ${amount} متر مکعب از حساب ${source.type == 'chah' ? source.license : source.accountNumber} به حساب ${target.type == 'chah' ? target.license : target.accountNumber} توسط میراب تایید شد.`,
-                                userID: source.ownerID,
-                                userFullname: source.owner,
-                                date: new Date(),
-                            });
-                            newUserNotif.save().then(doc => {
-                                req.flash('success_msg', 'انتقال با موفقیت انجام شد');
-                                res.redirect(`/dashboard/acount-view?acountID=${chahID}`);
-                            }).catch(err => console.log(err));
-                        });
+                if(source.endDate.year * 365 + source.endDate.month * 30 + source.endDate.day > settings.endYearDateJ.year * 365 + settings.endYearDateJ.month * 30 * settings.endYearDateJ.day){
+                    req.flash('error_msg', 'انتقال شارژ سال آینده امکان پذیر نیست');
+                    res.redirect(`/dashboard/acount-view?acountID=${chahID}`);
+                }else{
+                    var transmission = new Transmission({
+                        source,
+                        target,
+                        amount,
+                        date: new Date,
                     });
-                }).catch(err => console.log(err));
+                    transmission.save().then(doc =>{
+                        sms('09336448037', 'انتقال جدید در اپلیکیشن میراب');
+                        Acount.updateMany({_id: source._id}, {$set: {charge: source.charge - amount}}, (err) => {
+                            if(err) console.log(err);
+                            var mirab = getMirabRight(source, target, amount, settings);
+                            var abkhan = getAbkhanRight(source, target, amount, settings);
+                            var sandogh = getSandoghRight(source, target, amount, settings);
+                            Acount.updateMany({_id: target._id}, {$set: {
+                                charge: target.charge + (transmission.amount - mirab - abkhan),
+                                endDate: {year: source.endDate.year+1, month: source.endDate.month, day: source.endDate.day},
+                            }}, (err) => {});
+                            Acount.findOne({type: 'mirab'}, (err, mirabAccount) => {
+                                Acount.updateMany({type: 'mirab'}, {$set: {charge: mirabAccount.charge+mirab}}, (err, doc) => {
+                                    if(err) console.log(err);
+                                });
+                            });
+                            Acount.findOne({type: 'abkhan'}, (err, abkhanAccount) => {
+                                Acount.updateMany({type: 'abkhan'}, {$set: {charge: abkhanAccount.charge+abkhan}}, (err, doc) => {
+                                    if(err) console.log(err);
+                                });
+                            });
+                            if(source.type == 'chah') 
+                                Acount.updateMany({_id: source._id}, {$set: {sandogh: source.sandogh + sandogh}}, (err) => {});
+                            if(target.type == 'chah')
+                                Acount.updateMany({_id: target._id}, {$set: {sandogh: target.sandogh + sandogh}}, (err) => {});
+                            Transmission.updateMany({_id: transmission._id}, {$set: {done: true, accepted: true}}, (err) => {
+                                var newUserNotif = new UserNotif({
+                                    type: 'accept-transmission',
+                                    text: `انتقال شارژ ${amount} متر مکعب از حساب ${source.type == 'chah' ? source.license : source.accountNumber} به حساب ${target.type == 'chah' ? target.license : target.accountNumber} توسط میراب تایید شد.`,
+                                    userID: source.ownerID,
+                                    userFullname: source.owner,
+                                    date: new Date(),
+                                });
+                                newUserNotif.save().then(doc => {
+                                    req.flash('success_msg', 'انتقال با موفقیت انجام شد');
+                                    res.redirect(`/dashboard/acount-view?acountID=${chahID}`);
+                                }).catch(err => console.log(err));
+                            });
+                        });
+                    }).catch(err => console.log(err));
+                }
             });
         });
     });
@@ -1137,8 +1142,8 @@ router.post('/transmit-chahvandi-to-chah', ensureAuthenticated, (req, res, next)
                         var abkhan = getAbkhanRight(source, target, amount, settings);
                         var sandogh = getSandoghRight(source, target, amount, settings);
                         Acount.updateMany({_id: target._id}, {$set: {
-                            charge: target.charge + (transmission.amount - mirab - abkhan),
-                            endDate: {year: target.endDate.year+1, month: target.endDate.month, day: target.endDate.day},
+                            boughtCredit: target.boughtCredit + (transmission.amount - mirab - abkhan),
+                            endDate: {year: target.endDate.year, month: target.endDate.month, day: target.endDate.day},
                         }}, (err) => {});
                         Acount.findOne({type: 'mirab'}, (err, mirabAccount) => {
                             Acount.updateMany({type: 'mirab'}, {$set: {charge: mirabAccount.charge+mirab}}, (err, doc) => {
@@ -1223,7 +1228,6 @@ router.get('/commitment-letter-form', ensureAuthenticated, (req, res, next) => {
         })
     })
 })
-
 
 module.exports = router;
 

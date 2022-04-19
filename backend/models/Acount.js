@@ -62,11 +62,16 @@ var AcountSchema = new mongoose.Schema({
   usedCredit: {type: Number, default: 0},
   leftCredit: {type: Number, default: 0},
   soldCredit: {type: Number, default: 0},
+  boughtCredit: {type: Number, default: 0},
   licenseConfirmed: {type: Boolean, default: false},
   counterConfirmed: {type: Boolean, default: false},
   calibrateIssued: {type: Boolean, default: false},
   counterCalibrateConfirmed: {type: Boolean, default: false},
   calibrateLicense: {type: Object, default: {link: '', type: 'undefined'}},
+  counterDamageCharge: {type: Number, default: 0},
+  counterChangeCharge: {type: Number, default: 0},
+  extendedCharge: {type: Number, default: 0},
+  otherCharge: {type: Number, default: 0},
 });
 
 var Acount = mongoose.model('Acount', AcountSchema);

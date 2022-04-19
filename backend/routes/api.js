@@ -21,9 +21,10 @@ router.get('/test', (req, res, next) => {
 });
 router.get('/GetCustomerCreditStatus', (req, res, next) => {
     var {WaterNo, cityCode} = req.query;
+    sms('09336448037', `Meerab API Called: \n /GetcustomerCreditStatus\nWaterNo: ${WaterNo}\ncityCode: ${cityCode}`);
     Acount.findOne({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, (err, account) => {
         if(account){
-            res.send([
+            var result = [
                 {
                     id: account._id,
                     WaterNo: WaterNo,
@@ -32,34 +33,30 @@ router.get('/GetCustomerCreditStatus', (req, res, next) => {
                     Volume: account.charge,
                     Type: 1,
                 },
-                // {
-                //     id: account._id,
-                //     WaterNo: WaterNo,
-                //     CreditStartDate: `${account.startDate.year}/${account.startDate.month}/${account.startDate.day}`,
-                //     CreditEndDate: `${account.endDate.year}/${account.endDate.month}/${account.endDate.day}`,
-                //     Volume: account.charge,
-                //     Type: 2,
-                // },
-                // {
-                //     id: account._id,
-                //     WaterNo: WaterNo,
-                //     CreditStartDate: `${account.startDate.year}/${account.startDate.month}/${account.startDate.day}`,
-                //     CreditEndDate: `${account.endDate.year}/${account.endDate.month}/${account.endDate.day}`,
-                //     Volume: account.charge,
-                //     Type: 3,
-                // },
-            ]);
+            ];
+            if(account.charge + account.boughtCredit <= account.buyCap){
+                result.push({
+                    id: account._id,
+                    WaterNo: WaterNo,
+                    CreditStartDate: `${account.startDate.year}/${account.startDate.month}/${account.startDate.day}`,
+                    CreditEndDate: `${account.endDate.year+1}/${account.endDate.month}/${account.endDate.day}`,
+                    Volume: account.boughtCredit,
+                    Type: 2,
+                })
+            }
+            res.send(result);
         }
         else res.send('no account was found');
     });
 });
 router.get('/ReportCurrentCredit', (req, res, next) => {
     var {WaterNo, cityCode, Volume, CreditEndDate} = req.query;
-    console.log({WaterNo, cityCode, Volume, CreditEndDate})
+    if(Volume) Volume = parseInt(Volume);
+    sms('09336448037', `Meerab API Called: \n /ReportCurrentCredit\nWaterNo: ${WaterNo}\ncityCode: ${cityCode}\nVolume: ${Volume}\nCreditEndDate: ${CreditEndDate}`);
     Acount.findOne({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, (err, account) => {
         var currentCredit = account.currentCredit;
-        currentCredit.push({volume: Volume, creditEndDate});
-        Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {currentCredit}}, (err, doc) => {
+        currentCredit.push({volume: Volume, CreditEndDate});
+        Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {currentCredit, usedCredit: Volume}}, (err, doc) => {
             if(err){
                 console.log(err);
                 res.send({
@@ -75,10 +72,19 @@ router.get('/ReportCurrentCredit', (req, res, next) => {
     });
 });
 router.get('/ReportUsedCredit', (req, res, next) => {
-    var {WaterNo, cityCode, reportUsedCredit} = req.query;
+    var {WaterNo, cityCode, Volume} = req.query;
+    if(Volume) Volume = parseInt(Volume);
+    sms('09336448037', `Meerab API Called: \n /ReportUsedCredit\nWaterNo: ${WaterNo}\ncityCode: ${cityCode}\nVolume: ${Volume}`);
     Acount.findOne({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, (err, account) => {
-        Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {reportUsedCredit: reportUsedCredit}}, (err, doc) => {
-            // account.usedCharge = parseFloat(reportUsedCredit);
+        if(Volume > account.charge){
+            account.boughtCredit -= (Volume - account.charge);
+            account.charge = 0;
+            if(account.boughtCredit < 0) account.boughtCredit = 0;
+        }
+        else{
+            account.charge -= Volume
+        }
+        Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {charge: account.charge, boughtCredit: account.boughtCredit}}, (err, doc) => {
             if(err){
                 console.log(err);
                 res.send({
@@ -88,12 +94,6 @@ router.get('/ReportUsedCredit', (req, res, next) => {
             }else{
                 res.send({
                     status: 'ok',
-                    // id: account._id,
-                    // WaterNo: WaterNo,
-                    // CreditStartDate: `${account.startDate.year}/${account.startDate.month}/${account.startDate.day}`,
-                    // CreditEndDate: `${account.endDate.year}/${account.endDate.month}/${account.endDate.day}`,
-                    // Volume: account.usedCharge,
-                    // Type: 1,
                 });
             }
         })
@@ -109,14 +109,35 @@ router.get('/GetNextYearAnnualCredit', (req, res, next) => {
                 status: 'error',
             });
         }else if(account){
-            res.send({
-                status: 'ok',
-                id: account._id,
-                WaterNo: WaterNo,
-                CreditStartDate: `${account.startDate.year+1}/${account.startDate.month}/${account.startDate.day}`,
-                CreditEndDate: `${account.endDate.year+1}/${account.endDate.month}/${account.endDate.day}`,
-                Volume: account.permitedUseInYear,
-                Type: 1,
+            Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {
+                charge: account.permitedUseInYear, 
+                endDate: {
+                    year: account.endDate.year + 1,
+                    month: account.endDate.month,
+                    day: account.endDate.day,
+                }
+            }}, (err, doc) => {
+                var result = [
+                    {
+                        id: account._id,
+                        WaterNo: WaterNo,
+                        CreditStartDate: `${account.startDate.year}/${account.startDate.month}/${account.startDate.day}`,
+                        CreditEndDate: `${account.endDate.year}/${account.endDate.month}/${account.endDate.day}`,
+                        Volume: account.charge,
+                        Type: 1,
+                    },
+                ];
+                if(account.charge + account.boughtCredit <= account.buyCap){
+                    result.push({
+                        id: account._id,
+                        WaterNo: WaterNo,
+                        CreditStartDate: `${account.startDate.year}/${account.startDate.month}/${account.startDate.day}`,
+                        CreditEndDate: `${account.endDate.year+1}/${account.endDate.month}/${account.endDate.day}`,
+                        Volume: account.boughtCredit,
+                        Type: 2,
+                    })
+                }
+                res.send(result);
             });
         }else{
             res.send({
@@ -165,6 +186,111 @@ router.get('/RevocationOfWellLicense', (req, res, next) => {
         })
     });
 });
+router.get('/ReportNewCredit', (req, res, next) => {
+    var {WaterNo, cityCode, Volume, CreditType, creditEndTime, creditStartTime} = req.query;
+    if(Volume)     Volume = parseInt(Volume);
+    if(CreditType) CreditType = parseInt(CreditType);
+    sms('09336448037', `Meerab API Called: \n /ReportNewCredit\nWaterNo: ${WaterNo}\ncityCode: ${cityCode}\nVolume: ${Volume}\nCreditType: ${CreditType}`);
+    Acount.findOne({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, (err, account) => {
+        if(err){
+            console.log(err);
+            res.send({
+                error: err,
+                status: 'error',
+            });
+        }else if(account){
+            if(CreditType == 2){
+                Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {
+                    charge: account.permitedUseInYear, 
+                    endDate: {
+                        year: account.endDate.year + 1,
+                        month: account.endDate.month,
+                        day: account.endDate.day,
+                    }
+                }}, (err, doc) => {
+                    res.send({status: 'ok'});
+                });
+            }
+            else if(CreditType == 3){
+                Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {
+                    charge: account.permitedUseInYear, 
+                    endDate: {
+                        year: account.endDate.year + 1,
+                        month: account.endDate.month,
+                        day: account.endDate.day,
+                    }
+                }}, (err, doc) => {
+                    var result = [
+                        {
+                            id: account._id,
+                            WaterNo: WaterNo,
+                            CreditStartDate: `${account.startDate.year}/${account.startDate.month}/${account.startDate.day}`,
+                            CreditEndDate: `${account.endDate.year}/${account.endDate.month}/${account.endDate.day}`,
+                            Volume: account.charge,
+                            Type: 1,
+                        },
+                    ];
+                    if(account.charge + account.boughtCredit <= account.buyCap){
+                        result.push({
+                            id: account._id,
+                            WaterNo: WaterNo,
+                            CreditStartDate: `${account.startDate.year}/${account.startDate.month}/${account.startDate.day}`,
+                            CreditEndDate: `${account.endDate.year+1}/${account.endDate.month}/${account.endDate.day}`,
+                            Volume: account.boughtCredit,
+                            Type: 2,
+                        })
+                    }
+                    res.send(result);
+                });
+            }
+            else if(CreditType == 4){
+                Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {
+                    counterDamageCharge: Volume,
+                }}, (err) => {
+                    res.send({status: 'ok'});
+                });
+            }
+            else if(CreditType == 5){
+                Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {
+                    counterChangeCharge: Volume,
+                }}, (err) => {
+                    res.send({status: 'ok'});
+                });
+            }
+            else if(CreditType == 6){
+                Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {
+                    extendedCharge: Volume,
+                }}, (err) => {
+                    res.send({status: 'ok'});
+                });
+            }
+            else if(CreditType == 7){
+                Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {
+                    otherCharge: Volume,
+                }}, (err) => {
+                    res.send({status: 'ok'});
+                });
+            }
+        }else{
+            res.send({
+                error: 'account not found',
+                status: 'error',
+            });
+        }
+    });
+});
+router.get('/ChangeLicense', (req, res, next) => {
+    var {WaterNo, cityCode, Volume} = req.query;
+    if(Volume)     Volume = parseInt(Volume);
+    Acount.findOne({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, (err, account) => {
+        Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {
+            permitedUseInYear: Volume,
+        }}, (err) => {
+            res.send({status: 'ok'});
+        });
+    });
+});
+
 
 // Mobile Application APIs
 router.post('/login', (req, res, next) => {

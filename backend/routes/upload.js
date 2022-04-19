@@ -541,7 +541,7 @@ router.post('/upload-form-and-confirm-transmission', upload.single('form3'), (re
                     // Acount.updateMany({_id: source._id}, {$set: {charge: source.charge - transmission.amount}}, (err) => {});
                     Acount.updateMany({_id: target._id}, {$set: {
                         charge: target.charge + (transmission.amount - mirab - abkhan),
-                        endDate: typeof(target.endDate) == 'undefined' ? {} : {year: target.endDate.year+1, month: target.endDate.month, day: target.endDate.day},
+                        endDate: typeof(target.endDate) == 'undefined' ? {} : {year: target.endDate.year, month: target.endDate.month, day: target.endDate.day},
                     }}, (err) => {});
                     
                     Acount.findOne({type: 'mirab'}, (err, mirabAccount) => {

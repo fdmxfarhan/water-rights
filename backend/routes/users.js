@@ -6,7 +6,6 @@ const bcrypt = require('bcryptjs');
 const mail = require('../config/mail');
 const passport = require('passport');
 
-User.deleteMany({}, () => {})
 // User.findOne({role: 'admin'}, (err, user) => {
 //     if(!user){
 //         const newUser = new User({

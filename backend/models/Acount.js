@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-
 var AcountSchema = new mongoose.Schema({
   type: String, // abvandi, chahvandi, chah
   license: String,
@@ -75,7 +74,6 @@ var AcountSchema = new mongoose.Schema({
 });
 
 var Acount = mongoose.model('Acount', AcountSchema);
-
 module.exports = Acount;
 
 

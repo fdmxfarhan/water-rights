@@ -283,11 +283,24 @@ router.get('/ChangeLicense', (req, res, next) => {
     var {WaterNo, cityCode, Volume} = req.query;
     if(Volume)     Volume = parseInt(Volume);
     Acount.findOne({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, (err, account) => {
-        Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {
-            permitedUseInYear: Volume,
-        }}, (err) => {
-            res.send({status: 'ok'});
-        });
+        if(err){
+            console.log(err);
+            res.send({
+                error: err,
+                status: 'error',
+            });
+        }else if(account){
+            Acount.updateMany({$or:[ {accountNumber: parseInt(WaterNo)}, {license: WaterNo}]}, {$set: {
+                permitedUseInYear: Volume,
+            }}, (err) => {
+                res.send({status: 'ok'});
+            });
+        }else{
+            res.send({
+                error: 'account not found',
+                status: 'error',
+            });
+        }
     });
 });
 
@@ -510,8 +523,6 @@ router.post('/seen-notifications', (req, res, next) => {
         res.send({done: true});
     });
 });
-
-
 
 
 module.exports = router;
